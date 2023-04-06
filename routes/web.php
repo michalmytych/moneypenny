@@ -22,6 +22,7 @@ Route::get('/', function () {
 Route::prefix('files')->as('file.')->group(function () {
     Route::get('/', [FileController::class, 'index'])->name('index');
     Route::post('/upload', [FileController::class, 'upload'])->name('upload');
+    Route::get('{id}', [FileController::class, 'show'])->name('show');
 });
 
 Route::get('/dashboard', function () {

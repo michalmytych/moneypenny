@@ -13,8 +13,14 @@
             @foreach($files as $file)
                 <tr>
                     <td class="py-2">{{ $file->id }}</td>
-                    <td class="py-2">{{ $file->name }}</td>
-                    <td class="py-2">{{ $file->size }} bytes</td>
+                    <td class="py-2 hover:text-indigo-600">
+                        <a href="{{ route('file.show', ['id' => $file->id]) }}">
+                            {{ $file->name }}
+                        </a>
+                    </td>
+                    <td class="py-2">
+                        @include('components.storage-size-display', ['size' => $file->size])
+                    </td>
                     <td class="py-2">{{ $file->created_at }}</td>
                 </tr>
             @endforeach

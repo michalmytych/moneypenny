@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\File\FileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::prefix('files')->as('file.')->group(function () {
+    Route::get('/', [FileController::class, 'index'])->name('index');
+    Route::post('/upload', [FileController::class, 'upload'])->name('upload');
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -28,4 +34,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

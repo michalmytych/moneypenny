@@ -54,5 +54,5 @@
     </tbody>
 </table>
 @else
-    <h2 class="font-semibold text-3xl">Brak ustawień importu</h2>
+    <h2 class="font-semibold text-xl">Brak ustawień importu</h2>
 @endif

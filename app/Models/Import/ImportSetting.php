@@ -15,7 +15,7 @@ class ImportSetting extends Model
         'delimiter',
         'enclosure',
         'escape_character',
-        'input_encoding',
+        'input_encoding'
     ];
 }
 

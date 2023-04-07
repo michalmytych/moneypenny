@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('path');
             $table->integer('size');
+            $table
+                ->foreignId('import_setting_id')
+                ->constrained('import_settings');
             $table->timestamps();
         });
     }

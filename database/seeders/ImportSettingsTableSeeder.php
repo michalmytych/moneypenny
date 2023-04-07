@@ -16,29 +16,29 @@ class ImportSettingsTableSeeder extends Seeder
     {
         $importSettings = [
             [
-                'name' => 'CSV Import',
+                'name' => 'Alior CSV',
                 'file_extension' => 'csv',
-                'delimiter' => ',',
-                'enclosure' => '"',
-                'escape_character' => '\\',
-                'input_encoding' => 'UTF-8',
-            ],
-            [
-                'name' => 'Excel Import',
-                'file_extension' => 'xlsx',
-                'delimiter' => '',
-                'enclosure' => '',
-                'escape_character' => '',
-                'input_encoding' => 'UTF-8',
-            ],
-            [
-                'name' => 'XML Import',
-                'file_extension' => 'xml',
-                'delimiter' => '',
+                'delimiter' => ';',
                 'enclosure' => null,
                 'escape_character' => null,
-                'input_encoding' => 'UTF-8',
+                'input_encoding' => 'windows 1250',
             ],
+//            [
+//                'name' => 'Excel Import',
+//                'file_extension' => 'xlsx',
+//                'delimiter' => '',
+//                'enclosure' => '',
+//                'escape_character' => '',
+//                'input_encoding' => 'UTF-8',
+//            ],
+//            [
+//                'name' => 'XML Import',
+//                'file_extension' => 'xml',
+//                'delimiter' => '',
+//                'enclosure' => null,
+//                'escape_character' => null,
+//                'input_encoding' => 'UTF-8',
+//            ],
         ];
 
         foreach ($importSettings as $setting) {

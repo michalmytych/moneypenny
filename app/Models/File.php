@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  * @property string $path
  * @property int $size
+ * @property int $import_setting_id
  */
 class File extends Model
 {
@@ -17,6 +18,7 @@ class File extends Model
     protected $fillable = [
         'name',
         'path',
-        'size'
+        'size',
+        'import_setting_id'
     ];
 }

@@ -9,7 +9,7 @@ class TransactionController extends Controller
 {
     public function index(): View
     {
-        $transactions = Transaction::all();
+        $transactions = Transaction::orderBy('transaction_date', 'desc')->get();
         return view('transaction.index', compact('transactions'));
     }
 }

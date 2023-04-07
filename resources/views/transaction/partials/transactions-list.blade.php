@@ -1,5 +1,5 @@
 @if(count($transactions) > 0)
-    <table class="min-w-full divide-y divide-gray-200">
+    <table class="w-full divide-y divide-gray-200 overflow-x-scroll">
         <thead class="bg-gray-50">
             <tr>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -9,7 +9,10 @@
                     Transaction Date
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Accounting Date
+                    Volume
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Description
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Sender
@@ -18,10 +21,10 @@
                     Receiver
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Description
+                    Currency
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Currency
+                    Accounting Date
                 </th>
             </tr>
         </thead>
@@ -35,7 +38,10 @@
                         {{ $transaction->transaction_date }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        {{ $transaction->accounting_date }}
+                        {{ $transaction->decimal_volume }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        {{ $transaction->description }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         {{ $transaction->sender }}
@@ -44,10 +50,10 @@
                         {{ $transaction->receiver }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        {{ $transaction->description }}
+                        {{ $transaction->currency }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        {{ $transaction->currency }}
+                        {{ $transaction->accounting_date }}
                     </td>
                 </tr>
             @endforeach

@@ -15,7 +15,24 @@
                 </option>
             @endforeach
         </select>
-        <x-input-error :messages="$errors->get('file_extension')" class="mt-2" />
+        <x-input-error :messages="$errors->get('import_setting_id')" class="mt-2" />
+    </div>
+    <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="columns_mapping_id">
+            Mapowanie kolumn
+        </label>
+        <select
+                id="columns_mapping_id"
+                class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                name="columns_mapping_id">
+            <option selected>Wybierz</option>
+            @foreach($columnsMappings as $columnMapping)
+                <option value="{{ $columnMapping->id }}">
+                    {{ $columnMapping->name }}
+                </option>
+            @endforeach
+        </select>
+        <x-input-error :messages="$errors->get('columns_mapping_id')" class="mt-2" />
     </div>
     <div class="mb-4">
         <label for="file" class="block font-bold">Wybierz plik do przesłania</label>

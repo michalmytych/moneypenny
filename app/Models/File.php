@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $path
  * @property int $size
  * @property int $import_setting_id
+ * @property int $id
  */
 class File extends Model
 {

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->tinyInteger('status');
             $table->foreignId('import_setting_id')->constrained('import_settings');
+            $table->foreignId('columns_mapping_id')->constrained('columns_mappings');
             $table->foreignId('file_id')->constrained('files');
             $table->timestamps();
         });

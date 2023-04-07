@@ -9,6 +9,9 @@
                 File Extension
             </th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Start row
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Delimiter
             </th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -35,16 +38,19 @@
                     {{ $importSetting->file_extension }}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {{ $importSetting->start_row }}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {{ $importSetting->delimiter }}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {{ $importSetting->enclosure ?? '-' }}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {{ $importSetting->escape_character ?? '-' }}
+                    {{ $importSetting->escape_character ?? 'Domyślny' }}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {{ $importSetting->input_encoding ?? '-' }}
+                    {{ $importSetting->input_encoding ?? 'Domyślne' }}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <a href="{{ route('import.import-setting.edit', $importSetting) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>

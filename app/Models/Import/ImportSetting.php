@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $enclosure
  * @property string|null $escape_character
  * @property string $input_encoding
+ * @property int|null $start_row
+ * @property int $id
  */
 class ImportSetting extends Model
 {
@@ -17,6 +19,7 @@ class ImportSetting extends Model
 
     protected $fillable = [
         'name',
+        'start_row',
         'file_extension',
         'delimiter',
         'enclosure',

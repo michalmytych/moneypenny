@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             ImportSettingsTableSeeder::class,
+            TransactionsTableSeeder::class,
+            ColumnsMappingsTableSeeder::class,
 //            FilesTableSeeder::class,
         ]);
     }

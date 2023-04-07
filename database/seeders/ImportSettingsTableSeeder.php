@@ -21,7 +21,8 @@ class ImportSettingsTableSeeder extends Seeder
                 'delimiter' => ';',
                 'enclosure' => null,
                 'escape_character' => null,
-                'input_encoding' => 'windows 1250',
+                'start_row' => 3,
+                'input_encoding' => 'Windows-1250',
             ],
 //            [
 //                'name' => 'Excel Import',
@@ -29,6 +30,7 @@ class ImportSettingsTableSeeder extends Seeder
 //                'delimiter' => '',
 //                'enclosure' => '',
 //                'escape_character' => '',
+//                'start_row' => 0,
 //                'input_encoding' => 'UTF-8',
 //            ],
 //            [
@@ -37,6 +39,7 @@ class ImportSettingsTableSeeder extends Seeder
 //                'delimiter' => '',
 //                'enclosure' => null,
 //                'escape_character' => null,
+//                'start_row' => 1,
 //                'input_encoding' => 'UTF-8',
 //            ],
         ];

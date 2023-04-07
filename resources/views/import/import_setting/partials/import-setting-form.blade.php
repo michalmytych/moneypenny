@@ -47,6 +47,13 @@
             <x-input-error :messages="$errors->get('enclosure')" class="mt-2" />
         </div>
         <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2" for="start_row">
+                Wiersz rozpoczynający <small>(opcjonalne)</small>
+            </label>
+            <input type="number" min="0" max="1000" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="start_row" name="start_row" value="0">
+            <x-input-error :messages="$errors->get('start_row')" class="mt-2" />
+        </div>
+        <div class="mb-4">
             <label class="block text-gray-700 font-bold mb-2" for="escape_character">
                 Znak escape <small>(opcjonalne)</small>
             </label>
@@ -62,7 +69,7 @@
                     class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     name="input_encoding">
                 <option value="UTF-8" selected>UTF-8</option>
-                <option value="windows 1250">Window 1250</option>
+                <option value="Windows-1250">Windows-1250</option>
             </select>
             <x-input-error :messages="$errors->get('input_encoding')" class="mt-2" />
         </div>

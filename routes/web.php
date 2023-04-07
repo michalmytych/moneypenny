@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\File\FileController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\Import\ImportController;
 use App\Http\Controllers\Import\ImportSettingController;
 use App\Http\Controllers\Import\ColumnsMappingController;
 
@@ -27,7 +29,13 @@ Route::prefix('files')->as('file.')->group(function () {
     Route::get('{id}', [FileController::class, 'show'])->name('show');
 });
 
+Route::prefix('transactions')->as('transaction.')->group(function () {
+    Route::get('/', [TransactionController::class, 'index'])->name('index');
+});
+
 Route::prefix('imports')->as('import.')->group(function () {
+    Route::get('/', [ImportController::class, 'index'])->name('index');
+
     Route::prefix('settings')->as('import-setting.')->group(function () {
         Route::get('/', [ImportSettingController::class, 'index'])->name('index');
         Route::get('/{id}', [ImportSettingController::class, 'show'])->name('show');

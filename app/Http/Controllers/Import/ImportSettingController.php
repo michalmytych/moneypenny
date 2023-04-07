@@ -33,6 +33,7 @@ class ImportSettingController extends Controller
             'file_extension'   => 'required|string',
             'delimiter'        => 'required|string',
             'enclosure'        => 'nullable|string',
+            'start_row'        => 'nullable|numeric',
             'escape_character' => 'nullable|string',
             'input_encoding'   => 'nullable|string',
         ]);

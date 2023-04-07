@@ -34,12 +34,12 @@ class TransactionsImport implements ToCollection, WithCustomCsvSettings, WithSta
         try {
             foreach ($collection as $row) {
                 $transactionDate = data_get($row, $this->columnsMapping->transaction_date_column_index);
-                $accountingDate = data_get($row, $this->columnsMapping->accounting_date_column_index);
-                $sender = data_get($row, $this->columnsMapping->sender_column_index);
-                $receiver = data_get($row, $this->columnsMapping->receiver_column_index);
-                $description = data_get($row, $this->columnsMapping->description_column_index);
-                $currency = data_get($row, $this->columnsMapping->currency_column_index);
-                $rawVolume = data_get($row, $this->columnsMapping->volume_column_index);
+                $accountingDate  = data_get($row, $this->columnsMapping->accounting_date_column_index);
+                $sender          = data_get($row, $this->columnsMapping->sender_column_index);
+                $receiver        = data_get($row, $this->columnsMapping->receiver_column_index);
+                $description     = data_get($row, $this->columnsMapping->description_column_index);
+                $currency        = data_get($row, $this->columnsMapping->currency_column_index);
+                $rawVolume       = data_get($row, $this->columnsMapping->volume_column_index);
 
                 Transaction::create([
                     'transaction_date' => Carbon::parse($transactionDate),

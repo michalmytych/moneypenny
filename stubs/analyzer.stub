@@ -13,8 +13,7 @@ class {{class}} extends Analyzer
 
     protected function formatDataForChart($queryResult): Collection
     {
-        // Also, here. Have fun!
-        // PS. Remember to add new analyzer to ENABLED_ANALYZERS at AnalyzerResolver :)
+        // Also, you probably should change this implementation. Have fun!
         return $queryResult;
     }
 }

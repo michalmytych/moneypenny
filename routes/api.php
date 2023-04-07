@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Analysis\AnalysisController;
@@ -26,7 +27,10 @@ Route::get(
     '/test',
     function () {
         return app(\App\Services\Analysis\AnalysisService::class)->analyze([
-            'analyzer_type' => 'transaction_volume_sum_per_day'
+//            'analyzer_type' => 'transaction_count_per_day'
+//            'analyzer_type' => 'transaction_volume_sum_per_day'
+//            'analyzer_type' => 'total_transaction_volume_per_week_day'
+            'analyzer_type' => 'total_transactions_volume',
         ]);
     }
 )->name('api.test');

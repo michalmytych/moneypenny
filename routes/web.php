@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\File\FileController;
 use App\Http\Controllers\Import\ImportSettingController;
+use App\Http\Controllers\Import\ColumnsMappingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,11 @@ Route::prefix('imports')->as('import.')->group(function () {
         Route::get('/{id}', [ImportSettingController::class, 'show'])->name('show');
         Route::post('/', [ImportSettingController::class, 'store'])->name('store');
         Route::get('/{id}/edit', [ImportSettingController::class, 'edit'])->name('edit');
+    });
+
+    Route::prefix('columns-mappings')->as('columns-mapping.')->group(function () {
+        Route::get('/', [ColumnsMappingController::class, 'index'])->name('index');
+        Route::post('/', [ColumnsMappingController::class, 'store'])->name('store');
     });
 });
 

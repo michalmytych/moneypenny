@@ -10,9 +10,12 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Import\ImportSetting;
 use Illuminate\Http\RedirectResponse;
+use App\Services\Import\ImportService;
 
 class FileController extends Controller
 {
+    public function __construct(private ImportService $importService) { }
+
     public function index(): View
     {
         $files          = File::latest()->get();
@@ -33,28 +36,31 @@ class FileController extends Controller
     {
         $request->validate([
             'file'              => 'required',
-            'import_setting_id' => 'required|exists:import_settings,id'
+            'import_setting_id' => 'required|exists:import_settings,id',
         ]);
 
         $file = $request->file('file');
 
-        $extension = $file->getClientOriginalExtension();
-        $timestamp = time();
-        $uuid      = Str::uuid();
+        $extension       = $file->getClientOriginalExtension();
+        $timestamp       = time();
+        $uuid            = Str::uuid();
+        $importSettingId = $request->input('import_setting_id');
 
         $fileName = "upload_{$uuid}_{$timestamp}.{$extension}";
 
         $fileModel = new File();
 
-        $fileModel->name = $file->getClientOriginalName();
-        $fileModel->path = "uploads/{$fileName}";
-        $fileModel->size = $file->getSize();
-        $fileModel->import_setting_id = $request->input('import_setting_id');
+        $fileModel->name              = $file->getClientOriginalName();
+        $fileModel->path              = "uploads/{$fileName}";
+        $fileModel->size              = $file->getSize();
+        $fileModel->import_setting_id = $importSettingId;
 
         DB::transaction(function () use ($fileModel, $file, $fileName) {
             $fileModel->save();
             $file->storeAs('uploads', $fileName);
         });
+
+        $this->importService->importFromFile($fileModel->path, $importSettingId);
 
         return redirect()->route('file.index');
     }

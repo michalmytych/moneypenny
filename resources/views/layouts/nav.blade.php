@@ -1,4 +1,4 @@
-<nav class="bg-white rounded-lg">
+<nav class="bg-white rounded-lg shadow-md">
     <div class="mx-auto px-4 max-w-7xl sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
             <div class="flex items-center">
@@ -14,6 +14,7 @@
                         <a href="{{ route('import.import-setting.index') }}" class="text-black hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">Ustawienia importów</a>
                         <a href="{{ route('import.columns-mapping.index') }}" class="text-black hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">Mapowanie kolumn</a>
                         <a href="{{ route('transaction.index') }}" class="text-black hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">Transakcje</a>
+                        <a href="{{ route('debug.analyzers') }}" class="text-black hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">Debugowanie analizatorów</a>
                     </div>
                 </div>
             </div>

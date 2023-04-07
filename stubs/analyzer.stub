@@ -15,5 +15,6 @@ class {{class}} extends Analyzer
     {
         // Also, here. Have fun!
         // PS. Remember to add new analyzer to ENABLED_ANALYZERS at AnalyzerResolver :)
+        return $queryResult;
     }
 }

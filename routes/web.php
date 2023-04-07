@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DebugController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\File\FileController;
@@ -19,9 +20,8 @@ use App\Http\Controllers\Import\ColumnsMappingController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [FileController::class, 'index']);
+Route::get('/debug', [DebugController::class, 'analyzers'])->name('debug.analyzers');
 
 Route::prefix('files')->as('file.')->group(function () {
     Route::get('/', [FileController::class, 'index'])->name('index');

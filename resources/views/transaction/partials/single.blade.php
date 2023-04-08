@@ -25,10 +25,10 @@
     </div>
     <div class="mb-4">
         <p class="block text-gray-700 font-bold mb-2">
-            Obejmowanie:
+            Opis transakcji:
         </p>
         <p class="text-gray-700">
-            {{ $transaction->enclosure ?? 'Brak danych' }}
+            {{ $transaction->description ?? 'Brak danych' }}
         </p>
     </div>
     <div class="mb-4">

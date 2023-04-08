@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @method static applyFilter(Filter $filter)
+ * @method static create(array $data)
+ * @method static firstWhere(array $attributes)
  */
 class Transaction extends Model
 {
@@ -28,6 +30,7 @@ class Transaction extends Model
         'receiver',
         'description',
         'currency',
+        'import_id'
     ];
 
     public static function getFilterableColumns(): Collection

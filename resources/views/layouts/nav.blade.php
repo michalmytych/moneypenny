@@ -3,7 +3,7 @@
         <div class="flex items-center justify-between h-16">
             <div class="flex items-center">
                 <div class="flex-shrink-0">
-                    <a href="{{ url('/') }}" class="text-black hover:text-gray-700 font-bold" style="font-family: 'Fraunces', serif;">
+                    <a href="{{ url('/') }}" class="text-black hover:text-indigo-700 font-bold" style="font-family: 'Fraunces', serif;">
                         moneypenny
                     </a>
                 </div>

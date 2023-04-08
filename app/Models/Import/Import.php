@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * @property int $status
  * @property File $file
+ * @property int $id
  */
 class Import extends Model
 {

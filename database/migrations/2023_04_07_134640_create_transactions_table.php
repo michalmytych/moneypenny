@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->string('sender')->nullable();
             $table->string('raw_volume')->nullable();
             $table->decimal('decimal_volume')->nullable();
+            $table->foreignId('import_id')->constrained('imports');
             $table
                 ->unsignedTinyInteger('type')
                 ->default(Transaction::TYPE_UNKNOWN)

@@ -3,16 +3,14 @@
 namespace App\Imports;
 
 use Throwable;
-use Carbon\Carbon;
 use App\Models\Import\Import;
 use Illuminate\Support\Collection;
 use App\Models\Import\ImportSetting;
 use App\Models\Import\ColumnsMapping;
-use App\Models\Transaction\Transaction;
-use App\Services\Helpers\TransactionHelper;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
+use App\Services\Transaction\TransactionImportService;
 
 class TransactionsImport implements ToCollection, WithCustomCsvSettings, WithStartRow
 {
@@ -33,24 +31,9 @@ class TransactionsImport implements ToCollection, WithCustomCsvSettings, WithSta
 
         try {
             foreach ($collection as $row) {
-                $transactionDate = data_get($row, $this->columnsMapping->transaction_date_column_index);
-                $accountingDate  = data_get($row, $this->columnsMapping->accounting_date_column_index);
-                $sender          = data_get($row, $this->columnsMapping->sender_column_index);
-                $receiver        = data_get($row, $this->columnsMapping->receiver_column_index);
-                $description     = data_get($row, $this->columnsMapping->description_column_index);
-                $currency        = data_get($row, $this->columnsMapping->currency_column_index);
-                $rawVolume       = data_get($row, $this->columnsMapping->volume_column_index);
-
-                Transaction::create([
-                    'transaction_date' => Carbon::parse($transactionDate),
-                    'accounting_date'  => Carbon::parse($accountingDate),
-                    'sender'           => $sender,
-                    'receiver'         => $receiver,
-                    'description'      => $description,
-                    'currency'         => $currency,
-                    'decimal_volume'   => TransactionHelper::rawVolumeToDecimal($rawVolume),
-                    'raw_volume'       => $rawVolume,
-                ]);
+                /** @var TransactionImportService $service */
+                $service = app(TransactionImportService::class);
+                $service->importFileRowAsTransaction($row, $this->import, $this->columnsMapping);
             }
 
             $this->import->update(['status' => Import::STATUS_IMPORTED]);
@@ -67,8 +50,8 @@ class TransactionsImport implements ToCollection, WithCustomCsvSettings, WithSta
         $settings = [
             'delimiter'        => $this->importSetting->delimiter,
             'enclosure'        => $this->importSetting->enclosure,
-            'escape_character' => $this->importSetting->escape_character,
             'input_encoding'   => $this->importSetting->input_encoding,
+            'escape_character' => $this->importSetting->escape_character,
         ];
 
         return collect($settings)->filter()->toArray();

@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Transaction\Transaction;
-use App\Services\Helper\TransactionHelper;
+use App\Services\Helpers\TransactionHelper;
 use Illuminate\Foundation\Testing\WithFaker;
 
 class TransactionsTableSeeder extends Seeder

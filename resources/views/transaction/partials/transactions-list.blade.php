@@ -20,15 +20,10 @@
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Receiver
                 </th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Currency
-                </th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Accounting Date
-                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
             </tr>
         </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
+        <tbody class="bg-white divide-y divide-gray-200 overflow-x-scroll">
             @foreach ($transactions as $transaction)
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap">
@@ -38,22 +33,21 @@
                         {{ $transaction->transaction_date }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        {{ $transaction->decimal_volume }}
+                        <strong>{{ $transaction->raw_volume }}</strong> {{ $transaction->currency }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        {{ $transaction->description }}
+                        {{ \App\Services\Helpers\StringHelper::shortenAuto($transaction->description ?? '-') }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        {{ $transaction->sender }}
+                        {{ \App\Services\Helpers\StringHelper::shortenAuto($transaction->sender ?? '-') }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        {{ $transaction->receiver }}
+                        {{ \App\Services\Helpers\StringHelper::shortenAuto($transaction->receiver ?? '-') }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        {{ $transaction->currency }}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        {{ $transaction->accounting_date }}
+                        <a href="{{ route('transaction.show', ['id' => $transaction->id]) }}">
+                            @include('icons.go')
+                        </a>
                     </td>
                 </tr>
             @endforeach

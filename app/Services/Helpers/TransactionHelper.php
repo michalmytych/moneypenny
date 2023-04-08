@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Helper;
+namespace App\Services\Helpers;
 
 class TransactionHelper
 {

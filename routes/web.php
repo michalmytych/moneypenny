@@ -31,6 +31,7 @@ Route::prefix('files')->as('file.')->group(function () {
 
 Route::prefix('transactions')->as('transaction.')->group(function () {
     Route::get('/', [TransactionController::class, 'index'])->name('index');
+    Route::get('/{id}', [TransactionController::class, 'show'])->name('show');
 });
 
 Route::prefix('imports')->as('import.')->group(function () {

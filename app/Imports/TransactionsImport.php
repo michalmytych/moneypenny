@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 use App\Models\Import\ImportSetting;
 use App\Models\Import\ColumnsMapping;
 use App\Models\Transaction\Transaction;
-use App\Services\Helper\TransactionHelper;
+use App\Services\Helpers\TransactionHelper;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;

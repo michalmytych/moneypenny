@@ -2,12 +2,18 @@
 
 namespace App\Models\Transaction;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Filters\Filter;
+use Illuminate\Support\Collection;
+use App\Filters\Traits\Filterable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+/**
+ * @method static applyFilter(Filter $filter)
+ */
 class Transaction extends Model
 {
-    use HasFactory;
+    use HasFactory, Filterable;
 
     const TYPE_UNKNOWN     = 0;
     const TYPE_INCOME      = 1;
@@ -19,9 +25,42 @@ class Transaction extends Model
         'decimal_volume',
         'raw_volume',
         'sender',
-        'volume',
         'receiver',
         'description',
         'currency',
     ];
+
+    public static function getFilterableColumns(): Collection
+    {
+        return collect([
+            'transaction_date' => [
+                'operators' => ['lte', 'eq', 'gte', 'lt', 'gt'],
+                'input'     => 'date',
+            ],
+            'accounting_date'  => [
+                'operators' => ['lte', 'eq', 'gte', 'lt', 'gt'],
+                'input'     => 'date',
+            ],
+            'decimal_volume'   => [
+                'operators' => ['lte', 'eq', 'gte', 'lt', 'gt'],
+                'input'     => 'number',
+            ],
+            'sender'           => [
+                'operators' => ['starts', 'ends', 'contains', 'eq'],
+                'input'     => 'text',
+            ],
+            'receiver'         => [
+                'operators' => ['starts', 'ends', 'contains', 'eq'],
+                'input'     => 'text',
+            ],
+            'description'      => [
+                'operators' => ['contains'],
+                'input'     => 'text',
+            ],
+            'currency'         => [
+                'operators' => ['eq'],
+                'input'     => 'text',
+            ],
+        ]);
+    }
 }

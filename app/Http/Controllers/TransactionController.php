@@ -2,24 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\Filter;
 use Illuminate\View\View;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Http\Request;
 use App\Models\Transaction\Transaction;
 
 class TransactionController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        // @todo move caching to trait
-        $key = 'latest_transactions';
-        if (Cache::has($key)) {
-            $transactions = Cache::get($key);
-        } else {
-            $transactions = Transaction::orderBy('transaction_date', 'desc')->limit(1000)->get();
-            Cache::set($key, $transactions);
-        }
+        $filter = Filter::makeFromRequest($request);
 
-        return view('transaction.index', compact('transactions'));
+        $transactions = Transaction::applyFilter($filter)
+            ->orderBy('transaction_date', 'desc')
+            ->limit(1000)
+            ->get();
+
+        $filterableColumns = Transaction::getFilterableColumns();
+
+        return view('transaction.index', compact('transactions', 'filterableColumns'));
     }
 
     public function show(int $id): View

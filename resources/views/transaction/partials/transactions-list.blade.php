@@ -30,13 +30,13 @@
                         <strong>{{ $transaction->raw_volume }}</strong> {{ $transaction->currency }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        {{ \App\Services\Helpers\StringHelper::shortenAuto($transaction->description ?? '-') }}
+                        {{ \App\Services\Helpers\StringHelper::shortenAuto($transaction->description ?? '-', 30) }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        {{ \App\Services\Helpers\StringHelper::shortenAuto($transaction->sender ?? '-') }}
+                        {{ \App\Services\Helpers\StringHelper::shortenAuto($transaction->sender ?? '-', 30) }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        {{ \App\Services\Helpers\StringHelper::shortenAuto($transaction->receiver ?? '-') }}
+                        {{ \App\Services\Helpers\StringHelper::shortenAuto($transaction->receiver ?? '-', 30) }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <a href="{{ route('transaction.show', ['id' => $transaction->id]) }}">

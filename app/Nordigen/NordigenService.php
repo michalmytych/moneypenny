@@ -4,9 +4,11 @@ namespace App\Nordigen;
 
 use Throwable;
 use Exception;
+use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
+use App\Models\Nordigen\Requisition;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
 use App\Models\Nordigen\EndUserAgreement;
 use App\Http\Client\Traits\DecodesHttpJsonResponse;
 use App\Nordigen\DataObjects\InstitutionDataObject;
@@ -22,9 +24,13 @@ class NordigenService implements TransactionSyncServiceInterface
 
     private const NEW_END_USER_AGREEMENTS_URI = '/api/v2/agreements/enduser/';
 
+    private const NEW_REQUISITION_URI = '/api/v2/requisitions/';
+
     private const TOKEN_CACHE_KEY = 'nordigen_api_token_data';
 
     private const INSTITUTIONS_CACHE_KEY = 'nordigen_api_institutions_data';
+
+    private const REQUISITION_CREATED_STATUS = 'CR';
 
     public function __construct(private NordigenClient $httpClient) { }
 
@@ -33,9 +39,76 @@ class NordigenService implements TransactionSyncServiceInterface
         // @TODO: Implement
     }
 
+    public function getAgreements(): Collection
+    {
+        return EndUserAgreement::with('requisitions')->latest()->get();
+    }
+
+    public function getAgreementsByInstitution(mixed $institutionId): Collection
+    {
+        return EndUserAgreement::with('requisitions')
+            ->where('nordigen_institution_id', $institutionId)
+            ->latest()
+            ->get();
+    }
+
+    public function createNewRequisition(mixed $institutionId, mixed $endUserAgreementId): Requisition|array
+    {
+        $endUserAgreement = EndUserAgreement::findOrFail($endUserAgreementId);
+
+        $requestBody = [
+            'redirect'       => route('institution.agreements', ['id' => $endUserAgreement->getInstitutionId()]),
+            'institution_id' => $institutionId,
+            'reference'      => Str::uuid(),
+            'agreement'      => $endUserAgreement->nordigen_end_user_agreement_id,
+            'user_language'  => config('nordigen.user_language'),
+        ];
+
+        try {
+            $response = $this->httpClient->post(self::NEW_REQUISITION_URI, [
+                'json'    => $requestBody,
+                'headers' => $this->getAuthorizationHeader(),
+            ]);
+
+            $requisitionData = $this->decodedResponse($response);
+            $isSuccessful    = data_get($requisitionData, 'status') === self::REQUISITION_CREATED_STATUS;
+
+            if ($isSuccessful) {
+                return Requisition::create([
+                    'reference'               => data_get($requisitionData, 'reference'),
+                    'link'                    => data_get($requisitionData, 'link'),
+                    'nordigen_requisition_id' => data_get($requisitionData, 'id'),
+                    'raw_response_body'       => json_encode($requisitionData),
+                    'raw_request_body'        => json_encode($requestBody),
+                    'end_user_agreement_id'   => $endUserAgreement->id,
+                    'nordigen_institution_id' => $institutionId,
+                ]);
+            }
+
+            return [
+                'error'    => 'Error occurred. Requisition was not created.',
+                'response' => [
+                    'status_code' => $response->getStatusCode(),
+                    'body'        => $requisitionData,
+                ],
+            ];
+
+        } catch (Throwable $throwable) {
+            return [
+                'error' => $throwable->getMessage(),
+                'trace' => $throwable->getTraceAsString(),
+            ];
+        }
+    }
+
     public function getExistingAgreementForInstitution(mixed $institutionId): ?EndUserAgreement
     {
         return EndUserAgreement::firstWhere('nordigen_institution_id', $institutionId);
+    }
+
+    public function getAgreementById(mixed $id): EndUserAgreement
+    {
+        return EndUserAgreement::findOrFail($id);
     }
 
     public function createNewUserAgreement(mixed $institutionId): EndUserAgreement|array
@@ -98,6 +171,9 @@ class NordigenService implements TransactionSyncServiceInterface
      */
     public function getInstitutionsDataObjects(array $institutionsData)
     {
+        // @todo - add pagination instead of returning one chunk
+        $institutionsData = array_slice($institutionsData, 0, 30);
+
         return array_map(
             fn($institution) => InstitutionDataObject::make($institution),
             $institutionsData

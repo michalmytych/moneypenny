@@ -9,11 +9,12 @@
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="{{ route('transaction.index') }}" class="text-black hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">Transakcje</a>
+                        <a href="{{ route('institution.index') }}" class="text-black hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">Integracje</a>
                         <a href="{{ route('file.index') }}" class="text-black hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">Pliki</a>
                         <a href="{{ route('import.index') }}" class="text-black hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">Importy</a>
                         <a href="{{ route('import.import-setting.index') }}" class="text-black hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">Ustawienia importów</a>
                         <a href="{{ route('import.columns-mapping.index') }}" class="text-black hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">Mapowanie kolumn</a>
-                        <a href="{{ route('transaction.index') }}" class="text-black hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">Transakcje</a>
                         <a href="{{ route('debug.analyzers') }}" class="text-black hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">Debugowanie analizatorów</a>
                     </div>
                 </div>

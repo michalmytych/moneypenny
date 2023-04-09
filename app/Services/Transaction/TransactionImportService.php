@@ -5,14 +5,13 @@ namespace App\Services\Transaction;
 use Carbon\Carbon;
 use App\Models\Import\Import;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use App\Models\Import\ColumnsMapping;
 use App\Models\Transaction\Transaction;
 use App\Services\Helpers\TransactionHelper;
 
 class TransactionImportService
 {
-    private const SHOULD_OMIT_SIMILAR = true;
-
     public function importFileRowAsTransaction(Collection $row, Import $import, ColumnsMapping $columnsMapping): void
     {
 
@@ -36,7 +35,7 @@ class TransactionImportService
             'decimal_volume'   => TransactionHelper::rawVolumeToDecimal($rawVolume),
         ];
 
-        if (!self::SHOULD_OMIT_SIMILAR && !$this->similarTransactionExists($attributes)) {
+        if (!$this->similarTransactionExists($attributes)) {
             Transaction::create($attributes);
         }
     }

@@ -2,7 +2,7 @@
     <div class="py-12">
         <div class="w-full mx-auto sm:px-6 lg:px-8">
 
-            @include('institution.partials.single', ['institution' => $institution])
+            @include('nordigen.institution.partials.single', ['institution' => $institution])
 
             <p class="my-4">
                 Aby połączyć konto w instytucji finansowej z Moneypenny, musisz potwierdzić integrację na stronie internetowej instytucji.
@@ -29,7 +29,7 @@
                 </a>
                 <form action="{{ route('institution.new_agreement', ['institutionId' => $institution->id]) }}" method="POST">
                     @csrf
-                    <button type="submit" href="{{ route('institution.new_agreement', ['institutionId' => $institution->id]) }}"
+                    <button type="submit"
                             class="border-2 border-indigo-500 text-indigo-500 hover:bg-indigo-600 hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                         Przejdź dalej
                     </button>

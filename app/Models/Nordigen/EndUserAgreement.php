@@ -3,12 +3,18 @@
 namespace App\Models\Nordigen;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
+ * @property string|null $nordigen_institution_id
  * @var bool $is_successful
+ * @var Collection $requisitions
  * @method static create(array $array)
  * @method static firstWhere(string $attribute, mixed $value)
+ * @method static findOrFail(mixed $endUserAgreementId)
+ * @method static latest()
  */
 class EndUserAgreement extends Model
 {
@@ -24,4 +30,15 @@ class EndUserAgreement extends Model
         'nordigen_end_user_agreement_id',
         'nordigen_end_user_agreement_created',
     ];
+
+    public function getInstitutionId(): ?string
+    {
+        return $this->nordigen_institution_id;
+    }
+
+    public function requisitions(): HasMany
+    {
+        return $this->hasMany(Requisition::class, 'end_user_agreement_id');
+    }
 }
+

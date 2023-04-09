@@ -8,7 +8,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\Import\ImportController;
 use App\Http\Controllers\Import\ImportSettingController;
 use App\Http\Controllers\Import\ColumnsMappingController;
-use App\Http\Controllers\Institution\InstitutionController;
+use App\Http\Controllers\Nordigen\Institution\InstitutionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +34,8 @@ Route::prefix('institutions')->as('institution.')->group(function () {
     Route::get('/', [InstitutionController::class, 'index'])->name('index');
     Route::get('/{id}', [InstitutionController::class, 'select'])->name('select');
     Route::post('/{institutionId}', [InstitutionController::class, 'newAgreement'])->name('new_agreement');
+    Route::get('/{id}/agreements', [InstitutionController::class, 'agreements'])->name('agreements');
+    Route::post('/{agreementId}/requisitions', [InstitutionController::class, 'newRequisition'])->name('new_requisition');
 });
 
 Route::prefix('transactions')->as('transaction.')->group(function () {

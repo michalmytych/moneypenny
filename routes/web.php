@@ -1,13 +1,14 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DebugController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\File\FileController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\Import\ImportController;
 use App\Http\Controllers\Import\ImportSettingController;
 use App\Http\Controllers\Import\ColumnsMappingController;
+use App\Http\Controllers\Institution\InstitutionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,12 @@ Route::prefix('files')->as('file.')->group(function () {
     Route::get('/', [FileController::class, 'index'])->name('index');
     Route::post('/upload', [FileController::class, 'upload'])->name('upload');
     Route::get('{id}', [FileController::class, 'show'])->name('show');
+});
+
+Route::prefix('institutions')->as('institution.')->group(function () {
+    Route::get('/', [InstitutionController::class, 'index'])->name('index');
+    Route::get('/{id}', [InstitutionController::class, 'select'])->name('select');
+    Route::post('/{institutionId}', [InstitutionController::class, 'newAgreement'])->name('new_agreement');
 });
 
 Route::prefix('transactions')->as('transaction.')->group(function () {

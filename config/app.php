@@ -196,6 +196,11 @@ return [
         App\Providers\HorizonServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+         * Moneypenny specific service providers...
+         */
+        \App\Nordigen\Provider\NordigenServiceProvider::class
+
     ],
 
     /*

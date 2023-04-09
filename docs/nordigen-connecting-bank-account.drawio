@@ -1,0 +1,43 @@
+<mxfile host="app.diagrams.net" modified="2023-04-08T20:17:56.031Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36" etag="m-BerMz1O7QX9uZYm_8r" version="21.1.5" type="device">
+  <diagram name="Strona-1" id="bVrZ4zhM22kb5TiZuRDM">
+    <mxGraphModel dx="954" dy="529" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="gIqoWE_pJe6TNeRyp3Nx-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="gIqoWE_pJe6TNeRyp3Nx-1" target="gIqoWE_pJe6TNeRyp3Nx-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gIqoWE_pJe6TNeRyp3Nx-1" value="Lista banków" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="150" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="gIqoWE_pJe6TNeRyp3Nx-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="gIqoWE_pJe6TNeRyp3Nx-3" target="gIqoWE_pJe6TNeRyp3Nx-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gIqoWE_pJe6TNeRyp3Nx-3" value="Wybranie banku" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="230" y="130" width="170" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="gIqoWE_pJe6TNeRyp3Nx-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="gIqoWE_pJe6TNeRyp3Nx-4" target="gIqoWE_pJe6TNeRyp3Nx-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gIqoWE_pJe6TNeRyp3Nx-4" value="Użytkownik zatwierdza połączenie" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="130" width="170" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="gIqoWE_pJe6TNeRyp3Nx-10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="gIqoWE_pJe6TNeRyp3Nx-7" target="gIqoWE_pJe6TNeRyp3Nx-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gIqoWE_pJe6TNeRyp3Nx-7" value="Otrzymuję ID zgody użytkownika" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="230" width="170" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="gIqoWE_pJe6TNeRyp3Nx-13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="gIqoWE_pJe6TNeRyp3Nx-9" target="gIqoWE_pJe6TNeRyp3Nx-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gIqoWE_pJe6TNeRyp3Nx-9" value="Wysyłam zgodę żeby zrobić requisition" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="330" width="170" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="gIqoWE_pJe6TNeRyp3Nx-11" value="W odpowiedzi otrzymuję link na który ma być przekierowany&amp;nbsp;użytkownik" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="100" y="330" width="240" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

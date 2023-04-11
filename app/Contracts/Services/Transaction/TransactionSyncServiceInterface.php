@@ -3,6 +3,7 @@
 namespace App\Contracts\Services\Transaction;
 
 use Illuminate\Support\Collection;
+use App\Models\Synchronization\Synchronization;
 
 interface TransactionSyncServiceInterface
 {
@@ -25,4 +26,8 @@ interface TransactionSyncServiceInterface
     public function getExistingAgreementForInstitution(mixed $institutionId);
 
     public function createNewUserAgreement(mixed $institutionId);
+
+    public function setStatusSucceeded(Synchronization $synchronization);
+
+    public function setStatusFailed(Synchronization $synchronization);
 }

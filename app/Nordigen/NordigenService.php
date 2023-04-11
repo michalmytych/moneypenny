@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Cache;
 use App\Models\Synchronization\Account;
 use App\Models\Nordigen\EndUserAgreement;
 use GuzzleHttp\Exception\GuzzleException;
+use App\Models\Synchronization\Synchronization;
 use App\Http\Client\Traits\DecodesHttpJsonResponse;
 use App\Nordigen\DataObjects\InstitutionDataObject;
 use App\Nordigen\DataObjects\TransactionDataObject;
@@ -330,10 +331,23 @@ class NordigenService implements TransactionSyncServiceInterface
         ];
     }
 
+    /**
+     * @throws GuzzleException
+     */
     public function getInstitutionByExternalId(mixed $institutionId): ?InstitutionDataObject
     {
         $institutions = $this->provideSupportedInstitutionsData();
         $institutions = array_filter($institutions, fn($institution) => $institution->id === $institutionId);
         return collect($institutions)->first();
+    }
+
+    public function setStatusSucceeded(Synchronization $synchronization)
+    {
+        $synchronization->update(['status' => Synchronization::SYNC_STATUS_SUCCEEDED]);
+    }
+
+    public function setStatusFailed(Synchronization $synchronization)
+    {
+        $synchronization->update(['status' => Synchronization::SYNC_STATUS_FAILED]);
     }
 }

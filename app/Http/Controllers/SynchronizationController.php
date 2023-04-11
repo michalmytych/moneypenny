@@ -25,10 +25,10 @@ class SynchronizationController extends Controller
         try {
             $this->transactionSyncService->syncAccounts($requisition->nordigen_requisition_id, $synchronization->id);
             $this->transactionSyncService->syncTransactions($requisition->nordigen_requisition_id, $synchronization->id);
-            $synchronization->update(['status' => Synchronization::SYNC_STATUS_SUCCEEDED]);
+            $this->transactionSyncService->setStatusSucceeded($synchronization);
 
         } catch (Throwable $throwable) {
-            $synchronization->update(['status' => Synchronization::SYNC_STATUS_FAILED]);
+            $this->transactionSyncService->setStatusFailed($synchronization);
             $statusCode = $throwable->getCode();
 
             return response()->json([

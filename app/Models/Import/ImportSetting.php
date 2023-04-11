@@ -12,6 +12,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $input_encoding
  * @property int|null $start_row
  * @property int $id
+ * @method static findOrFail(int $importSettingId)
+ * @method static latest()
+ * @method static create(array $validatedData)
  */
 class ImportSetting extends Model
 {

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $status
  * @property File $file
  * @property int $id
+ * @method static create(array $data)
  */
 class Import extends Model
 {

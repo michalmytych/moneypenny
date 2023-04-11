@@ -286,6 +286,9 @@ class NordigenService implements TransactionSyncServiceInterface
         return $this->decodedResponse($response);
     }
 
+    /**
+     * @throws GuzzleException
+     */
     public function provideAccessTokenData(): array
     {
         if (Cache::missing(self::TOKEN_CACHE_KEY)) {
@@ -299,6 +302,9 @@ class NordigenService implements TransactionSyncServiceInterface
         return Cache::get(self::TOKEN_CACHE_KEY);
     }
 
+    /**
+     * @throws GuzzleException
+     */
     public function getFreshTokenData(): array
     {
         $requestBody = [

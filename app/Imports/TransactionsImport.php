@@ -33,6 +33,7 @@ class TransactionsImport implements ToCollection, WithCustomCsvSettings, WithSta
             foreach ($collection as $row) {
                 /** @var TransactionImportService $service */
                 $service = app(TransactionImportService::class);
+
                 $service->importFileRowAsTransaction($row, $this->import, $this->columnsMapping);
             }
 

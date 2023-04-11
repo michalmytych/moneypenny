@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $size
  * @property int $import_setting_id
  * @property int $id
+ * @method static findOrFail(int $fileId)
+ * @method static latest()
  */
 class File extends Model
 {

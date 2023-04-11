@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static applyFilter(Filter $filter)
  * @method static create(array $data)
  * @method static firstWhere(array $attributes)
+ * @method static findOrFail(int $id)
  */
 class Transaction extends Model
 {

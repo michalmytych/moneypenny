@@ -6,11 +6,13 @@ use Illuminate\Support\Collection;
 
 interface TransactionSyncServiceInterface
 {
-    public function getNewTransactions();
+    public function syncTransactions(mixed $requisitionId, mixed $synchronizationId);
 
     public function getInstitutionByExternalId(mixed $institutionId);
 
     public function provideSupportedInstitutionsData();
+
+    public function syncAccounts(mixed $requisitionId, mixed $synchronizationId): void;
 
     public function getAgreements(): Collection;
 

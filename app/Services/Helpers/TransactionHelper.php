@@ -10,4 +10,9 @@ class TransactionHelper
         $float = abs(floatval($volume));
         return round($float, 2);
     }
+
+    public static function changeComaToDotAtRawVolume(string $rawVolume): string
+    {
+        return str_replace(',', '.', $rawVolume);
+    }
 }

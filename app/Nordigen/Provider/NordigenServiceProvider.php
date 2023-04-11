@@ -4,6 +4,8 @@ namespace App\Nordigen\Provider;
 
 use App\Nordigen\NordigenClient;
 use Illuminate\Support\ServiceProvider;
+use App\Services\Transaction\TransactionSyncService;
+use App\Nordigen\Synchronization\NordigenTransactionServiceInterface;
 
 class NordigenServiceProvider extends ServiceProvider
 {
@@ -15,5 +17,7 @@ class NordigenServiceProvider extends ServiceProvider
                 'headers'  => $app->config->get('nordigen.headers'),
             ]);
         });
+
+        $this->app->bind(NordigenTransactionServiceInterface::class, TransactionSyncService::class);
     }
 }

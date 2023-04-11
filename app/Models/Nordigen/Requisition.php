@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @method static create(array $array)
+ * @method static latest()
  */
 class Requisition extends Model
 {

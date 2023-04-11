@@ -7,11 +7,16 @@ use Exception;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use App\Models\Nordigen\Requisition;
 use Illuminate\Support\Facades\Cache;
+use App\Models\Synchronization\Account;
 use App\Models\Nordigen\EndUserAgreement;
+use GuzzleHttp\Exception\GuzzleException;
 use App\Http\Client\Traits\DecodesHttpJsonResponse;
 use App\Nordigen\DataObjects\InstitutionDataObject;
+use App\Nordigen\DataObjects\TransactionDataObject;
+use App\Nordigen\Synchronization\NordigenTransactionServiceInterface;
 use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
 
 class NordigenService implements TransactionSyncServiceInterface
@@ -20,11 +25,13 @@ class NordigenService implements TransactionSyncServiceInterface
 
     private const NEW_TOKEN_URI = '/api/v2/token/new/';
 
-    private const INSTITUTIONS_URI = '/api/v2/institution/';
+    private const INSTITUTIONS_URI = '/api/v2/institutions';
 
     private const NEW_END_USER_AGREEMENTS_URI = '/api/v2/agreements/enduser/';
 
     private const NEW_REQUISITION_URI = '/api/v2/requisitions/';
+
+    private const ACCOUNTS_URI = '/api/v2/accounts/';
 
     private const TOKEN_CACHE_KEY = 'nordigen_api_token_data';
 
@@ -32,11 +39,89 @@ class NordigenService implements TransactionSyncServiceInterface
 
     private const REQUISITION_CREATED_STATUS = 'CR';
 
-    public function __construct(private NordigenClient $httpClient) { }
+    public function __construct(
+        private NordigenClient                      $httpClient,
+        private NordigenTransactionServiceInterface $nordigenTransactionService
+    ) {
+    }
 
-    public function getNewTransactions()
+    /**
+     * @throws GuzzleException
+     */
+    public function syncTransactions(mixed $requisitionId, mixed $synchronizationId): void
     {
-        // @TODO: Implement
+        $this->syncAccounts($requisitionId, $synchronizationId);
+        $accounts = $this->getAccounts();
+
+        foreach ($accounts as $account) {
+            $this->syncTransactionsByAccount($account, $synchronizationId);
+        }
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
+    protected function syncTransactionsByAccount(Account $account, mixed $synchronizationId)
+    {
+        $uri = self::ACCOUNTS_URI . $account->nordigen_account_id . '/transactions/';
+
+        $response = $this->httpClient->get($uri, [
+            'headers' => $this->getAuthorizationHeader(),
+        ]);
+
+        $transactionsData = $this->decodedResponse($response);
+
+        if (data_get($transactionsData, 'transactions')) {
+            $booked  = data_get($transactionsData, 'transactions.booked');
+            $pending = data_get($transactionsData, 'transactions.pending');
+
+            $all = $booked + $pending;
+
+            foreach ($all as $transactionData) {
+                $transactionDataObject = TransactionDataObject::make($transactionData);
+                $this->nordigenTransactionService->addNewSynchronizedTransaction(
+                    $transactionDataObject,
+                    $synchronizationId
+                );
+            }
+        } else {
+            Log::debug(json_encode($transactionsData));
+            throw new Exception('Invalid transaction data received. Response was logged to debug logs.');
+        }
+    }
+
+    public function getAccounts(): Collection
+    {
+        return Account::latest()->get();
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
+    public function syncAccounts(mixed $requisitionId, mixed $synchronizationId): void
+    {
+        $uri = self::NEW_REQUISITION_URI . $requisitionId . '/';
+
+        $response = $this->httpClient->get($uri, [
+            'headers' => $this->getAuthorizationHeader(),
+        ]);
+
+        $accountsData = $this->decodedResponse($response);
+        $accountsIds  = data_get($accountsData, 'accounts');
+
+        if (is_array($accountsIds)) {
+            foreach ($accountsIds as $accountId) {
+                // @todo add deleting non existing accounts
+                Account::firstOrCreate([
+                    'nordigen_account_id' => $accountId,
+                ], [
+                    'nordigen_account_id' => $accountId,
+                    'synchronization_id'  => $synchronizationId,
+                ]);
+            }
+        }
     }
 
     public function getAgreements(): Collection
@@ -149,6 +234,7 @@ class NordigenService implements TransactionSyncServiceInterface
     /**
      * @return array|InstitutionDataObject[]
      * @noinspection PhpMissingReturnTypeInspection
+     * @throws GuzzleException
      */
     public function provideSupportedInstitutionsData()
     {
@@ -180,6 +266,10 @@ class NordigenService implements TransactionSyncServiceInterface
         );
     }
 
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function getFreshSupportedInstitutionsData(): array
     {
         $requestQuery = [
@@ -187,20 +277,12 @@ class NordigenService implements TransactionSyncServiceInterface
             'country'          => config('nordigen.country'),
         ];
 
-        try {
-            $response = $this->httpClient->get(self::INSTITUTIONS_URI, [
-                'query'   => $requestQuery,
-                'headers' => $this->getAuthorizationHeader(),
-            ]);
+        $response = $this->httpClient->get(self::INSTITUTIONS_URI, [
+            'query'   => $requestQuery,
+            'headers' => $this->getAuthorizationHeader(),
+        ]);
 
-            return $this->decodedResponse($response);
-
-        } catch (Throwable $throwable) {
-            return [
-                'error' => $throwable->getMessage(),
-                'trace' => $throwable->getTraceAsString(),
-            ];
-        }
+        return $this->decodedResponse($response);
     }
 
     public function provideAccessTokenData(): array
@@ -223,19 +305,11 @@ class NordigenService implements TransactionSyncServiceInterface
             'secret_key' => config('nordigen.secret_key'),
         ];
 
-        try {
-            $response = $this->httpClient->post(self::NEW_TOKEN_URI, [
-                'json' => $requestBody,
-            ]);
+        $response = $this->httpClient->post(self::NEW_TOKEN_URI, [
+            'json' => $requestBody,
+        ]);
 
-            return $this->decodedResponse($response);
-
-        } catch (Throwable $throwable) {
-            return [
-                'error' => $throwable->getMessage(),
-                'trace' => $throwable->getTraceAsString(),
-            ];
-        }
+        return $this->decodedResponse($response);
     }
 
     /**

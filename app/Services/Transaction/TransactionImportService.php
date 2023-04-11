@@ -5,7 +5,6 @@ namespace App\Services\Transaction;
 use Carbon\Carbon;
 use App\Models\Import\Import;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 use App\Models\Import\ColumnsMapping;
 use App\Models\Transaction\Transaction;
 use App\Services\Helpers\TransactionHelper;
@@ -27,7 +26,7 @@ class TransactionImportService
             'sender'           => $sender,
             'receiver'         => $receiver,
             'currency'         => $currency,
-            'raw_volume'       => $rawVolume,
+            'raw_volume'       => TransactionHelper::changeComaToDotAtRawVolume($rawVolume),
             'import_id'        => $import->id,
             'description'      => $description,
             'accounting_date'  => Carbon::parse($accountingDate),
@@ -40,18 +39,12 @@ class TransactionImportService
         }
     }
 
-    private function similarTransactionExists(array $attributes): bool
+    public function similarTransactionExists(array $attributes): bool
     {
-        $checkAttributes = [
-            'transaction_date' => $attributes['transaction_date'],
-            'accounting_date'  => $attributes['accounting_date'],
-            'description'      => $attributes['description'],
-            'raw_volume'       => $attributes['raw_volume'],
-            'receiver'         => $attributes['receiver'],
-            'currency'         => $attributes['currency'],
-            'sender'           => $attributes['sender'],
-        ];
-
-        return (bool) Transaction::firstWhere($checkAttributes);
+        return Transaction::query()
+            ->whereDate('transaction_date', $attributes['transaction_date'])
+            ->where('description', 'LIKE', '%' . $attributes['description'] . '%')
+            ->where('decimal_volume', $attributes['decimal_volume'])
+            ->exists();
     }
 }

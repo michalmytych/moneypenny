@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SynchronizationController;
 use App\Http\Controllers\Analysis\AnalysisController;
 
 /*
@@ -20,6 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/analysis', [AnalysisController::class, 'analyze'])->name('api.analysis');
+Route::post('/sync', [SynchronizationController::class, 'sync'])->name('api.sync');
 
 // @todo
 Route::get(
@@ -31,6 +33,6 @@ Route::get(
 //            'analyzer_type' => 'total_transaction_volume_per_week_day'
 //            'analyzer_type' => 'total_transactions_volume',
 //        ]);
-        return app(\App\Nordigen\NordigenService::class)->provideSupportedInstitutionsData();
+//        return app(\App\Nordigen\NordigenService::class)->provideSupportedInstitutionsData();
     }
 )->name('api.test');

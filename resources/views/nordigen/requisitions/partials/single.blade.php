@@ -11,3 +11,4 @@
         <p class="text-gray-600 text-sm">ID: {{ $requisition->nordigen_requisition_id }}</p>
     </div>
 </div>
+

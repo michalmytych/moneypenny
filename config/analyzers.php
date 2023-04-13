@@ -2,8 +2,8 @@
 
 return [
     'use_auto_discovery' => true,
-    'namespace'          => "App\\Services\\Analysis\\Analyzers\\",
-    'path'               => 'Services/Analysis/Analyzers',
+    'namespace'          => "App\\Interfaces\\Analysis\\Analyzers\\",
+    'path'               => 'Interfaces/Analysis/Analyzers',
     'enabled'            => [
         \App\Services\Analysis\Analyzers\TransactionVolumeSumPerDay::class,
         \App\Services\Analysis\Analyzers\TransactionCountPerDay::class,

@@ -4,8 +4,8 @@ namespace App\ExchangeRates\Provider;
 
 use Illuminate\Support\ServiceProvider;
 use App\ExchangeRates\ExchangeRatesClient;
-use App\Services\Transaction\TransactionSyncService;
-use App\Nordigen\Synchronization\NordigenTransactionServiceInterface;
+use App\ExchangeRates\ExchangeRatesService;
+use App\Contracts\Services\ExchangeRates\ExchangeRatesServiceInterface;
 
 class ExchangeRatesServiceProvider extends ServiceProvider
 {
@@ -21,6 +21,6 @@ class ExchangeRatesServiceProvider extends ServiceProvider
             ]);
         });
 
-        $this->app->bind(NordigenTransactionServiceInterface::class, TransactionSyncService::class);
+        $this->app->bind(ExchangeRatesServiceInterface::class, ExchangeRatesService::class);
     }
 }

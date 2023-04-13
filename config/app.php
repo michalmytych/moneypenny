@@ -197,9 +197,10 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         /*
-         * Moneypenny specific service providers...
+         * Moneypenny integrations specific service providers...
          */
-        \App\Nordigen\Provider\NordigenServiceProvider::class
+        \App\Nordigen\Provider\NordigenServiceProvider::class,
+        \App\ExchangeRates\Provider\ExchangeRatesServiceProvider::class
 
     ],
 

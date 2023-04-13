@@ -11,7 +11,7 @@
         <div class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in">
             @include('icons.sync')
             <span class="text-black-50 text-xs ml-3">
-                Nowa synchronizacja: dodano 3 transakcje
+                <span class="font-black">Nowa synchronizacja</span>, dodano 3 transakcje
             </span>
         </div>
         <div class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in">
@@ -21,15 +21,15 @@
             </span>
         </div>
         <div class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in">
-            @include('icons.sync')
+            @include('icons.report')
             <span class="text-black-50 text-xs ml-3">
                 <span class="font-black">Nowy raport:</span> kwiecień 2023
             </span>
         </div>
         <div class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in">
-            @include('icons.sync')
+            @include('icons.report')
             <span class="text-black-50 text-xs ml-3">
-                <span class="font-black">Nowy raport:</span> kwiecień 2023
+                <span class="font-black">Nowy raport:</span> marzec 2023
             </span>
         </div>
     </div>
@@ -79,51 +79,51 @@
         function animateToValue(elementId, targetValue) {
             const element = document.getElementById(elementId);
             let value = 0;
-            const targetIntValue = targetValue * 100; // konwersja na grosze
-            const duration = 800; // czas trwania animacji w milisekundach
+            const targetIntValue = targetValue * 100;
+            const duration = 800;
 
             function animate(timestamp) {
-                const progress = Math.min(1, (timestamp - startTime) / duration); // postęp animacji
-                value = Math.floor(progress * targetIntValue); // wartość obecna animacji
+                const progress = Math.min(1, (timestamp - startTime) / duration);
+                value = Math.floor(progress * targetIntValue);
                 element.innerHTML = (value / 100).toFixed(2);
-                element.style.opacity = progress; // ustawienie opacity
+                element.style.opacity = progress;
 
                 if (progress < 1) {
                     requestAnimationFrame(animate);
                 }
             }
 
-            let startTime = performance.now(); // czas rozpoczęcia animacji
-            element.style.opacity = 0; // ustawienie opacity na 0
+            let startTime = performance.now();
+            element.style.opacity = 0;
             requestAnimationFrame(function (timestamp) {
                 startTime = timestamp;
-                element.style.display = 'block'; // pokazanie elementu
+                element.style.display = 'block';
                 requestAnimationFrame(animate);
             });
         }
 
         function animateLoader(elementId, targetValue) {
-            const loaderWidth = 120; // szerokość loadera w pikselach
-            const duration = 800; // czas trwania animacji w milisekundach
+            const loaderWidth = 120;
+            const duration = 800;
 
-            const targetWidth = (targetValue / 100) * loaderWidth; // szerokość docelowa w pikselach
+            const targetWidth = (targetValue / 100) * loaderWidth;
             const elementNode = document.getElementById(elementId);
 
             function animate(timestamp) {
-                const progress = Math.min(1, (timestamp - startTime) / duration); // postęp animacji
-                const width = progress * targetWidth; // szerokość obecna animacji
-                elementNode.style.width = width + 'px'; // ustawienie szerokości
+                const progress = Math.min(1, (timestamp - startTime) / duration);
+                const width = progress * targetWidth;
+                elementNode.style.width = width + 'px';
 
                 if (progress < 1) {
                     requestAnimationFrame(animate);
                 }
             }
 
-            let startTime = performance.now(); // czas rozpoczęcia animacji
-            elementNode.style.width = '0'; // ustawienie szerokości na 0
+            let startTime = performance.now();
+            elementNode.style.width = '0';
             requestAnimationFrame(function (timestamp) {
                 startTime = timestamp;
-                elementNode.style.display = 'block'; // pokazanie elementu
+                elementNode.style.display = 'block';
                 requestAnimationFrame(animate);
             });
         }
@@ -137,6 +137,5 @@
                 animateLoader('i4', 60);
             }
         );
-
     </script>
 @endpush

@@ -19,7 +19,7 @@ class MakeAnalyzerCommand extends Command
         $className = Str::studly($name);
 
         $namespace = 'App\Services\Analysis\Analyzers';
-        $path = app_path("Services/Analysis/Analyzers/{$className}.php");
+        $path = app_path("Interfaces/Analysis/Analyzers/{$className}.php");
 
         if (File::exists($path)) {
             $this->error("{$className} already exists.");

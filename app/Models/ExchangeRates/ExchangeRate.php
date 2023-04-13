@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static where(string[] $criteria)
  * @method static whereDate(string $string, string $format)
  * @method static create(array $array)
+ * @property string $rate
  */
 class ExchangeRate extends Model
 {

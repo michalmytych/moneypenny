@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static create(array $data)
  * @method static firstWhere(array $attributes)
  * @method static findOrFail(int $id)
+ * @method static cursor()
  */
 class Transaction extends Model
 {
@@ -25,6 +26,7 @@ class Transaction extends Model
     protected $fillable = [
         'transaction_date',
         'synchronization_id',
+        'calculation_volume',
         'accounting_date',
         'decimal_volume',
         'raw_volume',

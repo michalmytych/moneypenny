@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Throwable;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\App;
 use App\Models\Nordigen\Requisition;
 use App\Models\Synchronization\Account;
 use App\Models\Synchronization\Synchronization;
@@ -33,6 +34,7 @@ class SynchronizationController extends Controller
 
             return response()->json([
                 'error'       => 'Synchronization error',
+                'details'     => App::hasDebugModeEnabled() ? $throwable->getMessage() : 'Lacking permissions',
                 'status_code' => $statusCode,
             ], $statusCode);
         }

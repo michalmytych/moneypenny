@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DebugController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\File\FileController;
@@ -20,6 +21,8 @@ use App\Http\Controllers\Nordigen\Institution\InstitutionController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/', [FileController::class, 'index']);
 Route::get('/debug', [DebugController::class, 'analyzers'])->name('debug.analyzers');

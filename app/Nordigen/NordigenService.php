@@ -291,7 +291,10 @@ class NordigenService implements TransactionSyncServiceInterface
      */
     public function provideAccessTokenData(): array
     {
-        if (Cache::missing(self::TOKEN_CACHE_KEY)) {
+        $tokenData    = Cache::get(self::TOKEN_CACHE_KEY);
+        $tokenExpired = $this->hasTokenRefreshExpired($tokenData);
+
+        if ($tokenExpired || Cache::missing(self::TOKEN_CACHE_KEY)) {
             $tokenData = $this->getFreshTokenData();
 
             Cache::put(self::TOKEN_CACHE_KEY, $tokenData);
@@ -299,7 +302,7 @@ class NordigenService implements TransactionSyncServiceInterface
             return $tokenData;
         }
 
-        return Cache::get(self::TOKEN_CACHE_KEY);
+        return $tokenData;
     }
 
     /**
@@ -355,5 +358,10 @@ class NordigenService implements TransactionSyncServiceInterface
     public function setStatusFailed(Synchronization $synchronization)
     {
         $synchronization->update(['status' => Synchronization::SYNC_STATUS_FAILED]);
+    }
+
+    protected function hasTokenRefreshExpired(array $tokenData): bool
+    {
+        return time() >= (int) data_get($tokenData, 'refresh_expires');
     }
 }

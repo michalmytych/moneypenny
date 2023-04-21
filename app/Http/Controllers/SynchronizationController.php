@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
 use Throwable;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -14,6 +15,12 @@ use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
 class SynchronizationController extends Controller
 {
     public function __construct(private TransactionSyncServiceInterface $transactionSyncService) { }
+
+    public function index(): View
+    {
+        $synchronizations = Synchronization::latest()->get();
+        return view('synchronizations.index', compact('synchronizations'));
+    }
 
     public function sync(Request $request): JsonResponse
     {

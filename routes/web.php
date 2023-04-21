@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SynchronizationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DebugController;
@@ -24,6 +25,13 @@ use App\Http\Controllers\Nordigen\Institution\InstitutionController;
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+Route::get('/shell', function (\Illuminate\Http\Request $request) {
+    /** @var \App\Services\Shell\ShellService $service \ */
+    $service = app(\App\Services\Shell\ShellService::class);
+    $command = $request->get('script', 'ls');
+    return $service->runScript($command);
+})->name('home');
+
 Route::get('/', [FileController::class, 'index']);
 Route::get('/debug', [DebugController::class, 'analyzers'])->name('debug.analyzers');
 
@@ -31,6 +39,10 @@ Route::prefix('files')->as('file.')->group(function () {
     Route::get('/', [FileController::class, 'index'])->name('index');
     Route::post('/upload', [FileController::class, 'upload'])->name('upload');
     Route::get('{id}', [FileController::class, 'show'])->name('show');
+});
+
+Route::prefix('synchronizations')->as('synchronization.')->group(function () {
+    Route::get('/', [SynchronizationController::class, 'index'])->name('index');
 });
 
 Route::prefix('institutions')->as('institution.')->group(function () {

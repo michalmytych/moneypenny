@@ -11,20 +11,23 @@ use App\Nordigen\Synchronization\NordigenTransactionServiceInterface;
 
 class TransactionSyncService implements NordigenTransactionServiceInterface
 {
-    public function __construct(private readonly TransactionImportService $transactionImportService) { }
+    public function __construct(private readonly TransactionImportService $transactionImportService)
+    {
+    }
 
     public function addNewSynchronizedTransaction(TransactionDataObject $transactionDataObject, Import $import): ?Transaction
     {
         $attributes = [
-            'sender'             => $transactionDataObject->debtorName,
-            'receiver'           => null,
-            'currency'           => $transactionDataObject->currency,
-            'raw_volume'         => TransactionHelper::changeComaToDotAtRawVolume($transactionDataObject->rawVolume),
-            'import_id'          => $import->id,
-            'description'        => $transactionDataObject->remittanceInformationUnstructured,
-            'accounting_date'    => Carbon::parse($transactionDataObject->bookingDate),
-            'transaction_date'   => Carbon::parse($transactionDataObject->valueDate),
-            'decimal_volume'     => TransactionHelper::rawVolumeToDecimal($transactionDataObject->rawVolume),
+            'sender' => $transactionDataObject->debtorName,
+            'receiver' => null,
+            'currency' => $transactionDataObject->currency,
+            'raw_volume' => TransactionHelper::changeComaToDotAtRawVolume($transactionDataObject->rawVolume),
+            'import_id' => $import->id,
+            'description' => $transactionDataObject->remittanceInformationUnstructured,
+            'accounting_date' => Carbon::parse($transactionDataObject->bookingDate),
+            'transaction_date' => Carbon::parse($transactionDataObject->valueDate),
+            'decimal_volume' => TransactionHelper::rawVolumeToDecimal($transactionDataObject->rawVolume),
+            'calculation_volume' => TransactionHelper::rawVolumeToDecimal($transactionDataObject->rawVolume)
         ];
 
         $similarExists = $this->transactionImportService->similarTransactionExists($attributes);
@@ -33,7 +36,7 @@ class TransactionSyncService implements NordigenTransactionServiceInterface
             return Transaction::create($attributes);
         }
 
-        $import->update(['transactions_skipped_count' => $import->transactions_skipped_count + 1 ]);
+        $import->update(['transactions_skipped_count' => $import->transactions_skipped_count + 1]);
 
         return null;
     }

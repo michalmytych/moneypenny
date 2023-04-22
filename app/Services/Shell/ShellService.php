@@ -13,7 +13,13 @@ class ShellService
 
     public function executeCommand(string $command): string
     {
-        return shell_exec($command);
+        exec($command, $output, $return_var);
+
+        if ($return_var !== 0) {
+            return json_encode(['error' => implode(PHP_EOL, $output)]);
+        }
+
+        return implode(PHP_EOL, $output);
     }
 
     public function runScript(string $scriptName, array $args = []): string

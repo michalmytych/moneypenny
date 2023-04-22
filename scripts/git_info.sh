@@ -7,7 +7,7 @@ then
     exit 1
 fi
 
-# get repository root directory
+
 root=$(git rev-parse --show-toplevel)
 
 # get branch name

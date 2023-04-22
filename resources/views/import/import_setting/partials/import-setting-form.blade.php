@@ -1,4 +1,4 @@
-<div class="px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
+<div class="px-8 pb-8 mb-4 flex flex-col">
     <h1 class="text-3xl font-bold mb-4">Dodaj ustawienia importu</h1>
     <form action="{{ route('import.import-setting.store') }}" method="POST">
         @csrf

@@ -20,10 +20,6 @@
     </head>
     <body class="font-sans text-gray-900 antialiased">
         <div class="flex flex-col items-center pt-6 sm:pt-0 bg-gray-100 min-h-screen">
-            <div class="mt-6 w-5/6">
-                @include('layouts.nav')
-            </div>
-
             <div class="w-5/6 mt-6 px-2 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
                 {{ $slot }}
             </div>

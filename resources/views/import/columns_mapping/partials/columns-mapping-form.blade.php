@@ -1,4 +1,4 @@
-<div class="bg-white rounded-lg p-6">
+<div class="px-8 ">
     <h1 class="text-3xl font-bold mb-4">Dodaj mapowanie kolumn</h1>
     <form action="{{ route('import.columns-mapping.store') }}" method="POST">
         @csrf

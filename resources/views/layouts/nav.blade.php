@@ -1,5 +1,5 @@
 <nav class="w-full bg-white rounded-lg shadow-md">
-    <div class="mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="w-9/12 mx-auto">
         <div class="flex items-center justify-between h-16">
             <div class="flex items-center">
                 <div class="flex-shrink-0">
@@ -8,7 +8,7 @@
                     </a>
                 </div>
                 <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
+                    <div class="ml-10 flex items-center space-x-2">
                         <a href="{{ route('transaction.index') }}" class="text-black hover:bg-gray-100 active:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">Transakcje</a>
                         <a href="{{ route('institution.index') }}" class="text-black hover:bg-gray-100 active:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">Integracje</a>
                         <a href="{{ route('file.index') }}" class="text-black hover:bg-gray-100 active:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">Pliki</a>

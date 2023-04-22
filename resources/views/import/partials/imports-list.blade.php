@@ -23,7 +23,7 @@
             </thead>
             <tbody>
             @foreach ($imports as $import)
-                <tr>
+                <tr class="divide-y divide-gray-200">
                     <td class="px-4 py-2">{{ $import->id }}</td>
                     <td class="px-4 py-2">
                         @if ($import->status === \App\Models\Import\Import::STATUS_PROCESSING)
@@ -41,14 +41,12 @@
                     <td class="px-4 py-2">
                         @if($import->file_id || $import->synchronization_id)
                             @if($import->file_id)
-                                <span class="font-semibold">Plik<br></span>
-                                <span class="text-gray-500">{{ $import->file->name }}</span>
+                                <span class="font-semibold text-gray-500">Plik<br></span>
+                                <span>{{ $import->file->name }}</span>
                             @endif
                             @if($import->synchronization_id)
-                                <span class="text-gray-500">
-                                    <span class="font-semibold">Synchronizacja<br></span>
-                                    {{ $import->synchronization->created_at->format('d.m.Y H:i') }}
-                                </span>
+                                <span class="font-semibold text-gray-500">Synchronizacja<br></span>
+                                <span>{{ $import->synchronization->created_at->format('d.m.Y H:i') }}</span>
                             @endif
                         @endif
                     </td>

@@ -10,7 +10,9 @@ use App\Contracts\Services\ExchangeRates\ExchangeRatesServiceInterface;
 
 class ExchangeRateController extends Controller
 {
-    public function __construct(private ExchangeRatesServiceInterface $exchangeRatesService) {}
+    public function __construct(private readonly ExchangeRatesServiceInterface $exchangeRatesService)
+    {
+    }
 
     public function index(Request $request): JsonResponse
     {

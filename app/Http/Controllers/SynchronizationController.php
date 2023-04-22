@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\View\View;
 use Throwable;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\App;
@@ -14,7 +14,9 @@ use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
 
 class SynchronizationController extends Controller
 {
-    public function __construct(private readonly TransactionSyncServiceInterface $transactionSyncService) { }
+    public function __construct(private readonly TransactionSyncServiceInterface $transactionSyncService)
+    {
+    }
 
     public function index(): View
     {
@@ -40,8 +42,8 @@ class SynchronizationController extends Controller
             $statusCode = $throwable->getCode();
 
             return response()->json([
-                'error'       => 'Synchronization error',
-                'details'     => App::hasDebugModeEnabled() ? $throwable->getMessage() : 'Lacking permissions',
+                'error' => 'Synchronization error',
+                'details' => App::hasDebugModeEnabled() ? $throwable->getMessage() : 'Lacking permissions',
                 'status_code' => $statusCode,
             ], 500);
         }

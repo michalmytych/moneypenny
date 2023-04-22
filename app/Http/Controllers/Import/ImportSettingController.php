@@ -29,13 +29,13 @@ class ImportSettingController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validatedData = $request->validate([
-            'name'             => 'required|string',
-            'file_extension'   => 'required|string',
-            'delimiter'        => 'required|string',
-            'enclosure'        => 'nullable|string',
-            'start_row'        => 'nullable|numeric',
+            'name' => 'required|string',
+            'file_extension' => 'required|string',
+            'delimiter' => 'required|string',
+            'enclosure' => 'nullable|string',
+            'start_row' => 'nullable|numeric',
             'escape_character' => 'nullable|string',
-            'input_encoding'   => 'nullable|string',
+            'input_encoding' => 'nullable|string',
         ]);
 
         $importSetting = ImportSetting::create($validatedData);

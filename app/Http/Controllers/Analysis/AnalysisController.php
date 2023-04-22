@@ -9,7 +9,9 @@ use App\Contracts\Services\Analysis\AnalysisServiceContract;
 
 class AnalysisController extends Controller
 {
-    public function __construct(private AnalysisServiceContract $analysisService) {}
+    public function __construct(private readonly AnalysisServiceContract $analysisService)
+    {
+    }
 
     public function analyze(Request $request): JsonResponse
     {

@@ -10,7 +10,7 @@ use App\Contracts\Services\Analysis\AnalysisServiceContract;
 
 class AnalysisService implements AnalysisServiceContract
 {
-    public function __construct(private AnalyzerResolver $analyzerResolver) { }
+    public function __construct(private readonly AnalyzerResolver $analyzerResolver) { }
 
     public function analyze(array $input): Collection
     {

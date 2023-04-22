@@ -9,22 +9,24 @@ use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
 
 class InstitutionController extends Controller
 {
-    public function __construct(private TransactionSyncServiceInterface $transactionSyncService) { }
+    public function __construct(private readonly TransactionSyncServiceInterface $transactionSyncService)
+    {
+    }
 
     public function index(): View
     {
         $institutions = $this->transactionSyncService->provideSupportedInstitutionsData();
-        $agreements   = $this->transactionSyncService->getAgreements();
+        $agreements = $this->transactionSyncService->getAgreements();
         return view('nordigen.institution.index', compact('institutions', 'agreements'));
     }
 
     public function select(mixed $id): View
     {
         $selectedInstitution = $this->transactionSyncService->getInstitutionByExternalId($id);
-        $existingAgreement   = $this->transactionSyncService->getExistingAgreementForInstitution($id);
+        $existingAgreement = $this->transactionSyncService->getExistingAgreementForInstitution($id);
 
         return view('nordigen.institution.select', [
-                'institution'       => $selectedInstitution,
+                'institution' => $selectedInstitution,
                 'existingAgreement' => $existingAgreement,
             ]
         );
@@ -32,7 +34,7 @@ class InstitutionController extends Controller
 
     public function agreements(mixed $id): View
     {
-        $agreements  = $this->transactionSyncService->getAgreementsByInstitution($id);
+        $agreements = $this->transactionSyncService->getAgreementsByInstitution($id);
         $institution = $this->transactionSyncService->getInstitutionByExternalId($id);
         return view('nordigen.institution.agreements', compact('agreements', 'institution'));
     }
@@ -45,7 +47,7 @@ class InstitutionController extends Controller
 
     public function newRequisition(mixed $agreementId): RedirectResponse
     {
-        $agreement     = $this->transactionSyncService->getAgreementById($agreementId);
+        $agreement = $this->transactionSyncService->getAgreementById($agreementId);
         $institutionId = $agreement->getInstitutionId();
         $this->transactionSyncService->createNewRequisition($institutionId, $agreementId);
 

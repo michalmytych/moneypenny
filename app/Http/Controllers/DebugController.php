@@ -12,7 +12,7 @@ class DebugController extends Controller
     {
         /** @var Collection $analyzersMapping */
         $analyzersMapping = app(AnalyzerResolver::class)->getEnabledAnalyzersMapping();
-        $analyzers        = $analyzersMapping->keys();
+        $analyzers = $analyzersMapping->keys();
         return view('debug.analyzers', compact('analyzers'));
     }
 }

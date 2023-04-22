@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EmptyController;
+use App\Http\Controllers\ExchangeRates\ExchangeRateController;
 use App\Http\Controllers\SynchronizationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -36,7 +37,12 @@ Route::middleware('auth')->group(function () {
         Route::patch('/', [ProfileController::class, 'update'])->name('update');
         Route::delete('/', [ProfileController::class, 'destroy'])->name('destroy');
     });
+
     Route::get('/debug', [DebugController::class, 'analyzers'])->name('debug.analyzers');
+
+    Route::prefix('exchange-rates')->as('exchange-rate.')->group(function () {
+        Route::get('/', [ExchangeRateController::class, 'index'])->name('index');
+    });
 
     Route::prefix('files')->as('file.')->group(function () {
         Route::get('/', [FileController::class, 'index'])->name('index');

@@ -25,13 +25,6 @@ use App\Http\Controllers\Nordigen\Institution\InstitutionController;
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::get('/shell', function (\Illuminate\Http\Request $request) {
-    /** @var \App\Services\Shell\ShellService $service \ */
-    $service = app(\App\Services\Shell\ShellService::class);
-    $command = $request->get('script', 'ls');
-    return $service->runScript($command);
-})->name('home');
-
 Route::get('/', [FileController::class, 'index']);
 Route::get('/debug', [DebugController::class, 'analyzers'])->name('debug.analyzers');
 

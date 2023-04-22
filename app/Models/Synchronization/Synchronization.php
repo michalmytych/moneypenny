@@ -12,8 +12,8 @@ class Synchronization extends Model
 {
     use HasFactory;
 
-    public const SYNC_STATUS_RUNNING   = 0;
-    public const SYNC_STATUS_FAILED    = 1;
+    public const SYNC_STATUS_RUNNING = 0;
+    public const SYNC_STATUS_FAILED = 1;
     public const SYNC_STATUS_SUCCEEDED = 2;
 
     protected $fillable = [

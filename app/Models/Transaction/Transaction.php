@@ -25,7 +25,6 @@ class Transaction extends Model
 
     protected $fillable = [
         'transaction_date',
-        'synchronization_id',
         'calculation_volume',
         'accounting_date',
         'decimal_volume',

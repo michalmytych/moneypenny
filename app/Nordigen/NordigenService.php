@@ -2,6 +2,7 @@
 
 namespace App\Nordigen;
 
+use App\Models\Import\Import;
 use Throwable;
 use Exception;
 use Illuminate\Support\Str;
@@ -49,6 +50,7 @@ class NordigenService implements TransactionSyncServiceInterface
 
     /**
      * @throws GuzzleException
+     * @throws Throwable
      */
     public function syncTransactions(mixed $requisitionId, mixed $synchronizationId): void
     {
@@ -56,7 +58,19 @@ class NordigenService implements TransactionSyncServiceInterface
         $accounts = $this->getAccounts();
 
         foreach ($accounts as $account) {
-            $this->syncTransactionsByAccount($account, $synchronizationId);
+            $import = Import::create([
+                'synchronization_id' => $synchronizationId,
+                'status' => Import::STATUS_IMPORTING
+            ]);
+
+            try {
+                $this->syncTransactionsByAccount($account, $import);
+                $import->update(['status' => Import::STATUS_IMPORTED]);
+
+            } catch (Throwable $throwable) {
+                $import->update(['status' => Import::STATUS_IMPORT_ERROR]);
+                throw $throwable;
+            }
         }
     }
 
@@ -64,7 +78,7 @@ class NordigenService implements TransactionSyncServiceInterface
      * @throws GuzzleException
      * @throws Exception
      */
-    protected function syncTransactionsByAccount(Account $account, mixed $synchronizationId): void
+    protected function syncTransactionsByAccount(Account $account, Import $import): void
     {
         $uri = self::ACCOUNTS_URI . $account->nordigen_account_id . '/transactions/';
 
@@ -84,7 +98,7 @@ class NordigenService implements TransactionSyncServiceInterface
                 $transactionDataObject = TransactionDataObject::make($transactionData);
                 $this->nordigenTransactionService->addNewSynchronizedTransaction(
                     $transactionDataObject,
-                    $synchronizationId
+                    $import
                 );
             }
         } else {

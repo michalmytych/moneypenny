@@ -1,53 +1,38 @@
-@if(count($imports) > 0)
-    <div class="bg-white shadow-md rounded my-6">
-        <div class="flex justify-between items-center bg-gray-200 py-3 px-4 rounded-t">
-            <h2 class="font-bold text-lg">Synchronization List</h2>
-            <a href="#" class="text-indigo-500 hover:text-indigo-700">View All</a>
-        </div>
-
-        <div class="overflow-x-auto">
-            <table class="w-full whitespace-no-wrap">
-                <thead>
-                <tr class="text-gray-700">
-                    <th class="px-4 py-3">ID</th>
-                    <th class="px-4 py-3">Status</th>
-                    <th class="px-4 py-3">Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($synchronizations as $sync)
-                    <tr class="hover:bg-gray-100">
-                        <td class="border-t">
-                            <div class="px-4 py-3">{{ $sync->id }}</div>
-                        </td>
-                        <td class="border-t">
-                            <div class="px-4 py-3">
-                                @if($sync->status == \App\Models\Synchronization::SYNC_STATUS_RUNNING)
-                                    <span class="inline-flex items-center px-2 py-1 bg-yellow-500 text-white rounded-full">
+@if(count($synchronizations) > 0)
+    <div class="p-4">
+        <h2 class="text-xl font-semibold mb-4">Synchronizations List</h2>
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead>
+            <tr class="bg-gray-200">
+                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data utworzenia</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($synchronizations as $sync)
+                <tr>
+                    <td class="pl-6 py-2">{{ $sync->id }}</td>
+                    <td class="pl-6 py-2">
+                        @if($sync->status == \App\Models\Synchronization\Synchronization::SYNC_STATUS_RUNNING)
+                            <span class="text-blue-600 font-semibold">
                                 Running
                             </span>
-                                @elseif($sync->status == \App\Models\Synchronization::SYNC_STATUS_FAILED)
-                                    <span class="inline-flex items-center px-2 py-1 bg-red-500 text-white rounded-full">
+                        @elseif($sync->status == \App\Models\Synchronization\Synchronization::SYNC_STATUS_FAILED)
+                            <span class="text-red-500 font-semibold">
                                 Failed
                             </span>
-                                @elseif($sync->status == \App\Models\Synchronization::SYNC_STATUS_SUCCEEDED)
-                                    <span class="inline-flex items-center px-2 py-1 bg-green-500 text-white rounded-full">
+                        @elseif($sync->status == \App\Models\Synchronization\Synchronization::SYNC_STATUS_SUCCEEDED)
+                            <span class="text-green-600 font-semibold">
                                 Succeeded
                             </span>
-                                @endif
-                            </div>
-                        </td>
-                        <td class="border-t">
-                            <div class="px-4 py-3">
-                                <a href="#" class="text-indigo-500 hover:text-indigo-700">View Details</a>
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
-        </div>
-
+                        @endif
+                    </td>
+                    <td class="pl-6 py-2">{{ $sync->created_at->format('d.m.Y H:i') }}</td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
     </div>
 @else
     <h2 class="font-semibold text-xl">Brak synchronizacji</h2>

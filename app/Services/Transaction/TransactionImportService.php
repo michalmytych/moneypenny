@@ -11,9 +11,8 @@ use App\Services\Helpers\TransactionHelper;
 
 class TransactionImportService
 {
-    public function importFileRowAsTransaction(Collection $row, Import $import, ColumnsMapping $columnsMapping): void
+    public function importFileRowAsTransaction(Collection $row, Import $import, ColumnsMapping $columnsMapping): ?Transaction
     {
-
         $sender          = data_get($row, $columnsMapping->sender_column_index);
         $rawVolume       = data_get($row, $columnsMapping->volume_column_index);
         $receiver        = data_get($row, $columnsMapping->receiver_column_index);
@@ -35,8 +34,12 @@ class TransactionImportService
         ];
 
         if (!$this->similarTransactionExists($attributes)) {
-            Transaction::create($attributes);
+            return Transaction::create($attributes);
         }
+
+        $import->update(['transactions_skipped_count' => $import->transactions_skipped_count + 1 ]);
+
+        return null;
     }
 
     public function similarTransactionExists(array $attributes): bool

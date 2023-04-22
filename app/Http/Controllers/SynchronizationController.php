@@ -14,7 +14,7 @@ use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
 
 class SynchronizationController extends Controller
 {
-    public function __construct(private TransactionSyncServiceInterface $transactionSyncService) { }
+    public function __construct(private readonly TransactionSyncServiceInterface $transactionSyncService) { }
 
     public function index(): View
     {
@@ -43,7 +43,7 @@ class SynchronizationController extends Controller
                 'error'       => 'Synchronization error',
                 'details'     => App::hasDebugModeEnabled() ? $throwable->getMessage() : 'Lacking permissions',
                 'status_code' => $statusCode,
-            ], $statusCode);
+            ], 500);
         }
 
         return response()->json(Account::all());

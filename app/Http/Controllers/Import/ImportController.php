@@ -10,7 +10,12 @@ class ImportController extends Controller
 {
     public function index(): View
     {
-        $imports = Import::with('file')->latest()->get();
+        $imports = Import::query()
+            ->with('file', 'synchronization')
+            ->withCount('addedTransactions')
+            ->latest()
+            ->get();
+
         return view('import.index', compact('imports'));
     }
 }

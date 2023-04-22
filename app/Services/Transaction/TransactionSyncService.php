@@ -2,6 +2,7 @@
 
 namespace App\Services\Transaction;
 
+use App\Models\Import\Import;
 use Carbon\Carbon;
 use App\Models\Transaction\Transaction;
 use App\Services\Helpers\TransactionHelper;
@@ -10,17 +11,16 @@ use App\Nordigen\Synchronization\NordigenTransactionServiceInterface;
 
 class TransactionSyncService implements NordigenTransactionServiceInterface
 {
-    public function __construct(private TransactionImportService $transactionImportService) { }
+    public function __construct(private readonly TransactionImportService $transactionImportService) { }
 
-    public function addNewSynchronizedTransaction(TransactionDataObject $transactionDataObject, mixed $synchronizationId)
+    public function addNewSynchronizedTransaction(TransactionDataObject $transactionDataObject, Import $import): ?Transaction
     {
         $attributes = [
             'sender'             => $transactionDataObject->debtorName,
             'receiver'           => null,
             'currency'           => $transactionDataObject->currency,
             'raw_volume'         => TransactionHelper::changeComaToDotAtRawVolume($transactionDataObject->rawVolume),
-            'import_id'          => null,
-            'synchronization_id' => $synchronizationId,
+            'import_id'          => $import->id,
             'description'        => $transactionDataObject->remittanceInformationUnstructured,
             'accounting_date'    => Carbon::parse($transactionDataObject->bookingDate),
             'transaction_date'   => Carbon::parse($transactionDataObject->valueDate),
@@ -30,7 +30,11 @@ class TransactionSyncService implements NordigenTransactionServiceInterface
         $similarExists = $this->transactionImportService->similarTransactionExists($attributes);
 
         if (!$similarExists) {
-            Transaction::create($attributes);
+            return Transaction::create($attributes);
         }
+
+        $import->update(['transactions_skipped_count' => $import->transactions_skipped_count + 1 ]);
+
+        return null;
     }
 }

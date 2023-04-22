@@ -1,8 +1,8 @@
 <div class="w-full mb-6">
     <h2 class="text-black font-bold text-2xl pb-2">Filtrowanie wyników</h2>
     <form action="{{ $route }}" method="GET">
-        <div class="flex" id="filters-box-0">
-            <select name="column" id="column" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-4">
+        <div class="lg:flex sm:grid-cols-1" id="filters-box-0">
+            <select name="column" id="column" class="sm:mb-4 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-4">
                 <option>Select attribute</option>
                 @foreach($filterableColumns->keys() as $column)
                     <option value="{{ $column }}">
@@ -11,14 +11,14 @@
                 @endforeach
             </select>
 
-            <select name="operator" id="operator" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-4">
+            <select name="operator" id="operator" class="sm:mb-4 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-4">
                 <option>Select operator</option>
             </select>
 
             <input
                     name="value"
                     id="value"
-                    class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-4"
+                    class="sm:mb-4 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-4"
                     type="text"
                     placeholder="Attribute value"
                     autocomplete="off"

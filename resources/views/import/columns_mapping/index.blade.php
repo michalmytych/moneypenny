@@ -2,7 +2,7 @@
     <div class="py-12">
         <div class="w-full mx-auto sm:px-6 lg:px-8">
 
-            <div class="lg:grid grid-cols-[1fr_2fr]">
+            <div class="grid grid-cols-2">
                 <div>
                     @include('import.columns_mapping.partials.columns-mapping-form')
                 </div>

@@ -1,22 +1,31 @@
 <x-app-layout>
     <div class="pb-6">
-        <div class="w-full mx-auto sm:px-6 lg:px-8">
-            <div class="py-8">
-                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="w-full mx-auto">
+            <div class="py-4">
+                <div class="mx-auto sm:px-6 lg:px-8">
                     <div class="grid gap-4 lg:grid-cols-2 md:grid-cols-1">
-                        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                            <div class="p-6 bg-white">
-                                <h2 class="text-xl font-bold mb-2 flex items-baseline justify-between">
-                                    <span>Directory Size</span>
-                                    <small class="text-sm text-gray-500">{{ data_get($meta, 'directory') }}</small>
-                                </h2>
-                                <p class="text-gray-600">{{ data_get($meta, 'directory_size.folder_size', 'N/A') }}B</p>
+                        <div class="bg-white overflow-hidden sm:rounded-lg">
+                            <div class="p-6 bg-white shadow-sm">
+                                <h2 class="text-xl font-bold mb-2">Directories Size</h2>
+                                @foreach(data_get($meta, 'directories_sizes') as $directory => $size)
+                                    <div class="flex items-baseline justify-between">
+                                        <p class="text-gray-500">{{ $directory }}</p>
+                                        <p class="text-black">{{ data_get($size, 'folder_size') }}B</p>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
-                        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                            <div class="p-6 bg-white">
+                        <div class="overflow-hidden rounded-lg grid grid-cols-1">
+                            <div class="p-6 bg-white rounded-lg shadow-sm">
                                 <h2 class="text-xl font-bold mb-2">Disk Free</h2>
-                                <p class="text-gray-600">{{ data_get($meta, 'disk_free.disk_free', 'N/A') }}B</p>
+                                <div class="flex items-baseline justify-between">
+                                    <p class="text-gray-500">local</p>
+                                    <p class="text-black">{{ data_get($meta, 'disk_free.disk_free', 'N/A') }}B</p>
+                                </div>
+                            </div>
+                            <div class="p-6 bg-white rounded-lg mt-4 shadow-sm">
+                                <h2 class="text-xl font-bold mb-2">Processes</h2>
+                                @include('meta.partials.processes', ['processes' => data_get($meta, 'top')])
                             </div>
                         </div>
                     </div>

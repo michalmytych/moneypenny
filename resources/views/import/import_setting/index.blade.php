@@ -2,7 +2,7 @@
     <div class="py-12">
         <div class="w-full mx-auto sm:px-6 lg:px-8">
 
-            <div class="lg:grid grid-cols-[2fr_3fr]">
+            <div class="lg:grid grid-cols-[1fr_2fr]">
                 <div>
                     @include('import.import_setting.partials.import-setting-form')
                 </div>

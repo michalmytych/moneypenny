@@ -1,5 +1,5 @@
 @if(count($transactions) > 0)
-    <table class="w-full divide-y divide-gray-200 overflow-x-scroll">
+    <table class="divide-y divide-gray-200 overflow-x-scroll">
         <thead class="bg-gray-50 rounded-t-md">
             <tr>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">

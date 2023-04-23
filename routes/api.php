@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\MetaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SynchronizationController;
@@ -24,6 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/analysis', [AnalysisController::class, 'analyze'])->name('api.analysis');
 Route::post('/sync', [SynchronizationController::class, 'sync'])->name('api.sync');
 Route::get('/exchange-rates', [ExchangeRateController::class, 'index'])->name('api.exchange_rate');
+Route::get('/meta/processes', [MetaController::class, 'processes'])->name('api.meta.processes');
 
 // @todo
 Route::get(

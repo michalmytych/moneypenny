@@ -17,6 +17,7 @@
                         <a href="{{ route('import.import-setting.index') }}" class="text-black hover:bg-gray-100 active:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">Ustawienia importów</a>
                         <a href="{{ route('import.columns-mapping.index') }}" class="text-black hover:bg-gray-100 active:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">Mapowanie kolumn</a>
                         <a href="{{ route('debug.analyzers') }}" class="text-black hover:bg-gray-100 active:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">Debugowanie analizatorów</a>
+                        <a href="{{ route('meta.index') }}" class="text-black hover:bg-gray-100 active:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">Meta</a>
                     </div>
                 </div>
             </div>

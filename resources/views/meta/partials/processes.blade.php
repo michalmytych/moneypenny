@@ -1,20 +1,20 @@
 <div>
     <table class="text-sm w-full rounded-md mt-2 text-black">
         <thead>
-            <tr>
-                <th class="text-left">COMMAND</th>
-                <th class="text-left">CPU</th>
-                <th class="text-left">MEM</th>
-                <th class="text-left">USER</th>
-                <th class="text-left">PID</th>
-                <th class="text-left">TIME</th>
-                <th class="text-left">NI</th>
-                <th class="text-left">PR</th>
-                <th class="text-left">RES</th>
-                <th class="text-left">S</th>
-                <th class="text-left">SHR</th>
-                <th class="text-left">VIRT</th>
-            </tr>
+        <tr>
+            <th class="text-left">COMMAND</th>
+            <th class="text-left">CPU</th>
+            <th class="text-left">MEM</th>
+            <th class="text-left">USER</th>
+            <th class="text-left">PID</th>
+            <th class="text-left">TIME</th>
+            <th class="text-left">NI</th>
+            <th class="text-left">PR</th>
+            <th class="text-left">RES</th>
+            <th class="text-left">S</th>
+            <th class="text-left">SHR</th>
+            <th class="text-left">VIRT</th>
+        </tr>
         </thead>
         <tbody id="processesDisplay"></tbody>
     </table>

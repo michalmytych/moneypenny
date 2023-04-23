@@ -2,6 +2,8 @@
 
 namespace App\Services\Meta;
 
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use App\Services\Shell\ShellService;
 
 class MetaService
@@ -34,6 +36,16 @@ class MetaService
     public function getTopProcesses(): array
     {
         return ['processes' => $this->getTopData()];
+    }
+
+    /** @noinspection SqlDialectInspection */
+    public function getTablesSizes(): Collection
+    {
+        return DB::table('information_schema.TABLES')
+            ->select(DB::raw("table_name as `table`, ROUND(((data_length + index_length) / 1024 / 1024), 2) `size_MB`"))
+            ->where('table_schema', 'laravel')
+            ->orderBy(DB::raw("(data_length + index_length)"), 'desc')
+            ->get();
     }
 
     protected function getTopData(): array

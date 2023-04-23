@@ -1,5 +1,4 @@
 <div>
-    <div class="text-red-500 font-semibold" id="topProcessesErrorDisplay"></div>
     <table class="text-sm w-full rounded-md mt-2 text-black">
         <thead>
             <tr>
@@ -19,6 +18,7 @@
         </thead>
         <tbody id="processesDisplay"></tbody>
     </table>
+    <div class="text-red-500 font-semibold mt-2" id="topProcessesErrorDisplay"></div>
 </div>
 
 @push('scripts')
@@ -31,9 +31,11 @@
             processesDisplay.innerHTML = '';
 
             if (!data || !data.processes) {
-                topProcessesErrorDisplay.innerHTML += 'Error while fetching server processes.';
+                topProcessesErrorDisplay.innerHTML = 'Error while fetching server processes.';
                 return;
             }
+
+            topProcessesErrorDisplay.innerHTML = '';
 
             data.processes.forEach(item => {
                 const append = '<tr>' +
@@ -58,6 +60,10 @@
             fetch(metaProcessesRoute, {headers: {'Accept-Type': 'application/json'}})
                 .then(res => res.json())
                 .then(json => displayData(json))
+                .catch(error => {
+                    displayData(false);
+                    console.error(error);
+                })
         };
 
         window.addEventListener('load', () => {

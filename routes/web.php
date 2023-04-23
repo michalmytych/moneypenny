@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EmptyController;
 use App\Http\Controllers\ExchangeRates\ExchangeRateController;
+use App\Http\Controllers\Meta\MetaController;
 use App\Http\Controllers\SynchronizationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -38,7 +39,13 @@ Route::middleware('auth')->group(function () {
         Route::delete('/', [ProfileController::class, 'destroy'])->name('destroy');
     });
 
-    Route::get('/debug', [DebugController::class, 'analyzers'])->name('debug.analyzers');
+    Route::prefix('meta')->as('meta.')->group(function () {
+        Route::get('/', [MetaController::class, 'index'])->name('index');
+    });
+
+    Route::prefix('debug')->as('debug.')->group(function () {
+        Route::get('/analyzers', [DebugController::class, 'analyzers'])->name('analyzers');
+    });
 
     Route::prefix('exchange-rates')->as('exchange-rate.')->group(function () {
         Route::get('/', [ExchangeRateController::class, 'index'])->name('index');

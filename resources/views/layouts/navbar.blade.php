@@ -119,7 +119,7 @@
     </div>
 </nav>
 
-<div id="secondNav" class="w-full mx-auto relative" style="display: none;">
+<div id="secondNav" class="w-full mx-auto relative" style="display: none; z-index: 5;">
     <div class="w-full mt-px absolute bg-gradient-to-b from-indigo-200 h-72"></div>
     <div class="absolute w-full mt-4 pl-4 pr-4 sm:px-8">
         <div class="mx-20">

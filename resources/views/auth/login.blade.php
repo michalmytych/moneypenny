@@ -2,6 +2,10 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
+    <div class="w-full mb-6 text-center flex justify-center">
+        @include('icons.logo-lg')
+    </div>
+
     <h1 class="flex justify-center text-3xl font-semibold mt-2">Zaloguj się</h1>
     <form method="POST" action="{{ route('login') }}" class="sm:w-full lg:w-1/3 mb-8 mt-4 mx-auto">
         @csrf

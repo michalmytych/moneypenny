@@ -19,8 +19,8 @@ class Transaction extends Model
 {
     use HasFactory, Filterable;
 
-    const TYPE_UNKNOWN     = 0;
-    const TYPE_INCOME      = 1;
+    const TYPE_UNKNOWN = 0;
+    const TYPE_INCOME = 1;
     const TYPE_EXPENDITURE = 2;
 
     protected $fillable = [
@@ -36,36 +36,40 @@ class Transaction extends Model
         'import_id'
     ];
 
+    protected $casts = [
+        'transaction_date' => 'datetime'
+    ];
+
     public static function getFilterableColumns(): Collection
     {
         return collect([
             'transaction_date' => [
                 'operators' => ['lte', 'eq', 'gte', 'lt', 'gt'],
-                'input'     => 'date',
+                'input' => 'date',
             ],
-            'accounting_date'  => [
+            'accounting_date' => [
                 'operators' => ['lte', 'eq', 'gte', 'lt', 'gt'],
-                'input'     => 'date',
+                'input' => 'date',
             ],
-            'decimal_volume'   => [
+            'decimal_volume' => [
                 'operators' => ['lte', 'eq', 'gte', 'lt', 'gt'],
-                'input'     => 'number',
+                'input' => 'number',
             ],
-            'sender'           => [
+            'sender' => [
                 'operators' => ['starts', 'ends', 'contains', 'eq'],
-                'input'     => 'text',
+                'input' => 'text',
             ],
-            'receiver'         => [
+            'receiver' => [
                 'operators' => ['starts', 'ends', 'contains', 'eq'],
-                'input'     => 'text',
+                'input' => 'text',
             ],
-            'description'      => [
+            'description' => [
                 'operators' => ['contains'],
-                'input'     => 'text',
+                'input' => 'text',
             ],
-            'currency'         => [
+            'currency' => [
                 'operators' => ['eq'],
-                'input'     => 'text',
+                'input' => 'text',
             ],
         ]);
     }

@@ -23,13 +23,13 @@
             @foreach ($transactions as $transaction)
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        {{ $transaction->transaction_date }}
+                        {{ $transaction->transaction_date->format('d.m.Y') }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <strong>{{ $transaction->raw_volume }}</strong> {{ $transaction->currency }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        {{ \App\Services\Helpers\StringHelper::shortenAuto($transaction->description ?? '-', 30) }}
+                        {{ \App\Services\Helpers\StringHelper::shortenAuto($transaction->description ?? '-', 45) }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         {{ \App\Services\Helpers\StringHelper::shortenAuto($transaction->receiver ?? '-', 30) }}

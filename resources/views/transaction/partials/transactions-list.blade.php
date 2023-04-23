@@ -1,6 +1,7 @@
 @if(count($transactions) > 0)
-    <table class="divide-y divide-gray-200 overflow-x-scroll">
-        <thead class="bg-gray-50 rounded-t-md">
+    <div class="overflow-x-scroll rounded-md">
+        <table class="divide-y divide-gray-200 min-w-full">
+            <thead class="bg-gray-50">
             <tr>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Transaction Date
@@ -12,15 +13,13 @@
                     Description
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Sender
-                </th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Receiver
                 </th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+                <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
             </tr>
-        </thead>
-        <tbody class="bg-white divide-y divide-gray-200 overflow-x-scroll">
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
             @foreach ($transactions as $transaction)
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap">
@@ -33,9 +32,6 @@
                         {{ \App\Services\Helpers\StringHelper::shortenAuto($transaction->description ?? '-', 30) }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        {{ \App\Services\Helpers\StringHelper::shortenAuto($transaction->sender ?? '-', 30) }}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
                         {{ \App\Services\Helpers\StringHelper::shortenAuto($transaction->receiver ?? '-', 30) }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
@@ -45,8 +41,9 @@
                     </td>
                 </tr>
             @endforeach
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 @else
     <h2 class="font-semibold text-xl">Brak transakcji</h2>
 @endif

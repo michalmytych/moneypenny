@@ -151,7 +151,7 @@
             window.addEventListener('mousemove', function (event) {
                 let mouseY = event.clientY;
                 let windowHeight = window.innerHeight;
-                let halfWindowHeight = windowHeight / 2;
+                let halfWindowHeight = windowHeight / 4;
 
                 if (mouseY > halfWindowHeight) {
                     hideSecondNav();

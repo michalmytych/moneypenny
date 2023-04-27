@@ -3,6 +3,7 @@
 use App\Http\Controllers\EmptyController;
 use App\Http\Controllers\ExchangeRates\ExchangeRateController;
 use App\Http\Controllers\Meta\MetaController;
+use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\SynchronizationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -41,6 +42,10 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('meta')->as('meta.')->group(function () {
         Route::get('/', [MetaController::class, 'index'])->name('index');
+    });
+
+    Route::prefix('personas')->as('persona.')->group(function () {
+        Route::get('/mass-association', [PersonaController::class, 'associatePersonasToTransactions']);
     });
 
     Route::prefix('debug')->as('debug.')->group(function () {

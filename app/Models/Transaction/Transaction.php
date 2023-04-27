@@ -14,6 +14,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static firstWhere(array $attributes)
  * @method static findOrFail(int $id)
  * @method static cursor()
+ * @property string $sender
+ * @property string $receiver
+ * @property int $id
  */
 class Transaction extends Model
 {

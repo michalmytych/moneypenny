@@ -3,6 +3,7 @@
 namespace App\Models\Transaction;
 
 use App\Filters\Filter;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Collection;
 use App\Filters\Traits\Filterable;
 use Illuminate\Database\Eloquent\Model;
@@ -14,9 +15,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static firstWhere(array $attributes)
  * @method static findOrFail(int $id)
  * @method static cursor()
+ * @method static count()
  * @property string $sender
  * @property string $receiver
  * @property int $id
+ * @property Persona|null $senderPersona
+ * @property Persona|null $receiverPersona
+ * @property string $description
+ * @property string|null $receiver_account_number
+ * @property string|null $sender_account_number
  */
 class Transaction extends Model
 {
@@ -27,16 +34,20 @@ class Transaction extends Model
     const TYPE_EXPENDITURE = 2;
 
     protected $fillable = [
-        'transaction_date',
+        'receiver_account_number',
+        'sender_account_number',
+        'receiver_persona_id',
         'calculation_volume',
+        'sender_persona_id',
+        'transaction_date',
         'accounting_date',
         'decimal_volume',
-        'raw_volume',
-        'sender',
-        'receiver',
         'description',
+        'raw_volume',
+        'import_id',
+        'receiver',
         'currency',
-        'import_id'
+        'sender'
     ];
 
     protected $casts = [
@@ -75,5 +86,15 @@ class Transaction extends Model
                 'input' => 'text',
             ],
         ]);
+    }
+
+    public function senderPersona(): BelongsTo
+    {
+        return $this->belongsTo(Persona::class, 'sender_persona_id');
+    }
+
+    public function receiverPersona(): BelongsTo
+    {
+        return $this->belongsTo(Persona::class, 'receiver_persona_id');
     }
 }

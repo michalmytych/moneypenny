@@ -80,6 +80,27 @@
                    value="{{ old('currency_column_index', $columnsMapping->currency_column_index ?? '') }}">
             <x-input-error :messages="$errors->get('currency_column_index')" class="mt-2"/>
         </div>
+
+        <div class="mb-4">
+            <label for="sender_account_number_index" class="block font-medium text-gray-700 mb-1">
+                Sender Account Number Column Index
+            </label>
+            <input type="number" name="sender_account_number_index" id="sender_account_number_index"
+                   class="form-input block w-full rounded-md shadow-sm @error('sender_account_number_index') border-red-500 @enderror"
+                   value="{{ old('sender_account_number_index', $columnsMapping->sender_account_number_index ?? '') }}">
+            <x-input-error :messages="$errors->get('sender_account_number_index')" class="mt-2"/>
+        </div>
+
+        <div class="mb-4">
+            <label for="receiver_account_number_index" class="block font-medium text-gray-700 mb-1">
+                Receiver Account Number Index
+            </label>
+            <input type="number" name="receiver_account_number_index" id="receiver_account_number_index"
+                   class="form-input block w-full rounded-md shadow-sm @error('receiver_account_number_index') border-red-500 @enderror"
+                   value="{{ old('receiver_account_number_index', $columnsMapping->receiver_account_number_index ?? '') }}">
+            <x-input-error :messages="$errors->get('receiver_account_number_index')" class="mt-2"/>
+        </div>
+
         <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg">
             Zapisz
         </button>

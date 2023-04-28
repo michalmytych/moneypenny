@@ -13,7 +13,7 @@ class MakeAnalyzerCommand extends Command
 
     protected $description = 'Create a new analyzer class';
 
-    public function handle()
+    public function handle(): void
     {
         $name = $this->argument('name');
         $className = Str::studly($name);

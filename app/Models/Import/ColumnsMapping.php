@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $description_column_index
  * @property int|null $currency_column_index
  * @property int|null $volume_column_index
+ * @property int|null $sender_account_number_column_index
+ * @property int|null $receiver_account_number_column_index
  * @method static findOrFail(int $columnsMappingId)
  * @method static latest()
  * @method static create(array $data)
@@ -32,5 +34,7 @@ class ColumnsMapping extends Model
         'receiver_column_index',
         'description_column_index',
         'currency_column_index',
+        'sender_account_number_column_index',
+        'receiver_account_number_column_index'
     ];
 }

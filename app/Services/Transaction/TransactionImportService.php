@@ -8,9 +8,12 @@ use Illuminate\Support\Collection;
 use App\Models\Import\ColumnsMapping;
 use App\Models\Transaction\Transaction;
 use App\Services\Helpers\TransactionHelper;
+use App\Services\Transaction\Traits\FindsSimilarTransaction;
 
 class TransactionImportService
 {
+    use FindsSimilarTransaction;
+
     public function importFileRowAsTransaction(Collection $row, Import $import, ColumnsMapping $columnsMapping): ?Transaction
     {
         $sender = data_get($row, $columnsMapping->sender_column_index);
@@ -20,6 +23,8 @@ class TransactionImportService
         $description = data_get($row, $columnsMapping->description_column_index);
         $accountingDate = data_get($row, $columnsMapping->accounting_date_column_index);
         $transactionDate = data_get($row, $columnsMapping->transaction_date_column_index);
+        $senderAccountNumber = data_get($row, $columnsMapping->sender_account_number_column_index);
+        $receiverAccountNumber = data_get($row, $columnsMapping->receiver_account_number_column_index);
 
         $attributes = [
             'sender' => $sender,
@@ -31,7 +36,9 @@ class TransactionImportService
             'accounting_date' => Carbon::parse($accountingDate),
             'transaction_date' => Carbon::parse($transactionDate),
             'decimal_volume' => TransactionHelper::rawVolumeToDecimal($rawVolume),
-            'calculation_volume' => TransactionHelper::rawVolumeToDecimal($rawVolume)
+            'calculation_volume' => TransactionHelper::rawVolumeToDecimal($rawVolume),
+            'sender_account_number' => $senderAccountNumber,
+            'receiver_account_number' => $receiverAccountNumber,
         ];
 
         if (!$this->similarTransactionExists($attributes)) {
@@ -43,12 +50,5 @@ class TransactionImportService
         return null;
     }
 
-    public function similarTransactionExists(array $attributes): bool
-    {
-        return Transaction::query()
-            ->whereDate('transaction_date', $attributes['transaction_date'])
-            ->where('description', 'LIKE', '%' . $attributes['description'] . '%')
-            ->where('decimal_volume', $attributes['decimal_volume'])
-            ->exists();
-    }
+
 }

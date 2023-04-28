@@ -3,6 +3,7 @@
 namespace App\Services\Transaction;
 
 use App\Models\Import\Import;
+use App\Services\Transaction\Traits\FindsSimilarTransaction;
 use Carbon\Carbon;
 use App\Models\Transaction\Transaction;
 use App\Services\Helpers\TransactionHelper;
@@ -11,6 +12,8 @@ use App\Nordigen\Synchronization\NordigenTransactionServiceInterface;
 
 class TransactionSyncService implements NordigenTransactionServiceInterface
 {
+    use FindsSimilarTransaction;
+
     public function __construct(private readonly TransactionImportService $transactionImportService)
     {
     }
@@ -19,7 +22,7 @@ class TransactionSyncService implements NordigenTransactionServiceInterface
     {
         $attributes = [
             'sender' => $transactionDataObject->debtorName,
-            'receiver' => null,
+            'receiver' => $transactionDataObject->creditorName,
             'currency' => $transactionDataObject->currency,
             'raw_volume' => TransactionHelper::changeComaToDotAtRawVolume($transactionDataObject->rawVolume),
             'import_id' => $import->id,
@@ -27,10 +30,12 @@ class TransactionSyncService implements NordigenTransactionServiceInterface
             'accounting_date' => Carbon::parse($transactionDataObject->bookingDate),
             'transaction_date' => Carbon::parse($transactionDataObject->valueDate),
             'decimal_volume' => TransactionHelper::rawVolumeToDecimal($transactionDataObject->rawVolume),
-            'calculation_volume' => TransactionHelper::rawVolumeToDecimal($transactionDataObject->rawVolume)
+            'calculation_volume' => TransactionHelper::rawVolumeToDecimal($transactionDataObject->rawVolume),
+            'sender_account_number' => $transactionDataObject->senderAccountNumber,
+            'receiver_account_number' => $transactionDataObject->receiverAccountNumber,
         ];
 
-        $similarExists = $this->transactionImportService->similarTransactionExists($attributes);
+        $similarExists = $this->similarTransactionExists($attributes);
 
         if (!$similarExists) {
             return Transaction::create($attributes);

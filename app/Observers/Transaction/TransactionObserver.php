@@ -9,6 +9,6 @@ class TransactionObserver
 {
     public function created(Transaction $transaction): void
     {
-        CreateTransactionPersonaAssociation::dispatch($transaction->id, $transaction->sender, $transaction->receiver);
+        CreateTransactionPersonaAssociation::dispatch($transaction);
     }
 }

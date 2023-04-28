@@ -2,6 +2,7 @@
 
 namespace App\Jobs\Persona;
 
+use App\Models\Transaction\Transaction;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -13,11 +14,7 @@ class CreateTransactionPersonaAssociation implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(
-        public int    $transactionId,
-        public ?string $transactionSender,
-        public ?string $transactionReceiver
-    )
+    public function __construct(public Transaction $transaction)
     {
     }
 
@@ -26,10 +23,6 @@ class CreateTransactionPersonaAssociation implements ShouldQueue
      */
     public function handle(TransactionPersonaService $transactionPersonaService): void
     {
-        $transactionPersonaService->createPersonasAssociations(
-            $this->transactionId,
-            $this->transactionSender,
-            $this->transactionReceiver
-        );
+        $transactionPersonaService->createPersonasAssociations($this->transaction);
     }
 }

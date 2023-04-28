@@ -4,22 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction\Persona;
 use App\Models\Transaction\Transaction;
-use App\Jobs\Persona\CreateTransactionPersonaAssociation;
+use App\Services\Transaction\TransactionPersonaService;
 
 class PersonaController extends Controller
 {
+    /** @noinspection PhpUndefinedMethodInspection */
     public function associatePersonasToTransactions(): string
     {
         foreach (Transaction::cursor() as $transaction) {
-            CreateTransactionPersonaAssociation::dispatchSync(
-                $transaction->id,
-                $transaction->sender,
-                $transaction->receiver
-            );
+            app(TransactionPersonaService::class)->createPersonasAssociations($transaction);
         }
 
-        $personasNames = Persona::all()->map(fn(Persona $persona) => $persona->common_name);
+        $personasCount = Persona::count();
 
-        return "Success <hr>" . $personasNames->implode("<br>") ;
+        return "Successfuly associated. Personas count: $personasCount";
     }
 }

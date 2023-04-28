@@ -27,6 +27,8 @@ class ColumnsMappingController extends Controller
             'receiver_column_index' => 'nullable|numeric',
             'description_column_index' => 'nullable|numeric',
             'currency_column_index' => 'nullable|numeric',
+            'sender_account_number_index' => 'nullable|numeric',
+            'receiver_account_number_index' => 'nullable|numeric',
         ]);
 
         ColumnsMapping::create($data);

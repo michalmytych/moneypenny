@@ -24,9 +24,15 @@
                             </x-slot>
 
                             <x-slot name="content">
+                                <x-dropdown-link :href="route('transaction.index')">
+                                    {{ __('Wszystkie') }}
+                                </x-dropdown-link>
                                 <x-dropdown-link :href="route('persona.index')">
                                     <span class="flex items-center justify-between">
-                                        {{ __('Podmioty') }} @include('components.mainteance.beta-badge')
+                                        {{ __('Podmioty') }}
+                                        <span class="relative top-2">
+                                            @include('components.mainteance.beta-badge')
+                                        </span>
                                     </span>
                                 </x-dropdown-link>
                                 <x-dropdown-link :href="route('import.index')">

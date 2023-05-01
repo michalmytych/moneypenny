@@ -24,7 +24,7 @@
 
         <div class="min-h-screen bg-gray-100">
             <!-- Page Content -->
-            <main class="max-w-7xl mx-auto">
+            <main class="max-w-7xl mx-auto fade-in">
                 {{ $slot }}
             </main>
         </div>

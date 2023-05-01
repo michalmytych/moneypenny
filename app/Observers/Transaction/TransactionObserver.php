@@ -2,8 +2,8 @@
 
 namespace App\Observers\Transaction;
 
-use App\Jobs\Persona\CreateTransactionPersonaAssociation;
 use App\Models\Transaction\Transaction;
+use App\Jobs\Persona\CreateTransactionPersonaAssociation;
 
 class TransactionObserver
 {

@@ -16,9 +16,9 @@ class MetaService
     {
         $cacheKey = 'app_meta_data';
 
-//        if (Cache::has($cacheKey)) {
-//            return Cache::get($cacheKey);
-//        }
+        if (Cache::has($cacheKey)) {
+            return Cache::get($cacheKey);
+        }
 
         $appMetaData = [
             'disk_free' => $this->getDiskFree(),

@@ -21,3 +21,17 @@ body::-webkit-scrollbar-track {
 body::-webkit-scrollbar-thumb {
     background-color: darkgrey;
 }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation-name: fadeIn;
+    animation-duration: 1.2s;
+}

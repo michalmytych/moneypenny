@@ -49,14 +49,14 @@ class ReportService
             'top_5_biggest_incomes' => Transaction::whereMonthAndYear($carbon)
                 ->whereIncome()
                 ->select($columnsSelected)
-                ->orderBy('calculation_volume', 'desc')
+                ->orderBy(Transaction::CALCULATION_COLUMN, 'desc')
                 ->limit(5)
                 ->get(),
 
             'top_5_biggest_expenditures' => Transaction::whereMonthAndYear($carbon)
                 ->whereExpenditure()
                 ->select($columnsSelected)
-                ->orderBy('calculation_volume', 'desc')
+                ->orderBy(Transaction::CALCULATION_COLUMN, 'desc')
                 ->limit(5)
                 ->get(),
         ];

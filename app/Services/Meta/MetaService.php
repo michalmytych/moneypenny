@@ -2,10 +2,9 @@
 
 namespace App\Services\Meta;
 
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use App\Services\Shell\ShellService;
+use Illuminate\Support\Facades\Cache;
 
 class MetaService
 {
@@ -17,9 +16,9 @@ class MetaService
     {
         $cacheKey = 'app_meta_data';
 
-        if (Cache::has($cacheKey)) {
-            return Cache::get($cacheKey);
-        }
+//        if (Cache::has($cacheKey)) {
+//            return Cache::get($cacheKey);
+//        }
 
         $appMetaData = [
             'disk_free' => $this->getDiskFree(),
@@ -36,6 +35,9 @@ class MetaService
                 storage_path() => $this->getDirectorySize(storage_path()),
                 resource_path() => $this->getDirectorySize(resource_path()),
                 base_path('/node_modules') => $this->getDirectorySize(base_path('/node_modules'))
+            ],
+            'database' => [
+                'tables_sizes' => $this->getTablesSizes()
             ]
         ];
 
@@ -50,14 +52,14 @@ class MetaService
     }
 
     /** @noinspection SqlDialectInspection */
-    public function getTablesSizes(): Collection
+    public function getTablesSizes(): array
     {
-        // @todo
         return DB::table('information_schema.TABLES')
             ->select(DB::raw("table_name as `table`, ROUND(((data_length + index_length) / 1024 / 1024), 2) `size_MB`"))
             ->where('table_schema', 'laravel')
             ->orderBy(DB::raw("(data_length + index_length)"), 'desc')
-            ->get();
+            ->get()
+            ->toArray();
     }
 
     protected function getTopData(): array

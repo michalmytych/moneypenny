@@ -1,5 +1,5 @@
 <table class="w-full divide-y divide-gray-200 overflow-x-scroll">
-    <tbody class="bg-white divide-y divide-gray-200 overflow-x-scroll">
+    <tbody class="bg-white divide-y divide-gray-200">
     <tr>
         <td class="py-2 whitespace-nowrap">
             <strong>Hostname:</strong>

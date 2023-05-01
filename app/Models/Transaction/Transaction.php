@@ -3,7 +3,9 @@
 namespace App\Models\Transaction;
 
 use App\Filters\Filter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use App\Filters\Traits\Filterable;
 use Illuminate\Database\Eloquent\Model;
@@ -16,6 +18,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static findOrFail(int $id)
  * @method static cursor()
  * @method static count()
+ * @method static whereExpenditure()
+ * @method static whereMonthAndYear(Carbon $now)
  * @property string $sender
  * @property string $receiver
  * @property int $id
@@ -24,6 +28,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $description
  * @property string|null $receiver_account_number
  * @property string|null $sender_account_number
+ * @property string $raw_volume
  */
 class Transaction extends Model
 {
@@ -32,6 +37,8 @@ class Transaction extends Model
     const TYPE_UNKNOWN = 0;
     const TYPE_INCOME = 1;
     const TYPE_EXPENDITURE = 2;
+
+    const CALCULATION_COLUMN = 'calculation_volume';
 
     protected $fillable = [
         'receiver_account_number',
@@ -47,7 +54,8 @@ class Transaction extends Model
         'import_id',
         'receiver',
         'currency',
-        'sender'
+        'sender',
+        'type'
     ];
 
     protected $casts = [
@@ -78,7 +86,7 @@ class Transaction extends Model
                 'input' => 'text',
             ],
             'description' => [
-                'operators' => ['contains'],
+                'operators' => ['contains', 'eq'],
                 'input' => 'text',
             ],
             'currency' => [
@@ -96,5 +104,22 @@ class Transaction extends Model
     public function receiverPersona(): BelongsTo
     {
         return $this->belongsTo(Persona::class, 'receiver_persona_id');
+    }
+
+    public function scopeWhereExpenditure(Builder $builder): Builder
+    {
+        return $builder->where('type', Transaction::TYPE_EXPENDITURE);
+    }
+
+    public function scopeWhereIncome(Builder $builder): Builder
+    {
+        return $builder->where('type', Transaction::TYPE_INCOME);
+    }
+
+    public function scopeWhereMonthAndYear(Builder $builder, Carbon $carbon): Builder
+    {
+        return $builder
+            ->whereYear('transaction_date', $carbon->year)
+            ->whereMonth('transaction_date', $carbon->month);
     }
 }

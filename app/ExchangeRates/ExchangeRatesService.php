@@ -15,7 +15,7 @@ class ExchangeRatesService implements ExchangeRatesServiceInterface
 {
     use DecodesHttpJsonResponse;
 
-    public function __construct(private ExchangeRatesClient $exchangeRatesClient) { }
+    public function __construct(private readonly ExchangeRatesClient $exchangeRatesClient) { }
 
     /**
      * @throws GuzzleException

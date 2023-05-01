@@ -2,6 +2,7 @@
 
 namespace App\Services\Transaction;
 
+use App\Services\Transaction\Traits\DecidesTransactionType;
 use Carbon\Carbon;
 use App\Models\Import\Import;
 use Illuminate\Support\Collection;
@@ -12,7 +13,8 @@ use App\Services\Transaction\Traits\FindsSimilarTransaction;
 
 class TransactionImportService
 {
-    use FindsSimilarTransaction;
+    use FindsSimilarTransaction,
+        DecidesTransactionType;
 
     public function importFileRowAsTransaction(Collection $row, Import $import, ColumnsMapping $columnsMapping): ?Transaction
     {
@@ -31,6 +33,7 @@ class TransactionImportService
             'receiver' => $receiver,
             'currency' => $currency,
             'raw_volume' => TransactionHelper::changeComaToDotAtRawVolume($rawVolume),
+            'type' => $this->decideTransactionTypeByRawVolume($rawVolume),
             'import_id' => $import->id,
             'description' => $description,
             'accounting_date' => Carbon::parse($accountingDate),
@@ -49,6 +52,4 @@ class TransactionImportService
 
         return null;
     }
-
-
 }

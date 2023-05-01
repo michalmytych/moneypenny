@@ -4,6 +4,7 @@ use App\Http\Controllers\EmptyController;
 use App\Http\Controllers\ExchangeRates\ExchangeRateController;
 use App\Http\Controllers\Meta\MetaController;
 use App\Http\Controllers\PersonaController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SynchronizationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -38,6 +39,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [ProfileController::class, 'edit'])->name('edit');
         Route::patch('/', [ProfileController::class, 'update'])->name('update');
         Route::delete('/', [ProfileController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('reports')->as('report.')->group(function () {
+        Route::get('/', [ReportController::class, 'index'])->name('index');
+        Route::get('/periodic', [ReportController::class, 'periodic'])->name('periodic');
     });
 
     Route::prefix('meta')->as('meta.')->group(function () {

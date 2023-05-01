@@ -3,7 +3,9 @@
         <div class="w-full mx-auto sm:px-6 lg:px-8">
 
             <div>
-                <h2 class="text-3xl font-semibold mb-4">Podmioty</h2>
+                <h2 class="text-3xl font-semibold mb-4 flex">
+                    Podmioty @include('components.mainteance.beta-badge')
+                </h2>
             </div>
 
             @if(count($personas) > 0)
@@ -96,7 +98,7 @@
                 <a href="{{ route('persona.index') }}">
                     <div style="z-index: 12;"
                          class="fixed top-56 left-8 w-12 h-12 bg-indigo-600 text-white rounded-full font-semibold flex text-center justify-center pt-3 cursor-pointer transition transform-gpu ease-in-out active:scale-75 hover:scale-125">
-                        <span class="relative w-6 h-6">
+                        <span class="relative w-6 h-6 rotate-90">
                             @include('icons.arrow-left')
                         </span>
                     </div>

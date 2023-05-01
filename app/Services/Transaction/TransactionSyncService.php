@@ -2,17 +2,19 @@
 
 namespace App\Services\Transaction;
 
-use App\Models\Import\Import;
-use App\Services\Transaction\Traits\FindsSimilarTransaction;
 use Carbon\Carbon;
+use App\Models\Import\Import;
 use App\Models\Transaction\Transaction;
 use App\Services\Helpers\TransactionHelper;
 use App\Nordigen\DataObjects\TransactionDataObject;
+use App\Services\Transaction\Traits\DecidesTransactionType;
+use App\Services\Transaction\Traits\FindsSimilarTransaction;
 use App\Nordigen\Synchronization\NordigenTransactionServiceInterface;
 
 class TransactionSyncService implements NordigenTransactionServiceInterface
 {
-    use FindsSimilarTransaction;
+    use FindsSimilarTransaction,
+        DecidesTransactionType;
 
     public function __construct(private readonly TransactionImportService $transactionImportService)
     {
@@ -21,6 +23,7 @@ class TransactionSyncService implements NordigenTransactionServiceInterface
     public function addNewSynchronizedTransaction(TransactionDataObject $transactionDataObject, Import $import): ?Transaction
     {
         $attributes = [
+            'type' => $this->decideTransactionTypeByRawVolume($transactionDataObject->rawVolume),
             'sender' => $transactionDataObject->debtorName,
             'receiver' => $transactionDataObject->creditorName,
             'currency' => $transactionDataObject->currency,

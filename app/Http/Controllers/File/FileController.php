@@ -38,13 +38,26 @@ class FileController extends Controller
 
     public function upload(Request $request): RedirectResponse
     {
+        $fileType = $request->input('type');
+
+        if ($fileType) {
+            if ($fileType === File::USER_AVATAR) {
+                return $this->uploadAvatar($request);
+            }
+        }
+
+        return $this->uploadTransactions($request);
+    }
+
+    private function uploadTransactions(Request $request): RedirectResponse
+    {
+        $file = $request->file('file');
+
         $request->validate([
             'file' => 'required',
             'import_setting_id' => 'required|exists:import_settings,id',
             'columns_mapping_id' => 'required|exists:columns_mappings,id',
         ]);
-
-        $file = $request->file('file');
 
         $extension = $file->getClientOriginalExtension();
         $timestamp = time();
@@ -55,19 +68,39 @@ class FileController extends Controller
         $fileName = "upload_{$uuid}_{$timestamp}.{$extension}";
 
         $fileModel = new File();
-
         $fileModel->name = $file->getClientOriginalName();
         $fileModel->path = "uploads/{$fileName}";
         $fileModel->size = $file->getSize();
         $fileModel->import_setting_id = $importSettingId;
 
-        DB::transaction(function () use ($fileModel, $file, $fileName) {
-            $fileModel->save();
-            $file->storeAs('uploads', $fileName);
-        });
+        $this->registerAndStoreFile($fileModel, $file, $fileName);
 
         $this->importService->importFromFile($fileModel->id, $importSettingId, $columnMappingId);
 
         return redirect()->route('file.index');
+    }
+
+    private function uploadAvatar(Request $request): RedirectResponse
+    {
+        $file = $request->file('file');
+
+        $request->validate([
+            'file' => 'required'
+        ]);
+
+        $extension = $file->getClientOriginalExtension();
+        $fileName = $request->user()?->id . '_avatar.' . $extension;
+
+        $file->storePubliclyAs('public/avatars/', $fileName);
+
+        return redirect()->route('profile.edit');
+    }
+
+    private function registerAndStoreFile(File $fileModel, $fileObj, string $fileName): void
+    {
+        DB::transaction(function () use ($fileModel, $fileObj, $fileName) {
+            $fileModel->save();
+            $fileObj->storeAs('uploads', $fileName);
+        });
     }
 }

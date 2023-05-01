@@ -19,10 +19,10 @@
         @stack('styles')
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            <!-- Nav Bar -->
-            @include('layouts.navbar')
+        <!-- Nav Bar -->
+        @include('layouts.navbar')
 
+        <div class="min-h-screen bg-gray-100">
             <!-- Page Content -->
             <main class="max-w-7xl mx-auto">
                 {{ $slot }}

@@ -11,7 +11,7 @@ class PullExchangeRates extends Command
 {
     protected $signature = 'moneypenny:pull-exchange-rates';
 
-    protected $description = 'Command description';
+    protected $description = 'Fetch history exchange rates from external api for currently stored transactions';
 
     public function handle(ExchangeRatesServiceInterface $exchangeRatesService)
     {

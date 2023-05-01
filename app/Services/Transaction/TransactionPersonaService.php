@@ -166,7 +166,6 @@ class TransactionPersonaService
         if (!$alreadySaved) {
             $associatedNames[] = $personaName;
             $newCommonName = $this->getNamesCommonParts($associatedNames, $personaName);
-            echo $newCommonName;
 
             $persona->update([
                 'associated_names' => $associatedNames,

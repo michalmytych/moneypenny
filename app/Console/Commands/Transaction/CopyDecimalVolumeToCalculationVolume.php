@@ -10,9 +10,9 @@ class CopyDecimalVolumeToCalculationVolume extends Command
 {
     protected $signature = 'moneypenny:copy-decimal-volume-to-calculation-volume';
 
-    protected $description = 'Command description';
+    protected $description = 'Copy decimal value transaction column to calculation volume column.';
 
-    public function handle()
+    public function handle(): void
     {
         DB::transaction(function() {
             foreach (Transaction::cursor() as $transaction) {

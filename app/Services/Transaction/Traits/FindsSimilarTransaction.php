@@ -10,8 +10,6 @@ trait FindsSimilarTransaction
     {
         return Transaction::query()
             ->whereDate('transaction_date', $attributes['transaction_date'])
-            ->where('sender_account_number', $attributes['sender_account_number'])
-            ->where('receiver_account_number', $attributes['receiver_account_number'])
             ->where('description', 'LIKE', '%' . $attributes['description'] . '%')
             ->where('decimal_volume', $attributes['decimal_volume'])
             ->exists();

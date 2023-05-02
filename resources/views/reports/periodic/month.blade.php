@@ -3,7 +3,12 @@
         <div class="w-full mx-auto sm:px-6 lg:px-8">
 
             <div class="container mx-auto my-8">
-                <h1 class="text-3xl font-bold mb-4">Raport finansowy</h1>
+                <div class="flex justify-between">
+                    <h1 class="text-3xl font-bold mb-4">Raport finansowy</h1>
+                    <form id="monthForm" action="{{ route('report.periodic') }}" method="get">
+                        <input class="rounded" type="month" name="month" id="month">
+                    </form>
+                </div>
                 <div class="grid grid-cols-2 gap-4 mb-4">
                     <div class="bg-gray-200 p-4 rounded-lg">
                         <h2 class="text-xl font-bold mb-2">Podsumowanie</h2>
@@ -87,4 +92,20 @@
 
         </div>
     </div>
+
+    <script>
+        window.addEventListener('load', () => {
+            const monthForm = document.getElementById('monthForm');
+            const monthInput = monthForm.querySelector('#month');
+
+            const date= new Date();
+            const month=("0" + (date.getMonth() + 1)).slice(-2);
+            const year = date.getFullYear();
+            monthInput.value = `${year}-${month}`;
+
+            monthInput.addEventListener('change', () => {
+                monthForm.submit();
+            });
+        });
+    </script>
 </x-app-layout>

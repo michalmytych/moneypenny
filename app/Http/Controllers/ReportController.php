@@ -27,7 +27,7 @@ class ReportController extends Controller
         $rawMonth = $request->input('month');
 
         if ($rawMonth) {
-            $carbon = Carbon::createFromFormat('m-Y', $rawMonth);
+            $carbon = Carbon::createFromFormat('Y-m', $rawMonth);
         } else {
             $carbon = now();
         }

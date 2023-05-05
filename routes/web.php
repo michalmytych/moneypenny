@@ -84,6 +84,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('transactions')->as('transaction.')->group(function () {
         Route::get('/', [TransactionController::class, 'index'])->name('index');
+        Route::post('/', [TransactionController::class, 'create'])->name('create');
         Route::get('/{id}', [TransactionController::class, 'show'])->name('show');
     });
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Meta\MetaController;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SynchronizationController;
+use App\Http\Controllers\Version\VersionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DebugController;
@@ -102,6 +103,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [ColumnsMappingController::class, 'index'])->name('index');
             Route::post('/', [ColumnsMappingController::class, 'store'])->name('store');
         });
+    });
+
+    Route::prefix('versions')->as('version.')->group(function () {
+        Route::get('/', [VersionController::class, 'releaseNotes'])->name('release_notes');
     });
 
     Route::get('/', [EmptyController::class, 'redirect'])->name('empty');

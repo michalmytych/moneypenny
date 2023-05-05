@@ -6,6 +6,8 @@ use App\Services\Transaction\Currency\CurrencyService;
 use Illuminate\Http\Request;
 use App\Services\Transaction\Report\ReportService;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
 class ReportController extends Controller
@@ -32,9 +34,16 @@ class ReportController extends Controller
             $carbon = now();
         }
 
-        $data = $this->reportService->getMonthReport($carbon);
+        $cacheKey = $carbon->format('Y_m') . '_periodic_report_' . $request->user()?->id;
 
-        $data['currency'] = $this->currencyService->resolveCalculationCurrency();
+        if (Cache::has($cacheKey)) {
+            $data = Cache::get($cacheKey);
+
+        } else {
+            $data = $this->reportService->getMonthReport($carbon, Auth::user());
+            $data['currency'] = $this->currencyService->resolveCalculationCurrency();
+            Cache::put($cacheKey, $data, 10);
+        }
 
         return view('reports.periodic.month', compact('data'));
     }

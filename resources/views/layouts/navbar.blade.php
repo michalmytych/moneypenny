@@ -38,6 +38,9 @@
                                 <x-dropdown-link :href="route('import.index')">
                                     {{ __('Importy transakcji') }}
                                 </x-dropdown-link>
+                                <x-dropdown-link :href="route('file.index')">
+                                    {{ __('Pliki') }}
+                                </x-dropdown-link>
                             </x-slot>
                         </x-dropdown>
                     </div>

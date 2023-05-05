@@ -35,8 +35,7 @@
         <x-input-error :messages="$errors->get('columns_mapping_id')" class="mt-2" />
     </div>
     <div class="mb-4">
-        <label for="file" class="block font-bold">Wybierz plik do przesłania</label>
-        <input type="file" name="file" id="file" class="px-4 py-2 rounded-lg w-full">
+        <x-file-drop fileInputName="file"/>
         <x-input-error :messages="$errors->get('file')" class="mt-2" />
     </div>
     <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg">

@@ -1,25 +1,25 @@
 <?php /** @noinspection PhpArrayShapeAttributeCanBeAddedInspection */
 
-namespace App\Nordigen;
+namespace App\Services\Nordigen;
 
+use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
+use App\Http\Client\Traits\DecodesHttpJsonResponse;
 use App\Models\Import\Import;
-use Throwable;
+use App\Models\Nordigen\EndUserAgreement;
+use App\Models\Nordigen\Requisition;
+use App\Models\Synchronization\Account;
+use App\Models\Synchronization\Synchronization;
+use App\Services\Nordigen\DataObjects\InstitutionDataObject;
+use App\Services\Nordigen\DataObjects\TransactionDataObject;
+use App\Services\Nordigen\Synchronization\NordigenTransactionServiceInterface;
 use Exception;
-use Illuminate\Support\Str;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
-use App\Models\Nordigen\Requisition;
 use Illuminate\Support\Facades\Cache;
-use App\Models\Synchronization\Account;
-use App\Models\Nordigen\EndUserAgreement;
-use GuzzleHttp\Exception\GuzzleException;
-use App\Models\Synchronization\Synchronization;
-use App\Http\Client\Traits\DecodesHttpJsonResponse;
-use App\Nordigen\DataObjects\InstitutionDataObject;
-use App\Nordigen\DataObjects\TransactionDataObject;
-use App\Nordigen\Synchronization\NordigenTransactionServiceInterface;
-use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+use Throwable;
 
 class NordigenService implements TransactionSyncServiceInterface
 {

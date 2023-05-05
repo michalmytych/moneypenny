@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Nordigen\Provider;
+namespace App\Services\Nordigen\Provider;
 
-use App\Nordigen\NordigenClient;
-use Illuminate\Support\ServiceProvider;
+use App\Services\Nordigen\NordigenClient;
+use App\Services\Nordigen\Synchronization\NordigenTransactionServiceInterface;
 use App\Services\Transaction\TransactionSyncService;
-use App\Nordigen\Synchronization\NordigenTransactionServiceInterface;
+use Illuminate\Support\ServiceProvider;
 
 class NordigenServiceProvider extends ServiceProvider
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\ExchangeRates\Provider;
+namespace App\Services\ExchangeRates\Provider;
 
-use Illuminate\Support\ServiceProvider;
-use App\ExchangeRates\ExchangeRatesClient;
-use App\ExchangeRates\ExchangeRatesService;
 use App\Contracts\Services\ExchangeRates\ExchangeRatesServiceInterface;
+use App\Services\ExchangeRates\ExchangeRatesClient;
+use App\Services\ExchangeRates\ExchangeRatesService;
+use Illuminate\Support\ServiceProvider;
 
 class ExchangeRatesServiceProvider extends ServiceProvider
 {

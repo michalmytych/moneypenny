@@ -3,7 +3,6 @@
 namespace App\Services\Transaction\Traits;
 
 use App\Models\Transaction\Transaction;
-use App\Nordigen\DataObjects\TransactionDataObject;
 
 trait DecidesTransactionType
 {

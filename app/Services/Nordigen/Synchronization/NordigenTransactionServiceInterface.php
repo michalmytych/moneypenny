@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Nordigen\Synchronization;
+namespace App\Services\Nordigen\Synchronization;
 
 use App\Models\Import\Import;
-use App\Nordigen\DataObjects\TransactionDataObject;
+use App\Services\Nordigen\DataObjects\TransactionDataObject;
 
 interface NordigenTransactionServiceInterface
 {

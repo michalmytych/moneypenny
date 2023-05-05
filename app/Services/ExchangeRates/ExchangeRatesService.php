@@ -1,15 +1,15 @@
 <?php
 
-namespace App\ExchangeRates;
+namespace App\Services\ExchangeRates;
 
+use App\Contracts\Services\ExchangeRates\ExchangeRatesServiceInterface;
+use App\Http\Client\Traits\DecodesHttpJsonResponse;
+use App\Models\ExchangeRates\ExchangeRate;
+use App\Services\ExchangeRates\DataObjects\HistoricalExchangeRateDataObject;
 use Exception;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
-use GuzzleHttp\Exception\GuzzleException;
-use App\Models\ExchangeRates\ExchangeRate;
-use App\Http\Client\Traits\DecodesHttpJsonResponse;
-use App\ExchangeRates\DataObjects\HistoricalExchangeRateDataObject;
-use App\Contracts\Services\ExchangeRates\ExchangeRatesServiceInterface;
 
 class ExchangeRatesService implements ExchangeRatesServiceInterface
 {

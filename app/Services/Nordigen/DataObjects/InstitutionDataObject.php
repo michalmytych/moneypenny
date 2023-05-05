@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Nordigen\DataObjects;
+namespace App\Services\Nordigen\DataObjects;
+
+use App\DataObjects\DataObject;
 
 class InstitutionDataObject extends DataObject
 {
@@ -14,7 +16,7 @@ class InstitutionDataObject extends DataObject
     ) {
     }
 
-    public static function make(mixed $data): InstitutionDataObject
+    public static function make(mixed $data): self
     {
         return new self(
             id: data_get($data, 'id'),

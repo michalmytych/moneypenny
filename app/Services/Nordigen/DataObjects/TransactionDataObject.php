@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Nordigen\DataObjects;
+namespace App\Services\Nordigen\DataObjects;
+
+use App\DataObjects\DataObject;
 
 class TransactionDataObject extends DataObject
 {
@@ -35,7 +37,7 @@ class TransactionDataObject extends DataObject
     {
     }
 
-    public static function make(mixed $data): TransactionDataObject
+    public static function make(mixed $data): self
     {
         return new self(
             rawVolume: data_get($data, 'transactionAmount.amount'),

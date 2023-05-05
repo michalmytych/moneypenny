@@ -199,8 +199,8 @@ return [
         /*
          * Moneypenny integrations specific service providers...
          */
-        \App\Nordigen\Provider\NordigenServiceProvider::class,
-        \App\ExchangeRates\Provider\ExchangeRatesServiceProvider::class
+        \App\Services\Nordigen\Provider\NordigenServiceProvider::class,
+        \App\Services\ExchangeRates\Provider\ExchangeRatesServiceProvider::class
 
     ],
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Nordigen\DataObjects;
+namespace App\DataObjects;
 
 abstract class DataObject
 {

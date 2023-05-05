@@ -1,0 +1,9 @@
+### GET request with a header
+GET https://www.saltedge.com/api/v5/
+Content-type: application/json
+App-id: 62mJ0wygquURomeVll7vxvv-qS6w0_1KL04ArJvJWz8
+Secret: XXp-JUoSsCjXJMO5NkF5aLGhftHMyY_1HNEbXgPtILY
+
+
+## APP_ID  62mJ0wygquURomeVll7vxvv-qS6w0_1KL04ArJvJWz8
+## SECRET  XXp-JUoSsCjXJMO5NkF5aLGhftHMyY_1HNEbXgPtILY

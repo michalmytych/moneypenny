@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Nordigen;
+namespace App\Services\Nordigen;
 
 use App\Http\Client\Client;
 

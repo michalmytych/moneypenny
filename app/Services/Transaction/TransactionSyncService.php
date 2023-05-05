@@ -2,14 +2,14 @@
 
 namespace App\Services\Transaction;
 
-use Carbon\Carbon;
 use App\Models\Import\Import;
 use App\Models\Transaction\Transaction;
 use App\Services\Helpers\TransactionHelper;
-use App\Nordigen\DataObjects\TransactionDataObject;
+use App\Services\Nordigen\DataObjects\TransactionDataObject;
+use App\Services\Nordigen\Synchronization\NordigenTransactionServiceInterface;
 use App\Services\Transaction\Traits\DecidesTransactionType;
 use App\Services\Transaction\Traits\FindsSimilarTransaction;
-use App\Nordigen\Synchronization\NordigenTransactionServiceInterface;
+use Carbon\Carbon;
 
 class TransactionSyncService implements NordigenTransactionServiceInterface
 {

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\ExchangeRates\DataObjects;
+namespace App\Services\ExchangeRates\DataObjects;
 
+use App\DataObjects\DataObject;
 use Illuminate\Support\Carbon;
 
 class HistoricalExchangeRateDataObject extends DataObject
@@ -13,7 +14,7 @@ class HistoricalExchangeRateDataObject extends DataObject
         public string $targetCurrencyCode,
     ) {}
 
-    public static function make(mixed $data): DataObject
+    public static function make(mixed $data): self
     {
         return new self(
             date: data_get($data, 'date'),

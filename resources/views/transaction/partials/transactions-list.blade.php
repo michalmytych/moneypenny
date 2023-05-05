@@ -15,13 +15,12 @@
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Receiver
                 </th>
-                <th scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
             </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
             @foreach ($transactions as $transaction)
-                <tr>
+                <tr class="hover:bg-gray-100 cursor-pointer transaction-row"
+                    data-url="{{ route('transaction.show', ['id' => $transaction->id]) }}">
                     <td class="px-6 py-4 whitespace-nowrap">
                         {{ $transaction->transaction_date->format('d.m.Y') }}
                     </td>
@@ -34,11 +33,6 @@
                     <td class="px-6 py-4 whitespace-nowrap">
                         {{ \App\Services\Helpers\StringHelper::shortenAuto($transaction->receiver ?? '-', 30) }}
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <a href="{{ route('transaction.show', ['id' => $transaction->id]) }}">
-                            @include('icons.go')
-                        </a>
-                    </td>
                 </tr>
             @endforeach
             </tbody>
@@ -47,3 +41,16 @@
 @else
     <h2 class="font-semibold text-xl">Brak transakcji</h2>
 @endif
+
+@push('scripts')
+    <script>
+        window.addEventListener('load', () => {
+            const transactionRows = document.querySelectorAll('.transaction-row');
+            transactionRows.forEach(row => {
+                row.addEventListener('click', () => {
+                    window.location.href = row.dataset.url;
+                });
+            });
+        });
+    </script>
+@endpush

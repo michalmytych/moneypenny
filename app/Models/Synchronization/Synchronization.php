@@ -2,10 +2,14 @@
 
 namespace App\Models\Synchronization;
 
+use App\Models\Import\Import;
+use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
+ * @var Carbon $created_at
  * @method static create()
  */
 class Synchronization extends Model
@@ -19,4 +23,9 @@ class Synchronization extends Model
     protected $fillable = [
         'status',
     ];
+
+    public function import(): HasOne
+    {
+        return $this->hasOne(Import::class);
+    }
 }

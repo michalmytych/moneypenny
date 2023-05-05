@@ -4,6 +4,8 @@
 
             @include('home.partials.header')
 
+            @include('home.partials.latest-transactions', ['transactionsData' => $transactionsData ])
+
         </div>
     </div>
 </x-app-layout>

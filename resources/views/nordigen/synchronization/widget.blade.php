@@ -66,7 +66,6 @@
         }
 
         const handleRequestError = (res) => {
-            console.log(res)
             const mapping = {
                 500: 'Wewnętrzny błąd serwera',
                 429: 'Przekroczono dzienny limit synchronizacji dla instytucji',
@@ -87,6 +86,11 @@
             syncButton.classList.add('text-indigo-600');
             syncButton.classList.add('font-semibold');
             spinnerIcon.style.display = 'none';
+            @if(isset($reload) && $reload)
+                window.setTimeout(function() {
+                    window.location.reload();
+                }, 1000);
+            @endif
         }
 
         /** Event Listeners **/

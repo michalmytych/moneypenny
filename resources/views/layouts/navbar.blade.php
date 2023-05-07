@@ -41,6 +41,9 @@
                                 <x-dropdown-link :href="route('file.index')">
                                     {{ __('Pliki') }}
                                 </x-dropdown-link>
+                                <x-dropdown-link :href="route('exchange_rate.index')">
+                                    {{ __('Kursy walut') }}
+                                </x-dropdown-link>
                             </x-slot>
                         </x-dropdown>
                     </div>

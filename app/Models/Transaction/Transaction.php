@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static count()
  * @method static whereExpenditure()
  * @method static whereMonthAndYear(Carbon $now)
+ * @method static orderByTransactionDate()
  * @property string $sender
  * @property string $receiver
  * @property int $id
@@ -29,6 +30,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $receiver_account_number
  * @property string|null $sender_account_number
  * @property string $raw_volume
+ * @property int $type
+ * @property float $calculation_volume
  */
 class Transaction extends Model
 {
@@ -104,6 +107,11 @@ class Transaction extends Model
     public function receiverPersona(): BelongsTo
     {
         return $this->belongsTo(Persona::class, 'receiver_persona_id');
+    }
+
+    public function scopeOrderByTransactionDate(Builder $builder): Builder
+    {
+        return $builder->orderBy('transaction_date', 'desc');
     }
 
     public function scopeWhereExpenditure(Builder $builder): Builder

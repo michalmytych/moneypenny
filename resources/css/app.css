@@ -43,3 +43,27 @@ details > summary::-webkit-details-marker {
     animation-name: fadeIn;
     animation-duration: 1.2s;
 }
+
+@keyframes slideInBottom {
+    0% {
+        bottom: -200px;
+        opacity: 0;
+    }
+    10% {
+        bottom: 50px;
+        opacity: 1;
+    }
+    90% {
+        bottom: 50px;
+        opacity: 1;
+    }
+    100% {
+        bottom: -200px;
+        opacity: 0;
+    }
+}
+
+.slide-in-bottom {
+    animation-name: slideInBottom;
+    animation-duration: 7s;
+}

@@ -1,0 +1,57 @@
+<?php
+
+namespace App\Services\Transaction\PersonalAccount;
+
+use App\Models\User;
+use App\Models\Transaction\Transaction;
+use App\Models\Transaction\PersonalAccount;
+use Illuminate\Support\Facades\Cache;
+
+class SaldoService
+{
+    public function getByUser(User $user)
+    {
+        $cacheKey = 'account_saldo_' . $user->id;
+
+        if (Cache::missing($cacheKey)) {
+            $value = PersonalAccount::firstWhere('user_id', $user->id)->value;
+            Cache::put($cacheKey, (float) $value);
+            return $value;
+        }
+
+        return Cache::get($cacheKey);
+    }
+
+    public function calculate(): int
+    {
+        $saldo = 0;
+        foreach (Transaction::cursor() as $transaction) {
+            /** @var Transaction $transaction */
+            if ($transaction->type === Transaction::TYPE_EXPENDITURE) {
+                $saldo -= $transaction->calculation_volume;
+            }
+
+            if ($transaction->type === Transaction::TYPE_INCOME) {
+                $saldo += $transaction->calculation_volume;
+            }
+        }
+
+        return $saldo;
+    }
+
+    public function updateSaldo(Transaction $transaction): void
+    {
+        // @todo
+        $personalAccount = PersonalAccount::first();
+
+        if ($transaction->type === Transaction::TYPE_EXPENDITURE) {
+            $personalAccount->value -= $transaction->calculation_volume;
+        }
+
+        if ($transaction->type === Transaction::TYPE_INCOME) {
+            $personalAccount->value += $transaction->calculation_volume;
+        }
+
+        $personalAccount->save();
+    }
+}

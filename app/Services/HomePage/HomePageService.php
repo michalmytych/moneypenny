@@ -2,9 +2,9 @@
 
 namespace App\Services\HomePage;
 
-use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
 use App\Models\Transaction\Transaction;
 use App\Models\Synchronization\Synchronization;
+use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
 
 class HomePageService
 {
@@ -19,8 +19,7 @@ class HomePageService
                 ->transactionSyncService
                 ->getAgreements()
                 ->first(),
-            'transactions' => Transaction::query()
-                ->latest()
+            'transactions' => Transaction::orderByTransactionDate()
                 ->limit(5)
                 ->get(),
             'last_synchronization' => Synchronization::query()

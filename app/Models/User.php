@@ -11,6 +11,8 @@ use Laravel\Sanctum\HasApiTokens;
 
 /**
  * @property mixed $id
+ * @method static cursor()
+ * @method static firstWhere(array $array)
  */
 class User extends Authenticatable
 {

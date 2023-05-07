@@ -19,7 +19,7 @@
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
             @foreach ($transactions as $transaction)
-                <tr class="hover:bg-gray-100 cursor-pointer transaction-row"
+                <tr class="hover:bg-gray-50 cursor-pointer transaction-row"
                     data-url="{{ route('transaction.show', ['id' => $transaction->id]) }}">
                     <td class="px-6 py-4 whitespace-nowrap">
                         {{ $transaction->transaction_date->format('d.m.Y') }}

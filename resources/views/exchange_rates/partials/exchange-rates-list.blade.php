@@ -1,5 +1,5 @@
 @if(count($exchangeRates) > 0)
-    <h2 class="text-3xl font-semibold mb-4">Kursy walut</h2>
+    <h2 class="text-3xl font-semibold mb-4">Historyczne kursy walut</h2>
     <table class="w-full divide-y divide-gray-200 overflow-x-scroll">
         <thead class="bg-gray-50 rounded-t-md">
         <tr>

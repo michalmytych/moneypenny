@@ -5,28 +5,37 @@
             <h1 id="totalDisplay" class="text-7xl text-semibold">190.00</h1>
             <span class="text-xl ml-2">PLN</span>
         </div>
+        <h2 class="text-lg font-semibold">Stan konta</h2>
+        <div class="flex">
+            <h1 id="saldoDisplay" class="text-7xl text-semibold">{{ $saldoData }}</h1>
+            <span class="text-xl ml-2">PLN</span>
+        </div>
     </div>
 
     <div class="pr-4 sm:md:my-2">
-        <div class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in">
+        <div
+            class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in">
             @include('icons.sync')
             <span class="text-black-50 text-xs ml-3">
                 <span class="font-black">Nowa synchronizacja</span>, dodano 3 transakcje
             </span>
         </div>
-        <div class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in">
+        <div
+            class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in">
             @include('icons.eye')
             <span class="text-black-50 text-xs ml-3">
                 <span class="font-black">20 transakcji</span> wymaga uwagi
             </span>
         </div>
-        <div class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in">
+        <div
+            class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in">
             @include('icons.report')
             <span class="text-black-50 text-xs ml-3">
                 <span class="font-black">Nowy raport:</span> kwiecień 2023
             </span>
         </div>
-        <div class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in">
+        <div
+            class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in">
             @include('icons.report')
             <span class="text-black-50 text-xs ml-3">
                 <span class="font-black">Nowy raport:</span> marzec 2023
@@ -129,7 +138,15 @@
         }
 
         window.addEventListener('load', () => {
+                let saldoValue = 0.00;
+                try {
+                    saldoValue = parseFloat(document.getElementById('saldoDisplay').innerText);
+                } catch (e) {
+                    //
+                }
+
                 animateToValue('totalDisplay', 199.00);
+                animateToValue('saldoDisplay', saldoValue);
                 animateLoader('i0', 20);
                 animateLoader('i1', 30);
                 animateLoader('i2', 65);

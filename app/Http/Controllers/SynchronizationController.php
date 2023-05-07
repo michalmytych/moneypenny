@@ -41,11 +41,14 @@ class SynchronizationController extends Controller
             $this->transactionSyncService->setStatusFailed($synchronization);
             $statusCode = $throwable->getCode();
 
+            $supportedStatuses = [500, 429, 408];
+            $statusCode = in_array($throwable->getCode(), $supportedStatuses) ? $statusCode : 500;
+
             return response()->json([
                 'error' => 'Synchronization error',
                 'details' => App::hasDebugModeEnabled() ? $throwable->getMessage() : 'Lacking permissions',
                 'status_code' => $statusCode,
-            ], 500);
+            ], $statusCode);
         }
 
         return response()->json(Account::all());

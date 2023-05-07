@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\ApplicationNotificationSent;
 use App\Http\Controllers\EmptyController;
 use App\Http\Controllers\ExchangeRates\ExchangeRateController;
 use App\Http\Controllers\Meta\MetaController;
@@ -28,6 +29,17 @@ use App\Http\Controllers\Nordigen\Institution\InstitutionController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/test', function () {
+    broadcast(
+        new ApplicationNotificationSent(
+            'Test application notification',
+            'This is a notifications test!',
+            \route('transaction.index')
+        )
+    );
+    return 'Sent';
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -61,7 +73,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/analyzers', [DebugController::class, 'analyzers'])->name('analyzers');
     });
 
-    Route::prefix('exchange-rates')->as('exchange-rate.')->group(function () {
+    Route::prefix('exchange-rates')->as('exchange_rate.')->group(function () {
         Route::get('/', [ExchangeRateController::class, 'index'])->name('index');
     });
 

@@ -28,6 +28,7 @@
         {{ $slot }}
     </main>
 
+    @include('layouts.partials.notifications')
     @include('layouts.partials.fixed-footer')
 </div>
 

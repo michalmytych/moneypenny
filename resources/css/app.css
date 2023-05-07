@@ -67,3 +67,7 @@ details > summary::-webkit-details-marker {
     animation-name: slideInBottom;
     animation-duration: 7s;
 }
+
+.scale-hover:hover {
+    transform: scale(1.01);
+}

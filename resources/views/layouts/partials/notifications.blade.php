@@ -1,6 +1,6 @@
 <div id="applicationNotification" class="fixed flex justify-center w-full transition-all hover:translate-x-1.5" style="bottom: -200px;">
     <a href="#" class="link w-1/2">
-        <div class="px-6 w-full rounded-md bg-white py-2 shadow-lg flex items-center">
+        <div class="px-6 w-full rounded-md bg-white py-2 shadow-2xl flex items-center">
             <div class="mr-5">
                 @include('icons.bell')
             </div>

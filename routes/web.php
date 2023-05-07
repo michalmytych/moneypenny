@@ -4,6 +4,7 @@ use App\Events\ApplicationNotificationSent;
 use App\Http\Controllers\EmptyController;
 use App\Http\Controllers\ExchangeRates\ExchangeRateController;
 use App\Http\Controllers\Meta\MetaController;
+use App\Http\Controllers\Notification\NotificationController;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SynchronizationController;
@@ -31,12 +32,21 @@ use App\Http\Controllers\Nordigen\Institution\InstitutionController;
 */
 
 Route::get('/test', function () {
+    $header = 'Nowe transakcje w bazie';
+    $content = '12 nowych transakcji';
+    $url = \route('transaction.index');
+
+    \App\Models\Notification::create([
+        'content' => json_encode([
+            'header' => $header,
+            'content' => $content,
+            'url' => $url,
+        ]),
+        'type'
+    ]);
+
     broadcast(
-        new ApplicationNotificationSent(
-            'Test application notification',
-            'This is a notifications test!',
-            \route('transaction.index')
-        )
+        new ApplicationNotificationSent($header, $content, $url)
     );
     return 'Sent';
 });
@@ -47,6 +57,11 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+    Route::prefix('notifications')->as('notification.')->group(function () {
+        Route::get('/', [NotificationController::class, 'index'])->name('index');
+        Route::get('/redirect/{notification}', [NotificationController::class, 'redirect'])->name('redirect');
+    });
 
     Route::prefix('profile')->as('profile.')->group(function () {
         Route::get('/', [ProfileController::class, 'edit'])->name('edit');

@@ -18,7 +18,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 </head>
-<body class="font-sans antialiased">
+<body class="font-sans antialiased mt-10">
 <!-- Nav Bar -->
 @include('layouts.navbar')
 

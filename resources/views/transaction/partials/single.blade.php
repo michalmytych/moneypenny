@@ -1,5 +1,8 @@
 <div class="bg-white px-8 pt-6 pb-8 mb-4">
-    <div class="mb-4">
+    <div class="font-semibold text-indigo-500">
+        <a href="{{ url()->previous() }}">Back</a>
+    </div>
+    <div class="mb-4 mt-2">
         <p class="block text-gray-700 font-bold mb-2">
             Wartość:
         </p>

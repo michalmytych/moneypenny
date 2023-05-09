@@ -13,7 +13,7 @@ use App\Contracts\Services\Import\ImportServiceContract;
 
 class ImportService implements ImportServiceContract
 {
-    public function importFromFile(int $fileId, int $importSettingId, int $columnsMappingId)
+    public function importFromFile(int $fileId, int $importSettingId, int $columnsMappingId): void
     {
         $importSetting  = ImportSetting::findOrFail($importSettingId);
         $columnsMapping = ColumnsMapping::findOrFail($columnsMappingId);

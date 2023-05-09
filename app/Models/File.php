@@ -18,6 +18,8 @@ class File extends Model
 {
     use HasFactory;
 
+    public const USER_AVATAR = 'USER_AVATAR';
+
     protected $fillable = [
         'name',
         'path',

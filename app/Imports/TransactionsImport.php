@@ -15,17 +15,18 @@ use App\Services\Transaction\TransactionImportService;
 class TransactionsImport implements ToCollection, WithCustomCsvSettings, WithStartRow
 {
     public function __construct(
-        private ImportSetting  $importSetting,
-        private ColumnsMapping $columnsMapping,
-        private Import         $import
-    ) {
+        private readonly ImportSetting  $importSetting,
+        private readonly ColumnsMapping $columnsMapping,
+        private readonly Import         $import
+    )
+    {
     }
 
     /**
      * @param Collection $collection
      * @throws Throwable
      */
-    public function collection(Collection $collection)
+    public function collection(Collection $collection): void
     {
         $this->import->update(['status' => Import::STATUS_IMPORTING]);
 
@@ -49,9 +50,9 @@ class TransactionsImport implements ToCollection, WithCustomCsvSettings, WithSta
     public function getCsvSettings(): array
     {
         $settings = [
-            'delimiter'        => $this->importSetting->delimiter,
-            'enclosure'        => $this->importSetting->enclosure,
-            'input_encoding'   => $this->importSetting->input_encoding,
+            'delimiter' => $this->importSetting->delimiter,
+            'enclosure' => $this->importSetting->enclosure,
+            'input_encoding' => $this->importSetting->input_encoding,
             'escape_character' => $this->importSetting->escape_character,
         ];
 

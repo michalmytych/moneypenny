@@ -69,7 +69,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Europe/Warsaw',
 
     /*
     |--------------------------------------------------------------------------
@@ -82,7 +82,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'pl',
 
     /*
     |--------------------------------------------------------------------------
@@ -195,11 +195,13 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\HorizonServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\TelescopeServiceProvider::class,
 
         /*
-         * Moneypenny specific service providers...
+         * Moneypenny integrations specific service providers...
          */
-        \App\Nordigen\Provider\NordigenServiceProvider::class
+        \App\Services\Nordigen\Provider\NordigenServiceProvider::class,
+        \App\Services\ExchangeRates\Provider\ExchangeRatesServiceProvider::class
 
     ],
 

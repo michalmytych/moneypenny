@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use Throwable;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -11,17 +13,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        try {
+            User::factory()->create([
+                'name' => 'Test User',
+                'email' => 'test@example.com',
+            ]);
+        } catch (Throwable $throwable) {
+            echo 'Test user was not created. Reason: [' . $throwable->getMessage() . ']';
+        }
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
 
         $this->call([
             ImportSettingsTableSeeder::class,
-//            TransactionsTableSeeder::class,
             ColumnsMappingsTableSeeder::class,
+//            TransactionsTableSeeder::class,
 //            FilesTableSeeder::class,
         ]);
     }

@@ -1,6 +1,7 @@
 @if(count($transactions) > 0)
-    <table class="w-full divide-y divide-gray-200 overflow-x-scroll">
-        <thead class="bg-gray-50 rounded-t-md">
+    <div class="overflow-x-scroll rounded-md">
+        <table class="divide-y divide-gray-200 min-w-full">
+            <thead class="bg-gray-50">
             <tr>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Transaction Date
@@ -12,41 +13,44 @@
                     Description
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Sender
-                </th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Receiver
                 </th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
             </tr>
-        </thead>
-        <tbody class="bg-white divide-y divide-gray-200 overflow-x-scroll">
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
             @foreach ($transactions as $transaction)
-                <tr>
+                <tr class="hover:bg-gray-50 cursor-pointer transaction-row"
+                    data-url="{{ route('transaction.show', ['id' => $transaction->id]) }}">
                     <td class="px-6 py-4 whitespace-nowrap">
-                        {{ $transaction->transaction_date }}
+                        {{ $transaction->transaction_date->format('d.m.Y') }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <strong>{{ $transaction->raw_volume }}</strong> {{ $transaction->currency }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        {{ \App\Services\Helpers\StringHelper::shortenAuto($transaction->description ?? '-', 30) }}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        {{ \App\Services\Helpers\StringHelper::shortenAuto($transaction->sender ?? '-', 30) }}
+                        {{ \App\Services\Helpers\StringHelper::shortenAuto($transaction->description ?? '-', 45) }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         {{ \App\Services\Helpers\StringHelper::shortenAuto($transaction->receiver ?? '-', 30) }}
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <a href="{{ route('transaction.show', ['id' => $transaction->id]) }}">
-                            @include('icons.go')
-                        </a>
-                    </td>
                 </tr>
             @endforeach
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 @else
     <h2 class="font-semibold text-xl">Brak transakcji</h2>
 @endif
+
+@push('scripts')
+    <script>
+        window.addEventListener('load', () => {
+            const transactionRows = document.querySelectorAll('.transaction-row');
+            transactionRows.forEach(row => {
+                row.addEventListener('click', () => {
+                    window.location.href = row.dataset.url;
+                });
+            });
+        });
+    </script>
+@endpush

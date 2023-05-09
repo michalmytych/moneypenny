@@ -3,9 +3,12 @@
 namespace App\Models\Transaction;
 
 use App\Filters\Filter;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use App\Filters\Traits\Filterable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
@@ -13,26 +16,53 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static create(array $data)
  * @method static firstWhere(array $attributes)
  * @method static findOrFail(int $id)
+ * @method static cursor()
+ * @method static count()
+ * @method static whereExpenditure()
+ * @method static whereMonthAndYear(Carbon $now)
+ * @method static orderByTransactionDate()
+ * @property string $sender
+ * @property string $receiver
+ * @property int $id
+ * @property Persona|null $senderPersona
+ * @property Persona|null $receiverPersona
+ * @property string $description
+ * @property string|null $receiver_account_number
+ * @property string|null $sender_account_number
+ * @property string $raw_volume
+ * @property int $type
+ * @property float $calculation_volume
  */
 class Transaction extends Model
 {
     use HasFactory, Filterable;
 
-    const TYPE_UNKNOWN     = 0;
-    const TYPE_INCOME      = 1;
+    const TYPE_UNKNOWN = 0;
+    const TYPE_INCOME = 1;
     const TYPE_EXPENDITURE = 2;
 
+    const CALCULATION_COLUMN = 'calculation_volume';
+
     protected $fillable = [
+        'receiver_account_number',
+        'sender_account_number',
+        'receiver_persona_id',
+        'calculation_volume',
+        'sender_persona_id',
         'transaction_date',
-        'synchronization_id',
         'accounting_date',
         'decimal_volume',
-        'raw_volume',
-        'sender',
-        'receiver',
         'description',
+        'raw_volume',
+        'import_id',
+        'receiver',
         'currency',
-        'import_id'
+        'sender',
+        'type'
+    ];
+
+    protected $casts = [
+        'transaction_date' => 'datetime'
     ];
 
     public static function getFilterableColumns(): Collection
@@ -40,32 +70,64 @@ class Transaction extends Model
         return collect([
             'transaction_date' => [
                 'operators' => ['lte', 'eq', 'gte', 'lt', 'gt'],
-                'input'     => 'date',
+                'input' => 'date',
             ],
-            'accounting_date'  => [
+            'accounting_date' => [
                 'operators' => ['lte', 'eq', 'gte', 'lt', 'gt'],
-                'input'     => 'date',
+                'input' => 'date',
             ],
-            'decimal_volume'   => [
+            'decimal_volume' => [
                 'operators' => ['lte', 'eq', 'gte', 'lt', 'gt'],
-                'input'     => 'number',
+                'input' => 'number',
             ],
-            'sender'           => [
+            'sender' => [
                 'operators' => ['starts', 'ends', 'contains', 'eq'],
-                'input'     => 'text',
+                'input' => 'text',
             ],
-            'receiver'         => [
+            'receiver' => [
                 'operators' => ['starts', 'ends', 'contains', 'eq'],
-                'input'     => 'text',
+                'input' => 'text',
             ],
-            'description'      => [
-                'operators' => ['contains'],
-                'input'     => 'text',
+            'description' => [
+                'operators' => ['contains', 'eq'],
+                'input' => 'text',
             ],
-            'currency'         => [
+            'currency' => [
                 'operators' => ['eq'],
-                'input'     => 'text',
+                'input' => 'text',
             ],
         ]);
+    }
+
+    public function senderPersona(): BelongsTo
+    {
+        return $this->belongsTo(Persona::class, 'sender_persona_id');
+    }
+
+    public function receiverPersona(): BelongsTo
+    {
+        return $this->belongsTo(Persona::class, 'receiver_persona_id');
+    }
+
+    public function scopeOrderByTransactionDate(Builder $builder): Builder
+    {
+        return $builder->orderBy('transaction_date', 'desc');
+    }
+
+    public function scopeWhereExpenditure(Builder $builder): Builder
+    {
+        return $builder->where('type', Transaction::TYPE_EXPENDITURE);
+    }
+
+    public function scopeWhereIncome(Builder $builder): Builder
+    {
+        return $builder->where('type', Transaction::TYPE_INCOME);
+    }
+
+    public function scopeWhereMonthAndYear(Builder $builder, Carbon $carbon): Builder
+    {
+        return $builder
+            ->whereYear('transaction_date', $carbon->year)
+            ->whereMonth('transaction_date', $carbon->month);
     }
 }

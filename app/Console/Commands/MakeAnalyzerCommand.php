@@ -13,13 +13,13 @@ class MakeAnalyzerCommand extends Command
 
     protected $description = 'Create a new analyzer class';
 
-    public function handle()
+    public function handle(): void
     {
         $name = $this->argument('name');
         $className = Str::studly($name);
 
         $namespace = 'App\Services\Analysis\Analyzers';
-        $path = app_path("Services/Analysis/Analyzers/{$className}.php");
+        $path = app_path("Interfaces/Analysis/Analyzers/{$className}.php");
 
         if (File::exists($path)) {
             $this->error("{$className} already exists.");

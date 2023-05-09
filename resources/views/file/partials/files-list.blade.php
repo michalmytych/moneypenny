@@ -1,5 +1,5 @@
 @if(count($files) > 0)
-    <div class="text-black px-4 py-8">
+    <div class="text-black px-4 ml-2">
         <h1 class="text-3xl font-bold mb-4">Przesłane pliki</h1>
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">

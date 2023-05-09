@@ -14,6 +14,7 @@ class MetaController extends Controller
 
     public function processes(): JsonResponse
     {
-        return response()->json($this->metaService->getTopProcesses());
+        $serverTopProcesses = $this->metaService->getTopProcesses();
+        return response()->json($serverTopProcesses);
     }
 }

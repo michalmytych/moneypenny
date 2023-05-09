@@ -3,15 +3,15 @@
 namespace App\Services\Transaction\PersonalAccount;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 use App\Models\Transaction\Transaction;
 use App\Models\Transaction\PersonalAccount;
-use Illuminate\Support\Facades\Cache;
 
 class SaldoService
 {
     public function getByUser(User $user)
     {
-        $cacheKey = 'account_saldo_' . $user->id;
+        $cacheKey = PersonalAccount::USER_SALDO_CACHE_KEY_PREFIX . $user->id;
 
         if (Cache::missing($cacheKey)) {
             $value = PersonalAccount::firstWhere('user_id', $user->id)->value;
@@ -53,5 +53,6 @@ class SaldoService
         }
 
         $personalAccount->save();
+        Cache::flush(); // @todo - should remove only personal account saldo cache key
     }
 }

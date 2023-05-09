@@ -2,20 +2,26 @@
 
 namespace App\Services\ExchangeRates;
 
-use App\Contracts\Services\ExchangeRates\ExchangeRatesServiceInterface;
-use App\Http\Client\Traits\DecodesHttpJsonResponse;
-use App\Models\ExchangeRates\ExchangeRate;
-use App\Services\ExchangeRates\DataObjects\HistoricalExchangeRateDataObject;
 use Exception;
-use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
+use GuzzleHttp\Exception\GuzzleException;
+use App\Models\ExchangeRates\ExchangeRate;
+use App\Http\Client\Traits\DecodesHttpJsonResponse;
+use App\Contracts\Services\ExchangeRates\ExchangeRatesServiceInterface;
+use App\Services\ExchangeRates\DataObjects\HistoricalExchangeRateDataObject;
 
 class ExchangeRatesService implements ExchangeRatesServiceInterface
 {
     use DecodesHttpJsonResponse;
 
     public function __construct(private readonly ExchangeRatesClient $exchangeRatesClient) { }
+
+    public function all(): Collection
+    {
+        return ExchangeRate::latest()->get();
+    }
 
     /**
      * @throws GuzzleException

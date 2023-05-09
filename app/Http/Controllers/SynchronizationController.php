@@ -10,26 +10,28 @@ use Illuminate\Support\Facades\App;
 use App\Models\Nordigen\Requisition;
 use App\Models\Synchronization\Account;
 use App\Models\Synchronization\Synchronization;
+use App\Services\Transaction\Synchronization\SynchronizationService;
 use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
 
 class SynchronizationController extends Controller
 {
-    public function __construct(private readonly TransactionSyncServiceInterface $transactionSyncService)
+    public function __construct(
+        private readonly SynchronizationService          $synchronizationService,
+        private readonly TransactionSyncServiceInterface $transactionSyncService
+    )
     {
     }
 
     public function index(): View
     {
-        $synchronizations = Synchronization::latest()->get();
+        $synchronizations = $this->synchronizationService->all();
         return view('synchronizations.index', compact('synchronizations'));
     }
 
     public function sync(Request $request): JsonResponse
     {
         $agreementId = $request->get('agreement_id');
-
         $requisition = Requisition::latest()->firstWhere('end_user_agreement_id', $agreementId);
-
         $synchronization = Synchronization::create();
 
         try {

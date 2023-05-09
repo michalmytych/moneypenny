@@ -15,10 +15,7 @@ class AnalysisController extends Controller
 
     public function analyze(Request $request): JsonResponse
     {
-        $data = $request->all();
-
-        $result = $this->analysisService->analyze($data);
-
+        $result = $this->analysisService->analyze($request->all());
         return response()->json($result);
     }
 }

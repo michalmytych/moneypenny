@@ -3,36 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Filters\Filter;
-use App\Models\Transaction\Persona;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
-use App\Models\Transaction\Transaction;
+use App\Services\Transaction\TransactionService;
 
 class TransactionController extends Controller
 {
+    public function __construct(private readonly TransactionService $transactionService) {}
+
     public function index(Request $request): View
     {
         $filter = Filter::makeFromRequest($request);
+        $indexData = $this->transactionService->getIndexData($filter);
 
-        $transactions = Transaction::applyFilter($filter)
-            ->orderBy('transaction_date', 'desc')
-            ->limit(1000)
-            ->get();
-
-        $filterableColumns = Transaction::getFilterableColumns();
-        $personas = Persona::orderBy('common_name')->get();
-
-        return view('transaction.index', compact('transactions', 'filterableColumns', 'personas'));
+        return view('transaction.index', $indexData);
     }
 
     public function show(int $id): View
     {
-        $transaction = Transaction::findOrFail($id);
+        $transaction = $this->transactionService->findOrFail($id);
         return view('transaction.show', compact('transaction'));
     }
 
     public function create(Request $request)
     {
+        // @todo
         dd($request->all());
     }
 }

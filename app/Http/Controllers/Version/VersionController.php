@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Version;
 
-use App\Http\Controllers\Controller;
 use Illuminate\View\View;
+use App\Http\Controllers\Controller;
 
 class VersionController extends Controller
 {

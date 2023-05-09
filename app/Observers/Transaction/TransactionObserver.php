@@ -2,9 +2,9 @@
 
 namespace App\Observers\Transaction;
 
-use App\Jobs\Transaction\UpdateUsersPersonalAccountSaldo;
 use App\Models\Transaction\Transaction;
 use App\Jobs\Persona\CreateTransactionPersonaAssociation;
+use App\Jobs\Transaction\UpdateUsersPersonalAccountSaldo;
 
 class TransactionObserver
 {

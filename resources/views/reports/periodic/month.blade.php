@@ -10,7 +10,7 @@
                     </form>
                 </div>
                 <div class="grid lg:grid-cols-2 gap-4 mb-4 md:grid-cols-1 md:gap-8 sm:grid-cols-1">
-                    <div class="pb-4 pr-4 rounded-lg pl-0.5">
+                    <div class="pb-2 pr-4 rounded-lg pl-0.5 pt-4">
                         <h2 class="text-2xl font-bold mb-2">Podsumowanie</h2>
                         <ul>
                             <li class="flex justify-between items-end">

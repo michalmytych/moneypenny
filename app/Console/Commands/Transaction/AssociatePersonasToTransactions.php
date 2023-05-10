@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands\Transaction;
 
-use App\Models\Transaction\Persona;
-use App\Models\Transaction\Transaction;
-use App\Services\Helpers\StringHelper;
-use App\Services\Transaction\TransactionPersonaService;
 use Illuminate\Console\Command;
+use App\Models\Transaction\Persona;
+use App\Services\Helpers\StringHelper;
+use App\Models\Transaction\Transaction;
+use App\Services\Transaction\TransactionPersonaService;
 
 class AssociatePersonasToTransactions extends Command
 {
@@ -18,6 +18,7 @@ class AssociatePersonasToTransactions extends Command
     public function handle(): void
     {
         $transactionsCount = Transaction::count();
+
         $this->line("<fg=blue>Creating associations for $transactionsCount transactions...</>");
         $this->line("* * * * * * * * * * * * * * * * * * * * * * *");
 

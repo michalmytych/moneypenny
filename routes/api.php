@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\MetaController;
 use App\Http\Controllers\Api\Notification\NotificationController;
+use App\Http\Controllers\Api\Transaction\ReportController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SynchronizationController;
@@ -28,6 +29,8 @@ Route::post('/sync', [SynchronizationController::class, 'sync'])->name('api.sync
 Route::get('/exchange-rates', [ExchangeRateController::class, 'index'])->name('api.exchange_rate');
 Route::get('/meta/processes', [MetaController::class, 'processes'])->name('api.meta.processes');
 Route::get('/notifications', [NotificationController::class, 'index'])->name('api.notification.index');
+Route::get('/reports/avg-expenditures', [ReportController::class, 'avgExpenditures'])->name('api.report.avg_expenditures');
+Route::get('/reports/avg-incomes', [ReportController::class, 'avgIncomes'])->name('api.report.avg_incomes');
 
 // @todo
 Route::get(

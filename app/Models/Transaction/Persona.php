@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @method static create(array $array)
  * @method static orderBy(string $string)
+ * @method static withCount(string $string, string $string1)
  * @property string $associated_names
  * @property int $id
  * @property string $common_name

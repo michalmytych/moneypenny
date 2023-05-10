@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Meta;
 
-use App\Http\Controllers\Controller;
-use App\Services\Meta\MetaService;
 use Illuminate\View\View;
+use App\Services\Meta\MetaService;
+use App\Http\Controllers\Controller;
 
 class MetaController extends Controller
 {

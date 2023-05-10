@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\Transaction;
 
-use App\Models\Transaction\Transaction;
 use Illuminate\Console\Command;
+use App\Models\Transaction\Transaction;
 
 class UpdateTypesBasedOnRawVolume extends Command
 {

@@ -4,13 +4,15 @@ namespace App\Http\Controllers\ExchangeRates;
 
 use Illuminate\View\View;
 use App\Http\Controllers\Controller;
-use App\Models\ExchangeRates\ExchangeRate;
+use App\Services\ExchangeRates\ExchangeRatesService;
 
 class ExchangeRateController extends Controller
 {
+    public function __construct(private readonly ExchangeRatesService $exchangeRatesService) {}
+
     public function index(): View
     {
-        $exchangeRates = ExchangeRate::latest()->get();
+        $exchangeRates = $this->exchangeRatesService->all();
         return view('exchange_rates.index', compact('exchangeRates'));
     }
 }

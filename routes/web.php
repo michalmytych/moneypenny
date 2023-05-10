@@ -31,25 +31,11 @@ use App\Http\Controllers\Nordigen\Institution\InstitutionController;
 |
 */
 
-Route::get('/test', function () {
-    $header = 'Nowe transakcje w bazie';
-    $content = '12 nowych transakcji';
-    $url = \route('transaction.index');
-
-    \App\Models\Notification::create([
-        'content' => json_encode([
-            'header' => $header,
-            'content' => $content,
-            'url' => $url,
-        ]),
-        'type'
-    ]);
-
-    broadcast(
-        new ApplicationNotificationSent($header, $content, $url)
-    );
-    return 'Sent';
-});
+//Route::get('/test', function () {
+//    app(\App\Services\Auth\Device\DeviceService::class)->handleWhenDeviceHijacked();
+//
+//    return 'Sent';
+//});
 
 Route::get('/dashboard', function () {
     return view('dashboard');

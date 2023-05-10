@@ -3,15 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\View\View;
-use Illuminate\Support\Collection;
 use App\Services\Analysis\AnalyzerResolver;
 
 class DebugController extends Controller
 {
+    public function __construct(private readonly AnalyzerResolver $analyzerResolver) {}
+
     public function analyzers(): View
     {
-        /** @var Collection $analyzersMapping */
-        $analyzersMapping = app(AnalyzerResolver::class)->getEnabledAnalyzersMapping();
+        $analyzersMapping = $this->analyzerResolver->getEnabledAnalyzersMapping();
         $analyzers = $analyzersMapping->keys();
         return view('debug.analyzers', compact('analyzers'));
     }

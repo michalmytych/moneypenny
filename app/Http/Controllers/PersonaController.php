@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Transaction\Persona;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Models\Transaction\Transaction;
 use App\Services\Transaction\TransactionPersonaService;
 
 class PersonaController extends Controller
 {
+    public function __construct(private readonly TransactionPersonaService $transactionPersonaService) {}
+
     public function index(Request $request): View
     {
         $selectedPersonaId = $request->get('selected_persona_id');
@@ -43,7 +45,7 @@ class PersonaController extends Controller
     public function associatePersonasToTransactions(): string
     {
         foreach (Transaction::cursor() as $transaction) {
-            app(TransactionPersonaService::class)->createPersonasAssociations($transaction);
+            $this->transactionPersonaService->createPersonasAssociations($transaction);
         }
 
         return redirect(route('persona.index'));

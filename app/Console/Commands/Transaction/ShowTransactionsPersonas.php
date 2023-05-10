@@ -2,10 +2,9 @@
 
 namespace App\Console\Commands\Transaction;
 
-use App\Models\Transaction\Persona;
-use App\Models\Transaction\Transaction;
-use App\Services\Helpers\StringHelper;
 use Illuminate\Console\Command;
+use App\Services\Helpers\StringHelper;
+use App\Models\Transaction\Transaction;
 
 class ShowTransactionsPersonas extends Command
 {

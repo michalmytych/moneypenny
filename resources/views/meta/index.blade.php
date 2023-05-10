@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="pb-64">
         <div class="w-full mx-auto">
-            <div class="py-4">
+            <div class="py-10">
                 <div class="mx-auto sm:px-6 lg:px-8">
                     <div class="grid gap-4 lg:grid-cols-2 md:grid-cols-1">
                         <div class="bg-white overflow-hidden sm:rounded-lg">

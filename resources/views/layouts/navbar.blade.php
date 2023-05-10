@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white fixed top-0 w-full">
+<nav x-data="{ open: false }" class="bg-white fixed top-0 w-full shadow-sm">
     <!-- Primary Navigation Menu -->
     <div class="w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -151,6 +151,10 @@
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
+                        </x-dropdown-link>
+
+                        <x-dropdown-link :href="route('devices')">
+                            {{ __('Devices') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->

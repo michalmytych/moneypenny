@@ -4,7 +4,7 @@
 
             <div class="container mx-auto my-8">
                 <div class="flex justify-between">
-                    <h1 class="text-3xl font-bold mb-4">Raport finansowy</h1>
+                    <h1 class="text-4xl font-bold mb-4">Raport miesięczny</h1>
                     <form id="monthForm" action="{{ route('report.periodic') }}" method="get">
                         <input class="rounded" type="month" name="month" id="month">
                     </form>

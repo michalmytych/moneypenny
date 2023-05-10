@@ -47,6 +47,7 @@ class ReportService
 
     public function getAvgExpendituresByDays(Carbon $sinceDate, Carbon $toDate): \Illuminate\Support\Collection|array
     {
+        // @todo - źle, po prostu zwraca wydatki powinno obliczyć dla każdego dnia od początku konta
         $expendituresData = Transaction::query()
             ->orderBy('transaction_date')
             ->where('type', Transaction::TYPE_EXPENDITURE)

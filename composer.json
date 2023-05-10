@@ -11,6 +11,7 @@
         "php": "^8.2",
         "doctrine/dbal": "^3.6",
         "guzzlehttp/guzzle": "^7.2",
+        "ivanomatteo/laravel-device-tracking": "^0.2.1",
         "laravel/breeze": "^1.20",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",

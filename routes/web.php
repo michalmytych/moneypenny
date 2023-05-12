@@ -7,6 +7,7 @@ use App\Http\Controllers\Meta\MetaController;
 use App\Http\Controllers\Notification\NotificationController;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\Social\ChatController;
 use App\Http\Controllers\SynchronizationController;
 use App\Http\Controllers\Version\VersionController;
 use Illuminate\Support\Facades\Route;
@@ -78,6 +79,13 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [ExchangeRateController::class, 'index'])->name('index');
     });
 
+    Route::prefix('social')->as('social.')->group(function () {
+        Route::prefix('chat')->as('chat.')->group(function () {
+            Route::get('/', [ChatController::class, 'index'])->name('index');
+            Route::post('/send-message', [ChatController::class, 'sendMessage'])->name('send_message');
+        });
+    });
+
     Route::prefix('files')->as('file.')->group(function () {
         Route::get('/', [FileController::class, 'index'])->name('index');
         Route::post('/upload', [FileController::class, 'upload'])->name('upload');
@@ -94,6 +102,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/{institutionId}', [InstitutionController::class, 'newAgreement'])->name('new_agreement');
         Route::get('/{id}/agreements', [InstitutionController::class, 'agreements'])->name('agreements');
         Route::post('/{agreementId}/requisitions', [InstitutionController::class, 'newRequisition'])->name('new_requisition');
+        Route::delete('/agreements/{agreementId}', [InstitutionController::class, 'deleteAgreement'])->name('delete_agreement');
     });
 
     Route::prefix('transactions')->as('transaction.')->group(function () {

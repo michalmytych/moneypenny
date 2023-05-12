@@ -16,12 +16,14 @@ return new class extends Migration
                 ->foreignId('sender_persona_id')
                 ->nullable()
                 ->references('id')
-                ->on('personas');
+                ->on('personas')
+                ->cascadeOnDelete();
             $table
                 ->foreignId('receiver_persona_id')
                 ->nullable()
                 ->references('id')
-                ->on('personas');
+                ->on('personas')
+                ->cascadeOnDelete();
         });
     }
 

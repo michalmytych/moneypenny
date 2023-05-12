@@ -133,11 +133,37 @@
                         </x-dropdown>
                     </div>
 
+                    <div class="flex h-full text-center content-center pt-4">
+                        <x-dropdown align="right" width="48">
+                            <x-slot name="trigger">
+                                <button
+                                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                    <div>
+                                        {{ __('Sieć') }}
+                                    </div>
+                                </button>
+                            </x-slot>
+
+                            <x-slot name="content">
+                                <x-dropdown-link :href="route('social.chat.index')">
+                                    <span class="flex items-center justify-between">
+                                        {{ __('Chat') }}
+                                        <span class="relative top-2">
+                                            @include('components.mainteance.beta-badge')
+                                        </span>
+                                    </span>
+                                </x-dropdown-link>
+                            </x-slot>
+                        </x-dropdown>
+                    </div>
+
                 </div>
             </div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
+                @include('layouts.partials.chat-icon')
+
                 @include('layouts.partials.notifications-dropdown')
 
                 <x-dropdown align="right" width="48">
@@ -227,44 +253,3 @@
     </div>
 </nav>
 
-<div id="secondNav" class="w-full mx-auto relative" style="display: none; z-index: 5;">
-    <div class="w-full mt-px absolute bg-gradient-to-b from-indigo-200 h-72"></div>
-    <div class="absolute w-full mt-4 pl-4 pr-4 sm:px-8">
-        <div class="mx-20">
-            @include('layouts.second-level-nav')
-        </div>
-    </div>
-</div>
-
-@push('scripts')
-    <script>
-        const navLinks = document.querySelectorAll('.-nav-link');
-        const secondNav = document.getElementById('secondNav');
-
-        const showSecondNav = () => {
-            secondNav.style.display = 'block';
-        };
-
-        const hideSecondNav = () => {
-            secondNav.style.display = 'none';
-        };
-
-        window.addEventListener('load', () => {
-            navLinks.forEach(navLink => {
-                navLink.addEventListener('mouseover', () => {
-                    showSecondNav();
-                });
-            });
-
-            window.addEventListener('mousemove', function (event) {
-                let mouseY = event.clientY;
-                let windowHeight = window.innerHeight;
-                let halfWindowHeight = windowHeight / 4;
-
-                if (mouseY > halfWindowHeight) {
-                    hideSecondNav();
-                }
-            });
-        });
-    </script>
-@endpush

@@ -3,34 +3,37 @@
 namespace App\Services\Transaction\Transformers;
 
 use Carbon\CarbonPeriod;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
 class DateGroupByToCalendar extends Transformer
 {
-    public static function transform(mixed $data): Collection
+    public static function transform(mixed $data, string $dateKey, string $valueKey): Collection
     {
         /** @var Collection $data */
         $datesData = $data->toArray();
         $result = collect();
 
-        $sinceDate = $datesData[0]['date'];
-        $toDate = end($datesData)['date'];
+        $sinceDate = $datesData[0][$dateKey];
+        $toDate = end($datesData)[$dateKey];
 
         $period = CarbonPeriod::create($sinceDate, $toDate);
 
         foreach ($period as $date) {
-            $sumData = 0.0;
+            $valueData = 0.0;
             $currentDate = data_get($datesData, 0);
 
             $dayString = $date->format('Y-m-d');
-            if ($currentDate['date'] === $dayString) {
-                $sumData = floatval($currentDate['total']);
+            $dayFromDaya = Carbon::parse($currentDate[$dateKey])->format('Y-m-d');
+
+            if ($dayFromDaya === $dayString) {
+                $valueData = floatval($currentDate[$valueKey]);
                 array_shift($datesData);
             }
 
             $result->push([
                 'date' => $dayString,
-                'total' => $sumData
+                'total' => $valueData
             ]);
         }
 

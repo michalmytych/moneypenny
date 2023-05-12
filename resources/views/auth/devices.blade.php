@@ -11,10 +11,8 @@
                             <div class="bg-white overflow-hidden shadow rounded-lg">
                                 <div class="px-4 py-5 sm:p-6">
                                     <div class="flex items-center">
-                                        <div class="flex-shrink-0">
-                                            <svg class="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h2m10-7h2a2 2 0 012 2v10a2 2 0 01-2 2h-2m-6-10h4a2 2 0 012 2v12a2 2 0 01-2 2h-4a2 2 0 01-2-2V7a2 2 0 012-2z" />
-                                            </svg>
+                                        <div class="flex-shrink-0 text-gray-500">
+                                            @include('icons.device')
                                         </div>
                                         <div class="ml-5 w-0 flex-1">
                                             <dl>
@@ -24,7 +22,7 @@
                                                 <dd class="mt-1 text-lg font-semibold text-gray-900">
                                                     {{ $device->ip }}
                                                 </dd>
-                                                <dd class="mt-1 text-sm text-gray-500 truncate">
+                                                <dd class="mt-1 text-sm text-gray-500 truncate text-green-700">
                                                     {{ $device->created_at->diffForHumans() }}
                                                 </dd>
                                             </dl>

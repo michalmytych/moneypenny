@@ -53,4 +53,11 @@ class InstitutionController extends Controller
 
         return redirect(route('institution.agreements', ['id' => $institutionId]));
     }
+
+    public function deleteAgreement(mixed $agreementId): string
+    {
+        $agreement = $this->transactionSyncService->getAgreementById($agreementId);
+        // @todo delete agreement (check on delete in table)
+        return '<h1>This is not implemented :///</h1>';
+    }
 }

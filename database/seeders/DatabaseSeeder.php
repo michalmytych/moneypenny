@@ -22,6 +22,15 @@ class DatabaseSeeder extends Seeder
             echo 'Test user was not created. Reason: [' . $throwable->getMessage() . ']';
         }
 
+        try {
+            User::factory()->create([
+                'name' => 'Guest User',
+                'email' => 'guest@example.com',
+            ]);
+        } catch (Throwable $throwable) {
+            echo 'Guest user was not created. Reason: [' . $throwable->getMessage() . ']';
+        }
+
 
         $this->call([
             ImportSettingsTableSeeder::class,

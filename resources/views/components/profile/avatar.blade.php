@@ -11,7 +11,7 @@
 
 <div class="w-fit h-fit rounded-full">
     <img
-        src="{{ $src }}"
+        src="{{ $src ?? '' }}"
         alt="User avatar image"
         width="{{ $width }}"
         height="{{ $height }}"

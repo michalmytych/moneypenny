@@ -2,10 +2,10 @@
 
 namespace App\Services\Auth\Device;
 
-use App\Services\Notification\Broadcast\NotificationBroadcastService;
 use Illuminate\Database\Eloquent\Collection;
-use IvanoMatteo\LaravelDeviceTracking\Events\DeviceHijacked;
 use IvanoMatteo\LaravelDeviceTracking\Models\Device;
+use IvanoMatteo\LaravelDeviceTracking\Events\DeviceHijacked;
+use App\Services\Notification\Broadcast\NotificationBroadcastService;
 
 class DeviceService
 {

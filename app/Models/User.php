@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasAvatar;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -17,7 +17,7 @@ use IvanoMatteo\LaravelDeviceTracking\Traits\UseDevices;
  */
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, UseDevices;
+    use HasApiTokens, HasFactory, Notifiable, UseDevices, HasAvatar;
 
     protected $fillable = [
         'name',
@@ -43,16 +43,4 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    public function getAvatarPath(): string
-    {
-        $fileName = $this->id . '_avatar.jpeg';
-        $fileExists = Storage::exists('public/avatars/' . $fileName);
-
-        if ($fileExists) {
-            return asset('storage/avatars/' . $fileName);
-        }
-
-        return 'placeholders/avatar_placeholder.jpeg';
-    }
 }

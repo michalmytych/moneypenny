@@ -30,6 +30,15 @@ details > summary::-webkit-details-marker {
     display: none;
 }
 
+.hoverScaleBox {
+    transition: 0.4s;
+}
+
+.hoverScaleBox:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;

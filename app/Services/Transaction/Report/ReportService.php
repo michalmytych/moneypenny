@@ -2,20 +2,23 @@
 
 namespace App\Services\Transaction\Report;
 
-use App\Models\Transaction\Transaction;
 use App\Models\User;
-use App\Services\Transaction\Transformers\DateGroupByToCalendar;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
+use App\Models\Transaction\Transaction;
 use Illuminate\Contracts\Auth\Authenticatable;
 use App\Services\Transaction\Currency\CurrencyService;
 use App\Services\Transaction\Report\Defaults\MonthReport;
-use Illuminate\Support\Facades\DB;
+use App\Services\Transaction\Transformers\DateGroupByToCalendar;
 
 class ReportService
 {
-    public function __construct(private readonly CurrencyService $currencyService) {}
+    public function __construct(private readonly CurrencyService $currencyService)
+    {
+    }
 
     /**
      * @param string|null $rawMonth Date in m-Y format (optional).
@@ -45,19 +48,16 @@ class ReportService
         return $data;
     }
 
-    public function getAvgExpendituresByDays(Carbon $sinceDate, Carbon $toDate): \Illuminate\Support\Collection|array
+    public function getAvgExpendituresByDays(Carbon $sinceDate, Carbon $toDate): Collection|array
     {
-        // @todo - źle, po prostu zwraca wydatki powinno obliczyć dla każdego dnia od początku konta
-        $expendituresData = Transaction::query()
-            ->orderBy('transaction_date')
+        $expendituresData = $this
+            ->getBaseTrendQuery()
             ->where('type', Transaction::TYPE_EXPENDITURE)
             ->whereDate('transaction_date', '>=', $sinceDate)
             ->whereDate('transaction_date', '<=', $toDate)
-            ->select(DB::raw('DATE(transaction_date) as date'), DB::raw('SUM(calculation_volume) as total'))
-            ->groupBy('date')
             ->get();
 
-        return DateGroupByToCalendar::transform($expendituresData);
+        return DateGroupByToCalendar::transform($expendituresData, 'transaction_date', 'average_volume');
     }
 
     private function getMonthReport(Carbon $carbon, Authenticatable $user): array
@@ -72,15 +72,23 @@ class ReportService
 
     public function getAvgIncomesByDays(Carbon $sinceDate, Carbon $toDate): Collection|array
     {
-        $incomesData = Transaction::query()
-            ->orderBy('transaction_date')
+        $incomesData = $this
+            ->getBaseTrendQuery()
             ->where('type', Transaction::TYPE_INCOME)
             ->whereDate('transaction_date', '>=', $sinceDate)
             ->whereDate('transaction_date', '<=', $toDate)
-            ->select(DB::raw('DATE(transaction_date) as date'), DB::raw('SUM(calculation_volume) as total'))
-            ->groupBy('date')
             ->get();
 
-        return DateGroupByToCalendar::transform($incomesData);
+        return DateGroupByToCalendar::transform($incomesData, 'transaction_date', 'average_volume');
+    }
+
+    protected function getBaseTrendQuery(): Builder
+    {
+        return Transaction::query()
+            ->select(DB::raw('transaction_date'),
+                DB::raw('SUM(calculation_volume) as daily_sum'),
+                DB::raw('AVG(SUM(calculation_volume)) OVER (ORDER BY transaction_date ASC ROWS BETWEEN UNBOUNDED PRECEDING AND 1 PRECEDING) as average_volume'))
+            ->groupBy('transaction_date')
+            ->orderBy('transaction_date', 'ASC');
     }
 }

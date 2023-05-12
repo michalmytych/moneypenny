@@ -14,7 +14,8 @@ class SaldoService
         $cacheKey = PersonalAccount::USER_SALDO_CACHE_KEY_PREFIX . $user->id;
 
         if (Cache::missing($cacheKey)) {
-            $value = PersonalAccount::firstWhere('user_id', $user->id)->value;
+            $personalAccount = PersonalAccount::firstWhere('user_id', $user->id);
+            $value = $personalAccount?->value ?? 0.0;
             Cache::put($cacheKey, (float) $value);
             return $value;
         }

@@ -15,16 +15,24 @@ class TransactionPersonaService
     public function createPersonasAssociations(Transaction $transaction): void
     {
         $transactionId = $transaction->id;
-        $senderSearchColumnData = $transaction->sender ? $transaction->sender : $transaction->description;
-        $receiverSearchColumnData = $transaction->receiver ? $transaction->receiver : $transaction->description;
         $senderAccountNumber = $transaction->sender_account_number;
         $receiverAccountNumber = $transaction->receiver_account_number;
 
-        $senderAssociatedPersona = $this->findOrCreateAssociation($senderSearchColumnData, $senderAccountNumber);
-        Transaction::where('id', $transactionId)->update(['sender_persona_id' => $senderAssociatedPersona->id]);
+        $senderSearchColumnData = $transaction->sender
+            ? $transaction->sender
+            : $transaction->description;
 
+        $receiverSearchColumnData = $transaction->receiver
+            ? $transaction->receiver
+            : $transaction->description;
+
+        $senderAssociatedPersona = $this->findOrCreateAssociation($senderSearchColumnData, $senderAccountNumber);
         $receiverAssociatedPersona = $this->findOrCreateAssociation($receiverSearchColumnData, $receiverAccountNumber);
-        Transaction::where('id', $transactionId)->update(['receiver_persona_id' => $receiverAssociatedPersona->id]);
+
+        Transaction::where('id', $transactionId)->update([
+            'sender_persona_id' => $senderAssociatedPersona->id,
+            'receiver_persona_id' => $receiverAssociatedPersona->id
+        ]);
     }
 
     protected function findOrCreateAssociation(?string $personaName, ?string $personaAccountNumber): Persona
@@ -58,20 +66,16 @@ class TransactionPersonaService
     protected function runPersonaSearchRules(?string $personaName, ?string $personaAccountNumber): ?Persona
     {
         $persona = null;
-        $nameSearchRules = $this->getPersonaNameSearchRules();
-        $accountNumberSearchRules = $this->getPersonaAccountNumberSearchRules();
 
-        foreach ($accountNumberSearchRules as $rule) {
+        foreach ($this->getPersonaNameSearchRules() as $rule) {
             if (null === $persona && $personaAccountNumber) {
                 $persona = $rule($personaAccountNumber);
             }
         }
 
-        if (null === $persona) {
-            foreach ($nameSearchRules as $rule) {
-                if (null === $persona && $personaName) {
-                    $persona = $rule($personaName);
-                }
+        foreach ($this->getPersonaAccountNumberSearchRules() as $rule) {
+            if (null === $persona && $personaName) {
+                $persona = $rule($personaName);
             }
         }
 

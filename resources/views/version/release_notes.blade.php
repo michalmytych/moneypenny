@@ -1,13 +1,5 @@
 @php
-    $releaseNotes = [
-        [
-            'header' => 'Moneypenny v0.4',
-            'date' => '06-05-2023 00:15',
-            'notes' => [
-                'Added new favicon XD'
-            ]
-        ]
-    ];
+    $releaseNotes = config('release_notes.list');
 @endphp
 
 <x-app-layout>
@@ -15,7 +7,7 @@
         <div class="w-full mx-auto sm:px-6 lg:px-8">
 
             @foreach($releaseNotes as $note)
-                <div class="mb-2 px-6 py-6 bg-white rounded-md">
+                <div class="px-6 py-6 bg-white rounded-md mb-6">
                     <div class="mb-2">
                         <div class="flex items-center">
                             <h2 class="text-4xl font-bold text-black">{{ $note['header'] }}</h2>

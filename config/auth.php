@@ -112,4 +112,16 @@ return [
 
     'password_timeout' => 10800,
 
+    /*
+    |--------------------------------------------------------------------------
+    | One time token registration
+    |--------------------------------------------------------------------------
+    |
+    | If it's enabled, registration will only be available with
+    | link which contains valid token.
+    |
+    */
+
+    'one_time_registration_enabled' => false,
+
 ];

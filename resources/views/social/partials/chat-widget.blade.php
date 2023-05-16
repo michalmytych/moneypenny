@@ -1,6 +1,6 @@
 <div class="w-full rounded-md py-2 overflow-hidden">
     <div class="w-full rounded-md bg-white mb-6 shadow-sm px-4 flex-col overflow-y-scroll" style="height: 75vh;">
-        @foreach($chatMessages as $chatMessage)
+        @foreach($chatMessages ?? [] as $chatMessage)
             <div
                 class="flex items-start p-4 w-fit rounded-md mt-3 @if(request()->user()->name === $chatMessage['user']['name']) bg-indigo-50 ml-12 @else bg-gray-100 @endif shadow">
                 <div class="mr-2" style="min-width: 50px;">

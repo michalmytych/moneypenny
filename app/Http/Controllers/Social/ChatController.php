@@ -17,12 +17,12 @@ class ChatController extends Controller
 
     public function index(): View
     {
-        $chatMessages = collect();
+        $chatMessages = [];
 
         if (Cache::missing(self::CHAT_MESSAGES_CACHE_KEY)) {
             Cache::put(self::CHAT_MESSAGES_CACHE_KEY, $chatMessages);
         } else {
-            $chatMessages = Cache::get(self::CHAT_MESSAGES_CACHE_KEY);
+            $chatMessages = Cache::get(self::CHAT_MESSAGES_CACHE_KEY, []);
         }
 
         return view('social.chat.index', compact('chatMessages'));
@@ -39,7 +39,7 @@ class ChatController extends Controller
             url: route('home', ['chat_opened' => true])
         );
 
-        $chatMessages = Cache::get(self::CHAT_MESSAGES_CACHE_KEY);
+        $chatMessages = Cache::get(self::CHAT_MESSAGES_CACHE_KEY, []);
         $chatMessages[] = [
             'text' => $chatMessage,
             'timestamp' => time(),
@@ -48,6 +48,7 @@ class ChatController extends Controller
                 'avatar_path' => $user->getAvatarPath()
             ]
         ];
+
         Cache::put(self::CHAT_MESSAGES_CACHE_KEY, $chatMessages);
 
         return redirect()->back();

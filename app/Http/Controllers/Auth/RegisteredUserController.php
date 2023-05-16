@@ -48,4 +48,9 @@ class RegisteredUserController extends Controller
 
         return redirect(RouteServiceProvider::HOME);
     }
+
+    public function oneTimeRegistrationError(): View
+    {
+        return view('auth.token-registration-error');
+    }
 }

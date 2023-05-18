@@ -3,7 +3,7 @@
     <form action="{{ route('import.columns-mapping.store') }}" method="POST">
         @csrf
         <div class="mb-4">
-            <label for="name" class="block font-medium text-gray-700 mb-1">
+            <label for="name" class="form-label block font-medium text-gray-700 mb-1">
                 Name
             </label>
             @include('components.input.tip', ['key' => 'name', 'text' => __('Podaj nazwę dla tego mapowania kolumn')])
@@ -13,7 +13,7 @@
             <x-input-error :messages="$errors->get('name')" class="mt-2"/>
         </div>
         <div class="mb-4">
-            <label for="transaction_date_column_index" class="block font-medium text-gray-700 mb-1">
+            <label for="transaction_date_column_index" class="form-label block font-medium text-gray-700 mb-1">
                 Transaction Date Column Index
             </label>
             @include('components.input.tip', ['key' => 'transaction_date_column_index', 'text' => __('Numer kolumny z datą transakcji, licząc od zera')])
@@ -24,7 +24,7 @@
         </div>
 
         <div class="mb-4">
-            <label for="accounting_date_column_index" class="block font-medium text-gray-700 mb-1">
+            <label for="accounting_date_column_index" class="form-label block font-medium text-gray-700 mb-1">
                 Accounting Date Column Index
             </label>
             @include('components.input.tip', ['key' => 'accounting_date_column_index', 'text' => __('Numer kolumny z datą zaksięgowania, licząc od zera')])
@@ -35,7 +35,7 @@
         </div>
 
         <div class="mb-4">
-            <label for="sender_column_index" class="block font-medium text-gray-700 mb-1">
+            <label for="sender_column_index" class="form-label block font-medium text-gray-700 mb-1">
                 Sender Column Index
             </label>
             @include('components.input.tip', ['key' => 'sender_column_index', 'text' => __('Numer kolumny z nazwą nadawcy transakcji, licząc od zera')])
@@ -46,7 +46,7 @@
         </div>
 
         <div class="mb-4">
-            <label for="receiver_column_index" class="block font-medium text-gray-700 mb-1">
+            <label for="receiver_column_index" class="form-label block font-medium text-gray-700 mb-1">
                 Receiver Column Index
             </label>
             @include('components.input.tip', ['key' => 'receiver_column_index', 'text' => __('Numer kolumny z nazwą odbiorcy transakcji, licząc od zera')])
@@ -57,7 +57,7 @@
         </div>
 
         <div class="mb-4">
-            <label for="description_column_index" class="block font-medium text-gray-700 mb-1">
+            <label for="description_column_index" class="form-label block font-medium text-gray-700 mb-1">
                 Description Column Index
             </label>
             @include('components.input.tip', ['key' => 'description_column_index', 'text' => __('Numer kolumny z opisem transakcji, licząc od zera')])
@@ -68,7 +68,7 @@
         </div>
 
         <div class="mb-4">
-            <label for="volume_column_index" class="block font-medium text-gray-700 mb-1">
+            <label for="volume_column_index" class="form-label block font-medium text-gray-700 mb-1">
                 Volume Column Index
             </label>
             @include('components.input.tip', ['key' => 'volume_column_index', 'text' => __('Numer kolumny z wartością transakcji, licząc od zera')])
@@ -79,7 +79,7 @@
         </div>
 
         <div class="mb-4">
-            <label for="currency_column_index" class="block font-medium text-gray-700 mb-1">
+            <label for="currency_column_index" class="form-label block font-medium text-gray-700 mb-1">
                 Currency Column Index
             </label>
             @include('components.input.tip', ['key' => 'currency_column_index', 'text' => __('Numer kolumny z walutą transakcji, licząc od zera')])
@@ -90,7 +90,7 @@
         </div>
 
         <div class="mb-4">
-            <label for="sender_account_number_index" class="block font-medium text-gray-700 mb-1">
+            <label for="sender_account_number_index" class="form-label block font-medium text-gray-700 mb-1">
                 Sender Account Number Column Index
             </label>
             @include('components.input.tip', ['key' => 'sender_account_number_index', 'text' => __('Numer kolumny z numerem konta wysyłającego, licząc od zera')])
@@ -100,7 +100,7 @@
             <x-input-error :messages="$errors->get('sender_account_number_index')" class="mt-2"/>
         </div>
         <div class="mb-4">
-            <label for="receiver_account_number_index" class="block font-medium text-gray-700 mb-1">
+            <label for="receiver_account_number_index" class="form-label block font-medium text-gray-700 mb-1">
                 Receiver Account Number Index
             </label>
             @include('components.input.tip', ['key' => 'receiver_account_number_index', 'text' => __('Numer kolumny z numerem konta odbiorcy, licząc od zera')])
@@ -136,7 +136,15 @@
         const input = document.getElementById(key);
         const nameTip = document.getElementById(`${key}_tip`);
         input.addEventListener('focus', () => {
-            console.log(nameTip.innerText)
+            const allLabels = document.querySelectorAll('.form-label');
+            allLabels.forEach(label => {
+                label.style.fontWeight = 'regular';
+                if (label.getAttribute('for') === key) {
+                    label.style.fontWeight = 'bolder';
+                }
+            });
+            nameTip.style.display = 'block';
+
             const allTips = document.querySelectorAll("div[id$='_tip']");
             allTips.forEach(tip => {
                 tip.style.display = 'none';

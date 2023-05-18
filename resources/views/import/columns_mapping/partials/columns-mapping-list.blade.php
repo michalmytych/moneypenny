@@ -1,5 +1,5 @@
 @if(count($columnsMappings) > 0)
-    <div class="overflow-x-scroll">
+    <div class="overflow-x-scroll rounded-md shadow">
         <table class="min-w-full divide-y divide-gray-200">
             <thead>
             <tr>

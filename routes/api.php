@@ -24,24 +24,29 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/analysis', [AnalysisController::class, 'analyze'])->name('api.analysis');
-Route::post('/sync', [SynchronizationController::class, 'sync'])->name('api.sync');
-Route::get('/exchange-rates', [ExchangeRateController::class, 'index'])->name('api.exchange_rate');
-Route::get('/meta/processes', [MetaController::class, 'processes'])->name('api.meta.processes');
-Route::get('/notifications', [NotificationController::class, 'index'])->name('api.notification.index');
-Route::get('/reports/avg-expenditures', [ReportController::class, 'avgExpenditures'])->name('api.report.avg_expenditures');
-Route::get('/reports/avg-incomes', [ReportController::class, 'avgIncomes'])->name('api.report.avg_incomes');
+Route::prefix('api')->as('api.')->group(function() {
+    Route::prefix('analysis')->as('analysis.')->group(function() {
+        Route::post('/', [AnalysisController::class, 'analyze'])->name('analyze');
+    });
 
-// @todo
-Route::get(
-    '/test',
-    function () {
-//        return app(\App\Interfaces\Analysis\AnalysisService::class)->analyze([
-//            'analyzer_type' => 'transaction_count_per_day'
-//            'analyzer_type' => 'transaction_volume_sum_per_day'
-//            'analyzer_type' => 'total_transaction_volume_per_week_day'
-//            'analyzer_type' => 'total_transactions_volume',
-//        ]);
-//        return app(\App\Nordigen\NordigenService::class)->provideSupportedInstitutionsData();
-    }
-)->name('api.test');
+    Route::prefix('sync')->as('sync.')->group(function() {
+        Route::post('/', [SynchronizationController::class, 'sync'])->name('sync');
+    });
+
+    Route::prefix('exchange-rates')->as('exchange_rates.')->group(function() {
+        Route::get('/', [ExchangeRateController::class, 'index'])->name('index');
+    });
+
+    Route::prefix('notifications')->as('notification.')->group(function() {
+        Route::get('/', [NotificationController::class, 'index'])->name('index');
+    });
+
+    Route::prefix('meta')->as('meta.')->group(function() {
+        Route::get('processes', [MetaController::class, 'processes'])->name('processes');
+    });
+
+    Route::prefix('reports')->as('report.')->group(function() {
+        Route::get('avg-expenditures', [ReportController::class, 'avgExpenditures'])->name('avg_expenditures');
+        Route::get('avg-incomes', [ReportController::class, 'avgIncomes'])->name('avg_incomes');
+    });
+});

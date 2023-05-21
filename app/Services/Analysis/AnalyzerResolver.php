@@ -7,6 +7,9 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use App\Services\Analysis\Analyzers\Analyzer;
 
+/**
+ * @deprecated
+ */
 class AnalyzerResolver
 {
     public function getAnalyzerByType(string $analysisType): ?string

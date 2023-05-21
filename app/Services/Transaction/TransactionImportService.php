@@ -3,19 +3,18 @@
 namespace App\Services\Transaction;
 
 use App\Models\User;
-use App\Services\Transaction\Traits\DecidesTransactionType;
 use Carbon\Carbon;
 use App\Models\Import\Import;
 use Illuminate\Support\Collection;
 use App\Models\Import\ColumnsMapping;
 use App\Models\Transaction\Transaction;
 use App\Services\Helpers\TransactionHelper;
+use App\Services\Transaction\Traits\DecidesTransactionType;
 use App\Services\Transaction\Traits\FindsSimilarTransaction;
 
 class TransactionImportService
 {
-    use FindsSimilarTransaction,
-        DecidesTransactionType;
+    use FindsSimilarTransaction, DecidesTransactionType;
 
     public function importFileRowAsTransaction(Collection $row, Import $import, ColumnsMapping $columnsMapping, User $user): ?Transaction
     {

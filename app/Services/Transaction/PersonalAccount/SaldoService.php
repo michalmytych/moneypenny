@@ -29,11 +29,11 @@ class SaldoService
         foreach (Transaction::cursor() as $transaction) {
             /** @var Transaction $transaction */
             if ($transaction->type === Transaction::TYPE_EXPENDITURE) {
-                $saldo -= $transaction->calculation_volume;
+                $saldo -= $transaction->{Transaction::CALCULATION_COLUMN};
             }
 
             if ($transaction->type === Transaction::TYPE_INCOME) {
-                $saldo += $transaction->calculation_volume;
+                $saldo += $transaction->{Transaction::CALCULATION_COLUMN};
             }
         }
 
@@ -45,11 +45,11 @@ class SaldoService
         $personalAccount = PersonalAccount::firstWhere('user_id', $user->id);
 
         if ($transaction->type === Transaction::TYPE_EXPENDITURE) {
-            $personalAccount->value -= $transaction->calculation_volume;
+            $personalAccount->value -= $transaction->{Transaction::CALCULATION_COLUMN};
         }
 
         if ($transaction->type === Transaction::TYPE_INCOME) {
-            $personalAccount->value += $transaction->calculation_volume;
+            $personalAccount->value += $transaction->{Transaction::CALCULATION_COLUMN};
         }
 
         $personalAccount->save();

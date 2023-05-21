@@ -4,6 +4,9 @@ namespace App\Services\Analysis\Analyzers;
 
 use Illuminate\Support\Collection;
 
+/**
+ * @deprecated
+ */
 abstract class Analyzer
 {
     abstract protected function runQuery(): Collection;

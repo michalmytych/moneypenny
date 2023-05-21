@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\App;
 use App\Services\Analysis\Analyzers\Analyzer;
 use App\Contracts\Services\Analysis\AnalysisServiceContract;
 
+/**
+ * @deprecated
+ */
 class AnalysisService implements AnalysisServiceContract
 {
     public function __construct(private readonly AnalyzerResolver $analyzerResolver) { }

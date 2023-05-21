@@ -2,8 +2,8 @@
 
 namespace App\Services\Nordigen;
 
-use App\Models\Synchronization\Account;
 use App\Models\User;
+use App\Models\Synchronization\Account;
 
 class NordigenAccountService
 {

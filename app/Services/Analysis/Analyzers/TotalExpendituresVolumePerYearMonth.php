@@ -5,6 +5,9 @@ namespace App\Services\Analysis\Analyzers;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * @deprecated
+ */
 class TotalExpendituresVolumePerYearMonth extends Analyzer
 {
     protected function runQuery(): Collection

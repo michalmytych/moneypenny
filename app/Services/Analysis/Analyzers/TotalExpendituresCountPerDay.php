@@ -6,6 +6,9 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use App\Models\Transaction\Transaction;
 
+/**
+ * @deprecated
+ */
 class TotalExpendituresCountPerDay extends Analyzer
 {
     protected function runQuery(): Collection

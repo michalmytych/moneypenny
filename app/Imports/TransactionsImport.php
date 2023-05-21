@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Models\User;
 use Throwable;
 use App\Models\Import\Import;
 use Illuminate\Support\Collection;
@@ -17,7 +18,8 @@ class TransactionsImport implements ToCollection, WithCustomCsvSettings, WithSta
     public function __construct(
         private readonly ImportSetting  $importSetting,
         private readonly ColumnsMapping $columnsMapping,
-        private readonly Import         $import
+        private readonly Import         $import,
+        private readonly User           $user
     )
     {
     }
@@ -35,7 +37,7 @@ class TransactionsImport implements ToCollection, WithCustomCsvSettings, WithSta
                 /** @var TransactionImportService $service */
                 $service = app(TransactionImportService::class);
 
-                $service->importFileRowAsTransaction($row, $this->import, $this->columnsMapping);
+                $service->importFileRowAsTransaction($row, $this->import, $this->columnsMapping, $this->user);
             }
 
             $this->import->update(['status' => Import::STATUS_IMPORTED]);

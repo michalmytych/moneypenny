@@ -39,8 +39,8 @@ class ImportService implements ImportServiceContract
 
         $import->save();
 
-        DB::transaction(function () use ($file, $importSetting, $columnsMapping, $import) {
-            Excel::import(new TransactionsImport($importSetting, $columnsMapping, $import), $file->path);
+        DB::transaction(function () use ($file, $importSetting, $columnsMapping, $import, $user) {
+            Excel::import(new TransactionsImport($importSetting, $columnsMapping, $import, $user), $file->path);
         });
 
         $import->update(['status' => Import::STATUS_SAVED]);

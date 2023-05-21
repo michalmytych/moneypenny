@@ -21,7 +21,7 @@ use App\Http\Controllers\ExchangeRates\ExchangeRateController;
 |
 */
 
-Route::prefix('api')->as('api.')->group(function() {
+Route::as('api.')->group(function() {
     Route::post('/login', [UserController::class, 'login'])->name('login');
     Route::post('/register', [UserController::class, 'register'])->name('register');
 

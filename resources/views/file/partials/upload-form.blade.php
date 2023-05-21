@@ -1,4 +1,4 @@
-<form action="{{ route('file.upload') }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('file.upload') }}" method="POST" enctype="multipart/form-data" id="uploadForm">
     @csrf
     <div class="mb-4">
         <label class="block text-gray-700 font-bold mb-2" for="import_setting_id">
@@ -7,7 +7,7 @@
         <select
                 id="import_setting_id"
                 class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                name="import_setting_id">
+                name="import_setting_id" required>
             <option selected>Wybierz</option>
             @foreach($importSettings as $importSetting)
                 <option value="{{ $importSetting->id }}">
@@ -24,7 +24,7 @@
         <select
                 id="columns_mapping_id"
                 class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                name="columns_mapping_id">
+                name="columns_mapping_id" required>
             <option selected>Wybierz</option>
             @foreach($columnsMappings as $columnMapping)
                 <option value="{{ $columnMapping->id }}">
@@ -38,7 +38,26 @@
         <x-file-drop fileInputName="file"/>
         <x-input-error :messages="$errors->get('file')" class="mt-2" />
     </div>
-    <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg">
-        Prześlij
-    </button>
+    <div class="flex">
+        <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg" id="uploadButton">
+            Prześlij
+        </button>
+        <div class="flex items-center gap-1 ml-3" id="loaderWraper" style="visibility: hidden;">
+            @include('icons.loader') <span class="text-gray-600 ml-1">Processing file...</span>
+        </div>
+    </div>
 </form>
+
+@push('scripts')
+    <script>
+        window.addEventListener('load', () => {
+            const uploadForm = document.getElementById('uploadForm');
+            const uploadButton = document.getElementById('uploadButton');
+            const loaderWraper = document.getElementById('loaderWraper');
+            uploadForm.addEventListener('submit', () => {
+                uploadButton.disabled = 'true';
+                loaderWraper.style.visibility = 'visible';
+            });
+        });
+    </script>
+@endpush

@@ -32,7 +32,6 @@
         fileInput.addEventListener('change', (e) => {
             const firstFile = e.target.files[0];
             if (!firstFile) return false;
-            console.log(firstFile)
             fileNamePreview.innerText = firstFile.name;
         }, false);
     });

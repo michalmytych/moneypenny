@@ -40,9 +40,9 @@ class SaldoService
         return $saldo;
     }
 
-    public function updateSaldo(User $user, Transaction $transaction): void
+    public function updateSaldo(Transaction $transaction): void
     {
-        $personalAccount = PersonalAccount::firstWhere('user_id', $user->id);
+        $personalAccount = PersonalAccount::firstWhere('user_id', $transaction->user->id);
 
         if ($transaction->type === Transaction::TYPE_EXPENDITURE) {
             $personalAccount->value -= $transaction->{Transaction::CALCULATION_COLUMN};

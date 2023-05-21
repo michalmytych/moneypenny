@@ -16,6 +16,8 @@
                 headers: {
                     "Content-Type": "application/json",
                     'Accept-Type': 'application/json',
+                    'X-XSRF-TOKEN': decodeURIComponent(getCookie('XSRF-TOKEN')),
+                    'Authorization': `Bearer ${window.localStorage.getItem('SANCTUM_API_TOKEN')}`
                 }
             }
         )
@@ -62,6 +64,8 @@
         const baseHeaders = {
             "Content-Type": "application/json",
             'Accept-Type': 'application/json',
+            'X-XSRF-TOKEN': decodeURIComponent(getCookie('XSRF-TOKEN')),
+            'Authorization': `Bearer ${window.localStorage.getItem('SANCTUM_API_TOKEN')}`
         };
 
         const fetchIncomes = async () => {

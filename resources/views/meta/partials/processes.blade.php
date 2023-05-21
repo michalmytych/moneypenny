@@ -57,7 +57,12 @@
         }
 
         const fetchData = () => {
-            fetch(metaProcessesRoute, {headers: {'Accept-Type': 'application/json'}})
+            fetch(metaProcessesRoute, {
+                headers: {
+                    'Accept-Type': 'application/json',
+                    'X-XSRF-TOKEN': decodeURIComponent(getCookie('XSRF-TOKEN')),
+                    'Authorization': `Bearer ${window.localStorage.getItem('SANCTUM_API_TOKEN')}`
+                }})
                 .then(res => res.json())
                 .then(json => displayData(json))
                 .catch(error => {

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Auth\UserController;
 use App\Http\Controllers\Api\MetaController;
 use App\Http\Controllers\Api\Notification\NotificationController;
 use App\Http\Controllers\Api\Transaction\ReportController;
@@ -20,33 +21,39 @@ use App\Http\Controllers\ExchangeRates\ExchangeRateController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::prefix('api')->as('api.')->group(function() {
-    Route::prefix('analysis')->as('analysis.')->group(function() {
-        Route::post('/', [AnalysisController::class, 'analyze'])->name('analyze');
-    });
+    Route::post('/login', [UserController::class, 'login'])->name('login');
+    Route::post('/register', [UserController::class, 'register'])->name('register');
 
-    Route::prefix('sync')->as('sync.')->group(function() {
-        Route::post('/', [SynchronizationController::class, 'sync'])->name('sync');
-    });
+    Route::group(['middleware' => ['auth:sanctum']], function () {
+        Route::get('/user', [UserController::class, 'user'])->name('user');
+        Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
-    Route::prefix('exchange-rates')->as('exchange_rates.')->group(function() {
-        Route::get('/', [ExchangeRateController::class, 'index'])->name('index');
-    });
+        Route::prefix('analysis')->as('analysis.')->group(function() {
+            Route::post('/', [AnalysisController::class, 'analyze'])->name('analyze');
+        });
 
-    Route::prefix('notifications')->as('notification.')->group(function() {
-        Route::get('/', [NotificationController::class, 'index'])->name('index');
-    });
+        Route::prefix('sync')->as('sync.')->group(function() {
+            Route::post('/', [SynchronizationController::class, 'sync'])->name('synchronize');
+        });
 
-    Route::prefix('meta')->as('meta.')->group(function() {
-        Route::get('processes', [MetaController::class, 'processes'])->name('processes');
-    });
+        Route::prefix('exchange-rates')->as('exchange_rates.')->group(function() {
+            Route::get('/', [ExchangeRateController::class, 'index'])->name('index');
+        });
 
-    Route::prefix('reports')->as('report.')->group(function() {
-        Route::get('avg-expenditures', [ReportController::class, 'avgExpenditures'])->name('avg_expenditures');
-        Route::get('avg-incomes', [ReportController::class, 'avgIncomes'])->name('avg_incomes');
+        Route::prefix('notifications')->as('notification.')->group(function() {
+            Route::get('/', [NotificationController::class, 'index'])->name('index');
+        });
+
+        Route::prefix('meta')->as('meta.')->group(function() {
+            Route::get('processes', [MetaController::class, 'processes'])->name('processes');
+        });
+
+        Route::prefix('reports')->as('report.')->group(function() {
+            Route::get('avg-expenditures', [ReportController::class, 'avgExpenditures'])
+                ->name('avg_expenditures');
+            Route::get('avg-incomes', [ReportController::class, 'avgIncomes'])
+                ->name('avg_incomes');
+        });
     });
 });

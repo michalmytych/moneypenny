@@ -27,7 +27,7 @@
             const syncButton = document.getElementById('syncButton');
             const spinnerIcon = document.getElementById('spinnerIcon');
             const syncButtonText = document.getElementById('syncButtonText');
-            const synchronizationRoute = "{{ route('api.analysis') }}";
+            const synchronizationRoute = "{{ route('api.analysis.analyze') }}";
             const agreementId = "{{ $agreement->id }}";
 
             /** API Calls **/
@@ -35,11 +35,13 @@
                 if (syncButton.disabled) return false;
 
                 try {
-                    fetch("{{ route('api.sync') }}", {
+                    fetch("{{ route('api.sync.synchronize') }}", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json",
                                 'Accept-Type': 'application/json',
+                                'X-XSRF-TOKEN': decodeURIComponent(getCookie('XSRF-TOKEN')),
+                                'Authorization': `Bearer ${window.localStorage.getItem('SANCTUM_API_TOKEN')}`
                             },
                             body: JSON.stringify({
                                 'agreement_id': agreementId

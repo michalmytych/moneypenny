@@ -70,7 +70,7 @@ class FileController extends Controller
         $this->transactionFileService->uploadTransactions(
             $request->file('file'),
             $request->input('import_setting_id'),
-            $request->input('column_mapping_id'),
+            $request->input('columns_mapping_id'),
             $user
         );
 

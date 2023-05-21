@@ -3,36 +3,38 @@
         @csrf
         <h2 class="text-black font-bold text-2xl pb-4">Add new cash transaction</h2>
 
-        <div class="-mx-3 md:flex mb-6">
-            <div class="md:w-1/2 px-3 mb-6 md:mb-0">
-                <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
-                       for="sender_persona_id">
-                    Sender Persona
-                </label>
-                <select name="sender_persona_id" id="sender_persona_id"
-                        class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey">
-                    <option>Select sender persona</option>
-                    {{--@todo--}}
-                    @foreach($personas as $persona)
-                        <option value="{{ $persona->id }}">{{ $persona->common_name }}</option>
-                    @endforeach
-                </select>
+        @if(config('personas.enabled'))
+            <div class="-mx-3 md:flex mb-6">
+                <div class="md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+                           for="sender_persona_id">
+                        Sender Persona
+                    </label>
+                    <select name="sender_persona_id" id="sender_persona_id"
+                            class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey">
+                        <option>Select sender persona</option>
+                        {{--@todo--}}
+                        @foreach($personas as $persona)
+                            <option value="{{ $persona->id }}">{{ $persona->common_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="md:w-1/2 px-3">
+                    <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+                           for="receiver_persona_id">
+                        Receiver Persona
+                    </label>
+                    <select name="receiver_persona_id" id="receiver_persona_id"
+                            class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey">
+                        <option>Select receiver persona</option>
+                        {{--@todo--}}
+                        @foreach($personas as $persona)
+                            <option value="{{ $persona->id }}">{{ $persona->common_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
-            <div class="md:w-1/2 px-3">
-                <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
-                       for="receiver_persona_id">
-                    Receiver Persona
-                </label>
-                <select name="receiver_persona_id" id="receiver_persona_id"
-                        class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey">
-                    <option>Select receiver persona</option>
-                    {{--@todo--}}
-                    @foreach($personas as $persona)
-                        <option value="{{ $persona->id }}">{{ $persona->common_name }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
+        @endif
 
         <div class="-mx-3 md:flex mb-6">
             <div class="md:w-1/2 px-3 mb-6 md:mb-0">
@@ -43,7 +45,8 @@
                 <input
                     class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey"
                     id="transaction_date" name="transaction_date" type="date" placeholder="Enter Transaction Date"
-                    required>
+                    required value="{{ now()->format('Y-m-d') }}">
+                <x-input-error :messages="$errors->get('transaction_date')" class="mt-2"/>
             </div>
             <div class="md:w-1/2 px-3">
                 <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
@@ -52,7 +55,8 @@
                 </label>
                 <input
                     class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
-                    id="decimal_volume" name="decimal_volume" type="number" placeholder="Enter Decimal Volume" required>
+                    id="decimal_volume" name="decimal_volume" step="0.01" type="number" placeholder="Enter Decimal Volume" required>
+                <x-input-error :messages="$errors->get('decimal_volume')" class="mt-2" />
             </div>
         </div>
 
@@ -64,14 +68,7 @@
                 <input
                     class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey"
                     id="description" name="description" type="text" placeholder="Enter Description" required>
-            </div>
-            <div class="md:w-1/2 px-3">
-                <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="import_id">
-                    Import ID
-                </label>
-                <input
-                    class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
-                    id="import_id" name="import_id" type="text" placeholder="Enter Import ID" required>
+                <x-input-error :messages="$errors->get('description')" class="mt-2" />
             </div>
         </div>
 
@@ -83,14 +80,20 @@
                 <input
                     class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey"
                     id="receiver" name="receiver" type="text" placeholder="Enter Receiver" required>
+                <x-input-error :messages="$errors->get('receiver')" class="mt-2" />
             </div>
             <div class="md:w-1/2 px-3">
                 <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="currency">
                     Currency
                 </label>
-                <input
-                    class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
-                    id="currency" name="currency" type="text" placeholder="Enter Currency" required>
+                <select id="currency" name="currency" placeholder="Enter Currency" required
+                        class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey">
+                    <option>Select receiver persona</option>
+                    @foreach(config('moneypenny.supported_currencies') as $currencyCode)
+                        <option value="{{ $currencyCode }}">{{ $currencyCode }}</option>
+                    @endforeach
+                </select>
+                <x-input-error :messages="$errors->get('currency')" class="mt-2" />
             </div>
         </div>
 
@@ -102,6 +105,7 @@
                 <input
                     class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey"
                     id="sender" name="sender" type="text" placeholder="Enter Sender" required>
+                <x-input-error :messages="$errors->get('sender')" class="mt-2" />
             </div>
             <div class="md:w-1/2 px-3">
                 <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="type">
@@ -111,10 +115,10 @@
                     <select
                         class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey"
                         id="type" name="type" required>
-                        <option value="{{ \App\Models\Transaction\Transaction::TYPE_UNKNOWN }}">Unknown</option>
                         <option value="{{ \App\Models\Transaction\Transaction::TYPE_INCOME }}">Income</option>
-                        <option value="{{ \App\Models\Transaction\Transaction::TYPE_EXPENDITURE }}">Expenditure</option>
+                        <option selected value="{{ \App\Models\Transaction\Transaction::TYPE_EXPENDITURE }}">Expenditure</option>
                     </select>
+                    <x-input-error :messages="$errors->get('type')" class="mt-2" />
                 </div>
             </div>
         </div>

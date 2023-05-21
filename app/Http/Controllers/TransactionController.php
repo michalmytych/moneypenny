@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Filters\Filter;
+use App\Http\Requests\Web\Transaction\CreateRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Services\Transaction\TransactionService;
@@ -27,9 +29,11 @@ class TransactionController extends Controller
         return view('transaction.show', compact('transaction'));
     }
 
-    public function create(Request $request)
+    public function create(CreateRequest $request): RedirectResponse
     {
-        // @todo
-        dd($request->all());
+        $user = $request->user();
+        $data = $request->validated();
+        $this->transactionService->create($user, $data);
+        return redirect()->to(route('transaction.index'));
     }
 }

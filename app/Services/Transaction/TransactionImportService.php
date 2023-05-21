@@ -30,7 +30,7 @@ class TransactionImportService
 
         $attributes = [
             'sender' => $sender,
-            'user_id' => $user,
+            'user_id' => $user->id,
             'receiver' => $receiver,
             'currency' => $currency,
             'raw_volume' => TransactionHelper::changeComaToDotAtRawVolume($rawVolume),

@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Filters\Filter;
 use App\Models\Transaction\Persona;
 use App\Models\Transaction\Transaction;
+use App\Services\Helpers\TransactionHelper;
+use Illuminate\Support\Carbon;
 
 class TransactionService
 {
@@ -36,5 +38,28 @@ class TransactionService
         }
 
         return $transaction;
+    }
+
+    public function create(User $user, array $data): Transaction
+    {
+        $decimalVolume = (float) $data['decimal_volume'];
+        $type = (int) $data['type'];
+        $transactionDate = Carbon::parse($data['transaction_date']);
+
+        $attributes = [
+            'user_id' => $user->id,
+            'type' => $type,
+            'sender' => $data['sender'],
+            'receiver' => $data['receiver'],
+            'currency' => $data['currency'],
+            'decimal_volume' => $decimalVolume,
+            'calculation_volume' => $decimalVolume,
+            'raw_volume' => TransactionHelper::createRawVolume($decimalVolume, $type),
+            'description' => $data['description'],
+            'accounting_date' => $transactionDate,
+            'transaction_date' => $transactionDate
+        ];
+
+        return Transaction::create($attributes);
     }
 }

@@ -13,14 +13,14 @@ class DeviceService
 
     public function all(): Collection
     {
-        return Device::all();
+        return Device::latest()->get();
     }
 
     public function handleWhenDeviceHijacked(DeviceHijacked $event): void
     {
         $this->notificationBroadcastService->sendStoredApplicationNotification(
-            header: 'Uwaga! Wykryto podejrzaną aktywność.',
-            content: 'Informacje: ' . $event->message,
+            header: 'Warning! Suspicious activity detected.',
+            content: 'Details: ' . $event->message,
             url: route('devices')
         );
     }

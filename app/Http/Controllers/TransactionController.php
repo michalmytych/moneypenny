@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Filters\Filter;
-use App\Http\Requests\Web\Transaction\CreateRequest;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use App\Services\Transaction\TransactionService;
+use App\Http\Requests\Web\Transaction\CreateRequest;
 
 class TransactionController extends Controller
 {

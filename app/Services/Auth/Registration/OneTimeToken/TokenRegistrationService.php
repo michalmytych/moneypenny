@@ -2,8 +2,8 @@
 
 namespace App\Services\Auth\Registration\OneTimeToken;
 
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cache;
 
 class TokenRegistrationService
 {

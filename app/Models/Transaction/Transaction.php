@@ -2,13 +2,16 @@
 
 namespace App\Models\Transaction;
 
+use App\Models\User;
 use App\Filters\Filter;
-use App\Models\Traits\BelongsToUser;
+use App\Models\Import\Import;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use App\Filters\Traits\Filterable;
+use App\Models\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use App\Models\Synchronization\Synchronization;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -22,7 +25,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static whereExpenditure()
  * @method static whereMonthAndYear(Carbon $now)
  * @method static orderByTransactionDate()
- * @method static whereUser(\App\Models\User $user)
+ * @method static whereUser(User $user)
  * @property string $sender
  * @property string $receiver
  * @property int $id
@@ -34,6 +37,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $raw_volume
  * @property int $type
  * @property float $calculation_volume
+ * @property mixed $user_id
+ * @property User $user
  */
 class Transaction extends Model
 {
@@ -48,6 +53,21 @@ class Transaction extends Model
     protected $casts = [
         'transaction_date' => 'datetime'
     ];
+
+    public function import(): BelongsTo
+    {
+        return $this->belongsTo(Import::class);
+    }
+
+    public function account(): BelongsTo
+    {
+        return $this->belongsTo(PersonalAccount::class);
+    }
+
+    public function synchronization(): BelongsTo
+    {
+        return $this->belongsTo(Synchronization::class);
+    }
 
     public static function getFilterableColumns(): Collection
     {

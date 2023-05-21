@@ -8,6 +8,7 @@ use App\Models\Transaction\Persona;
 use App\Models\Transaction\Transaction;
 use App\Services\Helpers\TransactionHelper;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 
 class TransactionService
 {
@@ -31,7 +32,16 @@ class TransactionService
 
     public function findOrFail(mixed $id, User $user): ?Transaction
     {
-        $transaction = Transaction::findOrFail($id);
+        $relationsToLoad = [
+            'import',
+            'synchronization',
+            'account',
+            'senderPersona',
+            'receiverPersona',
+        ];
+
+        /** @var Transaction $transaction */
+        $transaction = Transaction::with($relationsToLoad)->findOrFail($id);
 
         if ($transaction->user_id !== $user->id) {
             abort(403);
@@ -61,5 +71,21 @@ class TransactionService
         ];
 
         return Transaction::create($attributes);
+    }
+
+    public function getSimilarTransactions(?Transaction $transaction): Collection
+    {
+        // @todo - improve search
+        if (!$transaction) {
+            return collect();
+        }
+
+        return Transaction::whereUser($transaction->user)
+            ->where('id', '!=', $transaction->id)
+            ->where('description', 'like', '%' . $transaction->description . '%')
+            ->where('receiver', 'like', '%' . $transaction->receiver . '%')
+            ->where('sender', 'like', '%' . $transaction->sender . '%')
+            ->limit(10)
+            ->get();
     }
 }

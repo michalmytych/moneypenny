@@ -26,7 +26,8 @@ class TransactionController extends Controller
     {
         $user = $request->user();
         $transaction = $this->transactionService->findOrFail($id, $user);
-        return view('transaction.show', compact('transaction'));
+        $similarTransactions = $this->transactionService->getSimilarTransactions($transaction);
+        return view('transaction.show', compact('transaction', 'similarTransactions'));
     }
 
     public function create(CreateRequest $request): RedirectResponse

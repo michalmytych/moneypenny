@@ -119,37 +119,42 @@
 <script>
     /** @todo - This could be a separate component, working with tip.blade.php component */
 
-    const tippedInputsIds = [
-        'name',
-        'transaction_date_column_index',
-        'accounting_date_column_index',
-        'sender_column_index',
-        'receiver_column_index',
-        'description_column_index',
-        'volume_column_index',
-        'currency_column_index',
-        'sender_account_number_index',
-        'receiver_account_number_index'
-    ];
+    window.addEventListener('load', () => {
+        const tippedInputsIds = [
+            'name',
+            'transaction_date_column_index',
+            'accounting_date_column_index',
+            'sender_column_index',
+            'receiver_column_index',
+            'description_column_index',
+            'volume_column_index',
+            'currency_column_index',
+            'sender_account_number_index',
+            'receiver_account_number_index'
+        ];
 
-    tippedInputsIds.forEach(key => {
-        const input = document.getElementById(key);
-        const nameTip = document.getElementById(`${key}_tip`);
-        input.addEventListener('focus', () => {
-            const allLabels = document.querySelectorAll('.form-label');
-            allLabels.forEach(label => {
-                label.style.fontWeight = 'regular';
-                if (label.getAttribute('for') === key) {
-                    label.style.fontWeight = 'bolder';
-                }
-            });
-            nameTip.style.display = 'block';
+        tippedInputsIds.forEach(key => {
+            const input = document.getElementById(key);
+            const nameTip = document.getElementById(`${key}_tip`);
+            input.addEventListener('focus', () => {
+                const allLabels = document.querySelectorAll('.form-label');
+                allLabels.forEach(label => {
+                    label.style.fontWeight = 'regular';
+                    if (label.getAttribute('for') === key) {
+                        label.style.fontWeight = 'bolder';
+                    }
+                });
+                nameTip.style.display = 'block';
 
-            const allTips = document.querySelectorAll("div[id$='_tip']");
-            allTips.forEach(tip => {
-                tip.style.display = 'none';
+                const allTips = document.querySelectorAll("div[id$='_tip']");
+                allTips.forEach(tip => {
+                    tip.style.display = 'none';
+                });
+                nameTip.style.display = 'block';
             });
-            nameTip.style.display = 'block';
         });
+
+        const nameInput = document.getElementById('name');
+        nameInput.focus();
     });
 </script>

@@ -14,9 +14,7 @@ return new class extends Migration
         Schema::create('personas', function (Blueprint $table) {
             $table->id();
             $table->string('common_name');
-            $table
-                ->json('associated_names')
-                ->default(json_encode([]));
+            $table->json('associated_names');
             $table->timestamps();
         });
     }

@@ -1,14 +1,13 @@
 <?php
 
-use App\Http\Controllers\Api\Auth\UserController;
-use App\Http\Controllers\Api\MetaController;
-use App\Http\Controllers\Api\Notification\NotificationController;
-use App\Http\Controllers\Api\Transaction\ReportController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\MetaController;
+use App\Http\Controllers\Api\Auth\UserController;
 use App\Http\Controllers\SynchronizationController;
 use App\Http\Controllers\Analysis\AnalysisController;
+use App\Http\Controllers\Api\Transaction\ReportController;
 use App\Http\Controllers\ExchangeRates\ExchangeRateController;
+use App\Http\Controllers\Api\Notification\NotificationController;
 
 /*
 |--------------------------------------------------------------------------

@@ -3,6 +3,7 @@
 namespace App\Models\Transaction;
 
 use App\Filters\Filter;
+use App\Models\Traits\BelongsToUser;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use App\Filters\Traits\Filterable;
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static whereExpenditure()
  * @method static whereMonthAndYear(Carbon $now)
  * @method static orderByTransactionDate()
+ * @method static whereUser(\App\Models\User $user)
  * @property string $sender
  * @property string $receiver
  * @property int $id
@@ -35,31 +37,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Transaction extends Model
 {
-    use HasFactory, Filterable;
+    use HasFactory, Filterable, BelongsToUser;
 
     const TYPE_UNKNOWN = 0;
     const TYPE_INCOME = 1;
     const TYPE_EXPENDITURE = 2;
 
     const CALCULATION_COLUMN = 'calculation_volume';
-
-    protected $fillable = [
-        'receiver_account_number',
-        'sender_account_number',
-        'receiver_persona_id',
-        'calculation_volume',
-        'sender_persona_id',
-        'transaction_date',
-        'accounting_date',
-        'decimal_volume',
-        'description',
-        'raw_volume',
-        'import_id',
-        'receiver',
-        'currency',
-        'sender',
-        'type'
-    ];
 
     protected $casts = [
         'transaction_date' => 'datetime'
@@ -98,6 +82,25 @@ class Transaction extends Model
             ],
         ]);
     }
+
+    protected $fillable = [
+        'receiver_account_number',
+        'sender_account_number',
+        'receiver_persona_id',
+        'calculation_volume',
+        'sender_persona_id',
+        'transaction_date',
+        'accounting_date',
+        'decimal_volume',
+        'description',
+        'raw_volume',
+        'import_id',
+        'receiver',
+        'currency',
+        'user_id',
+        'sender',
+        'type'
+    ];
 
     public function senderPersona(): BelongsTo
     {

@@ -32,12 +32,6 @@ use App\Http\Controllers\Nordigen\Institution\InstitutionController;
 |
 */
 
-//Route::get('/test', function () {
-//    app(\App\Services\Auth\Device\DeviceService::class)->handleWhenDeviceHijacked();
-//
-//    return 'Sent';
-//});
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

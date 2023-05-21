@@ -3,6 +3,7 @@
 namespace App\Services\File;
 
 use App\Models\File;
+use App\Models\User;
 use Illuminate\Support\Str;
 use App\Services\Import\ImportService;
 use App\Services\File\Traits\RegistersFileInDBAndStoresOnDisk;
@@ -13,7 +14,7 @@ class TransactionFileService
 
     public function __construct(private readonly ImportService $importService) {}
 
-    public function uploadTransactions(mixed $requestFile, mixed $importSettingId, mixed $columnMappingId): void
+    public function uploadTransactions(mixed $requestFile, mixed $importSettingId, mixed $columnMappingId, User $user): void
     {
         $file = $requestFile;
 
@@ -24,6 +25,7 @@ class TransactionFileService
         $fileName = "upload_{$uuid}_{$timestamp}.{$extension}";
 
         $fileModel = new File();
+        $fileModel->user_id = $user->id;
         $fileModel->name = $file->getClientOriginalName();
         $fileModel->path = "uploads/{$fileName}";
         $fileModel->size = $file->getSize();
@@ -31,6 +33,6 @@ class TransactionFileService
 
         $this->registerAndStoreFile($fileModel, $file, $fileName);
 
-        $this->importService->importFromFile($fileModel->id, $importSettingId, $columnMappingId);
+        $this->importService->importFromFile($fileModel->id, $importSettingId, $columnMappingId, $user);
     }
 }

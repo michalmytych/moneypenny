@@ -14,9 +14,21 @@ return new class extends Migration
         Schema::create('imports', function (Blueprint $table) {
             $table->id();
             $table->tinyInteger('status');
-            $table->foreignId('import_setting_id')->constrained('import_settings');
-            $table->foreignId('columns_mapping_id')->constrained('columns_mappings');
-            $table->foreignId('file_id')->constrained('files');
+            $table
+                ->foreignId('import_setting_id')
+                ->nullable()
+                ->constrained('import_settings')
+                ->nullOnDelete();
+            $table
+                ->foreignId('columns_mapping_id')
+                ->nullable()
+                ->constrained('columns_mappings')
+                ->nullOnDelete();
+            $table
+                ->foreignId('file_id')
+                ->nullable()
+                ->constrained('files')
+                ->nullOnDelete();
             $table->timestamps();
         });
     }

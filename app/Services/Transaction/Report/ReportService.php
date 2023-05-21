@@ -3,13 +3,12 @@
 namespace App\Services\Transaction\Report;
 
 use App\Models\User;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Transaction\Transaction;
-use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Builder;
 use App\Services\Transaction\Currency\CurrencyService;
 use App\Services\Transaction\Report\Defaults\MonthReport;
 use App\Services\Transaction\Transformers\DateGroupByToCalendar;
@@ -48,10 +47,10 @@ class ReportService
         return $data;
     }
 
-    public function getAvgExpendituresByDays(Carbon $sinceDate, Carbon $toDate): Collection|array
+    public function getAvgExpendituresByDays(User $user, Carbon $sinceDate, Carbon $toDate): Collection|array
     {
         $expendituresData = $this
-            ->getBaseTrendQuery()
+            ->getBaseTrendQuery($user)
             ->where('type', Transaction::TYPE_EXPENDITURE)
             ->whereDate('transaction_date', '>=', $sinceDate)
             ->whereDate('transaction_date', '<=', $toDate)
@@ -60,7 +59,7 @@ class ReportService
         return DateGroupByToCalendar::transform($expendituresData, 'transaction_date', 'average_volume');
     }
 
-    private function getMonthReport(Carbon $carbon, Authenticatable $user): array
+    private function getMonthReport(Carbon $carbon, User $user): array
     {
         /** @var MonthReport $reportTemplate */
         $reportTemplate = app(MonthReport::class);
@@ -70,10 +69,10 @@ class ReportService
             ->getReportData($user);
     }
 
-    public function getAvgIncomesByDays(Carbon $sinceDate, Carbon $toDate): Collection|array
+    public function getAvgIncomesByDays(User $user, Carbon $sinceDate, Carbon $toDate): Collection|array
     {
         $incomesData = $this
-            ->getBaseTrendQuery()
+            ->getBaseTrendQuery($user)
             ->where('type', Transaction::TYPE_INCOME)
             ->whereDate('transaction_date', '>=', $sinceDate)
             ->whereDate('transaction_date', '<=', $toDate)
@@ -82,9 +81,9 @@ class ReportService
         return DateGroupByToCalendar::transform($incomesData, 'transaction_date', 'average_volume');
     }
 
-    protected function getBaseTrendQuery(): Builder
+    protected function getBaseTrendQuery(User $user): Builder
     {
-        return Transaction::query()
+        return Transaction::whereUser($user)
             ->select(DB::raw('transaction_date'),
                 DB::raw('SUM(calculation_volume) as daily_sum'),
                 DB::raw('AVG(SUM(calculation_volume)) OVER (ORDER BY transaction_date ASC ROWS BETWEEN UNBOUNDED PRECEDING AND 1 PRECEDING) as average_volume'))

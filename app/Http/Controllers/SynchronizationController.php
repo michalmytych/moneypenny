@@ -7,36 +7,38 @@ use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\App;
-use App\Models\Nordigen\Requisition;
-use App\Models\Synchronization\Account;
-use App\Models\Synchronization\Synchronization;
+use App\Services\Nordigen\NordigenAccountService;
 use App\Services\Transaction\Synchronization\SynchronizationService;
 use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
 
 class SynchronizationController extends Controller
 {
     public function __construct(
+        private readonly NordigenAccountService $nordigenAccountService,
         private readonly SynchronizationService          $synchronizationService,
         private readonly TransactionSyncServiceInterface $transactionSyncService
     )
     {
     }
 
-    public function index(): View
+    public function index(Request $request): View
     {
-        $synchronizations = $this->synchronizationService->all();
+        $user = $request->user();
+        $synchronizations = $this->synchronizationService->all($user);
         return view('synchronizations.index', compact('synchronizations'));
     }
 
     public function sync(Request $request): JsonResponse
     {
+        $user = $request->user();
         $agreementId = $request->get('agreement_id');
-        $requisition = Requisition::latest()->firstWhere('end_user_agreement_id', $agreementId);
-        $synchronization = Synchronization::create();
+
+        $requisition = $this->synchronizationService->checkRequisition($user, $agreementId);
+        $synchronization = $this->synchronizationService->create($user);
 
         try {
-            $this->transactionSyncService->syncAccounts($requisition->nordigen_requisition_id, $synchronization->id);
-            $this->transactionSyncService->syncTransactions($requisition->nordigen_requisition_id, $synchronization->id);
+            $this->transactionSyncService->syncAccounts($requisition->nordigen_requisition_id, $synchronization->id, $user);
+            $this->transactionSyncService->syncTransactions($requisition->nordigen_requisition_id, $synchronization->id, $user);
             $this->transactionSyncService->setStatusSucceeded($synchronization);
 
         } catch (Throwable $throwable) {
@@ -53,6 +55,7 @@ class SynchronizationController extends Controller
             ], $statusCode);
         }
 
-        return response()->json(Account::all());
+        $accounts = $this->nordigenAccountService->all($user);
+        return response()->json($accounts);
     }
 }

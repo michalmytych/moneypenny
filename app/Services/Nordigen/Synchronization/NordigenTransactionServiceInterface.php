@@ -2,10 +2,11 @@
 
 namespace App\Services\Nordigen\Synchronization;
 
+use App\Models\User;
 use App\Models\Import\Import;
 use App\Services\Nordigen\DataObjects\TransactionDataObject;
 
 interface NordigenTransactionServiceInterface
 {
-    public function addNewSynchronizedTransaction(TransactionDataObject $transactionDataObject, Import $import);
+    public function addNewSynchronizedTransaction(TransactionDataObject $transactionDataObject, Import $import, User $user);
 }

@@ -2,24 +2,25 @@
 
 namespace App\Services\Nordigen;
 
-use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
-use App\Http\Client\Traits\DecodesHttpJsonResponse;
-use App\Models\Import\Import;
-use App\Models\Nordigen\EndUserAgreement;
-use App\Models\Nordigen\Requisition;
-use App\Models\Synchronization\Account;
-use App\Models\Synchronization\Synchronization;
-use App\Services\Nordigen\DataObjects\InstitutionDataObject;
-use App\Services\Nordigen\DataObjects\TransactionDataObject;
-use App\Services\Nordigen\Synchronization\NordigenTransactionServiceInterface;
 use Exception;
-use GuzzleHttp\Exception\GuzzleException;
+use Throwable;
+use App\Models\User;
+use Illuminate\Support\Str;
+use App\Models\Import\Import;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
-use Throwable;
+use App\Models\Nordigen\Requisition;
+use Illuminate\Support\Facades\Cache;
+use App\Models\Synchronization\Account;
+use GuzzleHttp\Exception\GuzzleException;
+use App\Models\Nordigen\EndUserAgreement;
+use App\Models\Synchronization\Synchronization;
+use App\Http\Client\Traits\DecodesHttpJsonResponse;
+use App\Services\Nordigen\DataObjects\InstitutionDataObject;
+use App\Services\Nordigen\DataObjects\TransactionDataObject;
+use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
+use App\Services\Nordigen\Synchronization\NordigenTransactionServiceInterface;
 
 class NordigenService implements TransactionSyncServiceInterface
 {
@@ -43,6 +44,7 @@ class NordigenService implements TransactionSyncServiceInterface
 
     public function __construct(
         private readonly NordigenClient                      $httpClient,
+        private readonly NordigenAccountService              $nordigenAccountService,
         private readonly NordigenTransactionServiceInterface $nordigenTransactionService
     )
     {
@@ -52,19 +54,20 @@ class NordigenService implements TransactionSyncServiceInterface
      * @throws GuzzleException
      * @throws Throwable
      */
-    public function syncTransactions(mixed $requisitionId, mixed $synchronizationId): void
+    public function syncTransactions(mixed $requisitionId, mixed $synchronizationId, User $user): void
     {
-        $this->syncAccounts($requisitionId, $synchronizationId);
-        $accounts = $this->getAccounts();
+        $this->syncAccounts($requisitionId, $synchronizationId, $user);
+        $accounts = $this->nordigenAccountService->all($user);
 
         foreach ($accounts as $account) {
             $import = Import::create([
+                'user_id' => $user->id,
                 'synchronization_id' => $synchronizationId,
                 'status' => Import::STATUS_IMPORTING
             ]);
 
             try {
-                $this->syncTransactionsByAccount($account, $import);
+                $this->syncTransactionsByAccount($account, $import, $user);
                 $import->update(['status' => Import::STATUS_IMPORTED]);
 
             } catch (Throwable $throwable) {
@@ -78,7 +81,7 @@ class NordigenService implements TransactionSyncServiceInterface
      * @throws GuzzleException
      * @throws Exception
      */
-    protected function syncTransactionsByAccount(Account $account, Import $import): void
+    protected function syncTransactionsByAccount(Account $account, Import $import, User $user): void
     {
         $uri = self::ACCOUNTS_URI . $account->nordigen_account_id . '/transactions/';
 
@@ -98,7 +101,8 @@ class NordigenService implements TransactionSyncServiceInterface
                 $transactionDataObject = TransactionDataObject::make($transactionData);
                 $this->nordigenTransactionService->addNewSynchronizedTransaction(
                     $transactionDataObject,
-                    $import
+                    $import,
+                    $user
                 );
             }
         } else {
@@ -107,16 +111,16 @@ class NordigenService implements TransactionSyncServiceInterface
         }
     }
 
-    public function getAccounts(): Collection
+    public function getAccounts(User $user): Collection
     {
-        return Account::latest()->get();
+        return Account::whereUser($user)->latest()->get();
     }
 
     /**
      * @throws GuzzleException
      * @throws Exception
      */
-    public function syncAccounts(mixed $requisitionId, mixed $synchronizationId): void
+    public function syncAccounts(mixed $requisitionId, mixed $synchronizationId, User $user): void
     {
         $uri = self::NEW_REQUISITION_URI . $requisitionId . '/';
 
@@ -131,8 +135,10 @@ class NordigenService implements TransactionSyncServiceInterface
             foreach ($accountsIds as $accountId) {
                 // @todo add deleting non existing accounts
                 Account::firstOrCreate([
+                    'user_id' => $user->id,
                     'nordigen_account_id' => $accountId,
                 ], [
+                    'user_id' => $user->id,
                     'nordigen_account_id' => $accountId,
                     'synchronization_id' => $synchronizationId,
                 ]);
@@ -140,22 +146,27 @@ class NordigenService implements TransactionSyncServiceInterface
         }
     }
 
-    public function getAgreements(): Collection
+    public function getAgreements(User $user): Collection
     {
-        return EndUserAgreement::with('requisitions')->latest()->get();
+        return EndUserAgreement::whereUser($user)->with('requisitions')->latest()->get();
     }
 
-    public function getAgreementsByInstitution(mixed $institutionId): Collection
+    public function getAgreementsByInstitution(User $user, mixed $institutionId): Collection
     {
-        return EndUserAgreement::with('requisitions')
+        return EndUserAgreement::whereUser($user)
+            ->with('requisitions')
             ->where('nordigen_institution_id', $institutionId)
             ->latest()
             ->get();
     }
 
-    public function createNewRequisition(mixed $institutionId, mixed $endUserAgreementId): Requisition|array
+    public function createNewRequisition(mixed $institutionId, mixed $endUserAgreementId, User $user): Requisition|array
     {
         $endUserAgreement = EndUserAgreement::findOrFail($endUserAgreementId);
+
+        if ($endUserAgreement->user_id !== $user->id) {
+            abort(403);
+        }
 
         $requestBody = [
             'redirect' => route('institution.agreements', ['id' => $endUserAgreement->getInstitutionId()]),
@@ -176,6 +187,7 @@ class NordigenService implements TransactionSyncServiceInterface
 
             if ($isSuccessful) {
                 return Requisition::create([
+                    'user_id' => $user->id,
                     'reference' => data_get($requisitionData, 'reference'),
                     'link' => data_get($requisitionData, 'link'),
                     'nordigen_requisition_id' => data_get($requisitionData, 'id'),
@@ -202,17 +214,26 @@ class NordigenService implements TransactionSyncServiceInterface
         }
     }
 
-    public function getExistingAgreementForInstitution(mixed $institutionId): ?EndUserAgreement
+    public function getExistingAgreementForInstitution(User $user, mixed $institutionId): ?EndUserAgreement
     {
-        return EndUserAgreement::firstWhere('nordigen_institution_id', $institutionId);
+        return EndUserAgreement::firstWhere([
+            'user_id' => $user->id,
+            'nordigen_institution_id' => $institutionId
+        ]);
     }
 
-    public function getAgreementById(mixed $id): EndUserAgreement
+    public function getAgreementById(User $user, mixed $id): ?EndUserAgreement
     {
-        return EndUserAgreement::findOrFail($id);
+        $agreement = EndUserAgreement::findOrFail($id);
+
+        if ($agreement->user_id !== $user->id) {
+            abort(403);
+        }
+
+        return $agreement;
     }
 
-    public function createNewUserAgreement(mixed $institutionId): EndUserAgreement|array
+    public function createNewUserAgreement(User $user, mixed $institutionId): EndUserAgreement|array
     {
         $requestBody = [
             'institution_id' => $institutionId,
@@ -231,6 +252,7 @@ class NordigenService implements TransactionSyncServiceInterface
             $nordigenCreated = data_get($userAgreementData, 'created');
 
             return EndUserAgreement::create([
+                'user_id' => $user->id,
                 'is_successful' => $isSuccessful,
                 'raw_request_body' => json_encode($requestBody),
                 'raw_response_body' => json_encode($userAgreementData),

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Import\ColumnsMapping;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class ColumnsMappingsTableSeeder extends Seeder
@@ -13,6 +14,7 @@ class ColumnsMappingsTableSeeder extends Seeder
     public function run(): void
     {
         ColumnsMapping::create([
+            'user_id' => User::first()->id,
             'name' => 'Alior Export',
             'transaction_date_column_index' => 0,
             'accounting_date_column_index' => 1,

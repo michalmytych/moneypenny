@@ -21,82 +21,84 @@
 </button>
 
 @push('scripts')
-    <script>
-        /** Scope **/
-        const syncButton = document.getElementById('syncButton');
-        const spinnerIcon = document.getElementById('spinnerIcon');
-        const syncButtonText = document.getElementById('syncButtonText');
-        const synchronizationRoute = "{{ route('api.analysis') }}";
-        const agreementId = "{{ $agreement->id }}";
+    @if($agreement)
+        <script>
+            /** Scope **/
+            const syncButton = document.getElementById('syncButton');
+            const spinnerIcon = document.getElementById('spinnerIcon');
+            const syncButtonText = document.getElementById('syncButtonText');
+            const synchronizationRoute = "{{ route('api.analysis') }}";
+            const agreementId = "{{ $agreement->id }}";
 
-        /** API Calls **/
-        const triggerSynchronization = () => {
-            if (syncButton.disabled) return false;
+            /** API Calls **/
+            const triggerSynchronization = () => {
+                if (syncButton.disabled) return false;
 
-            try {
-                fetch("{{ route('api.sync') }}", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            'Accept-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            'agreement_id': agreementId
-                        })
-                    }
-                )
-                    .then(res => {
-                        if (res.ok) {
-                            handleRequestSuccess()
-                        } else {
-                            handleRequestError(res);
+                try {
+                    fetch("{{ route('api.sync') }}", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                'Accept-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                'agreement_id': agreementId
+                            })
                         }
-                    })
-            } catch (e) {
-                handleRequestError();
+                    )
+                        .then(res => {
+                            if (res.ok) {
+                                handleRequestSuccess()
+                            } else {
+                                handleRequestError(res);
+                            }
+                        })
+                } catch (e) {
+                    handleRequestError();
+                }
             }
-        }
 
-        /** UI Updates **/
-        const handleSyncButtonClick = () => {
-            syncButtonText.innerText = 'Synchronizuję...';
-            syncButton.classList.add('text-gray-500');
-            spinnerIcon.classList.add('animate-spin');
-            syncButton.disabled = true;
-        }
-
-        const handleRequestError = (res) => {
-            const mapping = {
-                500: 'Wewnętrzny błąd serwera',
-                429: 'Przekroczono dzienny limit synchronizacji dla instytucji',
-                408: 'Żądanie zajęło zbyt długo'
-            };
-            try {
-                syncButtonText.innerText = mapping[res.status];
-            } catch(e) {
-                syncButtonText.innerText = 'Nieznany błąd';
+            /** UI Updates **/
+            const handleSyncButtonClick = () => {
+                syncButtonText.innerText = 'Synchronizuję...';
+                syncButton.classList.add('text-gray-500');
+                spinnerIcon.classList.add('animate-spin');
+                syncButton.disabled = true;
             }
-            syncButton.classList.add('text-red-600');
-            syncButton.classList.add('font-semibold');
-            spinnerIcon.style.display = 'none';
-        }
 
-        const handleRequestSuccess = () => {
-            syncButtonText.innerText = 'Zsynchronizowano';
-            syncButton.classList.add('text-indigo-600');
-            syncButton.classList.add('font-semibold');
-            spinnerIcon.style.display = 'none';
-            @if(isset($reload) && $reload)
+            const handleRequestError = (res) => {
+                const mapping = {
+                    500: 'Wewnętrzny błąd serwera',
+                    429: 'Przekroczono dzienny limit synchronizacji dla instytucji',
+                    408: 'Żądanie zajęło zbyt długo'
+                };
+                try {
+                    syncButtonText.innerText = mapping[res.status];
+                } catch(e) {
+                    syncButtonText.innerText = 'Nieznany błąd';
+                }
+                syncButton.classList.add('text-red-600');
+                syncButton.classList.add('font-semibold');
+                spinnerIcon.style.display = 'none';
+            }
+
+            const handleRequestSuccess = () => {
+                syncButtonText.innerText = 'Zsynchronizowano';
+                syncButton.classList.add('text-indigo-600');
+                syncButton.classList.add('font-semibold');
+                spinnerIcon.style.display = 'none';
+                @if(isset($reload) && $reload)
                 window.setTimeout(function() {
                     window.location.reload();
                 }, 1000);
-            @endif
-        }
+                @endif
+            }
 
-        /** Event Listeners **/
-        syncButton.addEventListener('click', () => {
-            triggerSynchronization();
-            handleSyncButtonClick();
-        });
-    </script>
+            /** Event Listeners **/
+            syncButton.addEventListener('click', () => {
+                triggerSynchronization();
+                handleSyncButtonClick();
+            });
+        </script>
+    @endif
 @endpush

@@ -13,15 +13,17 @@ class TransactionController extends Controller
 
     public function index(Request $request): View
     {
+        $user = $request->user();
         $filter = Filter::makeFromRequest($request);
-        $indexData = $this->transactionService->getIndexData($filter);
+        $indexData = $this->transactionService->getIndexData($filter, $user);
 
         return view('transaction.index', $indexData);
     }
 
-    public function show(int $id): View
+    public function show(int $id, Request $request): View
     {
-        $transaction = $this->transactionService->findOrFail($id);
+        $user = $request->user();
+        $transaction = $this->transactionService->findOrFail($id, $user);
         return view('transaction.show', compact('transaction'));
     }
 

@@ -2,6 +2,8 @@
 
 namespace App\Models\Import;
 
+use App\Models\Traits\BelongsToUser;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,13 +22,15 @@ use Illuminate\Database\Eloquent\Model;
  * @method static findOrFail(int $columnsMappingId)
  * @method static latest()
  * @method static create(array $data)
+ * @method static whereUser(User $user)
  */
 class ColumnsMapping extends Model
 {
-    use HasFactory;
+    use HasFactory, BelongsToUser;
 
     protected $fillable = [
         'name',
+        'user_id',
         'transaction_date_column_index',
         'volume_column_index',
         'accounting_date_column_index',

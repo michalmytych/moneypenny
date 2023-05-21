@@ -9,6 +9,8 @@ use App\Models\Transaction\Transaction;
 
 class TransactionPersonaService
 {
+    // @todo - personas should only be searched in transactions of one specific user
+
     public const ACCEPTED_SIMILARITY_PERCENTAGE = 10;
 
     /** @noinspection PhpUndefinedMethodInspection */

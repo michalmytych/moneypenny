@@ -15,6 +15,7 @@ class PersonaController extends Controller
 
     public function index(Request $request): View
     {
+        // @todo - not working logic (user)
         $selectedPersonaId = $request->get('selected_persona_id');
 
         $personas = Persona::withCount('transactionsAsSender', 'transactionsAsReceiver')
@@ -38,12 +39,14 @@ class PersonaController extends Controller
 
     public function update(Persona $persona, Request $request): RedirectResponse
     {
+        // @todo - not working logic (user)
         $persona->update($request->all());
         return redirect()->back();
     }
 
     public function associatePersonasToTransactions(): string
     {
+        // @todo - not working logic (user)
         foreach (Transaction::cursor() as $transaction) {
             $this->transactionPersonaService->createPersonasAssociations($transaction);
         }

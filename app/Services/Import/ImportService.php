@@ -3,6 +3,7 @@
 namespace App\Services\Import;
 
 use App\Models\File;
+use App\Models\User;
 use App\Models\Import\Import;
 use Illuminate\Support\Facades\DB;
 use App\Imports\TransactionsImport;
@@ -13,17 +14,27 @@ use App\Contracts\Services\Import\ImportServiceContract;
 
 class ImportService implements ImportServiceContract
 {
-    public function importFromFile(int $fileId, int $importSettingId, int $columnsMappingId): void
+    public function all(User $user)
     {
-        $importSetting  = ImportSetting::findOrFail($importSettingId);
+        return Import::whereUser($user)
+            ->with('file', 'synchronization')
+            ->withCount('addedTransactions')
+            ->latest()
+            ->get();
+    }
+
+    public function importFromFile(int $fileId, int $importSettingId, int $columnsMappingId, User $user): void
+    {
+        $importSetting = ImportSetting::findOrFail($importSettingId);
         $columnsMapping = ColumnsMapping::findOrFail($columnsMappingId);
-        $file           = File::findOrFail($fileId);
+        $file = File::findOrFail($fileId);
 
         $import = new Import([
-            'status'             => Import::STATUS_PROCESSING,
+            'user_id' => $user->id,
+            'status' => Import::STATUS_PROCESSING,
             'columns_mapping_id' => $columnsMappingId,
-            'import_setting_id'  => $importSettingId,
-            'file_id'            => $file->id,
+            'import_setting_id' => $importSettingId,
+            'file_id' => $file->id,
         ]);
 
         $import->save();
@@ -35,8 +46,9 @@ class ImportService implements ImportServiceContract
         $import->update(['status' => Import::STATUS_SAVED]);
     }
 
-    public function create(array $data): Import
+    public function create(User $user, array $data): Import
     {
+        $data['user_id'] = $user->id;
         return Import::create($data);
     }
 }

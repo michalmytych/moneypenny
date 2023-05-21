@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use App\Models\Import\ImportSetting;
 
@@ -12,7 +13,7 @@ class ImportSettingsTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $importSettings = [
             [
@@ -22,26 +23,10 @@ class ImportSettingsTableSeeder extends Seeder
                 'enclosure' => null,
                 'escape_character' => null,
                 'start_row' => 3,
+                'user_id' => User::first()->id,
                 'input_encoding' => 'Windows-1250',
             ],
-//            [
-//                'name' => 'Excel Import',
-//                'file_extension' => 'xlsx',
-//                'delimiter' => '',
-//                'enclosure' => '',
-//                'escape_character' => '',
-//                'start_row' => 0,
-//                'input_encoding' => 'UTF-8',
-//            ],
-//            [
-//                'name' => 'XML Import',
-//                'file_extension' => 'xml',
-//                'delimiter' => '',
-//                'enclosure' => null,
-//                'escape_character' => null,
-//                'start_row' => 1,
-//                'input_encoding' => 'UTF-8',
-//            ],
+            // ...
         ];
 
         foreach ($importSettings as $setting) {

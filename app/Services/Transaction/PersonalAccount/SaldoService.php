@@ -40,10 +40,9 @@ class SaldoService
         return $saldo;
     }
 
-    public function updateSaldo(Transaction $transaction): void
+    public function updateSaldo(User $user, Transaction $transaction): void
     {
-        // @todo
-        $personalAccount = PersonalAccount::first();
+        $personalAccount = PersonalAccount::firstWhere('user_id', $user->id);
 
         if ($transaction->type === Transaction::TYPE_EXPENDITURE) {
             $personalAccount->value -= $transaction->calculation_volume;
@@ -54,6 +53,5 @@ class SaldoService
         }
 
         $personalAccount->save();
-        Cache::flush(); // @todo - should remove only personal account saldo cache key
     }
 }

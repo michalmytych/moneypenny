@@ -3,15 +3,20 @@
 namespace App\Http\Controllers\Notification;
 
 use App\Models\Notification;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
+use App\Services\Notification\NotificationService;
 
 class NotificationController extends Controller
 {
-    public function index(): View
+    public function __construct(private readonly NotificationService $notificationService) {}
+
+    public function index(Request $request): View
     {
-        $notifications = Notification::latest()->get();
+        $user = $request->user();
+        $notifications = $this->notificationService->all($user);
         return view('notifications.index', compact('notifications'));
     }
 

@@ -18,7 +18,6 @@ return new class extends Migration {
             $table->string('sender')->nullable();
             $table->string('raw_volume')->nullable();
             $table->decimal('decimal_volume')->nullable();
-            $table->foreignId('import_id')->constrained('imports');
             $table
                 ->unsignedTinyInteger('type')
                 ->default(Transaction::TYPE_UNKNOWN)
@@ -26,6 +25,10 @@ return new class extends Migration {
             $table->string('receiver')->nullable();
             $table->text('description')->nullable();
             $table->string('currency')->nullable();
+            $table
+                ->foreignId('import_id')
+                ->constrained('imports')
+                ->cascadeOnDelete();
             $table->timestamps();
         });
     }

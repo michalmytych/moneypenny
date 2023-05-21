@@ -3,19 +3,18 @@
 namespace App\Http\Controllers\Import;
 
 use Illuminate\View\View;
-use App\Models\Import\Import;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\Import\ImportService;
 
 class ImportController extends Controller
 {
-    public function index(): View
-    {
-        $imports = Import::query()
-            ->with('file', 'synchronization')
-            ->withCount('addedTransactions')
-            ->latest()
-            ->get();
+    public function __construct(private readonly ImportService $importService) {}
 
+    public function index(Request $request): View
+    {
+        $user = $request->user();
+        $imports = $this->importService->all($user);
         return view('import.index', compact('imports'));
     }
 }

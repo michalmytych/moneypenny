@@ -18,7 +18,9 @@ return new class extends Migration
             $table->integer('size');
             $table
                 ->foreignId('import_setting_id')
-                ->constrained('import_settings');
+                ->nullable()
+                ->constrained('import_settings')
+                ->nullOnDelete();
             $table->timestamps();
         });
     }

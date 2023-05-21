@@ -3,12 +3,13 @@
 namespace App\Models\Import;
 
 use App\Models\File;
-use App\Models\Transaction\Transaction;
+use App\Models\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Transaction\Transaction;
 use App\Models\Synchronization\Synchronization;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $status
@@ -18,10 +19,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int|null $synchronization_id
  * @property int $transactions_skipped_count
  * @method static create(array $data)
+ * @method static whereUser(\App\Models\User $user)
  */
 class Import extends Model
 {
-    use HasFactory;
+    use HasFactory, BelongsToUser;
 
     public const STATUS_PROCESSING = 0;
     public const STATUS_SAVED = 1;
@@ -31,6 +33,7 @@ class Import extends Model
 
     protected $fillable = [
         'status',
+        'user_id',
         'import_setting_id',
         'columns_mapping_id',
         'transactions_skipped_count',

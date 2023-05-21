@@ -2,15 +2,20 @@
 
 namespace App\Models;
 
+use App\Models\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @property string $content
  * @property int $id
+ * @method static whereUser(User $user)
+ * @method static create(array $array)
  */
 class Notification extends Model
 {
+    use BelongsToUser;
+
     public const TYPE_INFO = 0;
 
     public const TYPE_WARNING = 1;
@@ -27,6 +32,7 @@ class Notification extends Model
 
     protected $fillable = [
         'status',
+        'user_id',
         'content',
         'type'
     ];

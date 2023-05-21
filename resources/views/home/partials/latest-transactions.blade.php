@@ -7,13 +7,16 @@
 
 <div class="my-6 bg-gray-100 rounded-lg w-full">
     @php
-        $timePassed = \App\Services\Helpers\TimeHelper::ax_getRoughTimeElapsedAsText(
-            $synchronization->created_at->timestamp
-        );
+        $timePassed = null;
+        if ($synchronization) {
+             $timePassed = \App\Services\Helpers\TimeHelper::ax_getRoughTimeElapsedAsText(
+                $synchronization->created_at->timestamp
+            );
+        }
     @endphp
     <div class="flex items-center">
         @include('nordigen.synchronization.widget', ['agreement' => $agreement, 'reload' => true])
-        <h2 class="ml-2 text-gray-500 font-light relative top-0.5">Last synchronization {{ $timePassed }} ago</h2>
+        <h2 class="ml-2 text-gray-500 font-light relative top-0.5"> {{ $timePassed ? 'Last synchronization ' . $timePassed . ' ago' : 'No synchronizations' }}</h2>
 
     </div>
 </div>

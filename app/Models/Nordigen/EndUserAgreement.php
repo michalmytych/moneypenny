@@ -2,6 +2,8 @@
 
 namespace App\Models\Nordigen;
 
+use App\Models\User;
+use App\Models\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -12,17 +14,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @var bool $is_successful
  * @var Collection $requisitions
  * @method static create(array $array)
- * @method static firstWhere(string $attribute, mixed $value)
+ * @method static firstWhere(string|array $attribute, mixed $value = null)
  * @method static findOrFail(mixed $endUserAgreementId)
  * @method static latest()
+ * @method static whereUser(User $user)
  */
 class EndUserAgreement extends Model
 {
-    use HasFactory;
+    use HasFactory, BelongsToUser;
 
     protected $table = 'nordigen_end_user_agreements';
 
     protected $fillable = [
+        'user_id',
         'is_successful',
         'raw_request_body',
         'raw_response_body',

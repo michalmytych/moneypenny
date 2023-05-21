@@ -2,13 +2,14 @@
 
 namespace App\Services\Import;
 
-use App\Models\Import\ImportSetting;
+use App\Models\User;
 use Illuminate\Support\Collection;
+use App\Models\Import\ImportSetting;
 
 class ImportSettingService
 {
-    public function all(): Collection
+    public function all(User $user): Collection
     {
-        return ImportSetting::latest()->get();
+        return ImportSetting::whereUser($user)->latest()->get();
     }
 }

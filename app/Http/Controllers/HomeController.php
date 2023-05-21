@@ -16,8 +16,9 @@ class HomeController extends Controller
 
     public function index(Request $request): View
     {
-        $saldoData = $this->saldoService->getByUser($request->user());
-        $transactionsData = $this->homePageService->getLatestTransactionsData();
+        $user = $request->user();
+        $saldoData = $this->saldoService->getByUser($user);
+        $transactionsData = $this->homePageService->getLatestTransactionsData($user);
         return view('home.index', compact('transactionsData', 'saldoData'));
     }
 }

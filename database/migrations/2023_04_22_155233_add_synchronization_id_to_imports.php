@@ -15,7 +15,8 @@ return new class extends Migration
             $table
                 ->foreignId('synchronization_id')
                 ->nullable()
-                ->constrained('synchronizations');
+                ->constrained('synchronizations')
+                ->nullOnDelete();
         });
     }
 

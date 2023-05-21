@@ -22,7 +22,8 @@ return new class extends Migration
             $table
                 ->foreignId('end_user_agreement_id')
                 ->references('id')
-                ->on('nordigen_end_user_agreements');
+                ->on('nordigen_end_user_agreements')
+                ->cascadeOnDelete();
             $table->timestamps();
         });
     }

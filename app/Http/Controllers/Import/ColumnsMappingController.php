@@ -5,14 +5,19 @@ namespace App\Http\Controllers\Import;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Import\ColumnsMapping;
 use Illuminate\Http\RedirectResponse;
+use App\Services\Import\ColumnMappingService;
 
 class ColumnsMappingController extends Controller
 {
-    public function index(): View
+    public function __construct(private readonly ColumnMappingService $columnMappingService)
     {
-        $columnsMappings = ColumnsMapping::latest()->get();
+    }
+
+    public function index(Request $request): View
+    {
+        $user = $request->user();
+        $columnsMappings = $this->columnMappingService->all($user);
         return view('import.columns_mapping.index', compact('columnsMappings'));
     }
 
@@ -31,7 +36,8 @@ class ColumnsMappingController extends Controller
             'receiver_account_number_index' => 'nullable|numeric',
         ]);
 
-        ColumnsMapping::create($data);
+        $user = $request->user();
+        $this->columnMappingService->create($user, $data);
 
         return redirect()
             ->route('import.columns-mapping.index')

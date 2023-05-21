@@ -13,8 +13,9 @@ class NotificationController extends Controller
 
     public function index(Request $request): JsonResponse
     {
+        $user = $request->user();
         $limit = $request->integer('limit', 5);
-        $notifications = $this->notificationService->all($limit);
+        $notifications = $this->notificationService->all($user, $limit);
 
         return response()->json([
             'notifications' => $notifications

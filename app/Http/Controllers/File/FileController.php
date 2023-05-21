@@ -25,24 +25,27 @@ class FileController extends Controller
     {
     }
 
-    public function index(): View
+    public function index(Request $request): View
     {
-        $files = $this->fileService->all();
-        $importSettings = $this->importSettingService->all();
-        $columnsMappings = $this->columnMappingService->all();
+        $user = $request->user();
+        $files = $this->fileService->all($user);
+        $importSettings = $this->importSettingService->all($user);
+        $columnsMappings = $this->columnMappingService->all($user);
 
         return view('file.index', compact('files', 'importSettings', 'columnsMappings'));
     }
 
-    public function show($id): View
+    public function show(mixed $id, Request $request): View
     {
+        $user = $request->user();
         return view('file.show', [
-            'file' => $this->fileService->findOrFail($id),
+            'file' => $this->fileService->findOrFail($id, $user),
         ]);
     }
 
     public function upload(Request $request): RedirectResponse
     {
+        $user = $request->user();
         $fileType = $request->input('type');
 
         if ($fileType && $fileType === File::USER_AVATAR) {
@@ -68,6 +71,7 @@ class FileController extends Controller
             $request->file('file'),
             $request->input('import_setting_id'),
             $request->input('column_mapping_id'),
+            $user
         );
 
         return redirect()->route('file.index');

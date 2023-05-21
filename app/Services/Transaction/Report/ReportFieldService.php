@@ -3,8 +3,8 @@
 namespace App\Services\Transaction\Report;
 
 use App\Models\Transaction\Report;
-use App\Models\Transaction\ReportField;
 use Illuminate\Support\Facades\DB;
+use App\Models\Transaction\ReportField;
 
 class ReportFieldService
 {

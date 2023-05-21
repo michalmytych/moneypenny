@@ -16,7 +16,7 @@
         @include('icons.refresh')
     </span>
     <span id="syncButtonText">
-        Synchronizuj
+        Synchronize
     </span>
 </button>
 
@@ -62,7 +62,7 @@
 
             /** UI Updates **/
             const handleSyncButtonClick = () => {
-                syncButtonText.innerText = 'Synchronizuję...';
+                syncButtonText.innerText = 'Synchronizing...';
                 syncButton.classList.add('text-gray-500');
                 spinnerIcon.classList.add('animate-spin');
                 syncButton.disabled = true;
@@ -70,14 +70,14 @@
 
             const handleRequestError = (res) => {
                 const mapping = {
-                    500: 'Wewnętrzny błąd serwera',
-                    429: 'Przekroczono dzienny limit synchronizacji dla instytucji',
-                    408: 'Żądanie zajęło zbyt długo'
+                    500: 'Internal server error!',
+                    429: 'Daily institution synchronizations limit exceeded!',
+                    408: 'Request timed out!'
                 };
                 try {
                     syncButtonText.innerText = mapping[res.status];
                 } catch(e) {
-                    syncButtonText.innerText = 'Nieznany błąd';
+                    syncButtonText.innerText = 'Error occured';
                 }
                 syncButton.classList.add('text-red-600');
                 syncButton.classList.add('font-semibold');
@@ -85,7 +85,7 @@
             }
 
             const handleRequestSuccess = () => {
-                syncButtonText.innerText = 'Zsynchronizowano';
+                syncButtonText.innerText = 'Synchronized';
                 syncButton.classList.add('text-indigo-600');
                 syncButton.classList.add('font-semibold');
                 spinnerIcon.style.display = 'none';

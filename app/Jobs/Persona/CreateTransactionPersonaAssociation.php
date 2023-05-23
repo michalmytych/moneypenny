@@ -14,7 +14,7 @@ class CreateTransactionPersonaAssociation implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(public Transaction $transaction)
+    public function __construct(public mixed $transactionId)
     {
     }
 
@@ -23,6 +23,7 @@ class CreateTransactionPersonaAssociation implements ShouldQueue
      */
     public function handle(TransactionPersonaService $transactionPersonaService): void
     {
-        $transactionPersonaService->createPersonasAssociations($this->transaction);
+        $transation = Transaction::findOrFail($this->transactionId);
+        $transactionPersonaService->createPersonasAssociations($transation);
     }
 }

@@ -39,6 +39,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property float $calculation_volume
  * @property mixed $user_id
  * @property User $user
+ * @property string $currency
+ * @property string|Carbon $transaction_date
  */
 class Transaction extends Model
 {

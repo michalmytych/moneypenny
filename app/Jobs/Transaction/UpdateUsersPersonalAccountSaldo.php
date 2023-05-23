@@ -14,9 +14,10 @@ class UpdateUsersPersonalAccountSaldo implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(public Transaction $transaction) {}
+    public function __construct(public mixed $transactionId) {}
     public function handle(SaldoService $saldoService): void
     {
-        $saldoService->updateSaldo($this->transaction);
+        $transaction = Transaction::findOrFail($this->transactionId);
+        $saldoService->updateSaldo($transaction);
     }
 }

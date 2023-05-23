@@ -40,7 +40,7 @@ class ReportService
         } else {
             $user = User::findOrFail($userId);
             $data = $this->getMonthReport($carbon, $user);
-            $data['currency'] = $this->currencyService->resolveCalculationCurrency();
+            $data['currency'] = $this->currencyService->resolveCalculationCurrency($user);
             Cache::put($cacheKey, $data, 10);
         }
 

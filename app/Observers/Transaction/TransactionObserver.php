@@ -5,12 +5,15 @@ namespace App\Observers\Transaction;
 use App\Models\Transaction\Transaction;
 use App\Jobs\Persona\CreateTransactionPersonaAssociation;
 use App\Jobs\Transaction\UpdateUsersPersonalAccountSaldo;
+use App\Jobs\Transaction\ResolveTransactionCalculationVolume;
 
 class TransactionObserver
 {
     public function created(Transaction $transaction): void
     {
-        CreateTransactionPersonaAssociation::dispatch($transaction);
-        UpdateUsersPersonalAccountSaldo::dispatch($transaction);
+        //@todo - batch jobs
+        CreateTransactionPersonaAssociation::dispatch($transaction->id);
+        ResolveTransactionCalculationVolume::dispatch($transaction->id);
+        UpdateUsersPersonalAccountSaldo::dispatch($transaction->id);
     }
 }

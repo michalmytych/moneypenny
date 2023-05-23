@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Filters\Filter;
+use App\Services\Transaction\Currency\CurrencyService;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -11,7 +12,10 @@ use App\Http\Requests\Web\Transaction\CreateRequest;
 
 class TransactionController extends Controller
 {
-    public function __construct(private readonly TransactionService $transactionService) {}
+    public function __construct(
+        private readonly TransactionService $transactionService,
+        private readonly CurrencyService $currencyService
+    ) {}
 
     public function index(Request $request): View
     {
@@ -27,7 +31,8 @@ class TransactionController extends Controller
         $user = $request->user();
         $transaction = $this->transactionService->findOrFail($id, $user);
         $similarTransactions = $this->transactionService->getSimilarTransactions($transaction);
-        return view('transaction.show', compact('transaction', 'similarTransactions'));
+        $userBaseCurrency = $this->currencyService->resolveCalculationCurrency($user);
+        return view('transaction.show', compact('transaction', 'similarTransactions', 'userBaseCurrency'));
     }
 
     public function create(CreateRequest $request): RedirectResponse

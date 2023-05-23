@@ -4,13 +4,13 @@
 
             <div class="mb-4">
                 <label class="block text-gray-700 font-bold mb-2" for="analyzer_type">
-                    Select analyzer
+                    {{ __('Select analyzer') }}
                 </label>
                 <select
                         id="analyzer_type"
                         class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         name="analyzer_type">
-                    <option selected>Select one</option>
+                    <option selected>{{ __('Select one') }}</option>
                     @foreach($analyzers as $analyzerAlias)
                         <option value="{{ $analyzerAlias }}">
                             {{  Illuminate\Support\Str::of($analyzerAlias)->ucfirst()->replace('_', ' ')->toString()  }}
@@ -20,13 +20,13 @@
             </div>
 
             <details>
-                <summary>Pokaż wykres</summary>
-                <div id="chart_div" style="overflow-x: scroll;">Pusto</div>
+                <summary>{{ __('Show chart') }}</summary>
+                <div id="chart_div" style="overflow-x: scroll;">{{ __('Empty') }}</div>
             </details>
 
             <details open>
-                <summary>Pokaż dane</summary>
-                <div id="container" style="overflow-x: scroll;">Pusto</div>
+                <summary>{{ __('Show data') }}</summary>
+                <div id="container" style="overflow-x: scroll;">{{ __('Empty') }}</div>
             </details>
 
             <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>

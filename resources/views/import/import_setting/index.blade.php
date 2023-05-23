@@ -7,7 +7,7 @@
                     @include('import.import_setting.partials.import-setting-form')
                 </div>
                 <div>
-                    <h2 class="text-3xl font-semibold mb-4">Ustawienia importów</h2>
+                    <h2 class="text-3xl font-semibold mb-4">{{ __('Import settings') }}</h2>
                     @include('import.import_setting.partials.import-setting-list', ['importSettings' => $importSettings])
                 </div>
             </div>

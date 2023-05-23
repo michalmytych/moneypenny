@@ -1,5 +1,5 @@
 @if(count($institutions) > 0)
-    <h2 class="font-semibold text-4xl pb-6">Obsługiwane instytucje</h2>
+    <h2 class="font-semibold text-4xl pb-6">{{ __('Supported integrations') }}</h2>
 
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
         @foreach ($institutions as $institution)
@@ -9,5 +9,5 @@
         @endforeach
     </div>
 @else
-    <h2 class="font-semibold text-xl">Brak instytucji</h2>
+    <h2 class="font-semibold text-xl">{{ __('No supported integrations') }}</h2>
 @endif

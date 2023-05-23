@@ -55,22 +55,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/periodic', [ReportController::class, 'periodic'])->name('periodic');
     });
 
-    Route::prefix('meta')->as('meta.')->group(function () {
-        Route::get('/', [MetaController::class, 'index'])->name('index');
-    });
-
     Route::prefix('personas')->as('persona.')->group(function () {
         Route::get('/', [PersonaController::class, 'index'])->name('index');
         Route::patch('/{persona}', [PersonaController::class, 'update'])->name('update');
         Route::get('/mass-association', [PersonaController::class, 'associatePersonasToTransactions']);
-    });
-
-    Route::prefix('debug')->as('debug.')->group(function () {
-        Route::get('/analyzers', [DebugController::class, 'analyzers'])->name('analyzers');
-    });
-
-    Route::prefix('exchange-rates')->as('exchange_rate.')->group(function () {
-        Route::get('/', [ExchangeRateController::class, 'index'])->name('index');
     });
 
     Route::prefix('social')->as('social.')->group(function () {
@@ -123,6 +111,20 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('versions')->as('version.')->group(function () {
         Route::get('/', [VersionController::class, 'releaseNotes'])->name('release_notes');
+    });
+
+    Route::middleware('admin')->group(function () {
+        Route::prefix('debug')->as('debug.')->group(function () {
+            Route::get('/analyzers', [DebugController::class, 'analyzers'])->name('analyzers');
+        });
+
+        Route::prefix('exchange-rates')->as('exchange_rate.')->group(function () {
+            Route::get('/', [ExchangeRateController::class, 'index'])->name('index');
+        });
+
+        Route::prefix('meta')->as('meta.')->group(function () {
+            Route::get('/', [MetaController::class, 'index'])->name('index');
+        });
     });
 
     Route::get('/', [EmptyController::class, 'redirect'])->name('empty');

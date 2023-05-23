@@ -2,7 +2,7 @@
     <h2 class="text-3xl font-medium mb-4">Ustawienia importu {{ $importSetting->name }}</h2>
     <div class="mb-4">
         <p class="block text-gray-700 font-bold mb-2">
-            Nazwa:
+            {{ __('Name') }}:
         </p>
         <p class="text-gray-700">
             {{ $importSetting->name }}
@@ -10,7 +10,7 @@
     </div>
     <div class="mb-4">
         <p class="block text-gray-700 font-bold mb-2">
-            Rozszerzenie pliku:
+            {{ __('File extension') }}:
         </p>
         <p class="text-gray-700">
             {{ $importSetting->file_extension }}
@@ -18,7 +18,7 @@
     </div>
     <div class="mb-4">
         <p class="block text-gray-700 font-bold mb-2">
-            Separator:
+            {{ __('Separator') }}:
         </p>
         <p class="text-gray-700">
             {{ $importSetting->delimiter }}
@@ -26,7 +26,7 @@
     </div>
     <div class="mb-4">
         <p class="block text-gray-700 font-bold mb-2">
-            Obejmowanie:
+            {{ __('Enclosure') }}:
         </p>
         <p class="text-gray-700">
             {{ $importSetting->enclosure ?? '-' }}
@@ -34,7 +34,7 @@
     </div>
     <div class="mb-4">
         <p class="block text-gray-700 font-bold mb-2">
-            Znak escape:
+            {{ __('Escape character') }}:
         </p>
         <p class="text-gray-700">
             {{ $importSetting->escape_character ?? '-' }}
@@ -42,7 +42,7 @@
     </div>
     <div class="mb-4">
         <p class="block text-gray-700 font-bold mb-2">
-            Kodowanie wejściowe:
+            {{ __('Input encoding') }}:
         </p>
         <p class="text-gray-700">
             {{ $importSetting->input_encoding ?? '-' }}
@@ -50,7 +50,7 @@
     </div>
     <div class="flex items-center justify-between">
         <a href="{{ route('import.import-setting.index') }}" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            Powrót
+            {{ __('Back') }}
         </a>
     </div>
 </div>

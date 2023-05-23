@@ -4,7 +4,7 @@
             <div class="py-10">
                 <div class="mx-auto sm:px-6 lg:px-8 py-8">
 
-                    <h2 class="text-black font-bold text-2xl pb-4">Urządzenia</h2>
+                    <h2 class="text-black font-bold text-2xl pb-4">{{ __('Devices') }}</h2>
 
                     <div class="grid gap-4 sm:grid-cols-1 lg:grid-cols-1">
                         @foreach($devices as $device)
@@ -22,7 +22,7 @@
                                                 <dd class="mt-1 text-lg font-semibold text-gray-900">
                                                     {{ $device->ip }}
                                                 </dd>
-                                                <dd class="mt-1 text-sm text-gray-500 truncate text-green-700">
+                                                <dd class="mt-1 text-sm truncate text-green-700">
                                                     {{ $device->created_at->diffForHumans() }}
                                                 </dd>
                                             </dl>

@@ -1,20 +1,21 @@
 <div class="px-8 pb-8 mb-4 flex flex-col">
-    <h1 class="text-3xl font-bold mb-4">Dodaj ustawienia importu</h1>
+    <h1 class="text-3xl font-bold mb-4">{{ __('Add new import settings') }}</h1>
     <form action="{{ route('import.import-setting.store') }}" method="POST">
         @csrf
+        {{--@todo - fill all placeholders--}}
         <div class="mb-4">
             <label class="block text-gray-700 font-bold mb-2" for="name">
-                Nazwa
+                {{ __('Name') }}
             </label>
-            @include('components.input.tip', ['key' => 'name', 'text' => __('Poglądowa nazwa konfiguracji.')])
-            <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" name="name" placeholder="Nazwa">
+            @include('components.input.tip', ['key' => 'name', 'text' => __('Default name of the configuration')])
+            <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" name="name" placeholder="{{ __('Name') }}">
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 font-bold mb-2" for="file_extension">
-                Rozszerzenie pliku
+                {{ __('File extension') }}
             </label>
-            @include('components.input.tip', ['key' => 'file_extension', 'text' => __('Rozszerzenie importowanego pliku.')])
+            @include('components.input.tip', ['key' => 'file_extension', 'text' => __('Extension of the imported file')])
             <select
                     id="file_extension"
                     class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -28,9 +29,9 @@
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 font-bold mb-2" for="delimiter">
-                Separator
+                {{ __('Separator') }}
             </label>
-            @include('components.input.tip', ['key' => 'delimiter', 'text' => __('Znak rozdzielający dane (dla plików *.csv).')])
+            @include('components.input.tip', ['key' => 'delimiter', 'text' => __('Data separator character (for *.csv files)')])
             <select
                     id="delimiter"
                     class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -44,37 +45,38 @@
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 font-bold mb-2" for="enclosure">
-                Enclosure <small>(opcjonalne)</small>
+                {{ __('Enclosure') }} <small>{{ __('(optional)') }}</small>
             </label>
-            @include('components.input.tip', ['key' => 'enclosure', 'text' => __('Enclosure - znak ograniczający dane w kolumnie (dla plików tekstowych).')])
-            <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="enclosure" type="text" name="enclosure" placeholder="Enclosure">
+            @include('components.input.tip', ['key' => 'enclosure', 'text' => __('Enclosure - character limiting the data in the column (for text files)')])
+            <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="enclosure" type="text" name="enclosure" placeholder="{{ __('Enclosure') }}">
             <x-input-error :messages="$errors->get('enclosure')" class="mt-2" />
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 font-bold mb-2" for="start_row">
-                Wiersz rozpoczynający <small>(opcjonalne)</small>
+                {{ __('Start row') }} <small>{{ __('(optional)') }}</small>
             </label>
-            @include('components.input.tip', ['key' => 'start_row', 'text' => __('Wiersz w którym zaczynają się dane. Indeksowanie od 0.')])
+            @include('components.input.tip', ['key' => 'start_row', 'text' => __('The row where the data begins - indexing from zero')])
             <input type="number" min="0" max="1000" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="start_row" name="start_row" value="0">
             <x-input-error :messages="$errors->get('start_row')" class="mt-2" />
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 font-bold mb-2" for="escape_character">
-                Znak escape <small>(opcjonalne)</small>
+                {{ __('Escape character') }} <small>{{ __('(optional)') }}</small>
             </label>
-            @include('components.input.tip', ['key' => 'escape_character', 'text' => __('Znak ucieczki (dla plików tekstowych).')])
-            <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="escape_character" type="text" name="escape_character" placeholder="Znak ucieczki">
+            @include('components.input.tip', ['key' => 'escape_character', 'text' => __('Escape character (for text files)')])
+            <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="escape_character" type="text" name="escape_character" placeholder="{{ __('Escape character') }}">
             <x-input-error :messages="$errors->get('escape_character')" class="mt-2" />
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 font-bold mb-2" for="input_encoding">
-                Kodowanie wejściowe <small>(opcjonalne)</small>
+                {{ __('Input encoding') }} <small>{{ __('(optional)') }}</small>
             </label>
-            @include('components.input.tip', ['key' => 'input_encoding', 'text' => __('Kodowanie wejściowe pliku. Jeśli plik zostanie zaimportowany z niewłaściwym kodowaniem, wyniki kalkulacji mogą być nieprawidłowe.')])
+            @include('components.input.tip', ['key' => 'input_encoding', 'text' => __('The input encoding of the file. If the file is imported with the wrong encoding, the calculation results may be incorrect')])
             <select
                     id="input_encoding"
                     class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     name="input_encoding">
+                {{--@todo resolve supported input eoncodings from config --}}
                 <option value="UTF-8" selected>UTF-8</option>
                 <option value="Windows-1250">Windows-1250</option>
             </select>
@@ -82,7 +84,7 @@
         </div>
         <div class="flex items-center justify-between">
             <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg">
-                Zapisz
+                {{ __('Save') }}
             </button>
         </div>
     </form>

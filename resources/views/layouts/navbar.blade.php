@@ -110,31 +110,33 @@
                         </x-dropdown>
                     </div>
 
-                    <div class="flex h-full text-center content-center pt-4">
-                        <x-dropdown align="right" width="48">
-                            <x-slot name="trigger">
-                                <button
-                                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                                    <div>
-                                        {{ __('Mainteance') }}
-                                    </div>
-                                </button>
-                            </x-slot>
-                            <x-slot name="content">
-                                @if(config('debugging.enabled'))
-                                    <x-dropdown-link :href="route('debug.analyzers')">
-                                        {{ __('Debugging') }}
+                    @if(request()->user()?->is_admin)
+                        <div class="flex h-full text-center content-center pt-4">
+                            <x-dropdown align="right" width="48">
+                                <x-slot name="trigger">
+                                    <button
+                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                        <div>
+                                            {{ __('Mainteance') }}
+                                        </div>
+                                    </button>
+                                </x-slot>
+                                <x-slot name="content">
+                                    @if(config('debugging.enabled'))
+                                        <x-dropdown-link :href="route('debug.analyzers')">
+                                            {{ __('Debugging') }}
+                                        </x-dropdown-link>
+                                    @endif
+                                    <x-dropdown-link :href="route('exchange_rate.index')">
+                                        {{ __('Exchange rates') }}
                                     </x-dropdown-link>
-                                @endif
-                                <x-dropdown-link :href="route('exchange_rate.index')">
-                                    {{ __('Exchange rates') }}
-                                </x-dropdown-link>
-                                <x-dropdown-link :href="route('meta.index')">
-                                    {{ __('System') }}
-                                </x-dropdown-link>
-                            </x-slot>
-                        </x-dropdown>
-                    </div>
+                                    <x-dropdown-link :href="route('meta.index')">
+                                        {{ __('System') }}
+                                    </x-dropdown-link>
+                                </x-slot>
+                            </x-dropdown>
+                        </div>
+                    @endif
 
                     @if(config('network.enabled'))
                         <div class="flex h-full text-center content-center pt-4">

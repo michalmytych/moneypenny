@@ -1,11 +1,12 @@
 <div class="lg:grid lg:grid-cols-3">
     <div class="col-1">
-        <h2 class="text-lg font-semibold">Dzisiaj do wydania</h2>
+        <h2 class="text-lg font-semibold">{{ __("Today's suggested budget") }}</h2>
         <div class="flex">
             <h1 id="totalDisplay" class="text-7xl text-semibold">190.00</h1>
+            {{--@todo - resolve currency programmatically--}}
             <span class="text-xl ml-2">PLN</span>
         </div>
-        <h2 class="text-lg font-semibold">Stan konta</h2>
+        <h2 class="text-lg font-semibold">{{ __('Account balance') }}</h2>
         <div class="flex">
             <h1 id="saldoDisplay" class="text-7xl text-semibold">{{ $saldoData }}</h1>
             <span class="text-xl ml-2">PLN</span>
@@ -14,6 +15,7 @@
 
     <div class="pr-4 sm:md:my-2">
         <div
+            {{--@todo - fix--}}
             class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in">
             @include('icons.sync')
             <span class="text-black-50 text-xs ml-3">

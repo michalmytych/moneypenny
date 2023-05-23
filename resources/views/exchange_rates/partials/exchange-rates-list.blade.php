@@ -1,19 +1,19 @@
 @if(count($exchangeRates) > 0)
-    <h2 class="text-3xl font-semibold mb-4">Historyczne kursy walut</h2>
+    <h2 class="text-3xl font-semibold mb-4">{{ __('Historical currencies exchange rates') }}</h2>
     <table class="w-full divide-y divide-gray-200 overflow-x-scroll">
         <thead class="bg-gray-50 rounded-t-md">
         <tr>
             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Kurs
+                {{ __('Rate') }}
             </th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Waluta źródłowa
+                {{ __('Source currency') }}
             </th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Waluta docelowa
+                {{ __('Target currency') }}
             </th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Data
+                {{ __('Date') }}
             </th>
         </tr>
         </thead>
@@ -37,5 +37,5 @@
         </tbody>
     </table>
 @else
-    <h2 class="font-semibold text-xl">Brak kursów walut</h2>
+    <h2 class="font-semibold text-xl">{{ __('No exchange rates') }}</h2>
 @endif

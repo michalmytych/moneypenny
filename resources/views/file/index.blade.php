@@ -4,7 +4,9 @@
 
             <div class="lg:grid grid-cols-[1fr_1fr]">
                 <div>
-                    <h2 class="text-3xl font-semibold mb-4">Przesyłanie</h2>
+                    <h2 class="text-3xl font-semibold mb-4">
+                        {{ __('Uploading transactions files') }}
+                    </h2>
                     @include('file.partials.upload-form', ['importSettings' => $importSettings])
                 </div>
                 <div>

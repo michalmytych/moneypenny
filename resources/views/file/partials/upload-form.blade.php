@@ -2,13 +2,13 @@
     @csrf
     <div class="mb-4">
         <label class="block text-gray-700 font-bold mb-2" for="import_setting_id">
-            Ustawienia importu
+            {{ __('Import settings') }}
         </label>
         <select
                 id="import_setting_id"
                 class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 name="import_setting_id" required>
-            <option selected>Wybierz</option>
+            <option selected>{{ __('Select') }}</option>
             @foreach($importSettings as $importSetting)
                 <option value="{{ $importSetting->id }}">
                     {{ $importSetting->name }}
@@ -19,13 +19,13 @@
     </div>
     <div class="mb-4">
         <label class="block text-gray-700 font-bold mb-2" for="columns_mapping_id">
-            Mapowanie kolumn
+            {{ __('Columns mappings') }}
         </label>
         <select
                 id="columns_mapping_id"
                 class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 name="columns_mapping_id" required>
-            <option selected>Wybierz</option>
+            <option selected>{{ __('Select') }}</option>
             @foreach($columnsMappings as $columnMapping)
                 <option value="{{ $columnMapping->id }}">
                     {{ $columnMapping->name }}
@@ -40,10 +40,10 @@
     </div>
     <div class="flex">
         <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg" id="uploadButton">
-            Prześlij
+            {{ __('Upload') }}
         </button>
         <div class="flex items-center gap-1 ml-3" id="loaderWraper" style="visibility: hidden;">
-            @include('icons.loader') <span class="text-gray-600 ml-1">Processing file...</span>
+            @include('icons.loader') <span class="text-gray-600 ml-1">{{ __('Processing file...') }}</span>
         </div>
     </div>
 </form>

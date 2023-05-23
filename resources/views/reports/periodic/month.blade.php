@@ -4,35 +4,37 @@
 
             <div class="container mx-auto my-8">
                 <div class="flex justify-between">
-                    <h1 class="text-4xl font-bold mb-4">Raport miesięczny</h1>
+                    <h1 class="text-4xl font-bold mb-4">
+                        {{ __('Month report') }}
+                    </h1>
                     <form id="monthForm" action="{{ route('report.periodic') }}" method="get">
                         <input class="rounded" type="month" name="month" id="month">
                     </form>
                 </div>
                 <div class="grid lg:grid-cols-2 gap-4 mb-4 md:grid-cols-1 md:gap-8 sm:grid-cols-1">
                     <div class="pb-2 pr-4 rounded-lg pl-0.5 pt-4">
-                        <h2 class="text-2xl font-bold mb-2">Podsumowanie</h2>
+                        <h2 class="text-2xl font-bold mb-2">{{ __('Summary') }}</h2>
                         <ul>
                             <li class="flex justify-between items-end">
-                                <span class="text-lg font-light text-gray-600">Liczba transakcji</span>
+                                <span class="text-lg font-light text-gray-600">{{ __('Transactions count') }}</span>
                                 <span class="text-4xl font-semibold">
                                     {{ $data['transactions_count'] }}
                                 </span>
                             </li>
                             <li class="flex justify-between items-end">
-                                <span class="text-lg font-light text-gray-600">Liczba wydatków</span>
+                                <span class="text-lg font-light text-gray-600">{{ __('Expenditures count') }}</span>
                                 <span class="text-4xl font-semibold">
                                     {{ $data['expenditures_count'] }}
                                 </span>
                             </li>
                             <li class="flex justify-between items-end">
-                                <span class="text-lg font-light text-gray-600">Liczba wpływów</span>
+                                <span class="text-lg font-light text-gray-600">{{ __('Incomes count') }}</span>
                                 <span class="text-4xl font-semibold">
                                     {{ $data['incomes_count'] }}
                                 </span>
                             </li>
                             <li class="flex justify-between items-end">
-                                <span class="text-lg font-light text-gray-600">Suma wydatków</span>
+                                <span class="text-lg font-light text-gray-600">{{ __('Expenditures sum') }}</span>
                                 <span class="text-4xl font-semibold">
                                     {{ $data['expenditures_sum'] }}
                                     <span class="text-xl font-lighter">
@@ -41,7 +43,7 @@
                                 </span>
                             </li>
                             <li class="flex justify-between items-end">
-                                <span class="text-lg font-light text-gray-600">Suma wpływów</span>
+                                <span class="text-lg font-light text-gray-600">{{ __('Incomes count') }}</span>
                                 <span class="text-4xl font-semibold">
                                     {{ $data['incomes_sum'] }}
                                     <span class="text-xl font-lighter">
@@ -53,13 +55,13 @@
                     </div>
 
                     <div class="bg-white p-4 rounded-lg">
-                        <h2 class="text-xl font-bold mb-2 px-4 mt-2">Największe przychody</h2>
+                        <h2 class="text-xl font-bold mb-2 px-4 mt-2">{{ __('Highest incomes') }}</h2>
                         <table class="w-full">
                             <thead>
                             <tr>
-                                <th class="px-4 text-left">Data transakcji</th>
-                                <th class="px-4 text-left">Opis</th>
-                                <th class="px-4 text-left">Kwota</th>
+                                <th class="px-4 text-left">{{ __('Date') }}</th>
+                                <th class="px-4 text-left">{{ __('Description') }}</th>
+                                <th class="px-4 text-left">{{ __('Volume') }}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -75,13 +77,13 @@
                     </div>
 
                     <div class="bg-white p-4 rounded-lg">
-                        <h2 class="text-xl font-bold mb-2 px-4 mt-2">Największe wydatki</h2>
+                        <h2 class="text-xl font-bold mb-2 px-4 mt-2">{{ __('Highest expenses') }}</h2>
                         <table class="w-full">
                             <thead>
                             <tr>
-                                <th class="px-4 text-left">Data transakcji</th>
-                                <th class="px-4 text-left">Opis</th>
-                                <th class="px-4 text-left">Kwota</th>
+                                <th class="px-4 text-left">{{ __('Date') }}</th>
+                                <th class="px-4 text-left">{{ __('Description') }}</th>
+                                <th class="px-4 text-left">{{ __('Volume') }}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -97,7 +99,7 @@
                     </div>
 
                     <div class="bg-white p-4 rounded-lg">
-                        <h2 class="text-xl font-bold mb-2 px-4 mt-2">Średnie dzienne wydatki i zarobki</h2>
+                        <h2 class="text-xl font-bold mb-2 px-4 mt-2">{{ __('Trend of average daily expenditures and incomes') }}</h2>
                         @include('charts.linear')
                     </div>
                 </div>

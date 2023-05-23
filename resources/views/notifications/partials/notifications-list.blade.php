@@ -1,5 +1,5 @@
 @if(count($notifications) > 0)
-    <h2 class="text-black font-bold text-2xl pb-4">Powiadomienia</h2>
+    <h2 class="text-black font-bold text-2xl pb-4">{{ __('Notifications') }}</h2>
     <div>
         @foreach($notifications as $notification)
             @php
@@ -26,6 +26,6 @@
         @endforeach
     </div>
 @else
-    <h2 class="font-semibold text-xl">Brak powiadomień</h2>
+    <h2 class="font-semibold text-xl">{{ __('No notifications') }}</h2>
 @endif
 

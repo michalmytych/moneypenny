@@ -4,27 +4,27 @@
             <thead class="bg-gray-50">
             <tr>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Name
+                    {{ __('Name') }}
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    File Extension
+                    {{ __('File extension') }}
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Start row
+                    {{ __('Start row') }}
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Delimiter
+                    {{ __('Delimiter') }}
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Enclosure
+                    {{ __('Enclosure') }}
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Escape Character
+                    {{ __('Escape character') }}
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Input Encoding
+                    {{ __('Input encoding') }}
                 </th>
-                <th scope="col" class="relative px-6 py-3"><span class="sr-only">Edit</span></th>
+                <th scope="col" class="relative px-6 py-3"><span class="sr-only">{{ __('Edit') }}</span></th>
             </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -46,14 +46,14 @@
                         {{ $importSetting->enclosure ?? '-' }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {{ $importSetting->escape_character ?? 'Domyślny' }}
+                        {{ $importSetting->escape_character ?? __('Default') }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {{ $importSetting->input_encoding ?? 'Domyślne' }}
+                        {{ $importSetting->input_encoding ?? __('Default') }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <a href="{{ route('import.import-setting.edit', $importSetting) }}"
-                           class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                           class="text-indigo-600 hover:text-indigo-900">{{ __('Edit') }}</a>
                     </td>
                 </tr>
             @endforeach
@@ -61,5 +61,5 @@
         </table>
     </div>
 @else
-    <h2 class="font-semibold text-xl">Brak ustawień importu</h2>
+    <h2 class="font-semibold text-xl">{{ __('No import settings') }}</h2>
 @endif

@@ -20,7 +20,7 @@ use App\Http\Controllers\Api\Notification\NotificationController;
 |
 */
 
-Route::as('api.')->group(function() {
+Route::as('api.')->group(function () {
     Route::post('/login', [UserController::class, 'login'])->name('login');
     Route::post('/register', [UserController::class, 'register'])->name('register');
 
@@ -28,27 +28,29 @@ Route::as('api.')->group(function() {
         Route::get('/user', [UserController::class, 'user'])->name('user');
         Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
-        Route::prefix('analysis')->as('analysis.')->group(function() {
+        Route::prefix('analysis')->as('analysis.')->group(function () {
             Route::post('/', [AnalysisController::class, 'analyze'])->name('analyze');
         });
 
-        Route::prefix('sync')->as('sync.')->group(function() {
+        Route::prefix('sync')->as('sync.')->group(function () {
             Route::post('/', [SynchronizationController::class, 'sync'])->name('synchronize');
         });
 
-        Route::prefix('exchange-rates')->as('exchange_rates.')->group(function() {
+        Route::prefix('exchange-rates')->as('exchange_rates.')->group(function () {
             Route::get('/', [ExchangeRateController::class, 'index'])->name('index');
         });
 
-        Route::prefix('notifications')->as('notification.')->group(function() {
+        Route::prefix('notifications')->as('notification.')->group(function () {
             Route::get('/', [NotificationController::class, 'index'])->name('index');
         });
 
-        Route::prefix('meta')->as('meta.')->group(function() {
-            Route::get('processes', [MetaController::class, 'processes'])->name('processes');
+        Route::middleware('admin')->group(function () {
+            Route::prefix('meta')->as('meta.')->group(function () {
+                Route::get('processes', [MetaController::class, 'processes'])->name('processes');
+            });
         });
 
-        Route::prefix('reports')->as('report.')->group(function() {
+        Route::prefix('reports')->as('report.')->group(function () {
             Route::get('avg-expenditures', [ReportController::class, 'avgExpenditures'])
                 ->name('avg_expenditures');
             Route::get('avg-incomes', [ReportController::class, 'avgIncomes'])

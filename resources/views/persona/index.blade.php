@@ -4,7 +4,7 @@
 
             <div>
                 <h2 class="text-3xl font-semibold mb-4 flex">
-                    Podmioty @include('components.mainteance.beta-badge')
+                    {{ __('Personas') }} @include('components.mainteance.beta-badge')
                 </h2>
             </div>
 
@@ -14,16 +14,16 @@
                         <thead>
                         <tr>
                             <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Alias
+                                {{ __('Alias') }}
                             </th>
                             <th class="px-4 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Jako wysyłający
+                                {{ __('As sender') }}
                             </th>
                             <th class="px-4 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Jako odbierający
+                                {{ __('As receiver') }}
                             </th>
                             <th class="px-4 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Powiązania
+                                {{ __('Related names') }}
                             </th>
                         </tr>
                         </thead>
@@ -91,7 +91,9 @@
                     </table>
                 </div>
             @else
-                <h2 class="font-semibold text-xl">Brak podmiotów</h2>
+                <h2 class="font-semibold text-xl">
+                    {{ __('No personas') }}
+                </h2>
             @endif
 
             @if(isset($selected_persona))

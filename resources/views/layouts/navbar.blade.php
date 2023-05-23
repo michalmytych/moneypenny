@@ -18,31 +18,30 @@
                                 <button
                                     class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                                     <div>
-                                        {{ __('Transakcje') }}
+                                        {{ __('Transactions') }}
                                     </div>
                                 </button>
                             </x-slot>
 
                             <x-slot name="content">
                                 <x-dropdown-link :href="route('transaction.index')">
-                                    {{ __('Wszystkie') }}
+                                    {{ __('All transactions') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('persona.index')">
+                                @if(config('personas.enabled'))
+                                    <x-dropdown-link :href="route('persona.index')">
                                     <span class="flex items-center justify-between">
-                                        {{ __('Podmioty') }}
+                                        {{ __('Personas') }}
                                         <span class="relative top-2">
                                             @include('components.mainteance.beta-badge')
                                         </span>
                                     </span>
-                                </x-dropdown-link>
+                                    </x-dropdown-link>
+                                @endif
                                 <x-dropdown-link :href="route('import.index')">
-                                    {{ __('Importy transakcji') }}
+                                    {{ __('Imports') }}
                                 </x-dropdown-link>
                                 <x-dropdown-link :href="route('file.index')">
-                                    {{ __('Pliki') }}
-                                </x-dropdown-link>
-                                <x-dropdown-link :href="route('exchange_rate.index')">
-                                    {{ __('Kursy walut') }}
+                                    {{ __('Files') }}
                                 </x-dropdown-link>
                             </x-slot>
                         </x-dropdown>
@@ -54,17 +53,14 @@
                                 <button
                                     class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                                     <div>
-                                        {{ __('Konfiguracja') }}
+                                        {{ __('Reports') }}
                                     </div>
                                 </button>
                             </x-slot>
 
                             <x-slot name="content">
-                                <x-dropdown-link :href="route('import.import-setting.index')">
-                                    {{ __('Ustawienia importów') }}
-                                </x-dropdown-link>
-                                <x-dropdown-link :href="route('import.columns-mapping.index')">
-                                    {{ __('Mapowanie kolumn') }}
+                                <x-dropdown-link :href="route('report.periodic')">
+                                    {{ __('Month report') }}
                                 </x-dropdown-link>
                             </x-slot>
                         </x-dropdown>
@@ -76,17 +72,17 @@
                                 <button
                                     class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                                     <div>
-                                        {{ __('Integracje') }}
+                                        {{ __('Integrations') }}
                                     </div>
                                 </button>
                             </x-slot>
 
                             <x-slot name="content">
                                 <x-dropdown-link :href="route('institution.index')">
-                                    {{ __('Integracje z instytucjami') }}
+                                    {{ __('Banks integrations') }}
                                 </x-dropdown-link>
                                 <x-dropdown-link :href="route('synchronization.index')">
-                                    {{ __('Synchronizacje') }}
+                                    {{ __('Synchronizations') }}
                                 </x-dropdown-link>
                             </x-slot>
                         </x-dropdown>
@@ -98,14 +94,40 @@
                                 <button
                                     class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                                     <div>
-                                        {{ __('Aplikacja') }}
+                                        {{ __('Configuration') }}
                                     </div>
                                 </button>
                             </x-slot>
 
                             <x-slot name="content">
-                                <x-dropdown-link :href="route('debug.analyzers')">
-                                    {{ __('Debugowanie analizatorów') }}
+                                <x-dropdown-link :href="route('import.import-setting.index')">
+                                    {{ __('Import settings') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link :href="route('import.columns-mapping.index')">
+                                    {{ __('Columns mappings') }}
+                                </x-dropdown-link>
+                            </x-slot>
+                        </x-dropdown>
+                    </div>
+
+                    <div class="flex h-full text-center content-center pt-4">
+                        <x-dropdown align="right" width="48">
+                            <x-slot name="trigger">
+                                <button
+                                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                    <div>
+                                        {{ __('Mainteance') }}
+                                    </div>
+                                </button>
+                            </x-slot>
+                            <x-slot name="content">
+                                @if(config('debugging.enabled'))
+                                    <x-dropdown-link :href="route('debug.analyzers')">
+                                        {{ __('Debugging') }}
+                                    </x-dropdown-link>
+                                @endif
+                                <x-dropdown-link :href="route('exchange_rate.index')">
+                                    {{ __('Exchange rates') }}
                                 </x-dropdown-link>
                                 <x-dropdown-link :href="route('meta.index')">
                                     {{ __('System') }}
@@ -114,49 +136,31 @@
                         </x-dropdown>
                     </div>
 
-                    <div class="flex h-full text-center content-center pt-4">
-                        <x-dropdown align="right" width="48">
-                            <x-slot name="trigger">
-                                <button
-                                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                                    <div>
-                                        {{ __('Raporty') }}
-                                    </div>
-                                </button>
-                            </x-slot>
+                    @if(config('network.enabled'))
+                        <div class="flex h-full text-center content-center pt-4">
+                            <x-dropdown align="right" width="48">
+                                <x-slot name="trigger">
+                                    <button
+                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                        <div>
+                                            {{ __('Network') }}
+                                        </div>
+                                    </button>
+                                </x-slot>
 
-                            <x-slot name="content">
-                                <x-dropdown-link :href="route('report.periodic')">
-                                    {{ __('Raport miesięczy') }}
-                                </x-dropdown-link>
-                            </x-slot>
-                        </x-dropdown>
-                    </div>
-
-                    <div class="flex h-full text-center content-center pt-4">
-                        <x-dropdown align="right" width="48">
-                            <x-slot name="trigger">
-                                <button
-                                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                                    <div>
-                                        {{ __('Sieć') }}
-                                    </div>
-                                </button>
-                            </x-slot>
-
-                            <x-slot name="content">
-                                <x-dropdown-link :href="route('social.chat.index')">
+                                <x-slot name="content">
+                                    <x-dropdown-link :href="route('social.chat.index')">
                                     <span class="flex items-center justify-between">
                                         {{ __('Chat') }}
                                         <span class="relative top-2">
                                             @include('components.mainteance.beta-badge')
                                         </span>
                                     </span>
-                                </x-dropdown-link>
-                            </x-slot>
-                        </x-dropdown>
-                    </div>
-
+                                    </x-dropdown-link>
+                                </x-slot>
+                            </x-dropdown>
+                        </div>
+                    @endif
                 </div>
             </div>
 
@@ -170,7 +174,7 @@
                     <x-slot name="trigger">
                         <button
                             class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                                @include('components.profile.avatar', ['src' => request()->user()?->getAvatarPath()])
+                            @include('components.profile.avatar', ['src' => request()->user()?->getAvatarPath()])
                         </button>
                     </x-slot>
 
@@ -190,7 +194,9 @@
                             <x-dropdown-link :href="route('logout')"
                                              onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                <span class="text-red-700 font-semibold">
+                                    {{ __('Log Out') }}
+                                </span>
                             </x-dropdown-link>
                         </form>
                     </x-slot>
@@ -215,12 +221,6 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-        </div>
-
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4 flex justify-between">
@@ -245,7 +245,9 @@
                     <x-responsive-nav-link :href="route('logout')"
                                            onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                        <span class="text-red-700 font-semibold">
+                            {{ __('Log Out') }}
+                        </span>
                     </x-responsive-nav-link>
                 </form>
             </div>

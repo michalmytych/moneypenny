@@ -1,4 +1,4 @@
-@if(config('chat.enabled'))
+@if(config('network.enabled'))
     <div class="w-full rounded-md py-2 overflow-hidden">
         <div class="w-full rounded-md bg-white mb-6 shadow-sm px-4 flex-col overflow-y-scroll" style="height: 75vh;">
             @foreach($chatMessages ?? [] as $chatMessage)

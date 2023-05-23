@@ -1,4 +1,4 @@
-@if(config('chat.enabled') && request()->boolean('chat_opened'))
+@if(config('network.enabled') && request()->boolean('chat_opened'))
     <div id="chatModal" class="absolute z-10 right-0 top-0 px-8 w-full h-full" style="backdrop-filter: blur(6px); background-color: rgba(148,148,152,0.42);">
         <div class="flex justify-center pt-10 rounded-md bg-transparent">
             <div class="w-1/2">

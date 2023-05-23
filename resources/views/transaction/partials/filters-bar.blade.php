@@ -1,5 +1,7 @@
 <div class="w-full mb-6">
-    <h2 class="text-black font-bold text-2xl pb-4">Filtrowanie wyników</h2>
+    <h2 class="text-black font-bold text-xl pb-4">
+        {{ __('Filter transactions') }}
+    </h2>
     <form action="{{ $route }}" method="GET">
         <div class="flex" id="filters-box-0">
             <select name="column" id="column" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-4">

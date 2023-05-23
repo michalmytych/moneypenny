@@ -4,16 +4,16 @@
             <thead class="bg-gray-50">
             <tr>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Transaction Date
+                    {{ __('Transaction Date') }}
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Volume
+                    {{ __('Volume') }}
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Description
+                    {{ __('Description') }}
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Receiver
+                    {{ __('Receiver') }}
                 </th>
             </tr>
             </thead>
@@ -39,7 +39,7 @@
         </table>
     </div>
 @else
-    <h2 class="font-semibold text-xl">Brak transakcji</h2>
+    <h2 class="font-semibold text-xl">{{ __('No transactions') }}</h2>
 @endif
 
 @push('scripts')

@@ -2,7 +2,7 @@
     <div class="col-1">
         <h2 class="text-lg font-semibold">{{ __("Today's suggested budget") }}</h2>
         <div class="flex">
-            <h1 id="totalDisplay" class="text-7xl text-semibold">190.00</h1>
+            <h1 id="totalDisplay" class="text-7xl text-semibold">110.00</h1>
             {{--@todo - resolve currency programmatically--}}
             <span class="text-xl ml-2">PLN</span>
         </div>
@@ -19,28 +19,28 @@
             class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in">
             @include('icons.sync')
             <span class="text-black-50 text-xs ml-3">
-                <span class="font-black">Nowa synchronizacja</span>, dodano 3 transakcje
+                <span class="font-black">New synchronization</span>, added 3 transactions
             </span>
         </div>
         <div
             class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in">
             @include('icons.eye')
             <span class="text-black-50 text-xs ml-3">
-                <span class="font-black">20 transakcji</span> wymaga uwagi
+                <span class="font-black">20 transactions</span> require attention
             </span>
         </div>
         <div
             class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in">
             @include('icons.report')
             <span class="text-black-50 text-xs ml-3">
-                <span class="font-black">Nowy raport:</span> kwiecień 2023
+                <span class="font-black">New report:</span> april 2023
             </span>
         </div>
         <div
             class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in">
             @include('icons.report')
             <span class="text-black-50 text-xs ml-3">
-                <span class="font-black">Nowy raport:</span> marzec 2023
+                <span class="font-black">New report:</span> march 2023
             </span>
         </div>
     </div>
@@ -48,35 +48,35 @@
     <div>
         <ul id="fadeInList" class="list-none sm:md:mr-4 sm:md:my-2">
             <div class="flex items-center mb-2">
-                <div class="text-sm w-1/2 text-right mr-4 font-semibold text-gray-700">Budżet domowy</div>
+                <div class="text-sm w-1/2 text-right mr-4 font-semibold text-gray-700">Target 1</div>
                 <li class="bg-gray-200 rounded-md w-1/2" style="height: 9px;">
                     <div id="i0" class="bg-indigo-600 rounded-md mb-4" style="height: 9px;"></div>
                 </li>
             </div>
 
             <div class="flex items-center mb-2">
-                <div class="text-sm w-1/2 text-right mr-4 font-semibold text-gray-700">Kredyt hipoteczny</div>
+                <div class="text-sm w-1/2 text-right mr-4 font-semibold text-gray-700">Target 2</div>
                 <li class="bg-gray-200 rounded-md w-1/2" style="height: 9px;">
                     <div id="i1" class="bg-indigo-600 rounded-md mb-4" style="height: 9px;"></div>
                 </li>
             </div>
 
             <div class="flex items-center mb-2">
-                <div class="text-sm w-1/2 text-right mr-4 font-semibold text-gray-700">Oszczędnościowy</div>
+                <div class="text-sm w-1/2 text-right mr-4 font-semibold text-gray-700">Target 3</div>
                 <li class="bg-gray-200 rounded-md w-1/2" style="height: 9px;">
                     <div id="i2" class="bg-indigo-600 rounded-md mb-4" style="height: 9px;"></div>
                 </li>
             </div>
 
             <div class="flex items-center mb-2">
-                <div class="text-sm w-1/2 text-right mr-4 font-semibold text-gray-700">Inwestycje giełdowe</div>
+                <div class="text-sm w-1/2 text-right mr-4 font-semibold text-gray-700">Target 4</div>
                 <li class="bg-gray-200 rounded-md w-1/2" style="height: 9px;">
                     <div id="i3" class="bg-indigo-600 rounded-md mb-4" style="height: 9px;"></div>
                 </li>
             </div>
 
             <div class="flex items-center mb-2">
-                <div class="text-sm w-1/2 text-right mr-4 font-semibold text-gray-700">Plan emerytalny</div>
+                <div class="text-sm w-1/2 text-right mr-4 font-semibold text-gray-700">Target 5</div>
                 <li class="bg-gray-200 rounded-md w-1/2" style="height: 9px;">
                     <div id="i4" class="bg-indigo-600 rounded-md mb-4" style="height: 9px;"></div>
                 </li>
@@ -147,7 +147,7 @@
                     //
                 }
 
-                animateToValue('totalDisplay', 199.00);
+                animateToValue('totalDisplay', 110.00);
                 animateToValue('saldoDisplay', saldoValue);
                 animateLoader('i0', 20);
                 animateLoader('i1', 30);

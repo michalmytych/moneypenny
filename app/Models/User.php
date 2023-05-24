@@ -11,6 +11,10 @@ use IvanoMatteo\LaravelDeviceTracking\Traits\UseDevices;
 
 /**
  * @property mixed $id
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property boolean $is_admin
  * @method static cursor()
  * @method static firstWhere(array $array)
  * @method static findOrFail(mixed $userId)
@@ -26,8 +30,13 @@ class User extends Authenticatable
     ];
 
     protected $hidden = [
+        'is_admin',
         'password',
         'remember_token',
+    ];
+
+    protected array $protected = [
+        'is_admin'
     ];
 
     protected $casts = [

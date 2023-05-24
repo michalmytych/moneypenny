@@ -52,8 +52,9 @@
                         {{ $importSetting->input_encoding ?? __('Default') }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a href="{{ route('import.import-setting.edit', $importSetting) }}"
-                           class="text-indigo-600 hover:text-indigo-900">{{ __('Edit') }}</a>
+{{--@todo--}}
+{{--                        <a href="{{ route('import.import-setting.edit', $importSetting) }}"--}}
+{{--                           class="text-indigo-600 hover:text-indigo-900">{{ __('Edit') }}</a>--}}
                     </td>
                 </tr>
             @endforeach

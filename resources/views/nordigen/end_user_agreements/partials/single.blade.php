@@ -6,13 +6,13 @@
                 <li class="font-bold text-2xl">{{ $institution->name }}</li>
                 <li class="font-italic">Dodano {{ Carbon\Carbon::parse($agreement->nordigen_end_user_agreement_created)->format('d-m-Y h:i') }}</li>
                 @if(count($agreement->requisitions) > 0)
-                    <li class="font-semibold text-green-700">Złożono rekwizycje</li>
+                    <li class="font-semibold text-green-700">Requisitions have been filed</li>
                     <li>
                         @include('nordigen.synchronization.widget', ['agreement' => $agreement])
                     </li>
                 @else
                     <li class="font-semibold text-indigo-600 hover:text-indigo-500">
-                        <a href="{{ route('institution.agreements', ['id' => $institution->id]) }}">Złóż pierwszą rekwizycję</a>
+                        <a href="{{ route('institution.agreements', ['id' => $institution->id]) }}">Make your first requisition</a>
                     </li>
                 @endif
             </ul>

@@ -88,7 +88,7 @@
                 </label>
                 <select id="currency" name="currency" placeholder="Enter Currency" required
                         class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey">
-                    <option>Select receiver persona</option>
+                    <option>Select currency</option>
                     @foreach(config('moneypenny.supported_currencies') as $currencyCode)
                         <option value="{{ $currencyCode }}">{{ $currencyCode }}</option>
                     @endforeach

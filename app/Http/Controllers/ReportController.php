@@ -10,6 +10,12 @@ class ReportController extends Controller
 {
     public function __construct(private readonly ReportService $reportService) {}
 
+    public function index(): View
+    {
+        $reports = $this->reportService->all();
+        return view('reports.index', compact('reports'));
+    }
+
     public function periodic(Request $request): View
     {
         $data = $this->reportService->getPeriodicReport(

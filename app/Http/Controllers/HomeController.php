@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use App\Models\Nordigen\EndUserAgreement;
 use App\Services\HomePage\HomePageService;
+use App\Models\Synchronization\Synchronization;
 use App\Services\Transaction\PersonalAccount\SaldoService;
 
 class HomeController extends Controller
@@ -17,8 +19,15 @@ class HomeController extends Controller
     public function index(Request $request): View
     {
         $user = $request->user();
-        $saldoData = $this->saldoService->getByUser($user);
-        $transactionsData = $this->homePageService->getLatestTransactionsData($user);
-        return view('home.index', compact('transactionsData', 'saldoData'));
+
+        return view(
+            'home.index',
+            [
+                'transactionsData' => $this->homePageService->getLatestTransactionsData($user),
+                'saldoData' => $this->saldoService->getByUser($user),
+                'synchronizationsCount' => Synchronization::count(), // @todo
+                'endUserAgreementCount' => EndUserAgreement::count() // @todo
+            ]
+        );
     }
 }

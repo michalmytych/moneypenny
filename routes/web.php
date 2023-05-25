@@ -1,24 +1,24 @@
 <?php
 
-use App\Events\ApplicationNotificationSent;
-use App\Http\Controllers\EmptyController;
-use App\Http\Controllers\ExchangeRates\ExchangeRateController;
-use App\Http\Controllers\Meta\MetaController;
-use App\Http\Controllers\Notification\NotificationController;
-use App\Http\Controllers\PersonaController;
-use App\Http\Controllers\ReportController;
-use App\Http\Controllers\Social\ChatController;
-use App\Http\Controllers\SynchronizationController;
-use App\Http\Controllers\Version\VersionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ChartController;
 use App\Http\Controllers\DebugController;
+use App\Http\Controllers\EmptyController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Meta\MetaController;
 use App\Http\Controllers\File\FileController;
+use App\Http\Controllers\Social\ChatController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\Import\ImportController;
+use App\Http\Controllers\SynchronizationController;
+use App\Http\Controllers\Version\VersionController;
 use App\Http\Controllers\Import\ImportSettingController;
 use App\Http\Controllers\Import\ColumnsMappingController;
+use App\Http\Controllers\Notification\NotificationController;
+use App\Http\Controllers\ExchangeRates\ExchangeRateController;
 use App\Http\Controllers\Nordigen\Institution\InstitutionController;
 
 /*
@@ -37,6 +37,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/test', fn() => view('analytics.dashboard'))->name('test');
+    Route::get('/apitest', [ChartController::class, 'apitest'])->name('apitest');
+
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     Route::prefix('notifications')->as('notification.')->group(function () {

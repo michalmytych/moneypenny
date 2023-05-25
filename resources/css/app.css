@@ -53,6 +53,25 @@ details > summary::-webkit-details-marker {
     animation-duration: 1.2s;
 }
 
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.fade-out {
+    animation-name: fadeOut;
+    animation-duration: 1.2s;
+}
+
+.fade-out-sm {
+    animation-name: fadeOut;
+    animation-duration: 1.2s;
+}
+
 @keyframes slideInBottom {
     0% {
         bottom: -200px;

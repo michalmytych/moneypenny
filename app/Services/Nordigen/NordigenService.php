@@ -311,6 +311,7 @@ class NordigenService implements TransactionSyncServiceInterface
     public function getFreshSupportedInstitutionsData(): array
     {
         $requestQuery = [
+            // @todo - payments enabled unkonow field obadac po wyczyszczeniu cache
             'payments_enabled' => config('nordigen.payments_enabled'),
             'country' => config('nordigen.country'),
         ];

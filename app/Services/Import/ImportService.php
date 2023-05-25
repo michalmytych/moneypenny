@@ -5,6 +5,7 @@ namespace App\Services\Import;
 use App\Models\File;
 use App\Models\User;
 use App\Models\Import\Import;
+use App\Services\Notification\Broadcast\NotificationBroadcastService;
 use Illuminate\Support\Facades\DB;
 use App\Imports\TransactionsImport;
 use App\Models\Import\ImportSetting;
@@ -14,6 +15,8 @@ use App\Contracts\Services\Import\ImportServiceContract;
 
 class ImportService implements ImportServiceContract
 {
+    public function __construct(private readonly NotificationBroadcastService $notificationBroadcastService) {}
+
     public function all(User $user)
     {
         return Import::whereUser($user)
@@ -44,6 +47,12 @@ class ImportService implements ImportServiceContract
         });
 
         $import->update(['status' => Import::STATUS_SAVED]);
+
+        $this->notificationBroadcastService->sendStoredApplicationNotification(
+            header: 'New transactions import! ',
+            content: 'See more',
+            url: route('transaction.index')
+        );
     }
 
     public function create(User $user, array $data): Import

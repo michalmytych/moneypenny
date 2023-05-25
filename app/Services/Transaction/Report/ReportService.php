@@ -2,6 +2,7 @@
 
 namespace App\Services\Transaction\Report;
 
+use App\Models\Transaction\Report;
 use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
@@ -89,5 +90,10 @@ class ReportService
                 DB::raw('AVG(SUM(calculation_volume)) OVER (ORDER BY transaction_date ASC ROWS BETWEEN UNBOUNDED PRECEDING AND 1 PRECEDING) as average_volume'))
             ->groupBy('transaction_date')
             ->orderBy('transaction_date', 'ASC');
+    }
+
+    public function all(): Collection
+    {
+        return Report::latest()->get();
     }
 }

@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @deprecated
+ */
+
 return [
     'use_auto_discovery' => true,
     'namespace'          => "App\\Services\\Analysis\\Analyzers\\",

@@ -17,7 +17,6 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @stack('styles')
-        @laravelPWA
     </head>
     <body class="font-sans text-gray-900 antialiased">
         <div class="flex flex-col h-screen items-center pt-6 sm:pt-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-sky-200 via-gray-100 to-indigo-300">

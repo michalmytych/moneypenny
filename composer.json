@@ -21,7 +21,6 @@
         "maatwebsite/excel": "^3.1",
         "predis/predis": "^2.1",
         "pusher/pusher-php-server": "^7.2",
-        "silviolleite/laravelpwa": "^2.0",
         "symfony/mailgun-mailer": "^6.2"
     },
     "require-dev": {

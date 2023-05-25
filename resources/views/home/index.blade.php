@@ -3,12 +3,18 @@
         body {
             overflow: hidden;
         }
+
+        @media (max-width: 800px) {
+            body {
+                overflow: scroll;
+            }
+        }
     </style>
 @endpush
 
 <x-app-layout>
     <div class="py-16 w-full mx-auto">
-        <div class="w-full mx-auto sm:px-6 lg:px-8">
+        <div class="w-full mx-auto px-4 lg:px-8">
 
             @include('home.partials.available-actions', ['transactionsData' => $transactionsData])
 

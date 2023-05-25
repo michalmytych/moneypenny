@@ -1,5 +1,5 @@
 <div class="lg:grid lg:grid-cols-3">
-    <div class="col-1">
+    <div class="col-1 mb-6">
         <h2 class="text-lg font-semibold">{{ __("Today's suggested budget") }}</h2>
         <div class="flex">
             <h1 id="totalDisplay" class="text-7xl text-semibold">110.00</h1>
@@ -13,7 +13,7 @@
         </div>
     </div>
 
-    <div class="pr-4 sm:md:my-2">
+    <div class="pr-4 mb-10">
         <div
             {{--@todo - fix--}}
             class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in">

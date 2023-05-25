@@ -17,6 +17,7 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
+    @laravelPWA
 </head>
 <body class="font-sans antialiased mt-10">
 <!-- Nav Bar -->

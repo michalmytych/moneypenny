@@ -33,7 +33,7 @@ class UserService
         $user = User::firstWhere(['email' => $data['email']]);
 
         if (!$user || !Hash::check($data['password'], $user->password)) {
-            throw new Exception('Bad creadentials.');
+            abort(401, 'Bad creadentials');
         }
 
         $token = $user->createToken('api_token')->plainTextToken;

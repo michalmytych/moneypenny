@@ -101,9 +101,11 @@
                             })
                         }
                     )
-                        .then(response => response.json())
-                        .then(json => {
-                            window.localStorage.setItem('SANCTUM_API_TOKEN', json.token);
+                        .then(response => {
+                            if (response.ok) {
+                                const json = response.json();
+                                window.localStorage.setItem('SANCTUM_API_TOKEN', json.token);
+                            }
                         });
                 }
 

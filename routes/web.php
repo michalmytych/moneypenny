@@ -1,28 +1,28 @@
 <?php
 
-use App\Http\Controllers\Auth\SetupController;
-use App\Http\Controllers\SettingsController;
-use App\Http\Controllers\Transaction\CategoryController;
+use App\Http\Controllers\Web\Auth\ProfileController;
+use App\Http\Controllers\Web\Auth\SetupController;
+use App\Http\Controllers\Web\Debug\DebugController;
+use App\Http\Controllers\Web\ExchangeRates\ExchangeRateController;
+use App\Http\Controllers\Web\File\FileController;
+use App\Http\Controllers\Web\Home\HomeController;
+use App\Http\Controllers\Web\Import\ColumnsMappingController;
+use App\Http\Controllers\Web\Import\ImportController;
+use App\Http\Controllers\Web\Import\ImportSettingController;
+use App\Http\Controllers\Web\Meta\MetaController;
+use App\Http\Controllers\Web\Nordigen\Institution\InstitutionController;
+use App\Http\Controllers\Web\Notification\NotificationController;
+use App\Http\Controllers\Web\Social\ChatController;
+use App\Http\Controllers\Web\Synchronization\SynchronizationController;
+use App\Http\Controllers\Web\Transaction\Analysis\ChartController;
+use App\Http\Controllers\Web\Transaction\CategoryController;
+use App\Http\Controllers\Web\Transaction\PersonaController;
+use App\Http\Controllers\Web\Transaction\ReportController;
+use App\Http\Controllers\Web\Transaction\SettingsController;
+use App\Http\Controllers\Web\Transaction\TransactionController;
+use App\Http\Controllers\Web\Utils\EmptyUrlController;
+use App\Http\Controllers\Web\Version\VersionController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ChartController;
-use App\Http\Controllers\DebugController;
-use App\Http\Controllers\EmptyController;
-use App\Http\Controllers\ReportController;
-use App\Http\Controllers\PersonaController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Meta\MetaController;
-use App\Http\Controllers\File\FileController;
-use App\Http\Controllers\Social\ChatController;
-use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\Import\ImportController;
-use App\Http\Controllers\SynchronizationController;
-use App\Http\Controllers\Version\VersionController;
-use App\Http\Controllers\Import\ImportSettingController;
-use App\Http\Controllers\Import\ColumnsMappingController;
-use App\Http\Controllers\Notification\NotificationController;
-use App\Http\Controllers\ExchangeRates\ExchangeRateController;
-use App\Http\Controllers\Nordigen\Institution\InstitutionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -140,7 +140,7 @@ Route::middleware('auth')->group(function () {
         });
     });
 
-    Route::get('/', [EmptyController::class, 'redirect'])->name('empty');
+    Route::get('/', [EmptyUrlController::class, 'redirect'])->name('empty');
 });
 
 require __DIR__ . '/auth.php';

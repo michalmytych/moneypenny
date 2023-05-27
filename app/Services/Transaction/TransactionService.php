@@ -36,6 +36,7 @@ class TransactionService
             'import',
             'synchronization',
             'account',
+            'category',
             'senderPersona',
             'receiverPersona',
         ];

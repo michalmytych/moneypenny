@@ -24,6 +24,18 @@
             </div>
             <div class="mb-4">
                 <p class="block text-gray-700 font-bold mb-2">
+                    {{ __('Category') }}:
+                </p>
+                <p class="text-gray-700 text-xl">
+                    @if($transaction->category)
+                        @include('components.category.category-badge', ['name' => \Illuminate\Support\Str::ucfirst($transaction->category->code)])
+                    @else
+                        No data
+                    @endif
+                </p>
+            </div>
+            <div class="mb-4">
+                <p class="block text-gray-700 font-bold mb-2">
                     {{ __('Sender') }}:
                 </p>
                 <p class="text-gray-700 text-xl">
@@ -46,6 +58,10 @@
                     {{ $transaction->description ?? 'No data' }}
                 </p>
             </div>
+        </div>
+
+        <div>
+            <h2 class="text-black font-bold text-2xl pb-4">{{ __('Details') }}</h2>
             <div class="mb-4">
                 <p class="block text-gray-700 font-bold mb-2">
                     {{ __('Transaction date') }}:
@@ -62,9 +78,6 @@
                     {{ $transaction->accounting_date ?? 'No data' }}
                 </p>
             </div>
-        </div>
-
-        <div>
             <div class="mb-4">
                 <p class="block text-gray-700 font-bold mb-2">
                     {{ __('Sender account number') }}:

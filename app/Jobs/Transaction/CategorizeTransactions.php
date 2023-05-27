@@ -4,6 +4,7 @@ namespace App\Jobs\Transaction;
 
 use App\Models\Transaction\Category;
 
+use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
@@ -16,7 +17,7 @@ use hisorange\BrowserDetect\Exceptions\Exception;
 
 class CategorizeTransactions implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, Batchable;
 
     public function __construct(public array $transactionsIds)
     {
@@ -51,6 +52,7 @@ class CategorizeTransactions implements ShouldQueue
 
         $requestUrl = config('egghead.base_api_url');
 
+        // @todo refactor
         $response = Http::withHeaders([
             'x-api-key' => config('egghead.api_token')
         ])->post(

@@ -30,11 +30,12 @@ class CategorizeTransactionService
                 $categorizationJobs[] = new CategorizeTransactions($transactionsIds);
             });
 
+        // @todo seems like there is not enough chunks generated (only few transactions are being sent)
         Bus::batch($categorizationJobs)
+            ->name('Import [' . $importId . '] transactions categorization')
             ->finally(function () use ($importId) {
                 event(new ImportCategorizationFinished($importId));
             })
-            ->name('Import [' . $importId . '] transactions categorization')
             ->dispatch();
     }
 }

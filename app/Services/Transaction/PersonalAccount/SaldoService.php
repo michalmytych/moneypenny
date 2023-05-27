@@ -11,16 +11,8 @@ class SaldoService
 {
     public function getByUser(User $user)
     {
-        $cacheKey = PersonalAccount::USER_SALDO_CACHE_KEY_PREFIX . $user->id;
-
-        if (Cache::missing($cacheKey)) {
-            $personalAccount = PersonalAccount::firstWhere('user_id', $user->id);
-            $value = $personalAccount?->value ?? 0.0;
-            Cache::put($cacheKey, (float) $value);
-            return $value;
-        }
-
-        return Cache::get($cacheKey);
+        $personalAccount = PersonalAccount::firstWhere('user_id', $user->id);
+        return $personalAccount?->value ?? 0.0;
     }
 
     public function calculate(): int

@@ -1,6 +1,7 @@
 <x-guest-layout>
     <h1 class="flex justify-center text-3xl font-semibold mt-2 mb-4">Register</h1>
-    <form method="POST" action="{{ route('register') }}">
+    <form class="sm:w-full lg:w-1/3 mb-8 mt-4 mx-auto"
+        method="POST" action="{{ route('register') }}">
         @csrf
 
         <!-- Name -->
@@ -44,7 +45,7 @@
             @include('auth.one-time-registration-token-input')
         @endif
 
-        <div class="flex items-center justify-end mt-4">
+        <div class="flex items-center justify-end mt-9">
             <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
                 {{ __('Already registered?') }}
             </a>

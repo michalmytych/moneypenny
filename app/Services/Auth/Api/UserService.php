@@ -20,6 +20,11 @@ class UserService
         ];
     }
 
+    public function getOrCreateApiToken(User $user): string
+    {
+        return $user->currentAccessToken() ?? $user->createToken('api_token')->plainTextToken;
+    }
+
     /**
      * @throws Exception
      */

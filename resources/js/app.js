@@ -1,20 +1,14 @@
 import './bootstrap';
 
+import {drawCharts} from "./drawCharts";
+import {logoutApi} from "./logoutApi";
+import {getCookie} from "./getCookie";
+
 import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
+window.getCookie = drawCharts;
+window.getCookie = getCookie;
+window.logoutApi = logoutApi;
 
 Alpine.start();
-
-function getCookie(cname) {
-    let name = cname + "=";
-    let ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) === ' ') c = c.substring(1);
-        if (c.indexOf(name) !== -1) return c.substring(name.length, c.length);
-    }
-    return "";
-}
-
-window.getCookie = getCookie;

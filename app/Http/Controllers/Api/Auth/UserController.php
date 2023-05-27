@@ -8,7 +8,6 @@ use App\Http\Controllers\Controller;
 use App\Services\Auth\Api\UserService;
 use App\Http\Requests\Api\Auth\LoginRequest;
 use App\Http\Requests\Api\Auth\RegisterRequest;
-use Throwable;
 
 class UserController extends Controller
 {
@@ -27,7 +26,6 @@ class UserController extends Controller
 
     public function login(LoginRequest $request): Response
     {
-
         try {
             $result = $this->userService->login($request->validated());
 

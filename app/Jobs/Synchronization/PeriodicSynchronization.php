@@ -2,16 +2,15 @@
 
 namespace App\Jobs\Synchronization;
 
-use App\Models\Import\Import;
 use Illuminate\Bus\Queueable;
+use App\Models\Import\Import;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use App\Models\Nordigen\EndUserAgreement;
-use App\Events\ApplicationNotificationSent;
-use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
 use App\Models\Synchronization\Synchronization;
 use App\Services\Notification\Broadcast\NotificationBroadcastService;
 

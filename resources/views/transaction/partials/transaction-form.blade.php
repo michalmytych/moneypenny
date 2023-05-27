@@ -90,7 +90,11 @@
                         class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey">
                     <option>Select currency</option>
                     @foreach(config('moneypenny.supported_currencies') as $currencyCode)
-                        <option value="{{ $currencyCode }}">{{ $currencyCode }}</option>
+                        @if($currencyCode === config('moneypenny.base_calculation_currency'))
+                            <option selected value="{{ $currencyCode }}">{{ $currencyCode }}</option>
+                        @else
+                            <option value="{{ $currencyCode }}">{{ $currencyCode }}</option>
+                        @endif
                     @endforeach
                 </select>
                 <x-input-error :messages="$errors->get('currency')" class="mt-2" />

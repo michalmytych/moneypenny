@@ -3,7 +3,7 @@
 namespace App\Services\Notification\Broadcast;
 
 use App\Models\Notification;
-use App\Events\ApplicationNotificationSent;
+use App\Events\Notification\ApplicationNotificationSent;
 
 class NotificationBroadcastService
 {
@@ -16,7 +16,7 @@ class NotificationBroadcastService
                 'content' => $content,
                 'url' => $url,
             ]),
-            'type' => Notification::TYPE_INFO       // @todo resolve notification type
+            'type' => Notification::TYPE_INFO // @todo resolve notification type
         ]);
 
         // @todo - broadcast only to specific users

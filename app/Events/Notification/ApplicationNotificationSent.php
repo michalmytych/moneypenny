@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events;
+namespace App\Events\Notification;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;

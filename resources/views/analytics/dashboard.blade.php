@@ -27,7 +27,5 @@
             </div>
 
         </div>
-
-        @vite(['resources/js/dashboard.js'])
     </div>
 </x-app-layout>

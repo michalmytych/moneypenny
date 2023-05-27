@@ -43,6 +43,9 @@
                                 <x-dropdown-link :href="route('file.index')">
                                     {{ __('Files') }}
                                 </x-dropdown-link>
+                                <x-dropdown-link :href="route('setting.edit')">
+                                    {{ __('Settings') }}
+                                </x-dropdown-link>
                             </x-slot>
                         </x-dropdown>
                     </div>
@@ -195,6 +198,7 @@
 
                             <x-dropdown-link :href="route('logout')"
                                              onclick="event.preventDefault();
+                                                logoutApi();
                                                 this.closest('form').submit();">
                                 <span class="text-red-700 font-semibold">
                                     {{ __('Log Out') }}
@@ -246,6 +250,7 @@
 
                     <x-responsive-nav-link :href="route('logout')"
                                            onclick="event.preventDefault();
+                                           logoutApi();
                                         this.closest('form').submit();">
                         <span class="text-red-700 font-semibold">
                             {{ __('Log Out') }}

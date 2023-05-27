@@ -20,6 +20,8 @@ class CreatePersonalAccountsForUsers extends Command
         foreach (User::cursor() as $user) {
             /** @var User $user */
             $account = PersonalAccount::firstOrCreate([
+                'user_id' => $user->id
+            ], [
                 'value' => app(SaldoService::class)->calculate(),
                 'user_id' => $user->id,
                 'name' => 'Default',

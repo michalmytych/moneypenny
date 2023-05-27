@@ -41,6 +41,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property User $user
  * @property string $currency
  * @property string|Carbon $transaction_date
+ * @property mixed $import_id
+ * @property string|Carbon $created_at
+ * @property string|Carbon $updated_at
  */
 class Transaction extends Model
 {
@@ -52,6 +55,26 @@ class Transaction extends Model
 
     const CALCULATION_COLUMN = 'calculation_volume';
 
+    protected $fillable = [
+        'receiver_account_number',
+        'sender_account_number',
+        'receiver_persona_id',
+        'calculation_volume',
+        'sender_persona_id',
+        'transaction_date',
+        'accounting_date',
+        'decimal_volume',
+        'description',
+        'category_id',
+        'raw_volume',
+        'import_id',
+        'receiver',
+        'currency',
+        'user_id',
+        'sender',
+        'type'
+    ];
+
     protected $casts = [
         'transaction_date' => 'datetime'
     ];
@@ -59,6 +82,11 @@ class Transaction extends Model
     public function import(): BelongsTo
     {
         return $this->belongsTo(Import::class);
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
     }
 
     public function account(): BelongsTo
@@ -104,25 +132,6 @@ class Transaction extends Model
             ],
         ]);
     }
-
-    protected $fillable = [
-        'receiver_account_number',
-        'sender_account_number',
-        'receiver_persona_id',
-        'calculation_volume',
-        'sender_persona_id',
-        'transaction_date',
-        'accounting_date',
-        'decimal_volume',
-        'description',
-        'raw_volume',
-        'import_id',
-        'receiver',
-        'currency',
-        'user_id',
-        'sender',
-        'type'
-    ];
 
     public function senderPersona(): BelongsTo
     {

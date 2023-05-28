@@ -8,7 +8,7 @@
                 <div class="bg-white rounded-md shadow-sm p-4 mb-4 transition">
                     <div class="flex justify-between items-center">
                         <h4 class="text-xl font-semibold flex">
-                            {{ \Illuminate\Support\Str::ucfirst($category->code) }}
+                            {{ $category->name() }}
                         </h4>
                     </div>
                     <div class="font-light text-gray-500 mt-2">{{ $category->transactions_count }} transactions</div>

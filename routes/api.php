@@ -40,7 +40,6 @@ Route::as('api.')->group(function () {
             Route::get('/', [ExchangeRateController::class, 'index'])->name('index');
         });
 
-        // @todo check if this route is protected beacuse notifications are fetched anyway
         Route::prefix('notifications')->as('notification.')->group(function () {
             Route::get('/', [NotificationController::class, 'index'])->name('index');
         });

@@ -22,6 +22,7 @@ class DeviceService
             header: 'Warning! Suspicious activity detected.',
             content: 'Details: ' . $event->message,
             url: route('devices')
+            // @todo send to specific users
         );
     }
 }

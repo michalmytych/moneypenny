@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\Notification;
 
-use App\Services\Notification\Broadcast\NotificationBroadcastService;
 use Illuminate\Console\Command;
+use App\Services\Notification\Broadcast\NotificationBroadcastService;
 
 class SendApplicationNotification extends Command
 {

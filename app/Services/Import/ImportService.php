@@ -51,7 +51,8 @@ class ImportService implements ImportServiceContract
         $this->notificationBroadcastService->sendStoredApplicationNotification(
             header: 'New transactions import! ',
             content: 'See more',
-            url: route('transaction.index')
+            url: route('transaction.index'),
+            userId: $user->id
         );
     }
 

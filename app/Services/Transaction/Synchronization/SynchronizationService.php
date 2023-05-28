@@ -40,7 +40,8 @@ class SynchronizationService
         $this->notificationBroadcastService->sendStoredApplicationNotification(
             header: 'New transactions synchronization! ',
             content: 'See more',
-            url: route('transaction.index')
+            url: route('transaction.index'),
+            userId: $user->id
         );
 
         return $synchronization;

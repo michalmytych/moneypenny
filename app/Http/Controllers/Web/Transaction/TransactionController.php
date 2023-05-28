@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Web\Transaction;
 use App\Filters\Filter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Transaction\CreateRequest;
+use App\Http\Requests\Web\Transaction\PatchRequest;
+use App\Models\Transaction\Transaction;
 use App\Services\Transaction\Currency\CurrencyService;
 use App\Services\Transaction\TransactionService;
 use Illuminate\Http\RedirectResponse;
@@ -42,5 +44,13 @@ class TransactionController extends Controller
         $data = $request->validated();
         $this->transactionService->create($user, $data);
         return redirect()->to(route('transaction.index'));
+    }
+
+    public function patch(mixed $transactionId, PatchRequest $request): RedirectResponse
+    {
+        $transaction = Transaction::findOrFail($transactionId);
+        $data = $request->validated();
+        $transaction->update($data);
+        return redirect()->to(route('transaction.show', ['id' => $transaction->id]));
     }
 }

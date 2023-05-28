@@ -28,4 +28,16 @@
 
         </div>
     </div>
+
+    @push('scripts')
+        <script>
+            window.addEventListener('load', () => {
+                window.drawCharts([
+                    'lastMonthExpenditures',
+                    'expendituresAndIncomesTrend'
+                ]);
+            });
+        </script>
+    @endpush
+
 </x-app-layout>

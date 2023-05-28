@@ -28,9 +28,21 @@
                 </p>
                 <p class="text-gray-700 text-xl">
                     @if($transaction->category)
-                        @include('components.category.category-badge', ['name' => \Illuminate\Support\Str::ucfirst($transaction->category->code)])
+                        @include('components.category.category-badge', ['name' => $transaction->category->name()])
                     @else
-                        No data
+                        <form action="{{ route('transaction.patch', ['id' => $transaction->id]) }}" method="POST" id="categoryForm">
+                            @csrf
+                            @method('PATCH')
+                            <select name="category_id" id="category_id" class="appearance-none border rounded py-2 px-3 w-1/2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                <option selected>Assign category</option>
+                                {{--@todo --- wtf!!!!!--}}
+                                @foreach(\App\Models\Transaction\Category::orderBy('code')->get() as $category)
+                                    <option value="{{ $category->id }}">
+                                        {{ $category->name() }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </form>
                     @endif
                 </p>
             </div>
@@ -120,3 +132,16 @@
 <div class="pb-20">
     @include('transaction.partials.transactions-list', ['transactions' => $similarTransactions])
 </div>
+
+@push('scripts')
+    <script>
+        window.addEventListener('load', () => {
+            const categoryForm = document.getElementById('categoryForm');
+            const categoryInput = document.getElementById('category_id');
+
+            categoryInput.addEventListener('change', () => {
+                categoryForm.submit();
+            });
+        });
+    </script>
+@endpush

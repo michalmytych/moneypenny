@@ -10,6 +10,7 @@ class DateGroupByToCalendar extends Transformer
 {
     public static function transform(mixed $data, string $dateKey, string $valueKey): Collection
     {
+        // @todo - refactor
         /** @var Collection $data */
         $datesData = $data->toArray();
         $result = collect();
@@ -24,11 +25,20 @@ class DateGroupByToCalendar extends Transformer
             $currentDate = data_get($datesData, 0);
 
             $dayString = $date->format('Y-m-d');
-            $dayFromDaya = Carbon::parse($currentDate[$dateKey])->format('Y-m-d');
+            $dayFromData = Carbon::parse($currentDate[$dateKey])->format('Y-m-d');
 
-            if ($dayFromDaya === $dayString) {
+            if ($dayFromData === $dayString) {
                 $valueData = floatval($currentDate[$valueKey]);
                 array_shift($datesData);
+            }
+
+            // @todo ASAP - rm this hack
+            if (!$valueData) {
+                $lastResult = $result->last();
+                if ($lastResult) {
+                    $lastTotal = data_get($lastResult, 'total');
+                    $valueData = $lastTotal - 10;
+                }
             }
 
             $result->push([
@@ -37,6 +47,18 @@ class DateGroupByToCalendar extends Transformer
             ]);
         }
 
-        return $result;
+        // @todo ASAP - rm this hack
+        return $result->map(function($record, $ix) use ($result) {
+            $total = data_get($record, 'total');
+            if ($total <= 0) {
+                $nextIx = intval($ix) + 3;
+                $nextRecord = $result->get($nextIx);
+                if ($nextRecord) {
+                    $nextTotal = data_get($nextRecord, 'total');
+                    $record['total'] = $nextTotal;
+                }
+            }
+            return $record;
+        });
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Services\Transaction\Synchronization;
 
 use App\Models\Nordigen\Requisition;
+use App\Models\Notification;
 use App\Models\User;
 use App\Services\Notification\Broadcast\NotificationBroadcastService;
 use Illuminate\Support\Collection;
@@ -19,10 +20,15 @@ class SynchronizationService
 
     public function checkRequisition(User $user, mixed $agreementId): ?Requisition
     {
-        $requisition = Requisition::latest()->firstWhere([
+        $conditions = [
             'end_user_agreement_id' => $agreementId,
             'user_id' => $user->id
-        ]);
+        ];
+
+        $requisition = Requisition::latest()
+            ->where($conditions)
+            ->get()
+            ->first();
 
         if (!$requisition) {
             abort(404);
@@ -41,7 +47,8 @@ class SynchronizationService
             header: 'New transactions synchronization! ',
             content: 'See more',
             url: route('transaction.index'),
-            userId: $user->id
+            userId: $user->id,
+            type: Notification::TYPE_EVENT
         );
 
         return $synchronization;

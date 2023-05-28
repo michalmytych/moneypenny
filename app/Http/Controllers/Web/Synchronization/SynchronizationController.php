@@ -34,6 +34,7 @@ class SynchronizationController extends Controller
         $user = $request->user();
         $agreementId = $request->get('agreement_id');
 
+        // @todo - checkRequisition - really bad method name
         $requisition = $this->synchronizationService->checkRequisition($user, $agreementId);
         $synchronization = $this->synchronizationService->create($user);
 

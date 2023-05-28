@@ -12,4 +12,13 @@ class NotificationService
     {
         return Notification::whereUser($user)->latest()->limit($limit)->get();
     }
+
+    public function allEvents(User $user, int $limit = 5)
+    {
+        return Notification::whereUser($user)
+            ->where('type', Notification::TYPE_EVENT)
+            ->latest()
+            ->limit($limit)
+            ->get();
+    }
 }

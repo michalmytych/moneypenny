@@ -9,35 +9,58 @@
 
     <div class="mb-10 pr-8">
         <h2 class="text-lg font-semibold mb-2">{{ __("Events") }}</h2>
-        <div
-            {{--@todo - fix--}}
-            class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in">
-            @include('icons.sync')
-            <span class="text-black-50 text-xs ml-3">
-                <span class="font-black">New synchronization</span>, added 3 transactions
-            </span>
-        </div>
-        <div
-            class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in">
-            @include('icons.eye')
-            <span class="text-black-50 text-xs ml-3">
-                <span class="font-black">20 transactions</span> require attention
-            </span>
-        </div>
-        <div
-            class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in">
-            @include('icons.report')
-            <span class="text-black-50 text-xs ml-3">
-                <span class="font-black">New report:</span> april 2023
-            </span>
-        </div>
-        <div
-            class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in">
-            @include('icons.report')
-            <span class="text-black-50 text-xs ml-3">
-                <span class="font-black">New report:</span> march 2023
-            </span>
-        </div>
+        @foreach($eventNotifications as $eventNotification)
+            @php
+                $notificationContent = json_decode($eventNotification->content);
+                $eventHeader = data_get($notificationContent, 'header');
+                $rawEventContent = data_get($notificationContent, 'content');
+                $eventContent = \App\Services\Helpers\StringHelper::shortenAuto($rawEventContent, 30);
+                $eventUrl = data_get($notificationContent, 'url');
+            @endphp
+            <a href="{{ $eventUrl ?? route('home') }}">
+                <div
+                    class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in">
+                    @include('icons.report')
+                    <span class="text-black-50 text-xs ml-3">
+                    <span class="font-bold">{{ $eventHeader }}</span>
+                    <span>{{ $eventContent }}</span>
+                </span>
+                </div>
+            </a>
+        @endforeach
+        @if(count($eventNotifications) === 0)
+            <h3 class="text-gray-600 font-light">Nothing new</h3>
+        @endif
+
+{{--        <div--}}
+{{--@todo - fix--}}
+{{--            class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in">--}}
+{{--            @include('icons.sync')--}}
+{{--            <span class="text-black-50 text-xs ml-3">--}}
+{{--                <span class="font-black">New synchronization</span>, added 3 transactions--}}
+{{--            </span>--}}
+{{--        </div>--}}
+{{--        <div--}}
+{{--            class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in">--}}
+{{--            @include('icons.eye')--}}
+{{--            <span class="text-black-50 text-xs ml-3">--}}
+{{--                <span class="font-black">20 transactions</span> require attention--}}
+{{--            </span>--}}
+{{--        </div>--}}
+{{--        <div--}}
+{{--            class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in">--}}
+{{--            @include('icons.report')--}}
+{{--            <span class="text-black-50 text-xs ml-3">--}}
+{{--                <span class="font-black">New report:</span> april 2023--}}
+{{--            </span>--}}
+{{--        </div>--}}
+{{--        <div--}}
+{{--            class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in">--}}
+{{--            @include('icons.report')--}}
+{{--            <span class="text-black-50 text-xs ml-3">--}}
+{{--                <span class="font-black">New report:</span> march 2023--}}
+{{--            </span>--}}
+{{--        </div>--}}
     </div>
 
     <div class="ml-6">

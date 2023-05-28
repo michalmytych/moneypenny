@@ -24,6 +24,8 @@ class Notification extends Model
 
     public const TYPE_SUCCESS = 3;
 
+    public const TYPE_EVENT = 4;
+
     public const STATUS_UNREAD = 0;
 
     public const STATUS_READ = 1;

@@ -2,6 +2,7 @@
 
 namespace App\Jobs\Synchronization;
 
+use App\Models\Notification;
 use Illuminate\Bus\Queueable;
 use App\Models\Import\Import;
 use Illuminate\Support\Carbon;
@@ -40,7 +41,9 @@ class PeriodicSynchronization implements ShouldQueue
             $notificationBroadcastService->sendStoredApplicationNotification(
                 header: 'Nowa automatyczna synchronizacja',
                 content: "$import->added_transactions_count nowych transakcji",
-                url: route('transaction.index')
+                url: route('transaction.index'),
+                userId: $agreement->user_id,
+                type: Notification::TYPE_EVENT
             );
         }
     }

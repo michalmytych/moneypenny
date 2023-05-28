@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\Web\Auth\ProfileController;
 use App\Http\Controllers\Web\Auth\SetupController;
 use App\Http\Controllers\Web\Debug\DebugController;
@@ -105,6 +106,15 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('categories')->as('category.')->group(function () {
         Route::get('/', [CategoryController::class, 'index'])->name('index');
+    });
+
+    Route::prefix('budgets')->as('budget.')->group(function () {
+        Route::get('/', [BudgetController::class, 'index'])->name('index');
+        Route::get('/new', [BudgetController::class, 'new'])->name('new');
+        Route::get('/{id}', [BudgetController::class, 'show'])->name('show');
+        Route::post('/', [BudgetController::class, 'create'])->name('create');
+        Route::get('/{id}/edit', [BudgetController::class, 'edit'])->name('edit');
+        Route::patch('/{id}', [BudgetController::class, 'patch'])->name('patch');
     });
 
     Route::prefix('imports')->as('import.')->group(function () {

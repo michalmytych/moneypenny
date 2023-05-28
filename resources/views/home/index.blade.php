@@ -18,7 +18,7 @@
 
             @include('home.partials.available-actions', ['transactionsData' => $transactionsData])
 
-            @include('home.partials.header', [ 'saldoData' => $saldoData ])
+            @include('home.partials.header', [ 'saldoData' => $saldoData, 'budgetsWithConsumption' => $budgetsWithConsumption ])
 
             @include('home.partials.latest-transactions', ['transactionsData' => $transactionsData ])
 

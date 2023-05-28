@@ -5,7 +5,7 @@
     $agreement = $transactionsData['agreement'];
 @endphp
 
-<div class="my-6 bg-gray-100 rounded-lg w-full">
+<div class="mt-2 bg-gray-100 rounded-lg w-full mb-4">
     @php
         $timePassed = null;
         if ($synchronization) {

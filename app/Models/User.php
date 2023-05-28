@@ -4,6 +4,10 @@ namespace App\Models;
 
 use App\Models\Auth\Settings;
 use App\Models\Traits\HasAvatar;
+use App\Models\Transaction\Budget;
+use App\Models\Transaction\PersonalAccount;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -18,6 +22,8 @@ use IvanoMatteo\LaravelDeviceTracking\Traits\UseDevices;
  * @property string $password
  * @property boolean $is_admin
  * @property Settings|null $settings
+ * @property Collection $personalAccounts
+ * @property Collection $budgets
  * @method static cursor()
  * @method static firstWhere(array $array)
  * @method static findOrFail(mixed $userId)
@@ -46,7 +52,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected function settings(): HasOne
+    public function personalAccounts(): HasMany
+    {
+        return $this->hasMany(PersonalAccount::class);
+    }
+
+    public function budgets(): HasMany
+    {
+        return $this->hasMany(Budget::class);
+    }
+
+
+    public function settings(): HasOne
     {
         return $this->hasOne(Settings::class);
     }

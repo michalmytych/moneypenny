@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
+ * @todo
+ * @deprecated
  * @property string $name
  */
 class Report extends Model

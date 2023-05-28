@@ -45,8 +45,8 @@
         </div>
     @endif
 
-    @if(request()?->user()->created_at->gte(now()->subMinutes(10)))
-        <div class="mb-8">
+    @if(request()?->user()->created_at->gte(now()->subMinutes(2)))
+        <div class="mb-4">
             <a href="{{ route('report.periodic') }}">
                 <div
                     class="rounded-md transition shadow text-white flex items-center pr-6 p-2 cursor-pointer hover:scale-[1.01] active:scale-[0.99] bg-gradient-to-r from-emerald-500 via-green-600 to-indigo-400">
@@ -61,6 +61,30 @@
 
                         <span class="ml-2 relative top-0.5">
                         Show first report
+                    </span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    @endif
+
+    @if(request()?->user()->created_at->gte(now()->subMinutes(2)))
+        {{--@todo - wtf??? search for queries in blade templates--}}
+        <div class="mb-8">
+            <a href="{{ route('budget.index') }}">
+                <div
+                    class="rounded-md transition shadow text-white flex items-center pr-6 p-2 cursor-pointer hover:scale-[1.01] active:scale-[0.99] bg-gradient-to-r from-emerald-500 via-green-600 to-indigo-400">
+
+                    @include('icons.arrow-trending')
+                    <div>
+                        <div class="flex items-center">
+                        <span class="font-semibold text-2xl ml-2">
+                            See budget propostions.
+                        </span>
+                        </div>
+
+                        <span class="ml-2 relative top-0.5">
+                        You can customize them if you want
                     </span>
                     </div>
                 </div>

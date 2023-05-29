@@ -3,6 +3,7 @@
 # Script for deploying moneypenny application on UJ server
 
 cd ~/moneypenny && \
+git reset --hard origin/bachelor && \
 git pull origin bachelor && \
 composer install && \
 composer du && \

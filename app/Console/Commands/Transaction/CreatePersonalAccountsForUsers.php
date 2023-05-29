@@ -13,7 +13,7 @@ class CreatePersonalAccountsForUsers extends Command
 
     protected $description = 'Create personal accounts records for existing users.';
 
-    public function handle(): int
+    public function handle(SaldoService $saldoService): int
     {
         $this->info("Calculating user's default account saldo...");
 
@@ -23,7 +23,7 @@ class CreatePersonalAccountsForUsers extends Command
             $account = PersonalAccount::firstOrCreate([
                 'user_id' => $user->id
             ], [
-                'value' => app(SaldoService::class)->calculate(),
+                'value' => $saldoService->calculate($user),
                 'user_id' => $user->id,
                 'name' => 'Default',
             ]);

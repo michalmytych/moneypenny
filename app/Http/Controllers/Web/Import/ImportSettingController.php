@@ -31,9 +31,10 @@ class ImportSettingController extends Controller
         return view('import.import_setting.edit', compact('importSetting'));
     }
 
-    public function show(ImportSetting $importSetting, Request $request): View
+    public function show(mixed $id, Request $request): View
     {
         $user = $request->user();
+        $importSetting = ImportSetting::findOrFail($id);
         if ($importSetting->user_id !== $user->id) {
             abort(403);
         }
@@ -43,6 +44,7 @@ class ImportSettingController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+        $user = $request->user();
         $validatedData = $request->validate([
             'name' => 'required|string',
             'file_extension' => 'required|string',
@@ -53,6 +55,7 @@ class ImportSettingController extends Controller
             'input_encoding' => 'nullable|string',
         ]);
 
+        $validatedData['user_id'] = $user->id;
         $importSetting = ImportSetting::create($validatedData);
 
         return redirect()

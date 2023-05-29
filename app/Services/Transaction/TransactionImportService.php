@@ -45,7 +45,7 @@ class TransactionImportService
             'receiver_account_number' => $receiverAccountNumber,
         ];
 
-        if (!$this->similarTransactionExists($attributes)) {
+        if (!$this->similarTransactionExists($user, $attributes)) {
             return Transaction::create($attributes);
         }
 

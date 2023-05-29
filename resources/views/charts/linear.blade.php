@@ -86,10 +86,13 @@
         const expendituresDataset = await fetchExpenditures();
 
         incomesDataset.dataset.forEach((dayData, ix) => {
+            console.log(dayData)
+            console.log(expendituresDataset.dataset)
             rows.push([
                 dayData.date.substring(5),
                 parseFloat(dayData.total),
-                parseFloat(expendituresDataset.dataset[ix].total)
+                // @todo - rm this hack
+                expendituresDataset.dataset[ix] ? parseFloat(expendituresDataset.dataset[ix].total) : 0
             ]);
         });
 

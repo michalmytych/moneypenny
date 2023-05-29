@@ -30,7 +30,11 @@ class ImportSettingsTableSeeder extends Seeder
         ];
 
         foreach ($importSettings as $setting) {
-            ImportSetting::create($setting);
+            // @todo ASAP - rm this hack
+            foreach (User::cursor() as $user) {
+                $setting['user_id'] = $user->id;
+                ImportSetting::create($setting);
+            }
         }
     }
 }

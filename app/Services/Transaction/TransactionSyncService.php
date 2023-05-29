@@ -39,7 +39,7 @@ class TransactionSyncService implements NordigenTransactionServiceInterface
             'receiver_account_number' => $transactionDataObject->receiverAccountNumber,
         ];
 
-        $similarExists = $this->similarTransactionExists($attributes);
+        $similarExists = $this->similarTransactionExists($user, $attributes);
 
         if (!$similarExists) {
             return Transaction::create($attributes);

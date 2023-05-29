@@ -18,6 +18,7 @@ class CreatePersonalAccountsForUsers extends Command
         $this->info("Calculating user's default account saldo...");
 
         foreach (User::cursor() as $user) {
+            // @todo - move to service
             /** @var User $user */
             $account = PersonalAccount::firstOrCreate([
                 'user_id' => $user->id

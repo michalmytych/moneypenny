@@ -15,10 +15,10 @@ class SaldoService
         return $personalAccount?->value ?? 0.0;
     }
 
-    public function calculate(): int
+    public function calculate(User $user): int
     {
         $saldo = 0;
-        foreach (Transaction::cursor() as $transaction) {
+        foreach (Transaction::whereUser($user)->cursor() as $transaction) {
             /** @var Transaction $transaction */
             if ($transaction->type === Transaction::TYPE_EXPENDITURE) {
                 $saldo -= $transaction->{Transaction::CALCULATION_COLUMN};

@@ -7,7 +7,7 @@
                 Base calculation currency
             </label>
             <div class="text-gray-600 mt-3 mb-4">
-                All calculations performed in transacton will be on with this currency.
+                All calculations performed on transactions will be performed with this currency.
             </div>
             <select id="base_currency_code" name="base_currency_code" placeholder="Select currency" required
                     class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey">

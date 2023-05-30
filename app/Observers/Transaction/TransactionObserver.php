@@ -14,6 +14,7 @@ class TransactionObserver
         //@todo - batch jobs
         CreateTransactionPersonaAssociation::dispatch($transaction->id);
         ResolveTransactionCalculationVolume::dispatch($transaction->id);
-        UpdateUsersPersonalAccountSaldo::dispatch($transaction->id);
+        // @todo - this will
+        UpdateUsersPersonalAccountSaldo::dispatchSync($transaction->id);
     }
 }

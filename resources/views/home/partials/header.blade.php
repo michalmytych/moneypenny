@@ -2,8 +2,10 @@
     <div class="col-1 mb-6">
         <h2 class="text-lg font-semibold mb-2">{{ __('Account balance') }}</h2>
         <div class="flex">
-            <h1 id="saldoDisplay" class="text-7xl text-semibold">{{ $saldoData }}</h1>
-            <span class="text-xl ml-2">PLN</span>
+            <a href="{{ route('personal-account.edit') }}" class="bg-transparent hover:bg-gray-200 w-full p-2 mr-2 transition rounded-md">
+                <h1 id="saldoDisplay" class="text-7xl text-semibold">{{ $saldoData }}</h1>
+                <span class="text-xl ml-2">PLN</span>
+            </a>
         </div>
     </div>
 

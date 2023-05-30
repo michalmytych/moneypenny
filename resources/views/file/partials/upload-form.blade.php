@@ -1,5 +1,28 @@
 <form action="{{ route('file.upload') }}" method="POST" enctype="multipart/form-data" id="uploadForm">
     @csrf
+
+    <div class="mb-3">
+        {{--@todo - no queries in templates--}}
+        @if(\App\Models\Import\ImportSetting::whereUser(request()->user())->count() === 0)
+            <a
+                class="font-semibold text-indigo-600 hover:text-indigo-400 flex items-center"
+                href="{{ route('import.import-setting.index') }}">
+                @include('icons.add') To upload first file, first you should create import configuration.
+            </a>
+        @endif
+    </div>
+
+    <div class="mb-3">
+        {{--@todo - no queries in templates--}}
+        @if(\App\Models\Import\ColumnsMapping::whereUser(request()->user())->count() === 0)
+            <a
+                class="font-semibold text-indigo-600 hover:text-indigo-400 flex items-center"
+                href="{{ route('import.columns-mapping.index') }}">
+                @include('icons.add') To upload first file, first you should create columns mapping configuration.
+            </a>
+        @endif
+    </div>
+
     <div class="mb-4">
         <label class="block text-gray-700 font-bold mb-2" for="import_setting_id">
             {{ __('Import settings') }}

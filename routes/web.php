@@ -18,6 +18,7 @@ use App\Http\Controllers\Web\Synchronization\SynchronizationController;
 use App\Http\Controllers\Web\Transaction\Analysis\ChartController;
 use App\Http\Controllers\Web\Transaction\CategoryController;
 use App\Http\Controllers\Web\Transaction\PersonaController;
+use App\Http\Controllers\Web\Transaction\PersonalAccountController;
 use App\Http\Controllers\Web\Transaction\ReportController;
 use App\Http\Controllers\Web\Transaction\SettingsController;
 use App\Http\Controllers\Web\Transaction\TransactionController;
@@ -106,6 +107,11 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('categories')->as('category.')->group(function () {
         Route::get('/', [CategoryController::class, 'index'])->name('index');
+    });
+
+    Route::prefix('personal-accounts')->as('personal-account.')->group(function () {
+        Route::get('/edit', [PersonalAccountController::class, 'edit'])->name('edit');
+        Route::put('/update', [PersonalAccountController::class, 'update'])->name('update');
     });
 
     Route::prefix('budgets')->as('budget.')->group(function () {

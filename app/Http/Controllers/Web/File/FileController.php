@@ -11,7 +11,9 @@ use App\Services\Import\ColumnMappingService;
 use App\Services\Import\ImportSettingService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use Throwable;
 
 class FileController extends Controller
 {
@@ -43,6 +45,9 @@ class FileController extends Controller
         ]);
     }
 
+    /**
+     * @throws ValidationException
+     */
     public function upload(Request $request): RedirectResponse
     {
         $user = $request->user();
@@ -67,12 +72,20 @@ class FileController extends Controller
             'columns_mapping_id' => 'required|exists:columns_mappings,id',
         ]);
 
-        $this->transactionFileService->uploadTransactions(
-            $request->file('file'),
-            $request->input('import_setting_id'),
-            $request->input('columns_mapping_id'),
-            $user
-        );
+        try {
+            // @todo - better error handling
+            $this->transactionFileService->uploadTransactions(
+                $request->file('file'),
+                $request->input('import_setting_id'),
+                $request->input('columns_mapping_id'),
+                $user
+            );
+
+        } catch(Throwable) {
+            throw ValidationException::withMessages([
+                'file' => 'Invalid file, please check import configuration.'
+            ]);
+        }
 
         return redirect()->route('file.index');
     }

@@ -2,6 +2,18 @@
     <h1 class="text-3xl font-bold mb-4">{{ __('Add new import settings') }}</h1>
     <form action="{{ route('import.import-setting.store') }}" method="POST">
         @csrf
+
+        <div class="mb-3">
+            {{--@todo - no queries in templates--}}
+            @if(\App\Models\Import\ColumnsMapping::whereUser(request()->user())->count() === 0 && \App\Models\Import\ImportSetting::whereUser(request()->user())->count() === 1)
+                <a
+                    class="font-semibold text-indigo-600 hover:text-indigo-400 flex items-center"
+                    href="{{ route('import.columns-mapping.index') }}">
+                    @include('icons.add') To upload first file, first you should create columns mapping configuration.
+                </a>
+            @endif
+        </div>
+
         {{--@todo - fill all placeholders--}}
         <div class="mb-4">
             <label class="block text-gray-700 font-bold mb-2" for="name">

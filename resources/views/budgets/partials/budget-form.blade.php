@@ -13,9 +13,9 @@
                         class="text-2xl appearance-none border rounded w-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     @php
                         $types = [
-                            ['name' => 'Monthly', 'value' => \App\Models\Transaction\Budget::TYPE_MONTH, 'selected' => true],
-                            ['name' => 'Weekly', 'value' => \App\Models\Transaction\Budget::TYPE_WEEK, 'selected' => false],
-                            ['name' => 'Daily', 'value' => \App\Models\Transaction\Budget::TYPE_DAY, 'selected' => false],
+                            ['name' => 'Monthly', 'value' => \App\Models\Transaction\Budget::TYPE_MONTH, 'selected' => $budget->type === \App\Models\Transaction\Budget::TYPE_MONTH],
+                            ['name' => 'Weekly', 'value' => \App\Models\Transaction\Budget::TYPE_WEEK, 'selected' => $budget->type === \App\Models\Transaction\Budget::TYPE_WEEK],
+                            ['name' => 'Daily', 'value' => \App\Models\Transaction\Budget::TYPE_DAY, 'selected' => $budget->type === \App\Models\Transaction\Budget::TYPE_DAY],
                         ];
                     @endphp
                     @foreach($types as $type)

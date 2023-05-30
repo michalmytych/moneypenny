@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\Web\Auth\ProfileController;
 use App\Http\Controllers\Web\Auth\SetupController;
 use App\Http\Controllers\Web\Debug\DebugController;
@@ -15,13 +14,15 @@ use App\Http\Controllers\Web\Nordigen\Institution\InstitutionController;
 use App\Http\Controllers\Web\Notification\NotificationController;
 use App\Http\Controllers\Web\Social\ChatController;
 use App\Http\Controllers\Web\Synchronization\SynchronizationController;
-use App\Http\Controllers\Web\Transaction\Analysis\ChartController;
+use App\Http\Controllers\Web\Transaction\Analytics\AnalyticsController;
+use App\Http\Controllers\Web\Transaction\BudgetController;
 use App\Http\Controllers\Web\Transaction\CategoryController;
 use App\Http\Controllers\Web\Transaction\PersonaController;
 use App\Http\Controllers\Web\Transaction\PersonalAccountController;
 use App\Http\Controllers\Web\Transaction\ReportController;
 use App\Http\Controllers\Web\Transaction\SettingsController;
 use App\Http\Controllers\Web\Transaction\TransactionController;
+use App\Http\Controllers\Web\User\UserController;
 use App\Http\Controllers\Web\Utils\EmptyUrlController;
 use App\Http\Controllers\Web\Version\VersionController;
 use Illuminate\Support\Facades\Route;
@@ -38,11 +39,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth')->group(function () {
-    Route::get('/test', fn() => view('analytics.dashboard'))->name('test'); // @todo
-    Route::get('/apitest', [ChartController::class, 'apitest'])->name('apitest'); // @todo
-
     Route::get('/home', [HomeController::class, 'index'])->name('home');
-
     Route::get('/setup', [SetupController::class, 'setup'])->name('setup');
 
     Route::prefix('notifications')->as('notification.')->group(function () {
@@ -109,6 +106,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [CategoryController::class, 'index'])->name('index');
     });
 
+    Route::prefix('analytics')->as('analytic.')->group(function () {
+        Route::get('/', [AnalyticsController::class, 'index'])->name('index');
+    });
+
     Route::prefix('personal-accounts')->as('personal-account.')->group(function () {
         Route::get('/edit', [PersonalAccountController::class, 'edit'])->name('edit');
         Route::put('/update', [PersonalAccountController::class, 'update'])->name('update');
@@ -146,6 +147,22 @@ Route::middleware('auth')->group(function () {
     Route::middleware('admin')->group(function () {
         Route::prefix('debug')->as('debug.')->group(function () {
             Route::get('/analyzers', [DebugController::class, 'analyzers'])->name('analyzers');
+        });
+
+        Route::prefix('users')->as('user.')->group(function () {
+            Route::get('/', [UserController::class, 'index'])->name('index');
+            Route::get('/{id}/confirm-change-role', [UserController::class, 'confirmRoleChange'])
+                ->name('confirm_change_role');
+            Route::get('/{id}/confirm-block', [UserController::class, 'confirmBlock'])
+                ->name('confirm_block');
+            Route::get('/{id}/confirm-delete', [UserController::class, 'confirmDelete'])
+                ->name('confirm_delete');
+            Route::delete('/{id}/delete', [UserController::class, 'delete'])
+                ->name('delete');
+            Route::post('/{id}/change-role', [UserController::class, 'changeRole'])
+                ->name('change_role');
+            Route::post('/{id}/block', [UserController::class, 'block'])
+                ->name('block');
         });
 
         Route::prefix('exchange-rates')->as('exchange_rate.')->group(function () {

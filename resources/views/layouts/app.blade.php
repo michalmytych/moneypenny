@@ -22,7 +22,7 @@
 <!-- Nav Bar -->
 @include('layouts.navbar')
 
-<div class="min-h-screen bg-gray-100">
+<div class="min-h-screen bg-gray-100 pt-6">
     <!-- Page Content -->
     <main class="max-w-7xl mx-auto fade-in">
         {{ $slot }}

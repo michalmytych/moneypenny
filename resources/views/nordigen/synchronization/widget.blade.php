@@ -27,7 +27,6 @@
             const syncButton = document.getElementById('syncButton');
             const spinnerIcon = document.getElementById('spinnerIcon');
             const syncButtonText = document.getElementById('syncButtonText');
-            const synchronizationRoute = "{{ route('api.analysis.analyze') }}";
             const agreementId = "{{ $agreement->id }}";
 
             /** API Calls **/

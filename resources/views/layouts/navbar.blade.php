@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white fixed top-0 w-full shadow-sm">
+<nav x-data="{ open: false }" class="bg-white fixed top-0 w-full shadow-sm z-50">
     <!-- Primary Navigation Menu -->
     <div class="w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -8,6 +8,11 @@
                     <a href="{{ route('home') }}">
                         @include('icons.logo-md')
                     </a>
+                    <div class="relative top-1.5 ml-9">
+                        @if(Auth::user()->isAdmin())
+                            @include('admin.partials.admin-badge')
+                        @endif
+                    </div>
                 </div>
 
                 <!-- Navigation Links -->
@@ -37,6 +42,9 @@
                                     </span>
                                     </x-dropdown-link>
                                 @endif
+                                <x-dropdown-link :href="route('analytic.index')">
+                                    {{ __('Analytics') }}
+                                </x-dropdown-link>
                                 <x-dropdown-link :href="route('import.index')">
                                     {{ __('Imports') }}
                                 </x-dropdown-link>
@@ -148,10 +156,10 @@
                                         <x-dropdown-link :href="route('debug.analyzers')">
                                             {{ __('Debugging') }}
                                         </x-dropdown-link>
+                                        <x-dropdown-link :href="route('exchange_rate.index')">
+                                            {{ __('Exchange rates') }}
+                                        </x-dropdown-link>
                                     @endif
-                                    <x-dropdown-link :href="route('exchange_rate.index')">
-                                        {{ __('Exchange rates') }}
-                                    </x-dropdown-link>
                                     <x-dropdown-link :href="route('meta.index')">
                                         {{ __('System') }}
                                     </x-dropdown-link>
@@ -190,6 +198,7 @@
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
+
                 @include('layouts.partials.chat-icon')
 
                 @include('layouts.partials.notifications-dropdown')
@@ -250,6 +259,7 @@
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4 flex justify-between">
                 <div>
+                    {{--@todo - should it be used as facade?--}}
                     <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
                     <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
                 </div>

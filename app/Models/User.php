@@ -20,7 +20,7 @@ use IvanoMatteo\LaravelDeviceTracking\Traits\UseDevices;
  * @property string $name
  * @property string $email
  * @property string $password
- * @property boolean $is_admin
+ * @property null|boolean $is_admin
  * @property Settings|null $settings
  * @property Collection $personalAccounts
  * @property Collection $budgets
@@ -62,6 +62,10 @@ class User extends Authenticatable
         return $this->hasMany(Budget::class);
     }
 
+    public function isAdmin(): bool
+    {
+        return (bool) $this->is_admin;
+    }
 
     public function settings(): HasOne
     {

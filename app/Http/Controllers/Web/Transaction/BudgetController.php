@@ -1,14 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web\Transaction;
 
-use Illuminate\View\View;
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
-use App\Services\Transaction\Budget\BudgetService;
-use App\Http\Requests\Web\Transaction\CreateRequest;    // @todo
-use App\Services\Transaction\Currency\CurrencyService;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Transaction\Budget\PatchRequest;
+use App\Http\Requests\Web\Transaction\CreateRequest;
+use App\Services\Transaction\Budget\BudgetService;
+use App\Services\Transaction\Currency\CurrencyService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
+
+// @todo
 
 class BudgetController extends Controller
 {

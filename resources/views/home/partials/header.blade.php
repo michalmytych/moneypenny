@@ -9,7 +9,7 @@
         </div>
     </div>
 
-    <div class="mb-10 pr-8">
+    <div class="mb-10 pr-6">
         <h2 class="text-lg font-semibold mb-2">{{ __("Events") }}</h2>
         @foreach($eventNotifications as $eventNotification)
             @php

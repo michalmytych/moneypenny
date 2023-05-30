@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Auth\UserController;
 use App\Http\Controllers\Api\MetaController;
 use App\Http\Controllers\Api\Notification\NotificationController;
+use App\Http\Controllers\Api\Transaction\Analytics\AnalyticsController;
 use App\Http\Controllers\Api\Transaction\ReportController;
 use App\Http\Controllers\Web\ExchangeRates\ExchangeRateController;
 use App\Http\Controllers\Web\Synchronization\SynchronizationController;
@@ -28,8 +29,13 @@ Route::as('api.')->group(function () {
         Route::get('/user', [UserController::class, 'user'])->name('user');
         Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
-        Route::prefix('analysis')->as('analysis.')->group(function () {
-            Route::post('/', [AnalysisController::class, 'analyze'])->name('analyze');
+// @todo - rm all related code
+//        Route::prefix('analysis')->as('analysis.')->group(function () {
+//            Route::post('/', [AnalysisController::class, 'analyze'])->name('analyze');
+//        });
+
+        Route::prefix('analytics')->as('analytic.')->group(function() {
+            Route::get('/', [AnalyticsController::class, 'index'])->name('index');
         });
 
         Route::prefix('sync')->as('sync.')->group(function () {

@@ -1,29 +1,29 @@
 <?php
 
-namespace App\Http\Controllers\Web\Transaction\Analysis;
+namespace App\Http\Controllers\Api\Transaction\Analytics;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
 use App\Models\Transaction\Transaction;
 use App\Services\Analysis\Charts\BarChart;
 use App\Services\Analysis\Charts\LinearChart;
 use App\Services\Transaction\Report\ReportService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 
-class ChartController extends Controller
+class AnalyticsController extends Controller
 {
-    public function __construct(private readonly ReportService $reportService)
-    {
-    }
+    public function __construct(private readonly ReportService $reportService) {}
 
-    public function apitest(Request $request): array
+    public function index(Request $request): array
     {
+        // @todo WTF ??????? REFACTOR
         $user = $request->user();
         $lastMonthDates = $this->getLastMonthDates();
 
         if ($request->input('chart_id') === 'lastMonthExpenditures') {
             $data = collect($lastMonthDates)->map(
                 fn($dateString) => Transaction::query()
+                    ->whereUser($user)
                     ->where('type', Transaction::TYPE_EXPENDITURE)
                     ->whereDate('transaction_date', Carbon::parse($dateString))
                     ->sum(Transaction::CALCULATION_COLUMN)

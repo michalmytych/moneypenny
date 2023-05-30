@@ -15,8 +15,15 @@ class DateGroupByToCalendar extends Transformer
         $datesData = $data->toArray();
         $result = collect();
 
-        $sinceDate = $datesData[0][$dateKey];
-        $toDate = end($datesData)[$dateKey];
+        $sinceDateRaw = data_get($datesData, 0);
+        $sinceDate = data_get($sinceDateRaw, $dateKey);
+        $endDate = end($datesData);
+        $toDate = data_get($endDate, $dateKey);
+
+        if (!$sinceDate || !$toDate) {
+            // @todo - rm all hacks
+            return collect();
+        }
 
         $period = CarbonPeriod::create($sinceDate, $toDate);
 

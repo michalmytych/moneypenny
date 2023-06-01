@@ -11,11 +11,10 @@
 
 <div class="w-fit h-fit rounded-full">
     <img
-{{--        src="{{ $src ?? '' }}"--}}
-    src="placeholders/avatar_placeholder.jpeg"
+        src="{{ $src ?? '' }}"
         alt="User avatar image"
         width="{{ $width }}"
         height="{{ $height }}"
-        style="border-radius: 50%;"
+        style="border-radius: 50%; aspect-ratio: 1 / 1"
     >
 </div>

@@ -37,6 +37,7 @@
                                     @include('icons.edit')
                                 </div>
                             </div>
+                            <x-input-error :messages="$errors->get('file')" class="mt-2" />
                         </div>
                     </div>
                 </div>

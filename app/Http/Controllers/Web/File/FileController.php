@@ -55,7 +55,7 @@ class FileController extends Controller
 
         if ($fileType && $fileType === File::USER_AVATAR) {
             $request->validate([
-                'file' => 'required'
+                'file' => 'required|mimes:jpeg|max:6000'
             ]);
 
             $this->profileFileService->uploadAvatar(

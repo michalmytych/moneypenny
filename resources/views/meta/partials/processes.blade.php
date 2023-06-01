@@ -31,7 +31,7 @@
             processesDisplay.innerHTML = '';
 
             if (!data || !data.processes) {
-                topProcessesErrorDisplay.innerHTML = 'Error while fetching server processes.';
+                topProcessesErrorDisplay.innerHTML = 'Error occured while fetching server processes.';
                 return;
             }
 

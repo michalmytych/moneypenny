@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BlockedUserController;
 use App\Http\Controllers\Web\Auth\ProfileController;
 use App\Http\Controllers\Web\Auth\SetupController;
 use App\Http\Controllers\Web\Debug\DebugController;
@@ -38,7 +39,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'deny_blocked'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/setup', [SetupController::class, 'setup'])->name('setup');
 
@@ -163,6 +164,10 @@ Route::middleware('auth')->group(function () {
                 ->name('change_role');
             Route::post('/{id}/block', [UserController::class, 'block'])
                 ->name('block');
+            Route::post('/{id}/unblock', [UserController::class, 'unblock'])
+                ->name('unblock');
+            Route::get('/{id}', [UserController::class, 'show'])
+                ->name('show');
         });
 
         Route::prefix('exchange-rates')->as('exchange_rate.')->group(function () {
@@ -175,6 +180,11 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::get('/', [EmptyUrlController::class, 'redirect'])->name('empty');
+});
+
+Route::prefix('blocked')->as('blocked.')->group(function () {
+    Route::get('/', [BlockedUserController::class, 'index'])
+        ->name('index');
 });
 
 require __DIR__ . '/auth.php';

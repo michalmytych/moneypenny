@@ -19,6 +19,7 @@
     @stack('styles')
 </head>
 <body class="font-sans antialiased mt-10">
+
 <!-- Nav Bar -->
 @include('layouts.navbar')
 

@@ -12,7 +12,7 @@ use App\Http\Controllers\Web\Auth\RegisteredUserController;
 use App\Http\Controllers\Web\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('guest')->group(function () {
+Route::middleware(['guest', 'deny_blocked'])->group(function () {
     Route::middleware('one_time_registration')->group(function () {
         Route::get('register', [RegisteredUserController::class, 'create'])
             ->name('register');
@@ -40,7 +40,7 @@ Route::middleware('guest')->group(function () {
                 ->name('password.store');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'deny_blocked'])->group(function () {
     Route::get('devices', [DeviceController::class, 'index'])
         ->name('devices');
 

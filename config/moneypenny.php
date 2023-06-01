@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'contact_email_address' => env('CONTACT_EMAIL_ADDRESS'),
     'base_calculation_currency' => 'PLN',
     'supported_currencies' => [
         'AED',

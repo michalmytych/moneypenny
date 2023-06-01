@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::as('api.')->group(function () {
+Route::middleware(['deny_blocked'])->as('api.')->group(function () {
     Route::post('/login', [UserController::class, 'login'])->name('login');
     Route::post('/register', [UserController::class, 'register'])->name('register');
 

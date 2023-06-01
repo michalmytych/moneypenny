@@ -8,9 +8,14 @@
                         <h4>
                             <div class="text-xl font-semibold flex mb-2">
                                 <span>{{ $user->name }}</span>
-                                <div class="relative top-1">
-                                    @if($user->isAdmin())
-                                        @include('admin.partials.admin-badge')
+                                <div class="relative top-1 flex justify-between">
+                                    <div class="mr-2">
+                                        @if($user->isAdmin())
+                                            @include('admin.partials.admin-badge')
+                                        @endif
+                                    </div>
+                                    @if($user->isBlocked())
+                                        @include('admin.partials.blocked-badge')
                                     @endif
                                 </div>
                             </div>
@@ -22,12 +27,20 @@
                     <div class="font-light text-gray-500 my-2">{{ __('Joined') }}: {{ $user->created_at }}</div>
                 </div>
                 <div class="w-1/2 flex justify-end">
+                    <a href="{{ route('user.show', ['id' => $user->id]) }}">
+                        <div class="font-semibold text-indigo-600">Details</div>
+                    </a>
+                    <div class="h-6 bg-gray-300 mx-4" style="width: 1.5px;"></div>
                     <a href="{{ route('user.confirm_change_role', ['id' => $user->id]) }}">
                         <div class="font-semibold text-indigo-600">Change role</div>
                     </a>
                     <div class="h-6 bg-gray-300 mx-4" style="width: 1.5px;"></div>
                     <a href="{{ route('user.confirm_block', ['id' => $user->id]) }}">
-                        <div class="font-semibold text-indigo-600">Block</div>
+                        @if($user->isBlocked())
+                            <div class="font-semibold text-indigo-600">Unblock</div>
+                        @else
+                            <div class="font-semibold text-indigo-600">Block</div>
+                        @endif
                     </a>
                     <div class="h-6 bg-gray-300 mx-4" style="width: 1.5px;"></div>
                     <a href="{{ route('user.confirm_delete', ['id' => $user->id]) }}">

@@ -21,6 +21,7 @@ use IvanoMatteo\LaravelDeviceTracking\Traits\UseDevices;
  * @property string $email
  * @property string $password
  * @property null|boolean $is_admin
+ * @property null|boolean $is_blocked
  * @property Settings|null $settings
  * @property Collection $personalAccounts
  * @property Collection $budgets
@@ -45,7 +46,8 @@ class User extends Authenticatable
     ];
 
     protected array $protected = [
-        'is_admin'
+        'is_admin',
+        'is_blocked'
     ];
 
     protected $casts = [
@@ -65,6 +67,11 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return (bool) $this->is_admin;
+    }
+
+    public function isBlocked(): bool
+    {
+        return (bool) $this->is_blocked;
     }
 
     public function settings(): HasOne

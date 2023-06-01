@@ -160,6 +160,9 @@
                                             {{ __('Exchange rates') }}
                                         </x-dropdown-link>
                                     @endif
+                                    <x-dropdown-link :href="route('user.index')">
+                                        {{ __('Users') }}
+                                    </x-dropdown-link>
                                     <x-dropdown-link :href="route('meta.index')">
                                         {{ __('System') }}
                                     </x-dropdown-link>
@@ -272,18 +275,82 @@
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('transaction.index')">
+                    {{ __('All transactions') }}
+                </x-responsive-nav-link>
 
+                @if(config('personas.enabled'))
+                    <x-responsive-nav-link :href="route('persona.index')">
+                                    <span class="flex items-center justify-between">
+                                        {{ __('Personas') }}
+                                        <span class="relative top-2">
+                                            @include('components.mainteance.beta-badge')
+                                        </span>
+                                    </span>
+                    </x-responsive-nav-link>
+                @endif
+
+                <x-responsive-nav-link :href="route('analytic.index')">
+                    {{ __('Analytics') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('import.index')">
+                    {{ __('Imports') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('file.index')">
+                    {{ __('Files') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('setting.edit')">
+                    {{ __('Settings') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('report.periodic')">
+                    {{ __('Month report') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('budget.index')">
+                    {{ __('All budgets') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('institution.index')">
+                    {{ __('Banks integrations') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('synchronization.index')">
+                    {{ __('Synchronizations') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('import.import-setting.index')">
+                    {{ __('Import settings') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('import.columns-mapping.index')">
+                    {{ __('Columns mappings') }}
+                </x-responsive-nav-link>
+                @if(request()->user()?->is_admin)
+                    @if(config('debugging.enabled'))
+                        <x-responsive-nav-link :href="route('debug.analyzers')">
+                            {{ __('Debugging') }}
+                        </x-responsive-nav-link>
+                        <x-responsive-nav-link :href="route('exchange_rate.index')">
+                            {{ __('Exchange rates') }}
+                        </x-responsive-nav-link>
+                    @endif
+                    <x-responsive-nav-link :href="route('meta.index')">
+                        {{ __('System') }}
+                    </x-responsive-nav-link>
+                @endif
+                @if(config('network.enabled'))
+                    <x-responsive-nav-link :href="route('social.chat.index')">
+                                    <span class="flex items-center justify-between">
+                                        {{ __('Chat') }}
+                                        <span class="relative top-2">
+                                            @include('components.mainteance.beta-badge')
+                                        </span>
+                                    </span>
+                    </x-responsive-nav-link>
+                @endif
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-
                     <x-responsive-nav-link :href="route('logout')"
-                                           onclick="event.preventDefault();
-                                           logoutApi();
-                                        this.closest('form').submit();">
-                        <span class="text-red-700 font-semibold">
-                            {{ __('Log Out') }}
-                        </span>
+                                           onclick="event.preventDefault(); logoutApi(); this.closest('form').submit();">
+                                        <span class="text-red-700 font-semibold">
+                                            {{ __('Log Out') }}
+                                        </span>
                     </x-responsive-nav-link>
                 </form>
             </div>

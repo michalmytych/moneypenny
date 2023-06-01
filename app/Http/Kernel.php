@@ -3,7 +3,6 @@
 namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
-use IvanoMatteo\LaravelDeviceTracking\Http\Middleware\DeviceTrackerMiddleware;
 
 class Kernel extends HttpKernel
 {
@@ -38,13 +37,13 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            DeviceTrackerMiddleware::class
+            \IvanoMatteo\LaravelDeviceTracking\Http\Middleware\DeviceTrackerMiddleware::class
         ],
 
         'api' => [
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class
         ],
     ];
 
@@ -67,6 +66,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'one_time_registration' => \App\Http\Middleware\CheckOneTimeRegistrationToken::class,
-        'admin' => \App\Http\Middleware\IsAdmin::class
+        'admin' => \App\Http\Middleware\IsAdmin::class,
+        'deny_blocked' => \App\Http\Middleware\DenyAccessForBlockedUsers::class
     ];
 }

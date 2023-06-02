@@ -13,3 +13,4 @@ feedback
 * Fix responsive navigation,
 * Add responsive styles for all the views
 * Add synchronizing nordigen accounts saldo
+* Customize 419 error page

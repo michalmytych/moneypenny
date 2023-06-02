@@ -72,7 +72,7 @@
         };
 
         window.addEventListener('load', () => {
-            setInterval(fetchData, 1500);
+            setInterval(fetchData, 5000);
         });
 
     </script>

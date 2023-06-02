@@ -1,5 +1,5 @@
 <div class="bg-white rounded-lg shadow-md overflow-hidden p-4 m-4 border">
-    <h2 class="font-semibold text-3xl pl-4">
+    <h2 class="font-semibold pl-4">
         Requisition created {{ Carbon\Carbon::parse($requisition->created_at)->format('h:i d-m-Y') }}
     </h2>
     <div class="p-4">

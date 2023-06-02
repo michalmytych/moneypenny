@@ -3,13 +3,12 @@
     <div>
         @foreach($users as $user)
             <div class="bg-white rounded-md shadow-sm p-4 mb-4 transition flex">
-                <div class="w-1/2">
-                    <div class="flex justify-between items-center">
-                        <h4>
-                            <div class="text-xl font-semibold flex mb-2">
+                <div class="w-3/5 mt-1">
+                    <div class="flex justify-between items-start">
+                            <div class="text-xl font-semibold flex">
                                 <span>{{ $user->name }}</span>
                                 <div class="relative top-1 flex justify-between">
-                                    <div class="mr-2">
+                                    <div class="mr-2 ml-2">
                                         @if($user->isAdmin())
                                             @include('admin.partials.admin-badge')
                                         @endif
@@ -22,11 +21,10 @@
                             <span class="text-gray-500">
                                 {{ $user->email }}
                             </span>
-                        </h4>
+                            <div class="font-light text-gray-500">{{ __('Joined') }}: {{ $user->created_at }}</div>
                     </div>
-                    <div class="font-light text-gray-500 my-2">{{ __('Joined') }}: {{ $user->created_at }}</div>
                 </div>
-                <div class="w-1/2 flex justify-end">
+                <div class="w-2/5 flex mt-1 justify-end">
                     <a href="{{ route('user.show', ['id' => $user->id]) }}">
                         <div class="font-semibold text-indigo-600">Details</div>
                     </a>
@@ -39,7 +37,7 @@
                         @if($user->isBlocked())
                             <div class="font-semibold text-indigo-600">Unblock</div>
                         @else
-                            <div class="font-semibold text-indigo-600">Block</div>
+                            <div class="font-semibold text-indigo-600 mr-2">Block</div>
                         @endif
                     </a>
                     <div class="h-6 bg-gray-300 mx-4" style="width: 1.5px;"></div>

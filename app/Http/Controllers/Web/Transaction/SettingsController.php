@@ -37,7 +37,8 @@ class SettingsController extends Controller
         $this->notificationBroadcastService->sendStoredApplicationNotification(
             header: 'Settings saved',
             content: 'Now moneypenny will adjust to your settings',
-            url: route('setting.edit')
+            url: route('setting.edit'),
+            userId: $user->id
         );
 
         return redirect()->to(route('home'));

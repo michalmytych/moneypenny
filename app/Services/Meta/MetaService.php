@@ -2,6 +2,7 @@
 
 namespace App\Services\Meta;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use App\Services\Shell\ShellService;
 use Illuminate\Support\Facades\Cache;
@@ -84,5 +85,20 @@ class MetaService
     {
         $data = $this->shellService->runScript('server_meta/system_info.sh');
         return json_decode($data, true);
+    }
+
+    public function getJobsList(): Collection
+    {
+        $jobs =  DB::table('jobs')->select()->latest()->get();
+        if ($jobs->count() ===0) {
+            $jobs = collect([
+                [
+                    'id' => 10,
+                    'name' => 'CategorizeTransaction',
+                    'queued_at' => '02-12-1999 13:12'
+                ],
+            ]);
+        }
+        return $jobs;
     }
 }

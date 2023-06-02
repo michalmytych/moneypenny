@@ -52,6 +52,7 @@ details > summary::-webkit-details-marker {
 .fade-in {
     animation-name: fadeIn;
     animation-duration: 1.2s;
+    animation-fill-mode: forwards;
 }
 
 @keyframes fadeOut {

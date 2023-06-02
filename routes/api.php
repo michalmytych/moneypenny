@@ -53,6 +53,7 @@ Route::middleware(['deny_blocked'])->as('api.')->group(function () {
         Route::middleware('admin')->group(function () {
             Route::prefix('meta')->as('meta.')->group(function () {
                 Route::get('processes', [MetaController::class, 'processes'])->name('processes');
+                Route::get('jobs', [MetaController::class, 'jobs'])->name('jobs');
             });
         });
 

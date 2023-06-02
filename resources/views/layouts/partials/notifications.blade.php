@@ -31,6 +31,7 @@
 
             channel.bind('application_notification_sent', function (data) {
                 showNotification(applicationNotification, data);
+                window.refreshNotifications();
             });
         });
     </script>

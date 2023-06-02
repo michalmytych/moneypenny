@@ -19,9 +19,12 @@
 
 <x-dropdown align="right" width="72">
     <x-slot name="trigger">
-        <button
+        <button id="notificationsDropdownButton"
             class="inline-flex items-center py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
             <div class="mr-4 font-bold">
+                <div
+                    id="notificationsBellUnreadBadge"
+                    class="bg-red-500 text-white font-semibold shadow-md" style="font-size: 9px; padding: 5.5px; border-radius: 100%; position: absolute; left: 1.1rem; bottom: 1.8rem; opacity: 0;"></div>
                 @include('icons.notification-bell')
             </div>
         </button>
@@ -32,7 +35,7 @@
         <div id="notificationsContainer">
             <x-dropdown-link :href="route('profile.edit')">
                 <strong>Notification</strong>
-                <p>Notification hello</p>
+                <p>...</p>
             </x-dropdown-link>
         </div>
 
@@ -73,7 +76,7 @@
             return link;
         }
 
-        window.addEventListener('load', () => {
+        const refreshNotifications = (badgeElement) => {
             const notificationsContainer = document.getElementById("notificationsContainer");
             notificationsContainer.innerHTML = '';
 
@@ -91,10 +94,26 @@
                 .then(json => {
                     const notifications = json.notifications;
                     notifications.forEach(notification => {
+                        if (notification.status === 0) { // Unread
+                            badgeElement.classList.add('fade-in');
+                        }
                         const link = createNotificationElement(notification);
                         notificationsContainer.appendChild(link);
                     });
                 })
+        };
+
+        window.addEventListener('load', () => {
+            const notificationsBellUnreadBadge = document.getElementById('notificationsBellUnreadBadge');
+            const notificationsDropdownButton = document.getElementById('notificationsDropdownButton');
+
+            window.refreshNotifications = () => refreshNotifications(notificationsBellUnreadBadge);
+
+            refreshNotifications(notificationsBellUnreadBadge);
+
+            notificationsDropdownButton.addEventListener('click', () => {
+                refreshNotifications(notificationsBellUnreadBadge);
+            })
         });
     </script>
 @endpush

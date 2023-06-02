@@ -65,7 +65,7 @@
 {{--        </div>--}}
     </div>
 
-    <div class="ml-6">
+    <div class="lg:ml-6">
         <a href="{{ route('budget.index') }}">
             <h2 class="text-lg font-semibold mb-6">{{ __("Budgets consumption") }}</h2>
             <ul id="fadeInList" class="list-none sm:md:my-2">

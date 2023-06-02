@@ -204,7 +204,7 @@
 
                 @include('layouts.partials.chat-icon')
 
-                @include('layouts.partials.notifications-dropdown')
+                @include('layouts.partials.notifications-dropdown', ['prefix' => 'desktop'])
 
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
@@ -266,7 +266,8 @@
                     <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
                     <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
                 </div>
-                <div>
+                <div class="flex items-center">
+                    @include('layouts.partials.notifications-dropdown', ['prefix' => 'mobile'])
                     @include('components.profile.avatar', ['src' => request()->user()?->getAvatarPath()])
                 </div>
             </div>

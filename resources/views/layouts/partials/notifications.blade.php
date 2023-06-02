@@ -1,11 +1,12 @@
-<div id="applicationNotification" class="fixed z-50 flex justify-center w-full transition-all hover:translate-x-1.5" style="bottom: -200px;">
-    <a href="#" class="link w-1/2">
-        <div class="px-6 w-full rounded-md bg-white py-2 shadow-2xl flex items-center">
+<div id="applicationNotification" class="fixed z-50 flex justify-center w-full transition-all hover:translate-x-1.5"
+     style="bottom: -200px;">
+    <a href="#" class="link w-full lg:w-1/2 md:w-2/3 sm:w-full flex justify-center">
+        <div class="px-6 w-5/6 rounded-md bg-white py-2 shadow-2xl shadow-indigo-400 flex items-center">
             <div class="mr-5">
                 @include('icons.bell')
             </div>
             <div>
-                <h5 class="text-lg font-semibold header">Nowy alert</h5>
+                <h5 class="text-lg font-semibold header lg:text-lg sm:text-sm">Nowy alert</h5>
                 <div class="content">Przejdź dalej</div>
             </div>
         </div>
@@ -15,7 +16,9 @@
 @push('scripts')
     @include('layouts.partials.pusher')
     <script>
-        const showNotification = (element, eventData) => {
+        const element = document.getElementById('applicationNotification');
+
+        const showNotification = (eventData) => {
             const header = element.querySelector('.header');
             const content = element.querySelector('.content');
             const link = element.querySelector('.link');
@@ -23,14 +26,17 @@
             content.innerText = eventData.message;
             link.setAttribute('href', eventData.url);
             element.classList.add('slide-in-bottom');
+            setTimeout(() => {
+                element.classList.remove('slide-in-bottom');
+            }, 7400);
         }
 
         window.addEventListener('load', function () {
-            const applicationNotification = document.getElementById('applicationNotification');
             let channel = pusher.subscribe('application_notifications');
 
             channel.bind('application_notification_sent', function (data) {
-                showNotification(applicationNotification, data);
+                element.classList.remove('slide-in-bottom');
+                showNotification(data);
                 window.refreshNotifications();
             });
         });

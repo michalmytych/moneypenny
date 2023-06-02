@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="pt-8 pb-8 w-full mx-auto">
+    <div class="pt-16 pb-8 w-full mx-auto">
         <div class="w-2/3 lg:w-2/3 md:w-3/4 sm:w-full mx-auto px-4 lg:px-8 pb-20">
 
             <section class="space-y-6">

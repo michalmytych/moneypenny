@@ -43,14 +43,14 @@
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <div class="bg-white overflow-hidden sm:rounded-lg p-4 mt-4">
-                            <div class="p-6 bg-white overflow-x-scroll">
-                                <h2 class="text-xl font-bold mb-2">Queued jobs</h2>
-                                @include('meta.partials.jobs')
-                            </div>
-                        </div>
-                    </div>
+{{--                    <div>@todo--}}
+{{--                        <div class="bg-white overflow-hidden sm:rounded-lg p-4 mt-4">--}}
+{{--                            <div class="p-6 bg-white overflow-x-scroll">--}}
+{{--                                <h2 class="text-xl font-bold mb-2">Queued jobs</h2>--}}
+{{--                                @include('meta.partials.jobs')--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                 </div>
             </div>
         </div>

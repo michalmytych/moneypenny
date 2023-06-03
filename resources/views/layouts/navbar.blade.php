@@ -216,6 +216,12 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
+                            <div class="font-bold text-lg">
+                                {{ request()->user()?->name  }}
+                            </div>
+                        </x-dropdown-link>
+
+                        <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
 

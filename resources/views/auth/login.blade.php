@@ -59,7 +59,7 @@
     </form>
 
     <div class="w-1/2 mx-auto">
-        <div class="flex items-center w-full lg:w-1/4 md:w-2/3 mx-auto sm:w-full" id="loaderWraper" style="visibility: hidden;">
+        <div class="flex items-center w-full lg:w-1/5 md:w-2/3 mx-auto sm:w-full" id="loaderWraper" style="visibility: hidden;">
             @include('icons.loader') <span class="text-gray-600">{{ __('Loging in...') }}</span>
         </div>
     </div>

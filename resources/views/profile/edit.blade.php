@@ -32,7 +32,7 @@
                                 </form>
                             </div>
                             <div class="flex mt-2 justify-center">
-                                <span class="font-semibold ml-3">Zmień avatara</span>
+                                <span class="font-semibold ml-3">Change avatar</span>
                                 <div class="relative left-1">
                                     @include('icons.edit')
                                 </div>

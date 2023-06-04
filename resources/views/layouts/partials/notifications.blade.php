@@ -37,6 +37,7 @@
             channel.bind('application_notification_sent', function (data) {
                 element.classList.remove('slide-in-bottom');
                 showNotification(data);
+                console.log(window.refreshNotifications)
                 window.refreshNotifications();
             });
         });

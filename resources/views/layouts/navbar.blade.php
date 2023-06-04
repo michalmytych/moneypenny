@@ -273,7 +273,7 @@
                     <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
                 </div>
                 <div class="flex items-center">
-                    @include('layouts.partials.notifications-dropdown', ['prefix' => 'mobile'])
+{{--                    @include('layouts.partials.notifications-dropdown', ['prefix' => 'mobile'])--}}
                     @include('components.profile.avatar', ['src' => request()->user()?->getAvatarPath()])
                 </div>
             </div>

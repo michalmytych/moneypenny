@@ -38,7 +38,7 @@
                 {{ __('Categories percentage') }}
             </h2>
 
-            <div class="mt-12 relative pb-20 w-full" style="max-height: 600px;">
+            <div class="mt-12 relative w-full" style="max-height: 600px;">
                 <div id="categoriesPercentageSkeleton" class="bg-gray-50 h-3/4 w-full mb-2 rounded-xl" style="height: 600px; position: absolute;">
                     <div class="w-full flex h-full items-center justify-center">
                         <div>
@@ -50,6 +50,22 @@
                 <canvas id="categoriesPercentage" data-route="{{ route('api.analytic.index', ['chart_id' => 'categoriesPercentage']) }}"></canvas>
             </div>
 
+            <h2 class="font-semibold text-4xl mt-20">
+                {{ __('Categorized vs uncategorized transactions') }}
+            </h2>
+
+            <div class="mt-12 relative pb-20 w-full" style="max-height: 600px;">
+                <div id="categorizedPercentageSkeleton" class="bg-gray-50 h-3/4 w-full mb-2 rounded-xl" style="height: 600px; position: absolute;">
+                    <div class="w-full flex h-full items-center justify-center">
+                        <div>
+                            @include('icons.loader')
+                            <h2 class="mt-2 text-gray-700 text-2xl font-semibold">Loading data</h2>
+                        </div>
+                    </div>
+                </div>
+                <canvas id="categorizedPercentage" data-route="{{ route('api.analytic.index', ['chart_id' => 'categorizedPercentage']) }}"></canvas>
+            </div>
+
         </div>
     </div>
 
@@ -58,6 +74,7 @@
             window.addEventListener('load', () => {
                 window.drawCharts([
                     'categoriesPercentage',
+                    'categorizedPercentage',
                     'lastMonthExpenditures',
                     'expendituresAndIncomesTrend'
                 ]);

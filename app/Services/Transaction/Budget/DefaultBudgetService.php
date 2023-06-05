@@ -25,7 +25,7 @@ class DefaultBudgetService
             ->get()
             ->sum('value');
 
-        $usersMoneySum = $usersMoneySum ?: 3000;
+        $usersMoneySum = $usersMoneySum ?: 5000;
         $monthBudgetValue = $usersMoneySum / 2; // @todo just take previous months expenses
         $weekBudgetValue = $monthBudgetValue / 4;
         $dayBudgetValue = $weekBudgetValue / 30;

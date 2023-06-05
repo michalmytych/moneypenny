@@ -245,7 +245,7 @@
 
                 @include('layouts.partials.notifications-dropdown', ['prefix' => 'desktop'])
 
-                <x-dropdown align="right" width="48">
+                <x-dropdown align="right" width="96">
                     <x-slot name="trigger">
                         <button
                             class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
@@ -255,16 +255,34 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
-                            <div class="font-bold text-lg">
-                                {{ request()->user()?->name  }}
+                            <div class="w-full">
+                                <div class="flex items-center">
+                                    <div class="mr-4">
+                                        @include('components.profile.avatar', ['src' => request()->user()?->getAvatarPath()])
+                                    </div>
+                                    <div>
+                                        <div class="font-bold text-lg">
+                                            {{ request()->user()?->name  }}
+                                        </div>
+                                        <div class="text-gray-600">
+                                            {{ request()->user()?->email  }}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </x-dropdown-link>
 
                         <x-dropdown-link :href="route('profile.edit')">
+                            <div class="mr-2">
+                                @include('icons.sm.profile')
+                            </div>
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
                         <x-dropdown-link :href="route('devices')">
+                            <div class="mr-2">
+                                @include('icons.sm.device')
+                            </div>
                             {{ __('Devices') }}
                         </x-dropdown-link>
 
@@ -276,7 +294,10 @@
                                              onclick="event.preventDefault();
                                                 logoutApi();
                                                 this.closest('form').submit();">
-                                <span class="text-red-700 font-semibold">
+                                <span class="text-red-700 font-semibold flex">
+                                    <div class="mr-2">
+                                    @include('icons.sm.logout')
+                                </div>
                                     {{ __('Log Out') }}
                                 </span>
                             </x-dropdown-link>

@@ -43,8 +43,39 @@ class AnalyticsController extends Controller
             );
         }
 
+        if ($request->input('chart_id') === 'categorizedPercentage') {
+            $categories = Category::query()
+                ->withCount([
+                    'transactions as transactions_count' => function ($query) use ($user) {
+                        $query->where('user_id', $user->id);
+                    }])
+                ->get();
+
+            $totalTransactions = Transaction::whereUser($user)->count();
+            $totalTransactionsCategorized = $categories->sum('transactions_count');
+
+            $labels = ['Categorized', 'Uncategorized'];
+            $values = [
+                $totalTransactionsCategorized,
+                $totalTransactions - $totalTransactionsCategorized
+            ];
+
+            return DoughnutChart::make(
+                header: 'Transactions count',
+                labels: $labels,
+                data: $values,
+                dataBaseUrl: route('transaction.index')
+            );
+        }
+
         if ($request->input('chart_id') === 'categoriesPercentage') {
-            $categories = Category::withCount('transactions')->get();
+            $categories = Category::query()
+                ->withCount([
+                    'transactions as transactions_count' => function ($query) use ($user) {
+                        $query->where('user_id', $user->id);
+                    }])
+                ->get();
+
             $totalTransactionsCategorized = $categories->sum('transactions_count');
 
             $categoriesLabels = [];
@@ -53,7 +84,7 @@ class AnalyticsController extends Controller
             $categories
                 ->each(function ($category) use ($totalTransactionsCategorized, &$categoriesLabels, &$categoriesValues) {
                     $categoriesLabels[] = Str::ucfirst($category->code);
-                    $categoriesValues[] = $category->transactions_count / $totalTransactionsCategorized;
+                    $categoriesValues[] = $totalTransactionsCategorized ? $category->transactions_count / $totalTransactionsCategorized : 0;
                 });
 
             return DoughnutChart::make(

@@ -44,7 +44,7 @@ class SynchronizationController extends Controller
             $this->transactionSyncService->setStatusSucceeded($synchronization);
 
         } catch (Throwable $throwable) {
-            $this->transactionSyncService->setStatusFailed($synchronization);
+            $this->transactionSyncService->setStatusFailed($synchronization, $throwable->getCode());
             $statusCode = $throwable->getCode();
 
             $supportedStatuses = [500, 429, 408];

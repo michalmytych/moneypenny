@@ -9,6 +9,24 @@ use Illuminate\View\View;
 
 class CategoryController extends Controller
 {
+    public function summary()
+    {
+        $categories = Category::withCount('transactions')->get();
+
+        $totalTransactions = Category::count();
+        $totalTransactionsCategorized = $categories->sum('transactions_count');
+
+        $categories = $categories->map(function ($category) use ($totalTransactionsCategorized) {
+            $category->percentage = $category->transactions_count / $totalTransactionsCategorized * 100;
+            return $category;
+        });
+
+        return [
+            'categories' => $categories,
+            'categorized_ratio' => $totalTransactionsCategorized / $totalTransactions
+        ];
+    }
+
     public function index(Request $request): View
     {
         $user = $request->user();

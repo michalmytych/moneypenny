@@ -149,8 +149,10 @@
                 const allTips = document.querySelectorAll("div[id$='_tip']");
                 allTips.forEach(tip => {
                     tip.style.display = 'none';
+                    tip.classList.remove('fade-in');
                 });
                 nameTip.style.display = 'block';
+                nameTip.classList.add('fade-in');
             });
         });
 

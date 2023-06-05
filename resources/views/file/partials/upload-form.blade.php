@@ -7,7 +7,10 @@
             <a
                 class="font-semibold text-indigo-600 hover:text-indigo-400 flex items-center"
                 href="{{ route('import.import-setting.index') }}">
-                @include('icons.add') To upload first file, first you should create import configuration.
+                @include('icons.add-indigo')
+                <span class="ml-1">
+                    {{ __('To upload first file, first you should create import configuration.') }}
+                </span>
             </a>
         @endif
     </div>
@@ -18,7 +21,10 @@
             <a
                 class="font-semibold text-indigo-600 hover:text-indigo-400 flex items-center"
                 href="{{ route('import.columns-mapping.index') }}">
-                @include('icons.add') To upload first file, first you should create columns mapping configuration.
+                @include('icons.add-indigo')
+                <span class="ml-1">
+                    {{ __('To upload first file, first you should create columns mapping configuration.') }}
+                </span>
             </a>
         @endif
     </div>
@@ -28,9 +34,9 @@
             {{ __('Import settings') }}
         </label>
         <select
-                id="import_setting_id"
-                class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                name="import_setting_id" required>
+            id="import_setting_id"
+            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            name="import_setting_id" required>
             <option selected>{{ __('Select') }}</option>
             @foreach($importSettings as $importSetting)
                 <option value="{{ $importSetting->id }}">
@@ -38,16 +44,16 @@
                 </option>
             @endforeach
         </select>
-        <x-input-error :messages="$errors->get('import_setting_id')" class="mt-2" />
+        <x-input-error :messages="$errors->get('import_setting_id')" class="mt-2"/>
     </div>
     <div class="mb-4">
         <label class="block text-gray-700 font-bold mb-2" for="columns_mapping_id">
             {{ __('Columns mappings') }}
         </label>
         <select
-                id="columns_mapping_id"
-                class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                name="columns_mapping_id" required>
+            id="columns_mapping_id"
+            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            name="columns_mapping_id" required>
             <option selected>{{ __('Select') }}</option>
             @foreach($columnsMappings as $columnMapping)
                 <option value="{{ $columnMapping->id }}">
@@ -55,14 +61,15 @@
                 </option>
             @endforeach
         </select>
-        <x-input-error :messages="$errors->get('columns_mapping_id')" class="mt-2" />
+        <x-input-error :messages="$errors->get('columns_mapping_id')" class="mt-2"/>
     </div>
     <div class="mb-4">
         <x-file-drop fileInputName="file"/>
-        <x-input-error :messages="$errors->get('file')" class="mt-2" />
+        <x-input-error :messages="$errors->get('file')" class="mt-2"/>
     </div>
     <div class="flex">
-        <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg" id="uploadButton">
+        <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg"
+                id="uploadButton">
             {{ __('Upload') }}
         </button>
         <div class="flex items-center gap-1 ml-3" id="loaderWraper" style="visibility: hidden;">

@@ -390,12 +390,18 @@ class NordigenService implements TransactionSyncServiceInterface
 
     public function setStatusSucceeded(Synchronization $synchronization): void
     {
-        $synchronization->update(['status' => Synchronization::SYNC_STATUS_SUCCEEDED]);
+        $synchronization->update([
+            'status' => Synchronization::SYNC_STATUS_SUCCEEDED,
+            'code' => 200
+        ]);
     }
 
-    public function setStatusFailed(Synchronization $synchronization): void
+    public function setStatusFailed(Synchronization $synchronization, ?int $status = null): void
     {
-        $synchronization->update(['status' => Synchronization::SYNC_STATUS_FAILED]);
+        $synchronization->update([
+            'status' => Synchronization::SYNC_STATUS_FAILED,
+            'code' => $status
+        ]);
     }
 
     protected function hasTokenRefreshExpired(?array $tokenData): bool

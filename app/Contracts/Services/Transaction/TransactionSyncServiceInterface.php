@@ -30,5 +30,5 @@ interface TransactionSyncServiceInterface
 
     public function setStatusSucceeded(Synchronization $synchronization);
 
-    public function setStatusFailed(Synchronization $synchronization);
+    public function setStatusFailed(Synchronization $synchronization, ?int $status = null);
 }

@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static create(array $data)
  * @method static whereUser(User $user)
  * @property mixed $id
+ * @property int $code
  */
 class Synchronization extends Model
 {
@@ -25,6 +26,7 @@ class Synchronization extends Model
     public const SYNC_STATUS_SUCCEEDED = 2;
 
     protected $fillable = [
+        'code',
         'status',
         'user_id'
     ];

@@ -30,6 +30,9 @@
 
                             <x-slot name="content">
                                 <x-dropdown-link :href="route('transaction.index')">
+                                    <div class="mr-2">
+                                        @include('icons.sm.list')
+                                    </div>
                                     {{ __('All transactions') }}
                                 </x-dropdown-link>
                                 @if(config('personas.enabled'))
@@ -43,15 +46,27 @@
                                     </x-dropdown-link>
                                 @endif
                                 <x-dropdown-link :href="route('analytic.index')">
+                                    <div class="mr-2">
+                                        @include('icons.sm.chart')
+                                    </div>
                                     {{ __('Analytics') }}
                                 </x-dropdown-link>
                                 <x-dropdown-link :href="route('import.index')">
+                                    <div class="mr-2">
+                                        @include('icons.sm.import')
+                                    </div>
                                     {{ __('Imports') }}
                                 </x-dropdown-link>
                                 <x-dropdown-link :href="route('file.index')">
+                                    <div class="mr-2">
+                                        @include('icons.sm.files')
+                                    </div>
                                     {{ __('Files') }}
                                 </x-dropdown-link>
                                 <x-dropdown-link :href="route('setting.edit')">
+                                    <div class="mr-2">
+                                        @include('icons.sm.settings')
+                                    </div>
                                     {{ __('Settings') }}
                                 </x-dropdown-link>
                             </x-slot>
@@ -71,6 +86,9 @@
 
                             <x-slot name="content">
                                 <x-dropdown-link :href="route('report.periodic')">
+                                    <div class="mr-2">
+                                        @include('icons.sm.report')
+                                    </div>
                                     {{ __('Month report') }}
                                 </x-dropdown-link>
                             </x-slot>
@@ -90,6 +108,9 @@
 
                             <x-slot name="content">
                                 <x-dropdown-link :href="route('budget.index')">
+                                    <div class="mr-2">
+                                        @include('icons.sm.budget')
+                                    </div>
                                     {{ __('All budgets') }}
                                 </x-dropdown-link>
                             </x-slot>
@@ -109,9 +130,15 @@
 
                             <x-slot name="content">
                                 <x-dropdown-link :href="route('institution.index')">
+                                    <div class="mr-2">
+                                        @include('icons.sm.bank')
+                                    </div>
                                     {{ __('Banks integrations') }}
                                 </x-dropdown-link>
                                 <x-dropdown-link :href="route('synchronization.index')">
+                                    <div class="mr-2">
+                                        @include('icons.sm.sync')
+                                    </div>
                                     {{ __('Synchronizations') }}
                                 </x-dropdown-link>
                             </x-slot>
@@ -131,9 +158,15 @@
 
                             <x-slot name="content">
                                 <x-dropdown-link :href="route('import.import-setting.index')">
+                                    <div class="mr-2">
+                                        @include('icons.sm.config')
+                                    </div>
                                     {{ __('Import settings') }}
                                 </x-dropdown-link>
                                 <x-dropdown-link :href="route('import.columns-mapping.index')">
+                                    <div class="mr-2">
+                                        @include('icons.sm.columns')
+                                    </div>
                                     {{ __('Columns mappings') }}
                                 </x-dropdown-link>
                             </x-slot>
@@ -161,9 +194,15 @@
                                         </x-dropdown-link>
                                     @endif
                                     <x-dropdown-link :href="route('user.index')">
+                                        <div class="mr-2">
+                                            @include('icons.sm.users')
+                                        </div>
                                         {{ __('Users') }}
                                     </x-dropdown-link>
                                     <x-dropdown-link :href="route('meta.index')">
+                                        <div class="mr-2">
+                                            @include('icons.sm.system')
+                                        </div>
                                         {{ __('System') }}
                                     </x-dropdown-link>
                                 </x-slot>

@@ -40,6 +40,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['auth', 'deny_blocked'])->group(function () {
+    Route::get('/test', [CategoryController::class, 'summary']);
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/setup', [SetupController::class, 'setup'])->name('setup');
 

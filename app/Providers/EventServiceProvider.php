@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Synchronization\Synchronization;
 use App\Models\User;
 use App\Models\Import\Import;
 use App\Observers\Auth\UserObserver;
+use App\Observers\Synchronization\SynchronizationObserver;
 use Illuminate\Auth\Events\Registered;
 use App\Models\Transaction\Transaction;
 use App\Observers\Import\ImportObserver;
@@ -33,6 +35,7 @@ class EventServiceProvider extends ServiceProvider
         User::observe(UserObserver::class);
         Import::observe(ImportObserver::class);
         Transaction::observe(TransactionObserver::class);
+        Synchronization::observe(SynchronizationObserver::class);
     }
 
     /**

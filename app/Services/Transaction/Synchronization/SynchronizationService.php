@@ -39,18 +39,6 @@ class SynchronizationService
 
     public function create(User $user): Synchronization
     {
-        $synchronization = Synchronization::create(['user_id' => $user->id]);
-
-        // @todo - move to synchronization observer when synchronization status gets to SUCCEDDED
-        // @todo - also handle failed synchronization
-        $this->notificationBroadcastService->sendStoredApplicationNotification(
-            header: 'New transactions synchronization! ',
-            content: 'See more',
-            url: route('transaction.index'),
-            userId: $user->id,
-            type: Notification::TYPE_EVENT
-        );
-
-        return $synchronization;
+        return Synchronization::create(['user_id' => $user->id]);
     }
 }

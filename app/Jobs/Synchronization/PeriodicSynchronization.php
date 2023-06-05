@@ -39,8 +39,8 @@ class PeriodicSynchronization implements ShouldQueue
             $import = Import::latest()->withCount('addedTransactions')->limit(1)->get()->first();
 
             $notificationBroadcastService->sendStoredApplicationNotification(
-                header: 'Nowa automatyczna synchronizacja',
-                content: "$import->added_transactions_count nowych transakcji",
+                header: 'New automatic synchronization',
+                content: "$import->added_transactions_count new transactions",
                 url: route('transaction.index'),
                 userId: $agreement->user_id,
                 type: Notification::TYPE_EVENT

@@ -9,7 +9,10 @@
                 <a
                     class="font-semibold text-indigo-600 hover:text-indigo-400 flex items-center"
                     href="{{ route('import.columns-mapping.index') }}">
-                    @include('icons.add') To upload first file, first you should create columns mapping configuration.
+                    @include('icons.add-indigo')
+                    <span class="ml-1">
+                        {{ __('You need to add columns configuration') }}
+                    </span>
                 </a>
             @endif
         </div>
@@ -127,13 +130,14 @@
                         label.style.fontWeight = 'bolder';
                     }
                 });
-                nameTip.style.display = 'block';
 
                 const allTips = document.querySelectorAll("div[id$='_tip']");
                 allTips.forEach(tip => {
                     tip.style.display = 'none';
+                    tip.classList.remove('fade-in');
                 });
                 nameTip.style.display = 'block';
+                nameTip.classList.add('fade-in');
             });
         });
 

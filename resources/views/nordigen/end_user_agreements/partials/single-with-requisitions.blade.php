@@ -1,6 +1,6 @@
 <div class="bg-white rounded-lg shadow-md overflow-hidden mb-4">
-    <div class="flex">
-        <img src="{{ $institution->logo }}" alt="{{ $institution->name }} logo" height="20px" width="120px">
+    <div class="flex ml-4 mt-4">
+        <img src="{{ $institution->logo }}" alt="{{ $institution->name }} logo" height="20px" width="120px" class="rounded-md">
         <ul class="ml-4">
             <li class="font-bold text-2xl">{{ $institution->name }}</li>
             <li class="font-italic">Dodano {{ Carbon\Carbon::parse($agreement->nordigen_end_user_agreement_created)->format('d-m-Y h:i') }}</li>

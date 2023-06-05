@@ -36,4 +36,12 @@
     </div>
 @else
     <h2 class="font-semibold text-xl">{{ __('No columns mappings') }}</h2>
+    <p class="mt-4 text-gray-500">
+        {{ __('Use column mapping to tell the application in which file columns specific transaction informations can be found.') }}
+    </p>
+    <div class="text-gray-400 text-center">
+        <div class="ml-36 mt-20">
+            @include('icons.xl.columns-mapping')
+        </div>
+    </div>
 @endif

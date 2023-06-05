@@ -33,7 +33,12 @@
         </table>
     </div>
 @else
-    <h2 class="font-semibold text-xl">
+    <h2 class="font-semibold text-2xl">
         {{ __('No synchronizations') }}
     </h2>
+    <p class="mt-4">
+        {{ __('Add first') }}
+        <a class="text-indigo-600 font-semibold hover:text-indigo-400" href="{{ route('institution.index') }}"> {{ __('bank integration') }} </a>
+        {{ __('to perform synchronization.') }}
+    </p>
 @endif

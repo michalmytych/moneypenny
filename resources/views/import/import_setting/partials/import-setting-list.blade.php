@@ -63,4 +63,12 @@
     </div>
 @else
     <h2 class="font-semibold text-xl">{{ __('No import settings') }}</h2>
+    <p class="mt-4 text-gray-500">
+        {{ __('Import settings are a way to provide application with konwledge about how to process one of many different transactions files formats.') }}
+    </p>
+    <div class="text-gray-400 text-center">
+        <div class="ml-48 mt-20">
+            @include('icons.xl.import-settings')
+        </div>
+    </div>
 @endif

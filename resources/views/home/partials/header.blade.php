@@ -21,7 +21,7 @@
             @endphp
             <a href="{{ $eventUrl ?? route('home') }}">
                 <div
-                    class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in">
+                    class="h-10 rounded-md w-full bg-gray-200 mb-4 flex items-center pl-3 hover:scale-105 cursor-pointer transform-gpu transition duration-150 ease-out hover:ease-in shadow-sm hover:shadow-md">
                     @include('icons.report')
                     <span class="text-black-50 text-xs ml-3">
                     <span class="font-bold">{{ $eventHeader }}</span>

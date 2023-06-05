@@ -66,5 +66,11 @@
         </table>
     </div>
 @else
-    <h2 class="font-semibold text-xl">{{ __('No imports') }}</h2>
+    <h2 class="font-semibold text-2xl">{{ __('No imports') }}</h2>
+    <p class="mt-4">
+        {{ __('Add first') }}
+        <a class="text-indigo-600 font-semibold hover:text-indigo-400" href="{{ route('institution.index') }}"> {{ __('bank integration') }} </a>
+        {{ __('or') }}
+        <a class="text-indigo-600 font-semibold hover:text-indigo-400" href="{{ route('file.index') }}"> {{ __('upload transaction file') }}</a>.
+    </p>
 @endif

@@ -67,7 +67,7 @@
 
     <div class="lg:ml-6">
         <a href="{{ route('budget.index') }}">
-            <h2 class="text-lg font-semibold mb-6">{{ __("Budgets consumption") }}</h2>
+            <h2 class="text-lg font-semibold">{{ __("Budgets consumption") }}</h2>
             <ul id="fadeInList" class="list-none sm:md:my-2">
                 @foreach($budgetsWithConsumption as $budgetData)
                     @php

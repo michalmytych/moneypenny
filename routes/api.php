@@ -3,11 +3,11 @@
 use App\Http\Controllers\Api\Auth\UserController;
 use App\Http\Controllers\Api\MetaController;
 use App\Http\Controllers\Api\Notification\NotificationController;
+use App\Http\Controllers\Api\Profile\ProfileController;
 use App\Http\Controllers\Api\Transaction\Analytics\AnalyticsController;
 use App\Http\Controllers\Api\Transaction\ReportController;
 use App\Http\Controllers\Web\ExchangeRates\ExchangeRateController;
 use App\Http\Controllers\Web\Synchronization\SynchronizationController;
-use App\Http\Controllers\Web\Transaction\Analysis\AnalysisController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +36,10 @@ Route::middleware(['deny_blocked'])->as('api.')->group(function () {
 
         Route::prefix('analytics')->as('analytic.')->group(function() {
             Route::get('/', [AnalyticsController::class, 'index'])->name('index');
+        });
+
+        Route::prefix('profile')->as('profile.')->group(function() {
+            Route::post('/', [ProfileController::class, 'selectLibraryAvatar'])->name('select_library_avatar');
         });
 
         Route::prefix('sync')->as('sync.')->group(function () {

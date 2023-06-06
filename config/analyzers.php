@@ -9,9 +9,9 @@ return [
     'namespace'          => "App\\Services\\Analysis\\Analyzers\\",
     'path'               => 'Services/Analysis/Analyzers',
     'enabled'            => [
-        \App\Services\Analysis\Analyzers\TransactionVolumeSumPerDay::class,
-        \App\Services\Analysis\Analyzers\TransactionCountPerDay::class,
-        \App\Services\Analysis\Analyzers\TotalTransactionVolumePerWeekDay::class,
-        \App\Services\Analysis\Analyzers\TotalTransactionsVolume::class,
+        \App\Services\Analytics\Analyzers\TransactionVolumeSumPerDay::class,
+        \App\Services\Analytics\Analyzers\TransactionCountPerDay::class,
+        \App\Services\Analytics\Analyzers\TotalTransactionVolumePerWeekDay::class,
+        \App\Services\Analytics\Analyzers\TotalTransactionsVolume::class,
     ],
 ];

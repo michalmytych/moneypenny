@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Analysis\Charts;
+namespace App\Services\Analytics\Charts;
 
 abstract class Chart
 {

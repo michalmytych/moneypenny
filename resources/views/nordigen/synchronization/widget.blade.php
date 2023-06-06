@@ -84,14 +84,14 @@
             }
 
             const handleRequestSuccess = () => {
-                syncButtonText.innerText = 'Synchronized';
+                syncButtonText.innerText = 'Synchronized. Loading new transactions...';
                 syncButton.classList.add('text-indigo-600');
                 syncButton.classList.add('font-semibold');
                 spinnerIcon.style.display = 'none';
                 @if(isset($reload) && $reload)
                 window.setTimeout(function() {
                     window.location.reload();
-                }, 1000);
+                }, 3000);
                 @endif
             }
 

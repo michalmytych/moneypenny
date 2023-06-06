@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Web\Debug;
 
 use App\Http\Controllers\Controller;
-use App\Services\Analysis\AnalyzerResolver;
+use App\Services\Analytics\AnalyzerResolver;
 use Illuminate\View\View;
 
 class DebugController extends Controller

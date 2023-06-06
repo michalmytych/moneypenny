@@ -9,16 +9,19 @@ use App\Services\Notification\Broadcast\NotificationBroadcastService;
 
 class SynchronizationObserver
 {
-    public function __construct(private readonly NotificationBroadcastService $notificationBroadcastService) {}
+    public function __construct(private readonly NotificationBroadcastService $notificationBroadcastService)
+    {
+    }
 
     public function updated(Synchronization $synchronization): void
     {
         if ($synchronization->status === Synchronization::SYNC_STATUS_SUCCEEDED) {
             $import = Import::where('synchronization_id', $synchronization->id)->get()->first();    // @todo - to service
+            $importTransactionsCount = $import ? $import->addedTransactions()->count() : 0;
 
             $this->notificationBroadcastService->sendStoredApplicationNotification(
                 header: 'New transactions synchronization! ',
-                content: $import?->transactions()->count() . ' transactions added',
+                content: $importTransactionsCount . ' transactions added',
                 url: route('transaction.index'),
                 userId: $synchronization->user->id,
                 type: Notification::TYPE_EVENT

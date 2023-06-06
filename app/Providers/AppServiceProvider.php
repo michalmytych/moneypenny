@@ -5,7 +5,7 @@ namespace App\Providers;
 use App\Contracts\Services\Analysis\AnalysisServiceContract;
 use App\Contracts\Services\Import\ImportServiceContract;
 use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
-use App\Services\Analysis\AnalysisService;
+use App\Services\Analytics\AnalysisService;
 use App\Services\Import\ImportService;
 use App\Services\Nordigen\NordigenService;
 use Illuminate\Support\ServiceProvider;

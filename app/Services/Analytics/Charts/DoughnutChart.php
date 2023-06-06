@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Analysis\Charts;
+namespace App\Services\Analytics\Charts;
 
 class DoughnutChart extends Chart
 {

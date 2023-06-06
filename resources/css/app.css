@@ -40,6 +40,26 @@ details > summary::-webkit-details-marker {
     transform: scale(1.05);
 }
 
+.hoverScaleBox:active {
+    cursor: pointer;
+    transform: scale(0.8);
+}
+
+
+.hoverScaleBoxXL {
+    transition: 0.3s;
+}
+
+.hoverScaleBoxXL:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.hoverScaleBoxXL:active {
+    cursor: pointer;
+    transform: scale(0.8);
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;

@@ -7,12 +7,12 @@ return [
             'header' => '🥳🥳🥳 Moneypenny v0.3',
             'date' => '06-06-2023 10:35',
             'notes' => [
-                'Add analytics features',
-                'Add transactions categorisations features',
-                'Implements beautiful ChartJS features in analytics views',
-                'Add multiple new features in admin panel: promoting, blocking and deleting users',
-                'Enhance home page features',
-                'Add icons and graphics for better UX',
+                'Added analytics features',
+                'Added transactions categorisations features',
+                'Implemented beautiful ChartJS features in analytics views',
+                'Added multiple new features in admin panel: promoting, blocking and deleting users',
+                'Enhanced home page features',
+                'Added icons and graphics for better UX',
                 'Improved query times',
                 'Fixed bugs'
             ]
@@ -23,7 +23,7 @@ return [
             'notes' => [
                 'Code refactor',
                 'Added users devices tracking',
-                'Addeed users devices tracking'
+                'Added users devices tracking'
             ]
         ],
         [

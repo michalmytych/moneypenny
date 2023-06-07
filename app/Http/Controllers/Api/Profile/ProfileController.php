@@ -15,10 +15,8 @@ class ProfileController extends Controller
     {
         $user = $request->user();
         $serverPath = $request->input('server_path');
-        $uploaded = $this->profileFileService->selectLibraryAvatar($serverPath, $user->id);
+        $result = $this->profileFileService->selectLibraryAvatar($serverPath, $user->id);
 
-        return response()->json([
-            'uploaded' => (bool) $uploaded
-        ]);
+        return response()->json($result);
     }
 }

@@ -22,7 +22,7 @@ class HomePageService
                 ->first(),
             'transactions' => Transaction::whereUser($user)
                 ->orderByTransactionDate()
-                ->limit(5)
+                ->limit(10)
                 ->get(),
             'last_synchronization' => Synchronization::whereUser($user)
                 ->where('status', Synchronization::SYNC_STATUS_SUCCEEDED)

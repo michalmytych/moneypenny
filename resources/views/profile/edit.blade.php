@@ -79,7 +79,6 @@
             const avatarForm = document.getElementById('avatarForm');
             const changeAvatarFormTrigger = document.getElementById('changeAvatarFormTrigger');
             const avatarsGallery = document.getElementById('avatarsGallery');
-
             const selectAvatarFormTrigger = document.getElementById('selectAvatarFormTrigger');
 
             window.addEventListener('load', () => {
@@ -94,35 +93,41 @@
                     avatarForm.style.visibility = 'visible';
                 });
 
-                selectAvatarFormTrigger.addEventListener('click', () => {
-                    // @todo
-                    {{--const selectLibraryAvatar = (serverPath) => {--}}
-                    {{--    fetch("{{ route('api.profile.select_library_avatar') }}", {--}}
-                    {{--            method: 'POST',--}}
-                    {{--            body: JSON.stringify({--}}
-                    {{--                server_path: serverPath,--}}
-                    {{--            }),--}}
-                    {{--            headers: {--}}
-                    {{--                "Content-Type": "application/json",--}}
-                    {{--                'Accept-Type': 'application/json',--}}
-                    {{--                'X-XSRF-TOKEN': decodeURIComponent(getCookie('XSRF-TOKEN')),--}}
-                    {{--                'Authorization': `Bearer ${window.localStorage.getItem('SANCTUM_API_TOKEN')}`--}}
-                    {{--            },--}}
-                    {{--        }--}}
-                    {{--    )--}}
-                    {{--        .then(response => response.json())--}}
-                    {{--        .then(j => console.log(j))--}}
-                    {{--}--}}
-
-                    const libraryAvatars = selectAvatarFormTrigger.querySelectorAll('.libraryAvatar');
-
-                    libraryAvatars.forEach(libraryAvatar => {
-                        libraryAvatar.addEventListener('click', () => {
-                            const avatarServerPath = libraryAvatar.dataset.serverpath;
-                            selectLibraryAvatar(avatarServerPath);
+                const selectLibraryAvatar = (serverPath, tmpSrc) => {
+                    fetch("{{ route('api.profile.select_library_avatar') }}", {
+                            method: 'POST',
+                            body: JSON.stringify({
+                                server_path: serverPath,
+                            }),
+                            headers: {
+                                "Content-Type": "application/json",
+                                'Accept-Type': 'application/json',
+                                'X-XSRF-TOKEN': decodeURIComponent(getCookie('XSRF-TOKEN')),
+                                'Authorization': `Bearer ${window.localStorage.getItem('SANCTUM_API_TOKEN')}`
+                            },
+                        }
+                    )
+                        .then(response => response.json())
+                        .then(data => {
+                           if (data.copied) {
+                               const avatarImages = document.querySelectorAll('.avatarImage');
+                               avatarImages.forEach(avatarImage => {
+                                   avatarImage.setAttribute('src', tmpSrc);
+                               });
+                           }
                         });
-                    });
+                }
 
+                const libraryAvatars = document.querySelectorAll('.libraryAvatar');
+                libraryAvatars.forEach(libraryAvatar => {
+                    const listener = () => {
+                        selectLibraryAvatar(libraryAvatar.dataset.serverpath, libraryAvatar.src);
+                    };
+                    libraryAvatar.removeEventListener('click', listener)
+                    libraryAvatar.addEventListener('click', listener);
+                });
+
+                selectAvatarFormTrigger.addEventListener('click', () => {
                     if (avatarsGallery.style.display === 'none') {
                         avatarsGallery.classList.remove('fade-in');
                         avatarsGallery.classList.add('fade-in');

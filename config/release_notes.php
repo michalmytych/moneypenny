@@ -4,6 +4,14 @@ return [
     'current_version' => 'v0.3',
     'list' => [
         [
+            'header' => '🧑🏾‍🎨👨🏻‍🎨👩‍🎨 Moneypenny v0.4',
+            'date' => '07-06-2023 22:22',
+            'notes' => [
+                'Add selecting avatars from gallery',
+                'Add new data widgets at home view'
+            ]
+        ],
+        [
             'header' => '🥳🥳🥳 Moneypenny v0.3',
             'date' => '06-06-2023 10:35',
             'notes' => [

@@ -16,15 +16,23 @@ class ProfileFileService
         $file->storePubliclyAs('public/avatars/', $fileName);
     }
 
-    public function selectLibraryAvatar(?string $serverPath, mixed $userId): mixed
+    public function selectLibraryAvatar(?string $serverPath, mixed $userId): ?array
     {
         if (!$serverPath) {
             return null;
         }
 
-        $targetPath = public_path('avatars/' . $userId . '_avatar.jpeg');
-        $srcPath = asset($serverPath);
+        $targetPath = storage_path('app/public/avatars/' . $userId . '_avatar.jpeg');
+        $srcPath = public_path($serverPath);
 
-        dd(File::copy($srcPath, $targetPath));
+        if (File::exists($targetPath)) {
+            File::delete($targetPath);
+        }
+
+        $copied = File::copy($srcPath, $targetPath);
+
+        return [
+            'copied' => $copied
+        ];
     }
 }

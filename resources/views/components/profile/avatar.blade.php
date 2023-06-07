@@ -21,6 +21,7 @@
         alt="User avatar image"
         width="{{ $width }}"
         height="{{ $height }}"
+        class="avatarImage"
         style="border-radius: 50%; aspect-ratio: 1 / 1; margin: 0 auto;"
     >
 </div>

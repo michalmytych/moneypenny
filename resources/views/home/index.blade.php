@@ -13,7 +13,11 @@
                     @include('home.partials.header', [
                         'saldoData' => $saldoData,
                         'budgetsWithConsumption' => $budgetsWithConsumption,
-                        'eventNotifications' => $eventNotifications
+                        'eventNotifications' => $eventNotifications,
+                        'expendituresTodayTotal' => $expendituresTodayTotal,
+                        'expendituresThisWeekTotal' => $expendituresThisWeekTotal,
+                        'incomesTodayTotal' => $incomesTodayTotal,
+                        'incomesThisWeekTotal' => $incomesThisWeekTotal
                     ])
                 </div>
 
@@ -25,7 +29,6 @@
 
                         <a href="{{ route('analytic.index') }}" class="font-semibold text-indigo-600 hover:text-indigo-400 ml-2 flex items-center" style="margin-bottom: 1.5px;">
                             <span class="mr-2">{{ __('See more') }}</span>
-                            @include('icons.go')
                         </a>
                     </div>
 

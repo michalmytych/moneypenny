@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static whereMonthAndYear(Carbon $now)
  * @method static orderByTransactionDate()
  * @method static whereUser(User $user)
+ * @method static chunk(int $chunkSize, \Closure $param)
  * @property string $sender
  * @property string $receiver
  * @property int $id

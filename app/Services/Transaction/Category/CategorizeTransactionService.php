@@ -2,6 +2,9 @@
 
 namespace App\Services\Transaction\Category;
 
+use App\Services\Transaction\Categorize\TransactionCategorizeService;
+use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use Throwable;
 use Illuminate\Support\Facades\Bus;
 use App\Models\Transaction\Transaction;
@@ -10,7 +13,13 @@ use App\Events\Transaction\Category\ImportCategorizationFinished;
 
 class CategorizeTransactionService
 {
-    public function __construct() {}
+    public function __construct(private readonly TransactionCategorizeService $transactionCategorizeService) {}
+
+    public function categorizeTransactionsSync(Collection|LazyCollection|array $transactions): void
+    {
+        // @todo what about memory?
+        $this->transactionCategorizeService->categorizeTransactions($transactions);
+    }
 
     /**
      * @throws Throwable

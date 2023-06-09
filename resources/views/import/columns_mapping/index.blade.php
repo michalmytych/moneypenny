@@ -7,7 +7,7 @@
                     @include('import.columns_mapping.partials.columns-mapping-form')
                 </div>
                 <div class="lg:ml-4">
-                    <h2 class="text-3xl font-semibold mb-4">{{ __('Column mappings') }}</h2>
+                    <h2 class="text-3xl font-bold mb-4">{{ __('Column mappings') }}</h2>
                     @include('import.columns_mapping.partials.columns-mapping-list', ['columnsMappings' => $columnsMappings])
                 </div>
             </div>

@@ -67,14 +67,14 @@
         <x-file-drop fileInputName="file"/>
         <x-input-error :messages="$errors->get('file')" class="mt-2"/>
     </div>
-    <div class="flex">
+    <div class="flex justify-end">
+        <div class="flex items-center gap-1 ml-3" id="loaderWraper" style="visibility: hidden;">
+            @include('icons.loader') <span class="text-gray-600 mr-6">{{ __('Processing...') }}</span>
+        </div>
         <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg"
                 id="uploadButton">
             {{ __('Upload') }}
         </button>
-        <div class="flex items-center gap-1 ml-3" id="loaderWraper" style="visibility: hidden;">
-            @include('icons.loader') <span class="text-gray-600 ml-1">{{ __('Processing file...') }}</span>
-        </div>
     </div>
 </form>
 

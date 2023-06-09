@@ -110,9 +110,11 @@
             <x-input-error :messages="$errors->get('receiver_account_number_index')" class="mt-2"/>
         </div>
 
-        <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg">
-            {{ __('Save') }}
-        </button>
+        <div class="flex justify-end">
+            <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg">
+                {{ __('Save') }}
+            </button>
+        </div>
     </form>
 </div>
 

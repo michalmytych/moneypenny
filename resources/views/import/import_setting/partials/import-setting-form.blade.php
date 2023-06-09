@@ -97,7 +97,7 @@
             </select>
             <x-input-error :messages="$errors->get('input_encoding')" class="mt-2" />
         </div>
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-end">
             <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg">
                 {{ __('Save') }}
             </button>

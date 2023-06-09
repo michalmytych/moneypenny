@@ -32,6 +32,7 @@
     @include('layouts.partials.notifications')
     @include('layouts.partials.fixed-footer')
     @include('layouts.partials.chat-modal')
+    @include('layouts.partials.debug')
 </div>
 
 @stack('scripts')

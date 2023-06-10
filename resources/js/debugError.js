@@ -5,12 +5,12 @@ export const debugError = (data, response) => {
     const debugErrorClose = debugError.querySelector('.debugErrorClose');
     const responseURL = debugError.querySelector('.responseURL');
 
-    if (debugError.style.top === '-10rem') {
+    if (debugError.style.top === '-20rem') {
         debugError.style.top = '4.5rem';
     }
 
     debugErrorClose.addEventListener('click', () => {
-        debugError.style.top = '-10rem';
+        debugError.style.top = '-20rem';
     });
 
     responseData.innerHTML = typeof data === "string" ? data : JSON.stringify(data);

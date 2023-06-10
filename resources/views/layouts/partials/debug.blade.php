@@ -1,5 +1,5 @@
 <div id="debugError" class="fixed left-1/3 bg-red-100 border-4 border-red-500 rounded-md shadow-2xl z-50 p-2 w-1/3"
-     style="top: -10rem;">
+     style="top: -20rem;">
     <div class="flex items-start justify-between">
         <div>
             <h1 class="text-xl font-bold text-red-500">

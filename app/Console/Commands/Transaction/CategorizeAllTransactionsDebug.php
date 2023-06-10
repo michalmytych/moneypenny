@@ -2,16 +2,17 @@
 
 namespace App\Console\Commands\Transaction;
 
-use App\Models\Transaction\Transaction;
-use App\Services\Helpers\StringHelper;
-use Illuminate\Console\Command;
-use App\Services\Transaction\Category\CategorizeTransactionService;
-use Illuminate\Support\Collection;
 use Throwable;
+use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
+use App\Services\Helpers\StringHelper;
+use App\Models\Transaction\Transaction;
+use App\Services\Transaction\Category\CategorizeTransactionService;
 
 class CategorizeAllTransactionsDebug extends Command
 {
-    protected $signature = 'moneypenny:categorize-all-transactions-debug';
+    protected $signature = 'moneypenny:categorize-all-transactions-debug
+                            {?--only-uncategorized : Whether only uncathegorized transactions should be taken into account.}';
 
     protected $description = 'Categorize all transactions with debug info.';
 
@@ -19,23 +20,47 @@ class CategorizeAllTransactionsDebug extends Command
     {
         $chunkSize = 100;
         $transactionsTotalCount = Transaction::count();
-        $transactionsChunksCount = round($transactionsTotalCount / $chunkSize);
+        $selectedToCategorizationCount = $transactionsTotalCount;
+        $transactionBaseQuery = Transaction::query();
 
-        $this->info('Categorizing ' . $transactionsTotalCount . ' transactions...');
+        if ($this->hasOption('only-uncategorized')) {
+            $transactionBaseQuery = Transaction::whereNull('category_id');
+            $selectedToCategorizationCount = (clone $transactionBaseQuery)->count();
+        }
+
+        $transactionsChunksCount = round($selectedToCategorizationCount / $chunkSize);
+
+        $this->info('Categorizing ' . $selectedToCategorizationCount . ' transactions...');
         $this->line($transactionsChunksCount . ' chunks to go.');
 
         $chunkCounter = 0;
-        Transaction::chunk($chunkSize, function(Collection $transactions) use ($categorizeTransactionService, &$chunkCounter) {
-            try {
-                $categorizedPercentage = $categorizeTransactionService->categorizeTransactionsSync($transactions);
-                ++$chunkCounter;
-                $this->line('[' . $chunkCounter . '] Processed chunk. ' . ($categorizedPercentage * 100) . '% categorized.');
+        $transactionBaseQuery
+            ->chunk($chunkSize, function (Collection $transactions) use ($categorizeTransactionService, &$chunkCounter) {
+                try {
+                    $categorizedPercentage = $categorizeTransactionService->categorizeTransactionsSync($transactions);
+                    ++$chunkCounter;
+                    $categorizedFormatted = number_format($categorizedPercentage * 100, 1);
+                    $line = '[' . $chunkCounter . '] Processed chunk. ' . $categorizedFormatted . '% categorized.';
+                    $this->line($line);
 
-            } catch (Throwable $throwable) {
-                $this->error('[' . $chunkCounter . '] Processed chunk failed');
-                $shortMessage = StringHelper::shortenAuto($throwable->getMessage(), 200);
-                $this->warn($shortMessage);
-            }
-        });
+                } catch (Throwable $throwable) {
+                    $this->error('[' . $chunkCounter . '] Processed chunk failed');
+                    $shortMessage = StringHelper::shortenAuto($throwable->getMessage(), 200);
+                    $this->warn($shortMessage);
+                }
+            });
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        $categorizedTransactionsCount = Transaction::whereNotNull('category_id')->count();
+        $totalCategorizedPercentage = number_format(
+            ($categorizedTransactionsCount / $transactionsTotalCount) * 100,
+            1
+        );
+
+        $this->info(
+            'Finished categorization. '
+            . $totalCategorizedPercentage
+            . '% of all transactions is assigned to some category.'
+        );
     }
 }

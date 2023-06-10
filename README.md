@@ -35,7 +35,7 @@ npm run dev
 ```
 
 __Other usefull commands__
-```bash
+```
 Available commands for the "moneypenny" namespace:
   moneypenny:associate-personas                         Create personas associations for all transactions.
   moneypenny:categorize-all-transactions-debug          Categorize all transactions with debug info.

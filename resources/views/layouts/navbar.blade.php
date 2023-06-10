@@ -29,14 +29,14 @@
                             </x-slot>
 
                             <x-slot name="content">
-                                <x-dropdown-link :href="route('transaction.index')">
+                                <x-dropdown-link class="navLink" :href="route('transaction.index')">
                                     <div class="mr-2">
                                         @include('icons.sm.list')
                                     </div>
                                     {{ __('All transactions') }}
                                 </x-dropdown-link>
                                 @if(config('personas.enabled'))
-                                    <x-dropdown-link :href="route('persona.index')">
+                                    <x-dropdown-link class="navLink" :href="route('persona.index')">
                                     <span class="flex items-center justify-between">
                                         {{ __('Personas') }}
                                         <span class="relative top-2">
@@ -45,25 +45,25 @@
                                     </span>
                                     </x-dropdown-link>
                                 @endif
-                                <x-dropdown-link :href="route('analytic.index')">
+                                <x-dropdown-link class="navLink" :href="route('analytic.index')">
                                     <div class="mr-2">
                                         @include('icons.sm.chart')
                                     </div>
                                     {{ __('Analytics') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('import.index')">
+                                <x-dropdown-link class="navLink" :href="route('import.index')">
                                     <div class="mr-2">
                                         @include('icons.sm.import')
                                     </div>
                                     {{ __('Imports') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('file.index')">
+                                <x-dropdown-link class="navLink" :href="route('file.index')">
                                     <div class="mr-2">
                                         @include('icons.sm.files')
                                     </div>
                                     {{ __('Files') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('setting.edit')">
+                                <x-dropdown-link class="navLink" :href="route('setting.edit')">
                                     <div class="mr-2">
                                         @include('icons.sm.settings')
                                     </div>
@@ -85,7 +85,7 @@
                             </x-slot>
 
                             <x-slot name="content">
-                                <x-dropdown-link :href="route('report.periodic')">
+                                <x-dropdown-link class="navLink" :href="route('report.periodic')">
                                     <div class="mr-2">
                                         @include('icons.sm.report')
                                     </div>
@@ -107,7 +107,7 @@
                             </x-slot>
 
                             <x-slot name="content">
-                                <x-dropdown-link :href="route('budget.index')">
+                                <x-dropdown-link class="navLink" :href="route('budget.index')">
                                     <div class="mr-2">
                                         @include('icons.sm.budget')
                                     </div>
@@ -129,13 +129,13 @@
                             </x-slot>
 
                             <x-slot name="content">
-                                <x-dropdown-link :href="route('institution.index')">
+                                <x-dropdown-link class="navLink" :href="route('institution.index')">
                                     <div class="mr-2">
                                         @include('icons.sm.bank')
                                     </div>
                                     {{ __('Banks integrations') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('synchronization.index')">
+                                <x-dropdown-link class="navLink" :href="route('synchronization.index')">
                                     <div class="mr-2">
                                         @include('icons.sm.sync')
                                     </div>
@@ -157,13 +157,13 @@
                             </x-slot>
 
                             <x-slot name="content">
-                                <x-dropdown-link :href="route('import.import-setting.index')">
+                                <x-dropdown-link class="navLink" :href="route('import.import-setting.index')">
                                     <div class="mr-2">
                                         @include('icons.sm.config')
                                     </div>
                                     {{ __('Import settings') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('import.columns-mapping.index')">
+                                <x-dropdown-link class="navLink" :href="route('import.columns-mapping.index')">
                                     <div class="mr-2">
                                         @include('icons.sm.columns')
                                     </div>
@@ -186,20 +186,20 @@
                                 </x-slot>
                                 <x-slot name="content">
                                     @if(config('debugging.enabled'))
-                                        <x-dropdown-link :href="route('debug.analyzers')">
+                                        <x-dropdown-link class="navLink" :href="route('debug.analyzers')">
                                             {{ __('Debugging') }}
                                         </x-dropdown-link>
-                                        <x-dropdown-link :href="route('exchange_rate.index')">
+                                        <x-dropdown-link class="navLink" :href="route('exchange_rate.index')">
                                             {{ __('Exchange rates') }}
                                         </x-dropdown-link>
                                     @endif
-                                    <x-dropdown-link :href="route('user.index')">
+                                    <x-dropdown-link class="navLink" :href="route('user.index')">
                                         <div class="mr-2">
                                             @include('icons.sm.users')
                                         </div>
                                         {{ __('Users') }}
                                     </x-dropdown-link>
-                                    <x-dropdown-link :href="route('meta.index')">
+                                    <x-dropdown-link class="navLink" :href="route('meta.index')">
                                         <div class="mr-2">
                                             @include('icons.sm.system')
                                         </div>
@@ -223,7 +223,7 @@
                                 </x-slot>
 
                                 <x-slot name="content">
-                                    <x-dropdown-link :href="route('social.chat.index')">
+                                    <x-dropdown-link class="navLink" :href="route('social.chat.index')">
                                     <span class="flex items-center justify-between">
                                         {{ __('Chat') }}
                                         <span class="relative top-2">
@@ -254,7 +254,7 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
+                        <x-dropdown-link class="navLink" :href="route('profile.edit')">
                             <div class="w-full">
                                 <div class="flex items-center">
                                     <div class="mr-4">
@@ -272,14 +272,14 @@
                             </div>
                         </x-dropdown-link>
 
-                        <x-dropdown-link :href="route('profile.edit')">
+                        <x-dropdown-link class="navLink" :href="route('profile.edit')">
                             <div class="mr-2">
                                 @include('icons.sm.profile')
                             </div>
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
-                        <x-dropdown-link :href="route('devices')">
+                        <x-dropdown-link class="navLink" :href="route('devices')">
                             <div class="mr-2">
                                 @include('icons.sm.device')
                             </div>
@@ -290,7 +290,7 @@
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
-                            <x-dropdown-link :href="route('logout')"
+                            <x-dropdown-link class="navLink" :href="route('logout')"
                                              onclick="event.preventDefault();
                                                 logoutApi();
                                                 this.closest('form').submit();">
@@ -339,7 +339,7 @@
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
+                <x-responsive-nav-link class="navLink" :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('transaction.index')">
@@ -347,7 +347,7 @@
                 </x-responsive-nav-link>
 
                 @if(config('personas.enabled'))
-                    <x-responsive-nav-link :href="route('persona.index')">
+                    <x-responsive-nav-link class="navLink" :href="route('persona.index')">
                                     <span class="flex items-center justify-between">
                                         {{ __('Personas') }}
                                         <span class="relative top-2">
@@ -357,51 +357,51 @@
                     </x-responsive-nav-link>
                 @endif
 
-                <x-responsive-nav-link :href="route('analytic.index')">
+                <x-responsive-nav-link class="navLink" :href="route('analytic.index')">
                     {{ __('Analytics') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('import.index')">
+                <x-responsive-nav-link class="navLink" :href="route('import.index')">
                     {{ __('Imports') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('file.index')">
+                <x-responsive-nav-link class="navLink" :href="route('file.index')">
                     {{ __('Files') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('setting.edit')">
+                <x-responsive-nav-link class="navLink" :href="route('setting.edit')">
                     {{ __('Settings') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('report.periodic')">
+                <x-responsive-nav-link class="navLink" :href="route('report.periodic')">
                     {{ __('Month report') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('budget.index')">
+                <x-responsive-nav-link class="navLink" :href="route('budget.index')">
                     {{ __('All budgets') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('institution.index')">
+                <x-responsive-nav-link class="navLink" :href="route('institution.index')">
                     {{ __('Banks integrations') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('synchronization.index')">
+                <x-responsive-nav-link class="navLink" :href="route('synchronization.index')">
                     {{ __('Synchronizations') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('import.import-setting.index')">
+                <x-responsive-nav-link class="navLink" :href="route('import.import-setting.index')">
                     {{ __('Import settings') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('import.columns-mapping.index')">
+                <x-responsive-nav-link class="navLink" :href="route('import.columns-mapping.index')">
                     {{ __('Columns mappings') }}
                 </x-responsive-nav-link>
                 @if(request()->user()?->is_admin)
                     @if(config('debugging.enabled'))
-                        <x-responsive-nav-link :href="route('debug.analyzers')">
+                        <x-responsive-nav-link class="navLink" :href="route('debug.analyzers')">
                             {{ __('Debugging') }}
                         </x-responsive-nav-link>
-                        <x-responsive-nav-link :href="route('exchange_rate.index')">
+                        <x-responsive-nav-link class="navLink" :href="route('exchange_rate.index')">
                             {{ __('Exchange rates') }}
                         </x-responsive-nav-link>
                     @endif
-                    <x-responsive-nav-link :href="route('meta.index')">
+                    <x-responsive-nav-link class="navLink" :href="route('meta.index')">
                         {{ __('System') }}
                     </x-responsive-nav-link>
                 @endif
                 @if(config('network.enabled'))
-                    <x-responsive-nav-link :href="route('social.chat.index')">
+                    <x-responsive-nav-link class="navLink" :href="route('social.chat.index')">
                                     <span class="flex items-center justify-between">
                                         {{ __('Chat') }}
                                         <span class="relative top-2">
@@ -413,7 +413,7 @@
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <x-responsive-nav-link :href="route('logout')"
+                    <x-responsive-nav-link class="navLink" :href="route('logout')"
                                            onclick="event.preventDefault(); logoutApi(); this.closest('form').submit();">
                                         <span class="text-red-700 font-semibold">
                                             {{ __('Log Out') }}

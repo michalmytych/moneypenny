@@ -4,6 +4,7 @@ import {drawCharts} from "./drawCharts";
 import {logoutApi} from "./logoutApi";
 import {getCookie} from "./getCookie";
 import {debugError} from "./debugError";
+import {handelNavLinkClick} from "./handleNavLinkClick";
 
 import Alpine from 'alpinejs';
 
@@ -12,6 +13,7 @@ window.drawCharts = drawCharts;
 window.getCookie = getCookie;
 window.logoutApi = logoutApi;
 window.debugError = debugError;
+window.handelNavLinkClick = handelNavLinkClick;
 
 const {fetch: originalFetch} = window;
 
@@ -34,5 +36,9 @@ window.fetch = async (...args) => {
 /**
  * DEBUG @todo - only in debug
  */
+
+window.addEventListener('load', () => {
+    handelNavLinkClick();
+});
 
 Alpine.start();

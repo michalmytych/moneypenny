@@ -25,10 +25,11 @@
 
 <div class="min-h-screen bg-gray-100 pt-2">
     <!-- Page Content -->
-    <main class="max-w-7xl mx-auto fade-in">
+    <main id="pageContent" class="max-w-7xl mx-auto fade-in">
         {{ $slot }}
     </main>
 
+    @include('layouts.partials.loader')
     @include('layouts.partials.notifications')
     @include('layouts.partials.fixed-footer')
     @include('layouts.partials.chat-modal')

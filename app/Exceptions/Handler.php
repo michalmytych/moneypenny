@@ -56,14 +56,15 @@ class Handler extends ExceptionHandler
      *      Accept: application/json
      * in its header
      *
-     * @todo - check if it works
-     *
      * @param Request $request
      * @param Throwable $e
-     * @return Response|JsonResponse
+     * @return JsonResponse|Response|\Symfony\Component\HttpFoundation\Response
      * @throws Throwable
+     * @todo - check if it works
+     *
+     * @noinspection PhpMissingReturnTypeInspection
      */
-    public function render($request, Throwable $e): Response|JsonResponse
+    public function render($request, Throwable $e)
     {
         if ($request->ajax() || $request->wantsJson()) {
             return response()->json(

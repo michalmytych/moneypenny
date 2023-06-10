@@ -35,6 +35,21 @@ npm run dev
 ```
 
 __Other usefull commands__
-
-<img width="1109" alt="image" src="https://github.com/michalmytych/moneypenny/assets/59512535/d93880e8-8765-41bb-af83-7cf1a85b03ca">
+```bash
+Available commands for the "moneypenny" namespace:
+  moneypenny:associate-personas                         Create personas associations for all transactions.
+  moneypenny:categorize-all-transactions-debug          Categorize all transactions with debug info.
+  moneypenny:categorize-import-transaction              Trigger transactions categorization by import.
+  moneypenny:copy-decimal-volume-to-calculation-volume  Copy decimal value transaction column to calculation volume column.
+  moneypenny:create-admin-user                          Create new admin user account.
+  moneypenny:create-users-personal-accounts             Create personal accounts records for existing users.
+  moneypenny:create-users-settings                      Create accounts settings for existing users.
+  moneypenny:generate-reports                           Generate reports for currently stored transactions.
+  moneypenny:pull-exchange-rates                        Fetch history exchange rates from external api for currently stored transactions
+  moneypenny:saldo                                      Calculate users's current saldo.
+  moneypenny:send-app-notification                      Send application notifification via notification broadcasting service.
+  moneypenny:set-saldo-by-email                         Set user's default account saldo by e-mail.
+  moneypenny:show-transactions-personas                 Print all transactions with associated personas.
+  moneypenny:update-types                               Update transactions types based on raw volume column.
+```
 

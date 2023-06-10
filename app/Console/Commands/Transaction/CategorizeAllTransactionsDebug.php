@@ -33,7 +33,7 @@ class CategorizeAllTransactionsDebug extends Command
 
             } catch (Throwable $throwable) {
                 $this->error('[' . $chunkCounter . '] Processed chunk failed');
-                $shortMessage = StringHelper::shortenAuto($throwable->getMessage(), 100);
+                $shortMessage = StringHelper::shortenAuto($throwable->getMessage(), 200);
                 $this->warn($shortMessage);
             }
         });

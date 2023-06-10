@@ -27,9 +27,9 @@ class CategorizeAllTransactionsDebug extends Command
         $chunkCounter = 0;
         Transaction::chunk($chunkSize, function(Collection $transactions) use ($categorizeTransactionService, &$chunkCounter) {
             try {
-                $categorizeTransactionService->categorizeTransactionsSync($transactions);
+                $categorizedPercentage = $categorizeTransactionService->categorizeTransactionsSync($transactions);
                 ++$chunkCounter;
-                $this->line('[' . $chunkCounter . '] Processed chunk');
+                $this->line('[' . $chunkCounter . '] Processed chunk. ' . ($categorizedPercentage * 100) . '% categorized.');
 
             } catch (Throwable $throwable) {
                 $this->error('[' . $chunkCounter . '] Processed chunk failed');

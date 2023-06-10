@@ -15,10 +15,10 @@ class CategorizeTransactionService
 {
     public function __construct(private readonly TransactionCategorizeService $transactionCategorizeService) {}
 
-    public function categorizeTransactionsSync(Collection|LazyCollection|array $transactions): void
+    public function categorizeTransactionsSync(Collection|LazyCollection|array $transactions): float|int
     {
         // @todo what about memory?
-        $this->transactionCategorizeService->categorizeTransactions($transactions);
+        return $this->transactionCategorizeService->categorizeTransactions($transactions);
     }
 
     /**

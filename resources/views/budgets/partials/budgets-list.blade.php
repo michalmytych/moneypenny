@@ -2,7 +2,7 @@
     @php
         $budgetsWithConsumption = $budgets;
     @endphp
-    <h2 class="text-black font-bold text-2xl pb-4 pt-4">{{ __('Your budgets') }}</h2>
+    <h2 class="text-black font-bold text-3xl pb-4 pt-4">{{ __('Your budgets') }}</h2>
     <div>
         @foreach($budgetsWithConsumption as $budgetWithConsumption)
             <a href="{{ route('budget.show', ['id' => $budgetWithConsumption['budget']->id]) }}">

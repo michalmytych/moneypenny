@@ -1,4 +1,4 @@
-<h2 class="font-semibold text-4xl pb-6">
+<h2 class="font-bold text-3xl pb-6">
     {{ __('Active integrations') }}
 </h2>
 <div class="grid grid-cols-1 gap-4 mb-8">

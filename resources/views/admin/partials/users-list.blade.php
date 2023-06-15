@@ -1,5 +1,5 @@
 @if(count($users) > 0)
-    <h2 class="text-black font-bold text-2xl pb-4 pt-4">{{ __('Users') }}</h2>
+    <h2 class="text-black font-bold text-3xl pb-4 pt-4">{{ __('Users') }}</h2>
     <div>
         @foreach($users as $user)
             <div class="bg-white rounded-md shadow-sm p-4 mb-4 transition flex">

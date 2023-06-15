@@ -1,8 +1,16 @@
 <?php
 
 return [
-    'current_version' => 'v0.3',
+    'current_version' => 'v0.4.1',
     'list' => [
+        [
+            'header' => '🐛🫎🦋 Moneypenny v0.4.1',
+            'date' => '15-06-2023 20:05',
+            'notes' => [
+                'Fixed api error handling bug at register',
+                'Improved styling at some pages'
+            ]
+        ],
         [
             'header' => '🧑🏾‍🎨👨🏻‍🎨👩‍🎨 Moneypenny v0.4',
             'date' => '07-06-2023 22:22',

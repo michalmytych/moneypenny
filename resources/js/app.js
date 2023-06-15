@@ -28,7 +28,11 @@ window.fetch = async (...args) => {
     response
         .clone()
         .json()
-        .catch(reason => debugError(reason, response));
+        .catch(reason => {
+            if (!response.ok) {
+                debugError(reason, response);
+            }
+        });
 
 
     return response;

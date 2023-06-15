@@ -1,10 +1,10 @@
 <x-app-layout>
-    <div class="py-12">
+    <div class="py-6">
         <div class="w-full mx-auto sm:px-6 lg:px-8">
 
             <div class="container mx-auto my-8">
                 <div class="flex justify-between">
-                    <h1 class="text-4xl font-bold mb-4">
+                    <h1 class="text-3xl font-bold mb-4">
                         {{ __('Month report') }}
                     </h1>
                     <form id="monthForm" action="{{ route('report.periodic') }}" method="get">

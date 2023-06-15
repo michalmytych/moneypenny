@@ -1,5 +1,5 @@
 @if(count($institutions) > 0)
-    <h2 class="font-semibold text-4xl pb-6">{{ __('Supported integrations') }}</h2>
+    <h2 class="font-bold text-3xl pb-6">{{ __('Supported integrations') }}</h2>
 
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
         @foreach ($institutions as $institution)

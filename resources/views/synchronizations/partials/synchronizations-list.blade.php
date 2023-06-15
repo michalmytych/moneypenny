@@ -1,6 +1,6 @@
 @if(count($synchronizations) > 0)
     <div class="p-4">
-        <h2 class="text-3xl font-semibold mb-4">{{ __('Synchronizations') }}</h2>
+        <h2 class="text-3xl font-bold mb-4">{{ __('Synchronizations') }}</h2>
         <table class="min-w-full divide-y divide-gray-200">
             <thead>
             <tr class="bg-gray-200">
@@ -18,7 +18,7 @@
                                 {{ __('Running') }}
                             </span>
                         @elseif($sync->status == \App\Models\Synchronization\Synchronization::SYNC_STATUS_FAILED)
-                            <span class="text-red-500 font-semibold">
+                            <span class="text-gray-500 font-semibold">
                                 {{ __('Failed') }}
                             </span>
                         @elseif($sync->status == \App\Models\Synchronization\Synchronization::SYNC_STATUS_SUCCEEDED)

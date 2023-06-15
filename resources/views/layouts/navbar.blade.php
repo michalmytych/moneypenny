@@ -8,11 +8,11 @@
                     <a href="{{ route('home') }}">
                         @include('icons.logo-md')
                     </a>
-                    <div class="relative top-1.5 ml-9">
-                        @if(Auth::user()->isAdmin())
+                    @if(Auth::user()->isAdmin())
+                        <div class="relative top-1.5 ml-9">
                             @include('admin.partials.admin-badge')
-                        @endif
-                    </div>
+                        </div>
+                    @endif
                 </div>
 
                 <!-- Navigation Links -->
@@ -333,7 +333,7 @@
                     <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
                 </div>
                 <div class="flex items-center">
-{{--                    @include('layouts.partials.notifications-dropdown', ['prefix' => 'mobile'])--}}
+                    {{--                    @include('layouts.partials.notifications-dropdown', ['prefix' => 'mobile'])--}}
                     @include('components.profile.avatar', ['src' => request()->user()?->getAvatarPath()])
                 </div>
             </div>

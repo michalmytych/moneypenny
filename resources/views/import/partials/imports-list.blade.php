@@ -1,6 +1,6 @@
 @if(count($imports) > 0)
     <div class="p-4">
-        <h2 class="text-3xl font-semibold mb-4">{{ __('Transactions imports') }}</h2>
+        <h2 class="text-3xl font-bold mb-4">{{ __('Transactions imports') }}</h2>
         <table class="min-w-full divide-y divide-gray-200">
             <thead>
             <tr class="bg-gray-200">

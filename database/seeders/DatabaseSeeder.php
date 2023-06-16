@@ -2,12 +2,15 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Console\Concerns\InteractsWithIO;
 use Throwable;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+    use InteractsWithIO;
+
     /**
      * Seed the application's database.
      */
@@ -19,7 +22,7 @@ class DatabaseSeeder extends Seeder
                 'email' => 'test@example.com',
             ]);
         } catch (Throwable $throwable) {
-            echo 'Test user was not created. Reason: [' . $throwable->getMessage() . ']';
+            echo 'Test user already exists.';
         }
 
         try {
@@ -28,7 +31,7 @@ class DatabaseSeeder extends Seeder
                 'email' => 'guest@example.com',
             ]);
         } catch (Throwable $throwable) {
-            echo 'Guest user was not created. Reason: [' . $throwable->getMessage() . ']';
+            echo 'Guest user already exists.';
         }
 
 

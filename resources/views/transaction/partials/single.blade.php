@@ -10,8 +10,9 @@
                 <p class="block text-gray-700 font-bold mb-2">
                     {{ __('Volume (as used for calculations)') }}:
                 </p>
-                <p class="text-gray-700 text-7xl">
-                    {{ $transaction->{\App\Models\Transaction\Transaction::CALCULATION_COLUMN} ?? 'No data' }} <span class="text-xl">{{ $userBaseCurrency }}</span>
+                <p class="text-gray-700 font-bold text-7xl">
+                    {{ $transaction->{\App\Models\Transaction\Transaction::CALCULATION_COLUMN} ?? 'No data' }} <span
+                        class="text-xl">{{ $userBaseCurrency }}</span>
                 </p>
             </div>
             <div class="mb-4 mt-2">
@@ -19,7 +20,8 @@
                     {{ __('Volume (raw from data source)') }}:
                 </p>
                 <p class="text-gray-700 text-4xl font-bold">
-                    {{ $transaction->raw_volume ?? 'No data' }} <span class="text-xl">{{ $transaction->currency }}</span>
+                    {{ $transaction->raw_volume ?? 'No data' }} <span
+                        class="text-xl">{{ $transaction->currency }}</span>
                 </p>
             </div>
             <div class="mb-4">
@@ -27,24 +29,32 @@
                     {{ __('Category') }}:
                 </p>
                 <p class="text-gray-700 text-xl">
+                @if($transaction->created_at->gt(now()->subMinutes(10)))
+                    <div class="flex items-center w-fit">
+                        @include('icons.loader-sm')
+                        <div class="ml-2">
+                            Categorizing
+                        </div>
+                    </div>
+                @else
                     @if($transaction->category)
-                        @include('components.category.category-badge', ['name' => $transaction->category->name()])
-                    @else
-                        <form action="{{ route('transaction.patch', ['id' => $transaction->id]) }}" method="POST" id="categoryForm">
-                            @csrf
-                            @method('PATCH')
-                            <select name="category_id" id="category_id" class="appearance-none border rounded py-2 px-3 w-1/2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                <option selected>Assign category</option>
-                                {{--@todo --- wtf!!!!!--}}
-                                @foreach(\App\Models\Transaction\Category::orderBy('code')->get() as $category)
-                                    <option value="{{ $category->id }}">
-                                        {{ $category->name() }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </form>
-                    @endif
-                </p>
+                        <details>
+                            <summary class="flex items-center">
+                                @include('components.category.category-badge', ['name' => $transaction->category->name])
+                            </summary>
+                            <div class="mt-4">
+                                @include('transaction.partials.transaction-category-form', [
+                                    'transaction' => $transaction,
+                                ])
+                            </div>
+                        </details>
+                        @else
+                            @include('transaction.partials.transaction-category-form', [
+                                'transaction' => $transaction,
+                            ])
+                        @endif
+                @endif
+                    </p>
             </div>
             <div class="mb-4">
                 <p class="block text-gray-700 font-bold mb-2">

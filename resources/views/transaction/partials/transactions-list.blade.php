@@ -6,6 +6,9 @@
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     {{ __('Transaction Date') }}
                 </th>
+                <th scope="col" class="py-3 pl-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    {{ __('Category') }}
+                </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     {{ __('Volume') }}
                 </th>
@@ -24,14 +27,38 @@
                     <td class="px-6 py-4 whitespace-nowrap">
                         {{ $transaction->transaction_date->format('d.m.Y') }}
                     </td>
+                    <td class="py-4 pl-6 whitespace-nowrap text-sm">
+                        <div class="flex items-center text-gray-500">
+                            @if($transaction->created_at->gt(now()->subMinutes(2)))
+                                <div class="flex items-center w-fit">
+                                    @include('icons.loader-sm')
+                                    <div class="ml-2">
+                                        Categorizing
+                                    </div>
+                                </div>
+                            @else
+                                @if($transaction->category)
+                                    <div class="w-4 h-4 rounded-full shadow pt-1 bg-indigo-500"
+                                         @if($transaction->category->color_hex)
+                                             style="background-color: {{ $transaction->category->color_hex }};"
+                                        @endif
+                                    ></div>
+                                    <div class="ml-3">{{ $transaction->category->name }}</div>
+                                @else
+                                    <div class="bg-gray-200 w-4 h-4 rounded-full shadow pt-1"></div>
+                                    <div class="ml-3">-</div>
+                                @endif
+                            @endif
+                        </div>
+                    </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <strong>{{ $transaction->raw_volume }}</strong> {{ $transaction->currency }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        {{ \App\Services\Helpers\StringHelper::shortenAuto($transaction->description ?? '-', 45) }}
+                        {{ \App\Services\Helpers\StringHelper::shortenAuto($transaction->description ?? '-') }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        {{ \App\Services\Helpers\StringHelper::shortenAuto($transaction->receiver ?? '-', 30) }}
+                        {{ \App\Services\Helpers\StringHelper::shortenAuto($transaction->receiver ?? '-') }}
                     </td>
                 </tr>
             @endforeach

@@ -7,6 +7,7 @@ use App\Filters\Filter;
 use App\Models\Transaction\Persona;
 use App\Models\Transaction\Transaction;
 use App\Services\Helpers\TransactionHelper;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
@@ -17,6 +18,7 @@ class TransactionService
         $transactions = Transaction::applyFilter($filter)
             ->whereUser($user)
             ->orderBy('transaction_date', 'desc')
+            ->with('category')
             ->limit(1000)
             ->get();
 
@@ -53,8 +55,8 @@ class TransactionService
 
     public function create(User $user, array $data): Transaction
     {
-        $decimalVolume = (float) $data['decimal_volume'];
-        $type = (int) $data['type'];
+        $decimalVolume = (float)$data['decimal_volume'];
+        $type = (int)$data['type'];
         $transactionDate = Carbon::parse($data['transaction_date']);
 
         $attributes = [
@@ -76,17 +78,59 @@ class TransactionService
 
     public function getSimilarTransactions(?Transaction $transaction): Collection
     {
-        // @todo - improve search
+        // @todo - improve search, refactor, optimize
         if (!$transaction) {
             return collect();
         }
 
-        return Transaction::whereUser($transaction->user)
+        $search = $transaction->description
+            . ' ' . $transaction->receiver
+            . ' ' . $transaction->sender;
+
+        $separators = ['-', '.', ',', '/', '\\', '--', '(', ')'];
+        $search = str_replace(
+            $separators,
+            ' ',
+            $search
+        );
+
+        $search = explode(' ', $search);
+
+        // Sort by length
+        $search = array_filter($search, fn($s) => strlen($s) > 3);
+        usort($search, fn($a, $b) => strlen($b) - strlen($a));
+
+        // Get max 10 longest
+        $tokens = array_slice($search, 0, 10, true);
+
+        $baseQuery = Transaction::whereUser($transaction->user)
             ->where('id', '!=', $transaction->id)
             ->where('description', 'like', '%' . $transaction->description . '%')
             ->where('receiver', 'like', '%' . $transaction->receiver . '%')
             ->where('sender', 'like', '%' . $transaction->sender . '%')
-            ->limit(10)
-            ->get();
+            ->limit(20);
+
+        $baseQueryClone = clone $baseQuery;
+
+        /** @var Collection $result */
+        $result = $baseQueryClone->get();
+
+        if ($result->count() < 5) {
+            foreach ($tokens as $token) {
+                $onlyLettersToken = preg_replace('/[^A-Za-z\-]/', '', $token);
+
+                $baseQueryClone
+                    ->orWhereRaw('UPPER(description) LIKE ?', ['%' . $onlyLettersToken . '%'])
+                    ->when($transaction->category, fn(Builder $builder) => $builder
+                        ->orWhere('category_id', $transaction->category?->id)
+                    );
+            }
+
+            return $result
+                ->concat($baseQueryClone->get())
+                ->unique('id');
+        } else {
+            return $result;
+        }
     }
 }

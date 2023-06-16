@@ -2,6 +2,7 @@
 
 namespace App\Observers\Transaction;
 
+use App\Jobs\Transaction\SaveTransactionCategoryReference;
 use App\Models\Transaction\Transaction;
 use App\Jobs\Persona\CreateTransactionPersonaAssociation;
 use App\Jobs\Transaction\UpdateUsersPersonalAccountSaldo;
@@ -11,10 +12,15 @@ class TransactionObserver
 {
     public function created(Transaction $transaction): void
     {
-        //@todo - batch jobs
         CreateTransactionPersonaAssociation::dispatch($transaction->id);
         ResolveTransactionCalculationVolume::dispatch($transaction->id);
-        // @todo - this will
-        UpdateUsersPersonalAccountSaldo::dispatchSync($transaction->id);
+        UpdateUsersPersonalAccountSaldo::dispatch($transaction->id);
+    }
+
+    public function updating(Transaction $transaction): void
+    {
+        if($transaction->isDirty('category_id')){
+            SaveTransactionCategoryReference::dispatch($transaction->id);
+        }
     }
 }

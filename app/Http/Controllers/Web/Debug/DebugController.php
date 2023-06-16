@@ -3,17 +3,14 @@
 namespace App\Http\Controllers\Web\Debug;
 
 use App\Http\Controllers\Controller;
-use App\Services\Analytics\AnalyzerResolver;
-use Illuminate\View\View;
 
+/**
+ * @deprecated
+ */
 class DebugController extends Controller
 {
-    public function __construct(private readonly AnalyzerResolver $analyzerResolver) {}
-
-    public function analyzers(): View
+    public function analyzers(): string
     {
-        $analyzersMapping = $this->analyzerResolver->getEnabledAnalyzersMapping();
-        $analyzers = $analyzersMapping->keys();
-        return view('debug.analyzers', compact('analyzers'));
+        return 'deprecated';
     }
 }

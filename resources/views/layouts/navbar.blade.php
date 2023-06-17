@@ -205,12 +205,18 @@
                                         </div>
                                         {{ __('System') }}
                                     </x-dropdown-link>
-                                        <x-dropdown-link class="navLink" :href="route('log-viewer.index')">
-                                            <div class="mr-2">
-                                                @include('icons.sm.logs')
-                                            </div>
-                                            {{ __('Logs') }}
-                                        </x-dropdown-link>
+                                    <x-dropdown-link class="navLink" :href="route('log-viewer.index')">
+                                        <div class="mr-2">
+                                            @include('icons.sm.logs')
+                                        </div>
+                                        {{ __('Logs') }}
+                                    </x-dropdown-link>
+                                    <x-dropdown-link class="navLink" :href="route('file_explorer.index')">
+                                        <div class="mr-2">
+                                            @include('icons.sm.storage')
+                                        </div>
+                                        {{ __('Storage') }}
+                                    </x-dropdown-link>
                                 </x-slot>
                             </x-dropdown>
                         </div>

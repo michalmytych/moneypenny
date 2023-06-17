@@ -1,6 +1,7 @@
-<details class="mt-2" data-source="{{ $url }}">
+<details class="mt-2">
     <summary class="transition bg-gray-100 shadow-sm hover:bg-gray-200 rounded-md cursor-pointer directory-details"
              data-source="{{ $url }}"
+             data-name="{{ $directoryName }}"
              style="min-width: 250px;">
         <div class="p-2 pl-3 font-semibold text-gray-700 flex items-center">
             <div class="text-gray-400">

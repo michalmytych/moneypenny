@@ -10,8 +10,8 @@ Route::prefix('file-explorer')->as('file_explorer.')->group(function () {
     })->name('index');
 
     Route::get('/open', function(Request $request) {
-//        $targetPath = $request->get('path');
-        $targetPath = '/';
+        $targetPath = $request->get('path');
+        $targetPath = str_replace($targetPath, '/', storage_path());
         $render = '';
         $data = [
             'directories' => [],
@@ -28,7 +28,7 @@ Route::prefix('file-explorer')->as('file_explorer.')->group(function () {
         foreach ($data['directories'] as $directory) {
             $render .= view('file_explorer.partials.folder', [
 
-                'url' => $request->get('path') . '/' . $directory,
+                'url' => route('file_explorer.open', ['path' => $request->get('path') . '/' . $directory]),
                 'directoryName' => $directory,
 
             ])->render();
@@ -36,6 +36,10 @@ Route::prefix('file-explorer')->as('file_explorer.')->group(function () {
 
         foreach ($data['files'] as $file) {
             $render .= view('file_explorer.partials.file', ['file' => $file])->render();
+        }
+
+        if ($render === '') {
+            $render .= view('file_explorer.partials.empty-folder')->render();
         }
 
         return response()->json([

@@ -38,6 +38,7 @@ Route::middleware(['auth', 'deny_blocked'])->group(function () {
     require __DIR__ . '/transactions.php';
     require __DIR__ . '/versions.php';
     require __DIR__ . '/categories.php';
+    require __DIR__ . '/file_explorer.php';
 
     Route::get('/', [EmptyUrlController::class, 'redirect'])->name('empty');
 });

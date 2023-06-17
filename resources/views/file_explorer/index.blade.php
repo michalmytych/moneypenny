@@ -9,7 +9,7 @@
             <span class="ml-3 text-gray-400 pt-1">{{ storage_path() }}</span>
         </div>
 
-        <div class="w-1/3">
+        <div class="w-2/3 sm:w-4/5">
             @include('file_explorer.partials.folder', [
                 'url' => route('file_explorer.open', ['path' => storage_path()]),
                 'directoryName' => 'root',
@@ -46,7 +46,7 @@
                                         childDetails.forEach(item => {
                                             item.addEventListener('click', getRenderedItem);
                                         });
-                                        details.classList.remove('directory-details')
+                                        details.classList.remove('directory-details');
                                     });
                             } catch(e) {
                                 //

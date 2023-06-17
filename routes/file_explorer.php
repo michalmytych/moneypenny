@@ -5,24 +5,35 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
 Route::prefix('file-explorer')->as('file_explorer.')->group(function () {
-    Route::get('/', function() {
+    Route::get('/', function () {
         return view('file_explorer.index');
     })->name('index');
 
-    Route::get('/open', function(Request $request) {
+    Route::get('/open', function (Request $request) {
         $targetPath = $request->get('path');
-        $targetPath = str_replace($targetPath, '/', storage_path());
+
+        if ($targetPath === storage_path()) {
+            $targetPath = '/';
+        } else {
+            $targetPath = str_replace(storage_path(), '', $targetPath);
+        }
+
         $render = '';
+
         $data = [
             'directories' => [],
             'files' => [],
         ];
 
         foreach (Storage::directories($targetPath) as $path) {
-            $data['directories'][] = $path;
+            $pathItems = explode('/', $path);
+            $dirName = end($pathItems);
+            $data['directories'][] = str_replace('/', '', $dirName);
         }
         foreach (Storage::files($targetPath) as $path) {
-            $data['files'][] = $path;
+            $pathItems = explode('/', $path);
+            $fileName = end($pathItems);
+            $data['files'][] = str_replace('/', '', $fileName);
         }
 
         foreach ($data['directories'] as $directory) {
@@ -43,6 +54,7 @@ Route::prefix('file-explorer')->as('file_explorer.')->group(function () {
         }
 
         return response()->json([
+            'requested_path' => $request->get('path'),
             'render' => $render
         ]);
 

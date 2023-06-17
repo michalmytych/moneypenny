@@ -9,20 +9,38 @@
             <span class="ml-3 text-gray-400 pt-1">{{ storage_path() }}</span>
         </div>
 
-        <div class="w-2/3 sm:w-4/5">
-            @include('file_explorer.partials.folder', [
-                'url' => route('file_explorer.open', ['path' => storage_path()]),
-                'directoryName' => 'root',
-            ])
+        <div class="grid grid-cols-2">
+            <div>
+                @include('file_explorer.partials.folder', [
+                    'url' => route('file_explorer.open', ['path' => storage_path()]),
+                    'directoryName' => 'root',
+                ])
+            </div>
+
+            <div id="fileDisplay" class="ml-4 mt-2"></div>
         </div>
 
         @push('scripts')
             <script>
                 window.addEventListener('load', () => {
+                    const fileDisplay = document.getElementById('fileDisplay');
                     const directoryDetails = document.querySelectorAll('.directory-details');
-                    directoryDetails.forEach(details => {
 
-                        const getRenderedItem = (e) => {
+                    directoryDetails.forEach(details => {
+                        const getRenderedFile = (e) => {
+                            try {
+                                fetch(e.currentTarget.dataset.source)
+                                    .then(response => response.json())
+                                    .then(json => {
+                                        console.log(json);
+                                        fileDisplay.innerHTML = json.render;
+                                    });
+                            } catch (e) {
+                                //
+                            }
+                        }
+
+                        const getRenderedDirectory = (e) => {
                             details = e.currentTarget;
                             console.log('clicked : [' + e.currentTarget.dataset.name + ']');
                             if (!details.classList.contains('directory-details')) {
@@ -42,9 +60,13 @@
                                         detailsWrapper.appendChild(wrapper);
 
                                         wrapper.innerHTML += json.render;
-                                        const childDetails = wrapper.querySelectorAll('.directory-details');
-                                        childDetails.forEach(item => {
-                                            item.addEventListener('click', getRenderedItem);
+                                        const childDirectoriesDetails = wrapper.querySelectorAll('.directory-details');
+                                        const childFileDetails = wrapper.querySelectorAll('.file-details');
+                                        childDirectoriesDetails.forEach(item => {
+                                            item.addEventListener('click', getRenderedDirectory);
+                                        });
+                                        childFileDetails.forEach(item => {
+                                            item.addEventListener('click', getRenderedFile);
                                         });
                                         details.classList.remove('directory-details');
                                     });
@@ -53,7 +75,7 @@
                             }
                         };
 
-                        details.addEventListener('click', getRenderedItem);
+                        details.addEventListener('click', getRenderedDirectory);
                     });
                 });
             </script>

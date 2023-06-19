@@ -26,15 +26,11 @@ class ImportSettingsTableSeeder extends Seeder
                 'user_id' => User::first()->id,
                 'input_encoding' => 'Windows-1250',
             ],
-            // ...
         ];
 
         foreach ($importSettings as $setting) {
-            // @todo ASAP - rm this hack
-            foreach (User::cursor() as $user) {
-                $setting['user_id'] = $user->id;
-                ImportSetting::create($setting);
-            }
+            $setting['user_id'] = User::first()->id;
+            ImportSetting::create($setting);
         }
     }
 }

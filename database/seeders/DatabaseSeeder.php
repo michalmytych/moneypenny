@@ -16,13 +16,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // @todo - refactor
         try {
             User::factory()->create([
                 'name' => 'Test User',
                 'email' => 'test@example.com',
             ]);
-        } catch (Throwable $throwable) {
-            echo 'Test user already exists.';
+        } catch (Throwable) {
+            echo PHP_EOL . 'Test user already exists.' . PHP_EOL;
         }
 
         try {
@@ -30,8 +31,8 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Guest User',
                 'email' => 'guest@example.com',
             ]);
-        } catch (Throwable $throwable) {
-            echo 'Guest user already exists.';
+        } catch (Throwable) {
+            echo PHP_EOL . 'Guest user already exists.' . PHP_EOL;
         }
 
 

@@ -30,6 +30,7 @@ class FileExplorerController extends Controller
         return Storage::download($fileStoragePath);
     }
 
+    // @todo Move Json routes to api
     public function show(Request $request): JsonResponse
     {
         $storagePath = $request->get('path');

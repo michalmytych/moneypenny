@@ -9,6 +9,6 @@ composer install && \
 composer du && \
 php artisan migrate && \
 npm install && \
+php artisan optimize:clear && \
 npm run build && \
-php artisan moneypenny:create-users-personal-accounts && \
-php artisan optimize:clear
+php artisan moneypenny:create-users-personal-accounts

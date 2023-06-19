@@ -9,6 +9,7 @@ return [
             'notes' => [
                 'File explorer interface for admin',
                 'Log browser view for admin',
+                'Deprecate analyzers logic',
                 'Minor bugs fixes'
             ]
         ],

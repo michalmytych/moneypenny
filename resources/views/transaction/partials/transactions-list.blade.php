@@ -6,7 +6,7 @@
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     {{ __('Transaction Date') }}
                 </th>
-                <th scope="col" class="py-3 pl-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th scope="col" class="py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     {{ __('Category') }}
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -27,7 +27,7 @@
                     <td class="px-6 py-4 whitespace-nowrap">
                         {{ $transaction->transaction_date->format('d.m.Y') }}
                     </td>
-                    <td class="py-4 pl-6 whitespace-nowrap text-sm">
+                    <td class="py-4 whitespace-nowrap text-sm">
                         <div class="flex items-center text-gray-500">
                             @if($transaction->created_at->gt(now()->subMinutes(2)))
                                 <div class="flex items-center w-fit">

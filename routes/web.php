@@ -21,6 +21,7 @@ Route::middleware(['auth', 'deny_blocked'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     require __DIR__ . '/web/admin.php';
+    require __DIR__ . '/web/transactions.php';
     require __DIR__ . '/web/analytics.php';
     require __DIR__ . '/web/budgets.php';
     require __DIR__ . '/web/files.php';
@@ -34,7 +35,6 @@ Route::middleware(['auth', 'deny_blocked'])->group(function () {
     require __DIR__ . '/web/settings.php';
     require __DIR__ . '/web/social.php';
     require __DIR__ . '/web/synchronizations.php';
-    require __DIR__ . '/web/transactions.php';
     require __DIR__ . '/web/versions.php';
     require __DIR__ . '/web/categories.php';
     require __DIR__ . '/web/file_explorer.php';

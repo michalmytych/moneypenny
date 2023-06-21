@@ -37,5 +37,8 @@
         </tbody>
     </table>
 @else
-    <h2 class="font-semibold text-xl">{{ __('No exchange rates') }}</h2>
+    <h2 class="font-semibold text-3xl">{{ __('No exchange rates') }}</h2>
+    <p class="mt-4">
+        No currencies exchanges happened yet.
+    </p>
 @endif

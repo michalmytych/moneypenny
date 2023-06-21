@@ -1,14 +1,7 @@
 <?php
 
-use App\Http\Controllers\Api\Auth\UserController;
-use App\Http\Controllers\Api\MetaController;
-use App\Http\Controllers\Api\Notification\NotificationController;
-use App\Http\Controllers\Api\Profile\ProfileController;
-use App\Http\Controllers\Api\Transaction\Analytics\AnalyticsController;
-use App\Http\Controllers\Api\Transaction\ReportController;
-use App\Http\Controllers\Web\ExchangeRates\ExchangeRateController;
-use App\Http\Controllers\Web\Synchronization\SynchronizationController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Auth\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,46 +19,16 @@ Route::middleware(['deny_blocked'])->as('api.')->group(function () {
     Route::post('/register', [UserController::class, 'register'])->name('register');
 
     Route::group(['middleware' => ['auth:sanctum']], function () {
-        Route::get('/user', [UserController::class, 'user'])->name('user');
-        Route::post('/logout', [UserController::class, 'logout'])->name('logout');
-
-// @todo - rm all related code
-//        Route::prefix('analysis')->as('analysis.')->group(function () {
-//            Route::post('/', [AnalysisController::class, 'analyze'])->name('analyze');
-//        });
-
-        Route::prefix('analytics')->as('analytic.')->group(function() {
-            Route::get('/', [AnalyticsController::class, 'index'])->name('index');
-        });
-
-        Route::prefix('profile')->as('profile.')->group(function() {
-            Route::post('/', [ProfileController::class, 'selectLibraryAvatar'])->name('select_library_avatar');
-        });
-
-        Route::prefix('sync')->as('sync.')->group(function () {
-            Route::post('/', [SynchronizationController::class, 'sync'])->name('synchronize');
-        });
-
-        Route::prefix('exchange-rates')->as('exchange_rates.')->group(function () {
-            Route::get('/', [ExchangeRateController::class, 'index'])->name('index');
-        });
-
-        Route::prefix('notifications')->as('notification.')->group(function () {
-            Route::get('/', [NotificationController::class, 'index'])->name('index');
-        });
+        require __DIR__ . '/api/user.php';
+        require __DIR__ . '/api/analytics.php';
+        require __DIR__ . '/api/profile.php';
+        require __DIR__ . '/api/sync.php';
+        require __DIR__ . '/api/exchange_rates.php';
+        require __DIR__ . '/api/notifications.php';
+        require __DIR__ . '/api/reports.php';
 
         Route::middleware('admin')->group(function () {
-            Route::prefix('meta')->as('meta.')->group(function () {
-                Route::get('processes', [MetaController::class, 'processes'])->name('processes');
-                Route::get('jobs', [MetaController::class, 'jobs'])->name('jobs');
-            });
-        });
-
-        Route::prefix('reports')->as('report.')->group(function () {
-            Route::get('avg-expenditures', [ReportController::class, 'avgExpenditures'])
-                ->name('avg_expenditures');
-            Route::get('avg-incomes', [ReportController::class, 'avgIncomes'])
-                ->name('avg_incomes');
+            require __DIR__ . '/api/admin.php';
         });
     });
 });

@@ -1,16 +1,11 @@
 <?php
 
-use App\Http\Controllers\Web\Debug\DebugController;
 use App\Http\Controllers\Web\ExchangeRates\ExchangeRateController;
 use App\Http\Controllers\Web\Meta\MetaController;
 use App\Http\Controllers\Web\User\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('admin')->group(function () {
-    Route::prefix('debug')->as('debug.')->group(function () {
-        Route::get('/analyzers', [DebugController::class, 'analyzers'])->name('analyzers');
-    });
-
     Route::prefix('users')->as('user.')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('index');
         Route::get('/{id}/confirm-change-role', [UserController::class, 'confirmRoleChange'])

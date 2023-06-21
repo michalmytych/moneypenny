@@ -91,9 +91,4 @@ class ReportService
             ->groupBy('transaction_date')
             ->orderBy('transaction_date', 'ASC');
     }
-
-    public function all(): Collection
-    {
-        return Report::latest()->get();
-    }
 }

@@ -185,19 +185,17 @@
                                     </button>
                                 </x-slot>
                                 <x-slot name="content">
-                                    @if(config('debugging.enabled'))
-                                        <x-dropdown-link class="navLink" :href="route('debug.analyzers')">
-                                            {{ __('Debugging') }}
-                                        </x-dropdown-link>
-                                        <x-dropdown-link class="navLink" :href="route('exchange_rate.index')">
-                                            {{ __('Exchange rates') }}
-                                        </x-dropdown-link>
-                                    @endif
                                     <x-dropdown-link class="navLink" :href="route('user.index')">
                                         <div class="mr-2">
                                             @include('icons.sm.users')
                                         </div>
                                         {{ __('Users') }}
+                                    </x-dropdown-link>
+                                    <x-dropdown-link class="navLink" :href="route('exchange_rate.index')">
+                                        <div class="mr-2">
+                                            @include('icons.sm.currency')
+                                        </div>
+                                        {{ __('Exchange rates') }}
                                     </x-dropdown-link>
                                     <x-dropdown-link class="navLink" :href="route('meta.index')">
                                         <div class="mr-2">
@@ -401,9 +399,6 @@
                 </x-responsive-nav-link>
                 @if(request()->user()?->is_admin)
                     @if(config('debugging.enabled'))
-                        <x-responsive-nav-link class="navLink" :href="route('debug.analyzers')">
-                            {{ __('Debugging') }}
-                        </x-responsive-nav-link>
                         <x-responsive-nav-link class="navLink" :href="route('exchange_rate.index')">
                             {{ __('Exchange rates') }}
                         </x-responsive-nav-link>

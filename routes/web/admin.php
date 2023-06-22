@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Transaction\Categorize\CategorizationController;
 use App\Http\Controllers\Web\ExchangeRates\ExchangeRateController;
 use App\Http\Controllers\Web\Meta\MetaController;
 use App\Http\Controllers\Web\Notification\NotificationController;
@@ -30,6 +31,11 @@ Route::middleware('admin')->group(function () {
     Route::prefix('notifications')->as('notification.')->group(function () {
         Route::get('/console', [NotificationController::class, 'console'])->name('console');
         Route::post('/send', [NotificationController::class, 'send'])->name('send');
+    });
+
+    Route::prefix('categorization')->as('categorization.')->group(function () {
+        Route::get('/index', [CategorizationController::class, 'index'])->name('index');
+        Route::post('/trigger', [CategorizationController::class, 'trigger'])->name('trigger');
     });
 
     Route::prefix('exchange-rates')->as('exchange_rate.')->group(function () {

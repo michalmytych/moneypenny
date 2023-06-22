@@ -221,6 +221,12 @@
                                         </div>
                                         {{ __('Notifications') }}
                                     </x-dropdown-link>
+                                    <x-dropdown-link class="navLink" :href="route('categorization.index')">
+                                        <div class="mr-2">
+                                            @include('icons.sm.category')
+                                        </div>
+                                        {{ __('Categorization') }}
+                                    </x-dropdown-link>
                                 </x-slot>
                             </x-dropdown>
                         </div>

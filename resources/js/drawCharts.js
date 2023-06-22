@@ -1,14 +1,5 @@
 import Chart from 'chart.js/auto';
 
-// window.addEventListener('load', () => {
-//     const chartContextsIds = [
-//         'lastMonthExpenditures',
-//         'expendituresAndIncomesTrend'
-//     ];
-//
-//
-// });
-
 const fadeOutElement = (element) => {
     element.classList.add('fade-out-sm');
 
@@ -40,6 +31,6 @@ const drawChart = (chartContextElementId) => {
 
 export const drawCharts = (chartContextsIds) => {
     chartContextsIds.forEach((contextId) => {
-        drawChart(contextId);
+        drawChart(contextId)
     });
 }

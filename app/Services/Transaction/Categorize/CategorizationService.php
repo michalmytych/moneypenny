@@ -4,6 +4,7 @@ namespace App\Services\Transaction\Categorize;
 
 use App\Models\Transaction\Category;
 use App\Models\Transaction\Transaction;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
 class CategorizationService
@@ -21,5 +22,10 @@ class CategorizationService
     public function getRecategorizationsPending(): bool
     {
         return (boolean) Cache::get(self::PENDING_CATEGORIZATION_CACHE_KEY);
+    }
+
+    public function getUncategorizedTransactions(): Collection
+    {
+        return Transaction::whereNull('category_id')->latest()->get();
     }
 }

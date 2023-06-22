@@ -16,8 +16,13 @@ class CategorizationController extends Controller
     public function index(): View
     {
         $recategorizationsIsRunning = $this->categorizationService->getRecategorizationsPending();
+        $uncategorizedTransactions = $this->categorizationService->getUncategorizedTransactions();
         $stats = $this->categorizationService->getStats();
-        return view('categorization.index', compact('stats', 'recategorizationsIsRunning'));
+
+        return view(
+            'categorization.index',
+            compact('stats', 'recategorizationsIsRunning', 'uncategorizedTransactions')
+        );
     }
 
     public function trigger(): RedirectResponse

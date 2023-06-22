@@ -62,6 +62,13 @@
                 <canvas id="categorizedPercentage" data-route="{{ route('api.analytic.index', ['chart_id' => 'categorizedPercentage']) }}"></canvas>
             </div>
         </div>
+
+        <div class="mt-12">
+            <h2 class="text-black font-bold text-3xl pt-7">{{ __('Uncategorized transactions') }}</h2>
+            <div class="mt-6 pb-24">
+                @include('transaction.partials.transactions-list', ['transactions' => $uncategorizedTransactions])
+            </div>
+        </div>
     </section>
 
     @push('scripts')

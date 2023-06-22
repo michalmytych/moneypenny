@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Web\ExchangeRates\ExchangeRateController;
 use App\Http\Controllers\Web\Meta\MetaController;
+use App\Http\Controllers\Web\Notification\NotificationController;
 use App\Http\Controllers\Web\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,11 @@ Route::middleware('admin')->group(function () {
             ->name('unblock');
         Route::get('/{id}', [UserController::class, 'show'])
             ->name('show');
+    });
+
+    Route::prefix('notifications')->as('notification.')->group(function () {
+        Route::get('/console', [NotificationController::class, 'console'])->name('console');
+        Route::post('/send', [NotificationController::class, 'send'])->name('send');
     });
 
     Route::prefix('exchange-rates')->as('exchange_rate.')->group(function () {

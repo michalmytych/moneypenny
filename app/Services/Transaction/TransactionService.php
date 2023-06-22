@@ -19,7 +19,6 @@ class TransactionService
             ->whereUser($user)
             ->orderBy('transaction_date', 'desc')
             ->with('category')
-            ->limit(1000)
             ->get();
 
         $filterableColumns = Transaction::getFilterableColumns();

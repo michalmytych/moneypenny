@@ -12,7 +12,7 @@ class UserObserver
     public function created(User $user): void
     {
         // @todo - regular dispatch
-        CreateUserSettings::dispatchSync($user);
+        CreateUserSettings::dispatch($user);
 
         // @todo - move to service
         PersonalAccount::firstOrCreate([

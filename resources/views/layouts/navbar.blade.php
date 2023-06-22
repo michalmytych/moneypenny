@@ -215,6 +215,12 @@
                                         </div>
                                         {{ __('Storage') }}
                                     </x-dropdown-link>
+                                    <x-dropdown-link class="navLink" :href="route('notification.console')">
+                                        <div class="mr-2">
+                                            @include('icons.sm.notification')
+                                        </div>
+                                        {{ __('Notifications') }}
+                                    </x-dropdown-link>
                                 </x-slot>
                             </x-dropdown>
                         </div>

@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Web\Transaction;
 
 use App\Filters\Filter;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Web\Transaction\CreateRequest;
-use App\Http\Requests\Web\Transaction\PatchRequest;
-use App\Models\Transaction\Transaction;
-use App\Services\Transaction\Currency\CurrencyService;
-use App\Services\Transaction\TransactionService;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use App\Models\Transaction\Transaction;
+use App\Services\Transaction\TransactionService;
+use App\Http\Requests\Web\Transaction\PatchRequest;
+use App\Http\Requests\Web\Transaction\CreateRequest;
+use App\Services\Transaction\Currency\CurrencyService;
 
 class TransactionController extends Controller
 {
@@ -35,6 +35,7 @@ class TransactionController extends Controller
         $transaction = $this->transactionService->findOrFail($id, $user);
         $similarTransactions = $this->transactionService->getSimilarTransactions($transaction);
         $userBaseCurrency = $this->currencyService->resolveCalculationCurrency($user);
+
         return view('transaction.show', compact('transaction', 'similarTransactions', 'userBaseCurrency'));
     }
 
@@ -43,6 +44,7 @@ class TransactionController extends Controller
         $user = $request->user();
         $data = $request->validated();
         $this->transactionService->create($user, $data);
+
         return redirect()->to(route('transaction.index'));
     }
 
@@ -51,6 +53,7 @@ class TransactionController extends Controller
         $transaction = Transaction::findOrFail($transactionId);
         $data = $request->validated();
         $transaction->update($data);
+
         return redirect()->to(route('transaction.show', ['id' => $transaction->id]));
     }
 }

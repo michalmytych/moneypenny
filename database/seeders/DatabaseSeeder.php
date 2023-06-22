@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
             ImportSettingsTableSeeder::class,
             ColumnsMappingsTableSeeder::class,
             CategoriesTableSeeder::class,
-            // TransactionsTableSeeder::class,
+            TransactionsTableSeeder::class,
             // FilesTableSeeder::class,
         ]);
     }

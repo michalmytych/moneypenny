@@ -24,7 +24,8 @@
 @include('layouts.navbar')
 
 <div class="min-h-screen bg-gray-100 pt-2">
-    <!-- Page Content -->
+    @include('layouts.partials.session-messages')
+
     <main id="pageContent" class="max-w-7xl mx-auto fade-in">
         {{ $slot }}
     </main>

@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "barryvdh/laravel-debugbar": "^3.9",
         "doctrine/dbal": "^3.6",
         "guzzlehttp/guzzle": "^7.2",
         "ivanomatteo/laravel-device-tracking": "^0.2.1",

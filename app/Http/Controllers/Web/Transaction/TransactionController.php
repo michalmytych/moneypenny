@@ -45,8 +45,12 @@ class TransactionController extends Controller
         $data = $request->validated();
         $this->transactionService->create($user, $data);
 
-        return redirect()->to(route('transaction.index'));
-    }
+        return redirect()
+            ->to(route('transaction.index'))
+            ->with(config('session.flash_messages_key'), [
+                __('Added new transaction.')
+            ]);
+        }
 
     public function patch(mixed $transactionId, PatchRequest $request): RedirectResponse
     {

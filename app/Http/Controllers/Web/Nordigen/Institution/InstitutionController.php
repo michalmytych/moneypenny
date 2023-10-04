@@ -7,17 +7,30 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Throwable;
 
 class InstitutionController extends Controller
 {
-    public function __construct(private readonly TransactionSyncServiceInterface $transactionSyncService) {}
-
-    public function index(Request $request): View
+    public function __construct(private readonly TransactionSyncServiceInterface $transactionSyncService)
     {
-        $user = $request->user();
-        $institutions = $this->transactionSyncService->provideSupportedInstitutionsData();
-        $agreements = $this->transactionSyncService->getAgreements($user);
-        return view('nordigen.institution.index', compact('institutions', 'agreements'));
+    }
+
+    public function index(Request $request): View|RedirectResponse
+    {
+        try {
+            $user = $request->user();
+            $institutions = $this->transactionSyncService->provideSupportedInstitutionsData();
+            $agreements = $this->transactionSyncService->getAgreements($user);
+
+            return view('nordigen.institution.index', compact('institutions', 'agreements'));
+
+        } catch (Throwable) {
+
+            return back()
+                ->with(config('session.flash_errors_key'), [
+                    __('Cannot fetch institutions data.')
+                ]);
+        }
     }
 
     public function select(mixed $id, Request $request): View
@@ -26,7 +39,9 @@ class InstitutionController extends Controller
         $selectedInstitution = $this->transactionSyncService->getInstitutionByExternalId($id);
         $existingAgreement = $this->transactionSyncService->getExistingAgreementForInstitution($user, $id);
 
-        return view('nordigen.institution.select', [
+        return view(
+            'nordigen.institution.select',
+            [
                 'institution' => $selectedInstitution,
                 'existingAgreement' => $existingAgreement,
             ]

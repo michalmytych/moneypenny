@@ -198,4 +198,17 @@ return [
 
     'same_site' => 'lax',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Session keys
+    |--------------------------------------------------------------------------
+    |
+    | These are the sessions keys for flash messages and errors.
+    | Use these while calling ->with($key, $value) method on
+    | HTTP response in controllers.
+    |
+    */
+
+    'flash_messages_key' => 'sessionMessages',
+    'flash_errors_key' => 'sessionErrors',
 ];

@@ -2,7 +2,7 @@
 /** @noinspection PhpUndefinedMethodInspection */
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
-namespace Tests\Feature\Transaction;
+namespace Tests\Feature\Web\Transaction;
 
 use Tests\TestCase;
 use App\Models\User;

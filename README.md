@@ -34,6 +34,14 @@ npm run build
 npm run dev
 ```
 
+__Setup tests__
+```bash
+# Copy .env.test.example config and change it
+# accordingly to your local setup
+cp .env.testing.example .env.testing
+php artisan optimize:clear --env=testing
+```
+
 __Other usefull commands__
 ```
 Available commands for the "moneypenny" namespace:

@@ -16,6 +16,8 @@ use App\Http\Controllers\Api\Auth\UserController;
 
 Route::middleware(['deny_blocked'])->as('api.')->group(function () {
     Route::post('/login', [UserController::class, 'login'])->name('login');
+    Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+    Route::get('/user', [UserController::class, 'user'])->name('user');
     Route::post('/register', [UserController::class, 'register'])->name('register');
 
     Route::group(['middleware' => ['auth:sanctum']], function () {

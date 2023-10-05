@@ -10,13 +10,13 @@ class BudgetService
 {
     public function __construct(
         private readonly DefaultBudgetService $defaultBudgetService,
-        private readonly BudgetConsumtptionService $budgetConsumtptionService
+        private readonly BudgetConsumtptionService $budgetConsumptionService
     ) {}
 
     public function allWithConsumption(User $user): Collection
     {
         $this->defaultBudgetService->getOrCreateBudgetsForUser($user);
-        return $this->budgetConsumtptionService->getBudgetsConsumptionByUser($user);
+        return $this->budgetConsumptionService->getBudgetsConsumptionByUser($user);
     }
 
     public function create(mixed $user, mixed $data): Budget

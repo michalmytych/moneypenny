@@ -197,7 +197,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
         App\Providers\MixinServiceProvider::class,
-
+        App\Providers\QueryCachingServiceProvider::class,
         /*
          * Moneypenny integrations specific service providers...
          */

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Transaction\Categorize;
+namespace App\Http\Controllers\Web\Transaction\Categorize;
 
-use Illuminate\View\View;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Http\RedirectResponse;
 use App\Jobs\Transaction\RecategorizeAllTransactions;
 use App\Services\Transaction\Categorize\CategorizationService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\View\View;
 
 class CategorizationController extends Controller
 {
@@ -29,6 +29,7 @@ class CategorizationController extends Controller
     {
         RecategorizeAllTransactions::dispatch();
         Cache::set(CategorizationService::PENDING_CATEGORIZATION_CACHE_KEY, 1, 2 * 60);
+
         return redirect(route('categorization.index'));
     }
 }

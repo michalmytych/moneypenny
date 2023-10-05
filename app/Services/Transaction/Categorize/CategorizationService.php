@@ -2,10 +2,10 @@
 
 namespace App\Services\Transaction\Categorize;
 
-use App\Models\Transaction\Category;
-use App\Models\Transaction\Transaction;
 use Illuminate\Support\Collection;
+use App\Models\Transaction\Category;
 use Illuminate\Support\Facades\Cache;
+use App\Models\Transaction\Transaction;
 
 class CategorizationService
 {
@@ -14,8 +14,17 @@ class CategorizationService
     /** @noinspection PhpUndefinedMethodInspection */
     public function getStats(): array
     {
+        $categorizedPercentage = 0;
+        $allTransactionsCount = Transaction::count();
+
+        if ($allTransactionsCount > 0) {
+            $categorizedPercentage = Category::count() > 0
+                ? Transaction::whereNotNull('category_id')->count() / $allTransactionsCount
+                : 0;
+        }
+
         return [
-            'categorized_percent' => Category::count() > 0 ? Transaction::whereNotNull('category_id')->count() / Transaction::count() : 0,
+            'categorized_percent' => $categorizedPercentage,
         ];
     }
 

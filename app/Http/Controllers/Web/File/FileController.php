@@ -2,28 +2,24 @@
 
 namespace App\Http\Controllers\Web\File;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Web\File\FileUploadRequest;
-use App\Models\File;
+use Illuminate\View\View;
+use Illuminate\Http\Request;
 use App\Services\File\FileService;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use App\Services\File\FileUploadService;
-use App\Services\File\ProfileFileService;
-use App\Services\File\TransactionFileService;
 use App\Services\Import\ColumnMappingService;
 use App\Services\Import\ImportSettingService;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use Illuminate\View\View;
-use Throwable;
+use App\Http\Requests\Web\File\FileUploadRequest;
 
 class FileController extends Controller
 {
     public function __construct(
-        private readonly FileService            $fileService,
-        private readonly FileUploadService      $fileUploadService,
-        private readonly ColumnMappingService   $columnMappingService,
-        private readonly ImportSettingService   $importSettingService
+        private readonly FileService          $fileService,
+        private readonly FileUploadService    $fileUploadService,
+        private readonly ColumnMappingService $columnMappingService,
+        private readonly ImportSettingService $importSettingService
     )
     {
     }
@@ -40,7 +36,6 @@ class FileController extends Controller
 
     public function show(mixed $id, Request $request): View
     {
-
         return view('file.show', [
             'file' => $this->fileService->findOrFail($id, $request->user()),
         ]);

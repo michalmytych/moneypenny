@@ -37,7 +37,6 @@ Route::middleware(['auth', 'deny_blocked'])->group(function () {
     require __DIR__ . '/web/synchronizations.php';
     require __DIR__ . '/web/versions.php';
     require __DIR__ . '/web/categories.php';
-    require __DIR__ . '/web/file_explorer.php';
 
     Route::get('/', [EmptyUrlController::class, 'redirect'])->name('empty');
 });

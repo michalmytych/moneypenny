@@ -46,7 +46,8 @@ class HomePageService implements HomePageServiceInterface
                     ->transactionSyncService
                     ->getAgreements($user)
                     ->first(),
-                'transactions' => Transaction::whereUser($user)
+                'transactions' => Transaction::with('category')
+                    ->whereUser($user)
                     ->orderByTransactionDate()
                     ->limit(10)
                     ->get(),

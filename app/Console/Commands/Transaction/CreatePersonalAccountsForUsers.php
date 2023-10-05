@@ -4,8 +4,7 @@ namespace App\Console\Commands\Transaction;
 
 use App\Models\User;
 use Illuminate\Console\Command;
-use App\Models\Transaction\PersonalAccount;
-use App\Services\Transaction\PersonalAccount\SaldoService;
+use App\Services\Transaction\PersonalAccount\PersonalAccountService;
 
 class CreatePersonalAccountsForUsers extends Command
 {
@@ -13,20 +12,12 @@ class CreatePersonalAccountsForUsers extends Command
 
     protected $description = 'Create personal accounts records for existing users.';
 
-    public function handle(SaldoService $saldoService): int
+    public function handle(PersonalAccountService $accountService): int
     {
         $this->info("Calculating user's default account saldo...");
 
         foreach (User::cursor() as $user) {
-            // @todo - move to service
-            /** @var User $user */
-            $account = PersonalAccount::firstOrCreate([
-                'user_id' => $user->id
-            ], [
-                'value' => $saldoService->calculate($user),
-                'user_id' => $user->id,
-                'name' => 'Default',
-            ]);
+            $account = $accountService->createForUser($user);
 
             $this->line("Account saldo: $account->value PLN");
         }

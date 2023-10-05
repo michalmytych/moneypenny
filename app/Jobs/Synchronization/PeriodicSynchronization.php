@@ -21,14 +21,14 @@ class PeriodicSynchronization implements ShouldQueue
 
     public function handle(NotificationBroadcastService $notificationBroadcastService): void
     {
-        $lastSuccesfullSync = Synchronization::query()
+        $lastSuccessfulSync = Synchronization::query()
             ->where('status', Synchronization::SYNC_STATUS_SUCCEEDED)
             ->latest()
             ->get()
             ->first();
 
         /** @var Carbon $c */
-        $c = $lastSuccesfullSync->created_at;
+        $c = $lastSuccessfulSync->created_at;
 
         if (now()->diffInHours($c) > 4) {
             // @todo refactor

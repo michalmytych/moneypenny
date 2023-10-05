@@ -9,7 +9,7 @@ use App\Models\User;
 use App\Models\Transaction\Transaction;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class TransactionControllerTest extends TestCase
+class TransactionTest extends TestCase
 {
     use RefreshDatabase;
 

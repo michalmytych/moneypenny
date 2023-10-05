@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Web\File;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Web\File\FileUploadRequest;
 use App\Models\File;
 use App\Services\File\FileService;
+use App\Services\File\FileUploadService;
 use App\Services\File\ProfileFileService;
 use App\Services\File\TransactionFileService;
 use App\Services\Import\ColumnMappingService;
@@ -19,8 +21,7 @@ class FileController extends Controller
 {
     public function __construct(
         private readonly FileService            $fileService,
-        private readonly ProfileFileService     $profileFileService,
-        private readonly TransactionFileService $transactionFileService,
+        private readonly FileUploadService      $fileUploadService,
         private readonly ColumnMappingService   $columnMappingService,
         private readonly ImportSettingService   $importSettingService
     )
@@ -39,54 +40,23 @@ class FileController extends Controller
 
     public function show(mixed $id, Request $request): View
     {
-        $user = $request->user();
+
         return view('file.show', [
-            'file' => $this->fileService->findOrFail($id, $user),
+            'file' => $this->fileService->findOrFail($id, $request->user()),
         ]);
     }
 
     /**
      * @throws ValidationException
      */
-    public function upload(Request $request): RedirectResponse
+    public function upload(FileUploadRequest $request): RedirectResponse
     {
+        $data = $request->validated();
         $user = $request->user();
-        $fileType = $request->input('type');
+        $file = $request->file('file');
 
-        if ($fileType && $fileType === File::USER_AVATAR) {
-            $request->validate([
-                'file' => 'required|mimes:jpeg|max:6000'
-            ]);
+        $this->fileUploadService->upload($user, $file, $data);
 
-            $this->profileFileService->uploadAvatar(
-                $request->file('file'),
-                $request->user()->id
-            );
-
-            return redirect()->route('profile.edit');
-        }
-
-        $request->validate([
-            'file' => 'required',
-            'import_setting_id' => 'required|exists:import_settings,id',
-            'columns_mapping_id' => 'required|exists:columns_mappings,id',
-        ]);
-
-        try {
-            // @todo - better error handling
-            $this->transactionFileService->uploadTransactions(
-                $request->file('file'),
-                $request->input('import_setting_id'),
-                $request->input('columns_mapping_id'),
-                $user
-            );
-
-        } catch(Throwable) {
-            throw ValidationException::withMessages([
-                'file' => 'Invalid file, please check import configuration.'
-            ]);
-        }
-
-        return redirect()->route('file.index');
+        return redirect()->back();
     }
 }

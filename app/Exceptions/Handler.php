@@ -2,11 +2,8 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Throwable;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
@@ -55,14 +52,6 @@ class Handler extends ExceptionHandler
      * i.e: specifies
      *      Accept: application/json
      * in its header
-     *
-     * @param Request $request
-     * @param Throwable $e
-     * @return JsonResponse|Response|\Symfony\Component\HttpFoundation\Response
-     * @throws Throwable
-     * @todo - check if it works
-     *
-     * @noinspection PhpMissingReturnTypeInspection
      */
     public function render($request, Throwable $e)
     {
@@ -72,19 +61,25 @@ class Handler extends ExceptionHandler
                 $this->getExceptionHTTPStatusCode($e)
             );
         }
+
         return parent::render($request, $e);
     }
 
-    protected function getJsonMessage($e): array
+    protected function getJsonMessage(Throwable $throwable): array
     {
         return [
             'status' => 'false',
-            'message' => $e->getMessage()
+            'message' => $throwable->getMessage()
         ];
     }
 
-    protected function getExceptionHTTPStatusCode($e){
-        return method_exists($e, 'getStatusCode') ?
-            $e->getStatusCode() : 500;
+    protected function getExceptionHTTPStatusCode($e): int
+    {
+
+        if ($e instanceof \Illuminate\Validation\ValidationException) {
+            return 422;
+        }
+
+        return method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500;
     }
 }

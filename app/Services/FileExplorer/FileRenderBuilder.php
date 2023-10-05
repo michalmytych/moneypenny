@@ -87,7 +87,7 @@ class FileRenderBuilder
         return view('file_explorer.partials.video-file', [
             'fileName' => $this->fileName,
             'fileExtension' => $extension,
-            'src' => route('file_explorer.get', ['path' => $this->storageFilePath])
+            'src' => route('api.file_explorer.get', ['path' => $this->storageFilePath])
         ])->render();
     }
 
@@ -104,7 +104,7 @@ class FileRenderBuilder
         $this->fileType = self::FILE_TYPE_IMAGE;
         return view('file_explorer.partials.image-file', [
             'fileName' => $this->fileName,
-            'src' => route('file_explorer.get', ['path' => $this->storageFilePath])
+            'src' => route('api.file_explorer.get', ['path' => $this->storageFilePath])
         ])->render();
     }
 

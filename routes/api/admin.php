@@ -10,7 +10,6 @@ Route::prefix('meta')->as('meta.')->group(function () {
 });
 
 Route::prefix('file-explorer')->as('file_explorer.')->group(function () {
-    // @todo ASAP - secure routes
     Route::get('/get', [FileExplorerController::class, 'get'])->name('get');
     Route::get('/show', [FileExplorerController::class, 'show'])->name('show');
     Route::get('/open', [FileExplorerController::class, 'open'])->name('open');

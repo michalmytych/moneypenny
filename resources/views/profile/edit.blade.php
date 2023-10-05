@@ -22,7 +22,7 @@
                         </div>
                         <div class="flex-col justify-center">
                             <div id="avatarForm" class="flex-col mt-2 bg-gray-100 hidden rounded-lg p-2 shadow-md mb-6 pb-2">
-                                <form action="{{ route('file.upload') }}" method="POST" enctype="multipart/form-data">
+                                <form id="_avatarForm" action="{{ route('file.upload') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <input type="hidden" name="type" value="{{ \App\Models\File::USER_AVATAR }}">
 
@@ -31,7 +31,7 @@
                                     </div>
 
                                     <div class="text-center mt-5">
-                                        <x-primary-button>{{ __('Upload') }}</x-primary-button>
+                                        <x-primary-button id="uploadButton">{{ __('Upload') }}</x-primary-button>
                                     </div>
                                 </form>
                             </div>
@@ -44,13 +44,13 @@
                                         'userUploadedAvatar' => request()->user()?->getAvatarPath()
                                     ])
                                 </div>
-                                <span class="ml-2 hover:underline">Select avatar</span>
+                                <span class="ml-2 hover:underline">{{ __('Select avatar') }}</span>
                             </div>
                             <div class="flex mt-2 justify-center cursor-pointer hover:text-gray-500" id="changeAvatarFormTrigger">
                                 <div class="relative" style="top: 1px;">
                                     @include('icons.edit')
                                 </div>
-                                <span class="ml-2 hover:underline">Upload avatar</span>
+                                <span class="ml-2 hover:underline">{{ __('Upload avatar') }}</span>
                             </div>
                             <x-input-error :messages="$errors->get('file')" class="mt-2" />
                         </div>
@@ -142,12 +142,13 @@
     @push('scripts')
         <script>
             window.addEventListener('load', () => {
-                const uploadForm = document.getElementById('uploadForm');
+                const _avatarForm = document.getElementById('_avatarForm');
                 const uploadButton = document.getElementById('uploadButton');
-                const loaderWraper = document.getElementById('loaderWraper');
-                uploadForm.addEventListener('submit', () => {
+                const loaderWrapper = document.getElementById('loaderWrapper');
+                _avatarForm.addEventListener('submit', () => {
+                    alert('HELLLO');
                     uploadButton.disabled = 'true';
-                    loaderWraper.style.visibility = 'visible';
+                    loaderWrapper.style.visibility = 'visible';
                 });
             });
         </script>

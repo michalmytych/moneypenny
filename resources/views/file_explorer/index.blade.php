@@ -28,9 +28,8 @@
                     directoryDetails.forEach(details => {
                         const getRenderedFile = (e) => {
                             try {
-                                fetch(details.dataset.source, {
+                                fetch(e.currentTarget.dataset.source, {
                                         headers: {
-                                            "Content-Type": "application/json",
                                             'Accept-Type': 'application/json',
                                             'X-XSRF-TOKEN': decodeURIComponent(getCookie('XSRF-TOKEN')),
                                             'Authorization': `Bearer ${window.localStorage.getItem('SANCTUM_API_TOKEN')}`
@@ -45,7 +44,7 @@
                                             render = json.render;
                                         }
 
-                                        fileDisplay.innerHTML = json.render;
+                                        fileDisplay.innerHTML = render;
                                     });
                             } catch (e) {
                                 //
@@ -64,7 +63,6 @@
                             try {
                                 fetch(details.dataset.source, {
                                         headers: {
-                                            "Content-Type": "application/json",
                                             'Accept-Type': 'application/json',
                                             'X-XSRF-TOKEN': decodeURIComponent(getCookie('XSRF-TOKEN')),
                                             'Authorization': `Bearer ${window.localStorage.getItem('SANCTUM_API_TOKEN')}`

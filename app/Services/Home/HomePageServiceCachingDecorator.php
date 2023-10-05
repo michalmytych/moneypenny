@@ -4,11 +4,15 @@ namespace App\Services\Home;
 
 use App\Models\User;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
+use App\Services\Cache\CacheAdapterService;
 
 readonly class HomePageServiceCachingDecorator implements HomePageServiceInterface
 {
-    public function __construct(private HomePageService $homePageService)
+    public function __construct(
+        private HomePageService $homePageService,
+        // @todo - implement everywhere instead of using Cache facade directly
+        private CacheAdapterService $cacheAdapterService
+    )
     {
         // @todo write adapter for laravel cache and inject it through interface
     }
@@ -17,13 +21,13 @@ readonly class HomePageServiceCachingDecorator implements HomePageServiceInterfa
     {
         $cacheKey = 'home_page_data_user:' . $user->id;
 
-        if (Cache::missing($cacheKey)) {
+        if ($this->cacheAdapterService->missing($cacheKey)) {
             $homePageData = $this->homePageService->getHomeData($user);
-            Cache::set($cacheKey, $homePageData);
+            $this->cacheAdapterService->set($cacheKey, $homePageData);
 
             return $homePageData;
         }
 
-        return Cache::get($cacheKey);
+        return $this->cacheAdapterService->get($cacheKey);
     }
 }

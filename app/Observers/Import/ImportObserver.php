@@ -6,9 +6,9 @@ use Throwable;
 use App\Models\Import\Import;
 use App\Services\Transaction\Category\CategorizeTransactionService;
 
-class ImportObserver
+readonly class ImportObserver
 {
-    public function __construct(private readonly CategorizeTransactionService $categorizeTransactionService) {}
+    public function __construct(private CategorizeTransactionService $categorizeTransactionService) {}
 
     /**
      * @throws Throwable

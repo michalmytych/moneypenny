@@ -12,16 +12,16 @@ use App\Services\Transaction\Category\CategorizeTransactionService;
 class CategorizeAllTransactionsDebug extends Command
 {
     protected $signature = 'moneypenny:categorize-all-transactions-debug
-                            {?--only-uncategorized : Whether only uncathegorized transactions should be taken into account.}';
+                            {?--only-uncategorized : Whether only uncategorized transactions should be taken into account.}';
 
     protected $description = 'Categorize all transactions with debug info.';
 
     public function handle(CategorizeTransactionService $categorizeTransactionService): void
     {
         $chunkSize = 100;
+        $transactionBaseQuery = Transaction::query();
         $transactionsTotalCount = Transaction::count();
         $selectedToCategorizationCount = $transactionsTotalCount;
-        $transactionBaseQuery = Transaction::query();
 
         if ($this->hasOption('only-uncategorized')) {
             $transactionBaseQuery = Transaction::whereNull('category_id');

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Web\Import;
 
-use App\Http\Controllers\Controller;
-use App\Services\Import\ColumnMappingService;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use App\Services\Import\ColumnMappingService;
 
 class ColumnsMappingController extends Controller
 {
@@ -18,6 +18,7 @@ class ColumnsMappingController extends Controller
     {
         $user = $request->user();
         $columnsMappings = $this->columnMappingService->all($user);
+
         return view('import.columns_mapping.index', compact('columnsMappings'));
     }
 

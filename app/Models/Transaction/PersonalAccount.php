@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * @method static firstWhere(string $string, mixed $id)
+ * @property mixed $value
  */
 class PersonalAccount extends Model
 {

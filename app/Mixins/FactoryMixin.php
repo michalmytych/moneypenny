@@ -3,8 +3,8 @@
 namespace App\Mixins;
 
 use Closure;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @property Model $model

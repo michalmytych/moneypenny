@@ -52,7 +52,6 @@ Available commands for the "moneypenny" namespace:
   moneypenny:create-admin-user                          Create new admin user account.
   moneypenny:create-users-personal-accounts             Create personal accounts records for existing users.
   moneypenny:create-users-settings                      Create accounts settings for existing users.
-  moneypenny:generate-reports                           Generate reports for currently stored transactions.
   moneypenny:pull-exchange-rates                        Fetch history exchange rates from external api for currently stored transactions
   moneypenny:saldo                                      Calculate users's current saldo.
   moneypenny:send-app-notification                      Send application notifification via notification broadcasting service.

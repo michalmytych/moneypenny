@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Web\Home;
 
+use Illuminate\View\View;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Home\HomePageServiceInterface;
-use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class HomeController extends Controller
 {

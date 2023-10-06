@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Models\Traits\BelongsToUser;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @property string $name

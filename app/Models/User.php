@@ -4,13 +4,13 @@ namespace App\Models;
 
 use App\Models\Auth\Settings;
 use App\Models\Traits\HasAvatar;
+use Laravel\Sanctum\HasApiTokens;
 use App\Models\Transaction\Budget;
+use Illuminate\Notifications\Notifiable;
 use App\Models\Transaction\PersonalAccount;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use IvanoMatteo\LaravelDeviceTracking\Traits\UseDevices;

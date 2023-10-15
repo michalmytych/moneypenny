@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers\Web\User;
 
-use App\Models\Auth\Settings;
-use App\Models\Import\ColumnsMapping;
-use App\Models\Import\Import;
-use App\Models\Import\ImportSetting;
-use App\Models\Nordigen\EndUserAgreement;
-use App\Models\Nordigen\Requisition;
-use App\Models\Synchronization\Account;
-use App\Models\Synchronization\Synchronization;
-use App\Models\Transaction\Transaction;
 use App\Models\User;
-use App\Services\Auth\Device\DeviceService;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use App\Models\Auth\Settings;
+use App\Models\Import\Import;
 use App\Http\Controllers\Controller;
+use App\Models\Import\ImportSetting;
+use App\Models\Nordigen\Requisition;
+use Illuminate\Http\RedirectResponse;
+use App\Models\Import\ColumnsMapping;
+use App\Models\Transaction\Transaction;
+use App\Models\Synchronization\Account;
+use App\Models\Nordigen\EndUserAgreement;
+use App\Services\Auth\Device\DeviceService;
+use App\Models\Synchronization\Synchronization;
 
 class UserController extends Controller
 {
@@ -69,18 +69,21 @@ class UserController extends Controller
     public function confirmRoleChange(mixed $id): View
     {
         $user = User::findOrFail($id);
+
         return view('admin.users.confirm-role-change', compact('user'));
     }
 
     public function confirmDelete(mixed $id): View
     {
         $user = User::findOrFail($id);
+
         return view('admin.users.confirm-delete', compact('user'));
     }
 
     public function confirmBlock(mixed $id): View
     {
         $user = User::findOrFail($id);
+
         return view('admin.users.confirm-block', compact('user'));
     }
 
@@ -91,13 +94,13 @@ class UserController extends Controller
         $role = $request->input('role');
         $user->is_admin = false;
 
-        if ($role === 'ADMIN') {        // @todo - find a better way
+        if ($role === 'ADMIN') { // @todo - find a better way
             $user->is_admin = true;
         }
 
         $user->save();
 
-        return redirect()->to(route('user.index'));
+        return to_route('user.index');
     }
 
     public function block(mixed $id): RedirectResponse
@@ -106,7 +109,7 @@ class UserController extends Controller
         $user->is_blocked = true;
         $user->save();
 
-        return redirect()->to(route('user.index'));
+        return to_route('user.index');
     }
 
     public function unblock(mixed $id): RedirectResponse
@@ -115,7 +118,7 @@ class UserController extends Controller
         $user->is_blocked = false;
         $user->save();
 
-        return redirect()->to(route('user.index'));
+        return to_route('user.index');
     }
 
     public function delete(mixed $id): RedirectResponse
@@ -123,6 +126,6 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect()->to(route('user.index'));
+        return to_route('user.index');
     }
 }

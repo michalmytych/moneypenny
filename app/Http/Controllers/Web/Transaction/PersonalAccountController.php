@@ -13,6 +13,7 @@ class PersonalAccountController extends Controller
     {
         // @todo - handle editing multiplte personal account saldos
         $personalAccount = $request->user()->personalAccounts()->first();
+
         return view('personal_account.edit', [
             'personalAccount' => $personalAccount
         ]);
@@ -28,6 +29,7 @@ class PersonalAccountController extends Controller
         $personalAccount->update([
             'value' => $request->input('value')
         ]);
-        return redirect()->to(route('home'));
+
+        return to_route('home');
     }
 }

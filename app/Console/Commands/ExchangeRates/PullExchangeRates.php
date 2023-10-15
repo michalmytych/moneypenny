@@ -13,7 +13,7 @@ class PullExchangeRates extends Command
 
     protected $description = 'Fetch history exchange rates from external api for currently stored transactions';
 
-    public function handle(ExchangeRatesServiceInterface $exchangeRatesService)
+    public function handle(ExchangeRatesServiceInterface $exchangeRatesService): void
     {
         $defaultCurrency = config('moneypenny.base_calculation_currency');
 

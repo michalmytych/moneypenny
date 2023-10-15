@@ -53,6 +53,7 @@ class InstitutionController extends Controller
         $user = $request->user();
         $agreements = $this->transactionSyncService->getAgreementsByInstitution($user, $id);
         $institution = $this->transactionSyncService->getInstitutionByExternalId($id);
+
         return view('nordigen.institution.agreements', compact('agreements', 'institution'));
     }
 
@@ -60,7 +61,8 @@ class InstitutionController extends Controller
     {
         $user = $request->user();
         $this->transactionSyncService->createNewUserAgreement($user, $institutionId);
-        return redirect(route('institution.index'));
+
+        return to_route('institution.index');
     }
 
     public function newRequisition(mixed $agreementId, Request $request): RedirectResponse
@@ -70,7 +72,7 @@ class InstitutionController extends Controller
         $institutionId = $agreement->getInstitutionId();
         $this->transactionSyncService->createNewRequisition($institutionId, $agreementId, $user);
 
-        return redirect(route('institution.agreements', ['id' => $institutionId]));
+        return to_route('institution.agreements', ['id' => $institutionId]);
     }
 
     public function deleteAgreement(mixed $agreementId, Request $request): RedirectResponse
@@ -78,6 +80,7 @@ class InstitutionController extends Controller
         $user = $request->user();
         $agreement = $this->transactionSyncService->getAgreementById($user, $agreementId);
         $agreement->delete();
+
         return back();
     }
 }

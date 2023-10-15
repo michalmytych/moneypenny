@@ -2,27 +2,27 @@
 
 namespace App\Services\Transaction\Synchronization;
 
-use App\Models\Import\Import;
-use App\Models\Nordigen\EndUserAgreement;
-use App\Models\Nordigen\Requisition;
-use App\Models\Notification;
 use App\Models\User;
-use App\Services\Notification\Broadcast\NotificationBroadcastService;
+use App\Models\Notification;
+use App\Models\Import\Import;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
-use App\Models\Synchronization\Synchronization;
 use Illuminate\Support\Facades\Http;
+use App\Models\Nordigen\Requisition;
+use App\Models\Nordigen\EndUserAgreement;
+use App\Models\Synchronization\Synchronization;
+use App\Services\Notification\Broadcast\NotificationBroadcastService;
 
-class SynchronizationService
+readonly class SynchronizationService
 {
-    public function __construct(private readonly NotificationBroadcastService $notificationBroadcastService) {}
+    public function __construct(private NotificationBroadcastService $notificationBroadcastService) {}
 
     public function all(User $user): Collection
     {
         return Synchronization::whereUser($user)->latest()->get();
     }
 
-    public function checkRequisition(User $user, mixed $agreementId): ?Requisition
+    public function getLastRequisitionByAgreement(User $user, mixed $agreementId): ?Requisition
     {
         $conditions = [
             'end_user_agreement_id' => $agreementId,
@@ -49,7 +49,7 @@ class SynchronizationService
     public function handleSynchronizationUpdate(Synchronization $synchronization): void
     {
         if ($synchronization->status === Synchronization::SYNC_STATUS_SUCCEEDED) {
-            $import = Import::where('synchronization_id', $synchronization->id)->get()->first();    // @todo - to service
+            $import = Import::where('synchronization_id', $synchronization->id)->get()->first(); // @todo - to service
             $importTransactionsCount = $import ? $import->addedTransactions()->count() : 0;
 
             $this->notificationBroadcastService->sendStoredApplicationNotification(
@@ -62,7 +62,7 @@ class SynchronizationService
         }
 
         if ($synchronization->status === Synchronization::SYNC_STATUS_FAILED) {
-            $header = 'Synchronization failed';
+            $header = 'Synchronization failed'; // @todo rm hardcoded strings
 
             if ($synchronization->code === 429) {
                 $header = 'Daily synchronizations limit exceeded';

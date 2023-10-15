@@ -1,4 +1,4 @@
-export function handelNavLinkClick() {
+export function handleNavLinkClick() {
     const pageContent = document.getElementById('pageContent');
     const navLinks = document.querySelectorAll('.navLink');
 

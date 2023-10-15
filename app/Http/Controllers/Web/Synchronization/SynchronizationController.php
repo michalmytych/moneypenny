@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers\Web\Synchronization;
 
-use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
+use Throwable;
+use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
 use App\Services\Nordigen\NordigenAccountService;
 use App\Services\Transaction\Synchronization\SynchronizationService;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
-use Illuminate\View\View;
-use Throwable;
+use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
 
 class SynchronizationController extends Controller
 {
     public function __construct(
-        private readonly NordigenAccountService $nordigenAccountService,
+        private readonly NordigenAccountService          $nordigenAccountService,
         private readonly SynchronizationService          $synchronizationService,
         private readonly TransactionSyncServiceInterface $transactionSyncService
     )
@@ -26,6 +26,7 @@ class SynchronizationController extends Controller
     {
         $user = $request->user();
         $synchronizations = $this->synchronizationService->all($user);
+
         return view('synchronizations.index', compact('synchronizations'));
     }
 
@@ -34,8 +35,7 @@ class SynchronizationController extends Controller
         $user = $request->user();
         $agreementId = $request->get('agreement_id');
 
-        // @todo - checkRequisition - really bad method name
-        $requisition = $this->synchronizationService->checkRequisition($user, $agreementId);
+        $requisition = $this->synchronizationService->getLastRequisitionByAgreement($user, $agreementId);
         $synchronization = $this->synchronizationService->create($user);
 
         try {
@@ -58,6 +58,7 @@ class SynchronizationController extends Controller
         }
 
         $accounts = $this->nordigenAccountService->all($user);
+
         return response()->json($accounts);
     }
 }

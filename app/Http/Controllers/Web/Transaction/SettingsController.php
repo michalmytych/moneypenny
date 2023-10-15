@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Web\Transaction;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Web\EditSettingsRequest;
-use App\Models\Auth\Settings;
-use App\Services\Notification\Broadcast\NotificationBroadcastService;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use App\Models\Auth\Settings;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\Web\EditSettingsRequest;
+use App\Services\Notification\Broadcast\NotificationBroadcastService;
 
 class SettingsController extends Controller
 {
@@ -41,6 +41,6 @@ class SettingsController extends Controller
             userId: $user->id
         );
 
-        return redirect()->to(route('home'));
+        return to_route('home');
     }
 }

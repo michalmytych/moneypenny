@@ -30,6 +30,6 @@ class CategorizationController extends Controller
         RecategorizeAllTransactions::dispatch();
         Cache::set(CategorizationService::PENDING_CATEGORIZATION_CACHE_KEY, 1, 2 * 60);
 
-        return redirect(route('categorization.index'));
+        return to_route('categorization.index');
     }
 }

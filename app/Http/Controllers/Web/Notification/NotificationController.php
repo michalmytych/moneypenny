@@ -23,6 +23,7 @@ class NotificationController extends Controller
     {
         $user = $request->user();
         $notifications = $this->notificationService->all($user);
+
         return view('notifications.index', compact('notifications'));
     }
 
@@ -36,6 +37,7 @@ class NotificationController extends Controller
             'Success' => Notification::TYPE_SUCCESS,
             'Warning' => Notification::TYPE_WARNING,
         ];
+
         return view('notifications.console', compact('users', 'notificationsTypes'));
     }
 
@@ -53,13 +55,14 @@ class NotificationController extends Controller
                 type: $data['type'],
             );
 
-        return redirect(route('notification.console'));
+        return to_route('notification.console');
     }
 
     public function redirect(Notification $notification): RedirectResponse
     {
         $notification->update(['status' => Notification::STATUS_READ]);
         $url = json_decode($notification->content, true)['url'];
+
         return redirect($url);
     }
 }

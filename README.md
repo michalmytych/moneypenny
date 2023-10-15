@@ -4,7 +4,14 @@ Moneypenny is a project created as part of my BA thesis. It is a full-stack web 
 
 ![ezgif com-video-to-gif](https://github.com/michalmytych/moneypenny/assets/59512535/726475dc-dcb8-4515-b319-a535a4e2a301)
 
-### Setup
+### Automated basic local setup
+If you have `php8.2`, `Composer 2.*` and some relational database (`mysql`, `postgresql`, etc.) installed in your system, you can try automated setup.
+```bash
+composer install
+php artisan moneypenny:setup-app
+```
+
+### Setup with Sail
 __Start Laravel Sail containers__
 ```bash
 # First start docker, then:
@@ -26,11 +33,9 @@ php artisan db:seed
 php artisan moneypenny:create-users-personal-accounts
 ```
 
-__Build frontend__
+__Build & hot-reload Blade frontend__
 ```bash
 # (In docker php app container shell)
-npm run build
-# Optionally, if you want hot reloading:
 npm run dev
 ```
 
@@ -39,10 +44,15 @@ __Setup tests__
 # Copy .env.test.example config and change it
 # accordingly to your local setup
 cp .env.testing.example .env.testing
-php artisan optimize:clear --env=testing
+# In newly created .env.testing replace APP_ENV value with "testing"
+APP_ENV=testing
+# Clear config cache
+php artisan config:cache --env=testing
+# Run tests
+php artisan test
 ```
 
-__Other usefull commands__
+__Other useful commands__
 ```
 Available commands for the "moneypenny" namespace:
   moneypenny:associate-personas                         Create personas associations for all transactions.
@@ -53,9 +63,10 @@ Available commands for the "moneypenny" namespace:
   moneypenny:create-users-personal-accounts             Create personal accounts records for existing users.
   moneypenny:create-users-settings                      Create accounts settings for existing users.
   moneypenny:pull-exchange-rates                        Fetch history exchange rates from external api for currently stored transactions
-  moneypenny:saldo                                      Calculate users's current saldo.
-  moneypenny:send-app-notification                      Send application notifification via notification broadcasting service.
+  moneypenny:saldo                                      Calculate user's current saldo.
+  moneypenny:send-app-notification                      Send application notification via notification broadcasting service.
   moneypenny:set-saldo-by-email                         Set user's default account saldo by e-mail.
+  moneypenny:setup-app                                  Perform basic local application setup.
   moneypenny:show-transactions-personas                 Print all transactions with associated personas.
   moneypenny:update-types                               Update transactions types based on raw volume column.
 ```

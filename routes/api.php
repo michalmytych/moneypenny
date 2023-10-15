@@ -25,7 +25,6 @@ Route::middleware(['deny_blocked'])->as('api.')->group(function () {
         require __DIR__ . '/api/analytics.php';
         require __DIR__ . '/api/profile.php';
         require __DIR__ . '/api/sync.php';
-        require __DIR__ . '/api/exchange_rates.php';
         require __DIR__ . '/api/notifications.php';
         require __DIR__ . '/api/reports.php';
 

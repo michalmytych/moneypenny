@@ -13,6 +13,7 @@ class ExchangeRateController extends Controller
     public function index(): View
     {
         $exchangeRates = $this->exchangeRatesService->all();
+
         return view('exchange_rates.index', compact('exchangeRates'));
     }
 }

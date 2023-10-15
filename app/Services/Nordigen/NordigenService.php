@@ -2,25 +2,25 @@
 
 namespace App\Services\Nordigen;
 
-use Exception;
-use Throwable;
-use App\Models\User;
-use Illuminate\Support\Str;
+use App\Contracts\Infrastructure\Cache\CacheAdapterInterface;
+use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
+use App\Http\Client\Traits\DecodesHttpJsonResponse;
 use App\Models\Import\Import;
+use App\Models\Nordigen\EndUserAgreement;
+use App\Models\Nordigen\Requisition;
+use App\Models\Synchronization\Account;
+use App\Models\Synchronization\Synchronization;
+use App\Models\User;
+use App\Services\Nordigen\DataObjects\InstitutionDataObject;
+use App\Services\Nordigen\DataObjects\TransactionDataObject;
+use App\Services\Nordigen\Synchronization\NordigenTransactionServiceInterface;
+use Exception;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
-use App\Models\Nordigen\Requisition;
-use Illuminate\Support\Facades\Cache;
-use App\Models\Synchronization\Account;
-use GuzzleHttp\Exception\GuzzleException;
-use App\Models\Nordigen\EndUserAgreement;
-use App\Models\Synchronization\Synchronization;
-use App\Http\Client\Traits\DecodesHttpJsonResponse;
-use App\Services\Nordigen\DataObjects\InstitutionDataObject;
-use App\Services\Nordigen\DataObjects\TransactionDataObject;
-use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
-use App\Services\Nordigen\Synchronization\NordigenTransactionServiceInterface;
+use Illuminate\Support\Str;
+use Throwable;
 
 class NordigenService implements TransactionSyncServiceInterface
 {
@@ -44,6 +44,7 @@ class NordigenService implements TransactionSyncServiceInterface
 
     public function __construct(
         private readonly NordigenClient                      $httpClient,
+        private readonly CacheAdapterInterface               $cacheAdapter,
         private readonly NordigenAccountService              $nordigenAccountService,
         private readonly NordigenTransactionServiceInterface $nordigenTransactionService
     )
@@ -276,15 +277,15 @@ class NordigenService implements TransactionSyncServiceInterface
      */
     public function provideSupportedInstitutionsData()
     {
-        if (Cache::missing(self::INSTITUTIONS_CACHE_KEY)) {
+        if ($this->cacheAdapter->missing(self::INSTITUTIONS_CACHE_KEY)) {
             $institutionsData = $this->getFreshSupportedInstitutionsData();
 
-            Cache::put(self::INSTITUTIONS_CACHE_KEY, $institutionsData);
+            $this->cacheAdapter->put(self::INSTITUTIONS_CACHE_KEY, $institutionsData);
 
             return $this->getInstitutionsDataObjects($institutionsData);
         }
 
-        $institutionsData = Cache::get(self::INSTITUTIONS_CACHE_KEY);
+        $institutionsData = $this->cacheAdapter->get(self::INSTITUTIONS_CACHE_KEY);
 
         return $this->getInstitutionsDataObjects($institutionsData);
     }
@@ -329,13 +330,13 @@ class NordigenService implements TransactionSyncServiceInterface
      */
     public function provideAccessTokenData(): array
     {
-        $tokenData = Cache::get(self::TOKEN_CACHE_KEY);
+        $tokenData = $this->cacheAdapter->get(self::TOKEN_CACHE_KEY);
         $tokenExpired = $this->hasTokenRefreshExpired($tokenData);
 
-        if ($tokenExpired || Cache::missing(self::TOKEN_CACHE_KEY)) {
+        if ($tokenExpired || $this->cacheAdapter->missing(self::TOKEN_CACHE_KEY)) {
             $tokenData = $this->getFreshTokenData();
 
-            Cache::put(self::TOKEN_CACHE_KEY, $tokenData);
+            $this->cacheAdapter->put(self::TOKEN_CACHE_KEY, $tokenData);
 
             return $tokenData;
         }

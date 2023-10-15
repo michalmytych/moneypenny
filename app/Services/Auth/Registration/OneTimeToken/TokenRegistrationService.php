@@ -2,31 +2,37 @@
 
 namespace App\Services\Auth\Registration\OneTimeToken;
 
+use App\Contracts\Infrastructure\Cache\CacheAdapterInterface;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Cache;
 
-class TokenRegistrationService
+readonly class TokenRegistrationService
 {
+    public function __construct(private CacheAdapterInterface $cacheAdapter)
+    {
+    }
+
     private const ONE_TIME_REGISTRATION_TOKEN_CACHE_KEY = 'one_time_registration_token';
 
     public function generateToken(int $minutes = 15): string
     {
         $token = Str::random(64);
-        Cache::put(self::ONE_TIME_REGISTRATION_TOKEN_CACHE_KEY, $token, $minutes * 60);
+        $this->cacheAdapter->put(self::ONE_TIME_REGISTRATION_TOKEN_CACHE_KEY, $token, $minutes * 60);
+
         return $token;
     }
 
     public function getTokenRegistrationLink(): ?string
     {
-        $cachedToken = Cache::get(self::ONE_TIME_REGISTRATION_TOKEN_CACHE_KEY);
+        $cachedToken = $this->cacheAdapter->get(self::ONE_TIME_REGISTRATION_TOKEN_CACHE_KEY);
         if ($cachedToken) {
             return route('register', ['one_time_registration_token' => $cachedToken]);
         }
+
         return null;
     }
 
     public function isTokenValid(?string $token = null): bool
     {
-        return $token && $token === Cache::get(self::ONE_TIME_REGISTRATION_TOKEN_CACHE_KEY);
+        return $token && $token === $this->cacheAdapter->get(self::ONE_TIME_REGISTRATION_TOKEN_CACHE_KEY);
     }
 }

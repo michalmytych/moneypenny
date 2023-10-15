@@ -5,13 +5,14 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Transaction\Transaction;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class TransactionsTableSeeder extends Seeder
 {
-    use WithFaker;
+    use WithFaker, WithoutModelEvents;
 
     public function run(): void
     {
-        Transaction::factory(200)->create();
+        $this->withoutModelEvents(fn() => Transaction::factory(200)->create());
     }
 }

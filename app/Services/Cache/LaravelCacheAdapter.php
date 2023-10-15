@@ -2,11 +2,13 @@
 
 namespace App\Services\Cache;
 
-use DateInterval;
+use App\Contracts\Infrastructure\Cache\CacheAdapterInterface;
 use App\Models\User;
+use DateInterval;
+use DateTimeInterface;
 use Illuminate\Support\Facades\Cache;
 
-class CacheAdapterService
+class LaravelCacheAdapter implements CacheAdapterInterface
 {
     public function getUserCacheKeys(User $user): array
     {
@@ -42,5 +44,15 @@ class CacheAdapterService
     public function missing(string $cacheKey): bool
     {
         return Cache::missing($cacheKey);
+    }
+
+    public function put(string|array $cacheKey, mixed $content, DateInterval|DateTimeInterface|int|null $ttl = null): bool
+    {
+        return Cache::put($cacheKey, $content, $ttl);
+    }
+
+    public function has(array|string $cacheKey): bool
+    {
+        return Cache::has($cacheKey);
     }
 }

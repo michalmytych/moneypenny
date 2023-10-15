@@ -3,21 +3,21 @@
 namespace App\Observers\Transaction;
 
 use App\Models\Transaction\Transaction;
-use App\Services\Cache\CacheAdapterService;
 use App\Jobs\Persona\CreateTransactionPersonaAssociation;
 use App\Jobs\Transaction\UpdateUsersPersonalAccountSaldo;
 use App\Jobs\Transaction\SaveTransactionCategoryReference;
+use App\Contracts\Infrastructure\Cache\CacheAdapterInterface;
 use App\Jobs\Transaction\ResolveTransactionCalculationVolume;
 
 readonly class TransactionObserver
 {
-    public function __construct(private CacheAdapterService $cacheAdapterService)
+    public function __construct(private CacheAdapterInterface $cacheAdapter)
     {
     }
 
     public function created(Transaction $transaction): void
     {
-        $this->cacheAdapterService->clearUserCache($transaction->user);
+        $this->cacheAdapter->clearUserCache($transaction->user);
 
         CreateTransactionPersonaAssociation::dispatch($transaction->id);
         ResolveTransactionCalculationVolume::dispatch($transaction->id);
@@ -26,7 +26,7 @@ readonly class TransactionObserver
 
     public function updating(Transaction $transaction): void
     {
-        $this->cacheAdapterService->clearUserCache($transaction->user);
+        $this->cacheAdapter->clearUserCache($transaction->user);
 
         if($transaction->isDirty('category_id')){
             SaveTransactionCategoryReference::dispatch($transaction->id);

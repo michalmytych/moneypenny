@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
                 'email' => 'test@example.com',
             ]);
         } catch (Throwable) {
-            $this->command->warn('⚠️ Test user already exists.');
+            $this->command->warn('  ⚠️ Test user already exists.');
         }
 
         try {
@@ -28,7 +28,7 @@ class UsersTableSeeder extends Seeder
                 'email' => 'guest@example.com',
             ]);
         } catch (Throwable) {
-            $this->command->warn('⚠️ Guest user already exists.');
+            $this->command->warn('  ⚠️ Guest user already exists.');
         }
 
         try {
@@ -39,7 +39,7 @@ class UsersTableSeeder extends Seeder
                     'email' => 'admin@example.com',
                 ]);
         } catch (Throwable) {
-            $this->command->warn('⚠️ Admin user already exists.');
+            $this->command->warn('  ⚠️ Admin user already exists.');
         }
     }
 }

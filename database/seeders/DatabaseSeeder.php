@@ -14,13 +14,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        if (!app()->hasDebugModeEnabled()) {
+            $this
+                ->command
+                ->warn('⚠️ Cannot run development seeders in production! Debug mode is disabled.');
+
+            return;
+        }
+
         $this->call([
             UsersTableSeeder::class,
             ImportSettingsTableSeeder::class,
             ColumnsMappingsTableSeeder::class,
             CategoriesTableSeeder::class,
             TransactionsTableSeeder::class,
-            // FilesTableSeeder::class,
+            FilesTableSeeder::class,
         ]);
     }
 }

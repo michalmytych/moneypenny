@@ -4,7 +4,7 @@
 
             <div>
                 <h2 class="text-3xl font-semibold mb-4 flex">
-                    {{ __('Personas') }} @include('components.mainteance.beta-badge')
+                    {{ __('Personas') }} @include('components.maintenance.beta-badge')
                 </h2>
             </div>
 
@@ -30,19 +30,19 @@
                         <tbody class="bg-white divide-y divide-gray-200">
                         @foreach ($personas as $persona)
                             <tr
-                                id="row_{{$persona->id}}"
-                                class="@if(request()->get('selected_persona_id') === (string) $persona->id) bg-indigo-100 @endif"
+                                    id="row_{{$persona->id}}"
+                                    class="@if(request()->get('selected_persona_id') === (string) $persona->id) bg-indigo-100 @endif"
                             >
                                 <td class="px-6 py-4 whitespace-nowrap flex items-center">
                                     <form method="post"
                                           action="{{ route('persona.update', ['persona' => $persona->id]) }}">
                                         @csrf
                                         <input
-                                            id="{{ $persona->id }}_value_input"
-                                            type="text"
-                                            name="common_name"
-                                            class="border-none rounded-md"
-                                            value="{{ $persona->common_name }}"
+                                                id="{{ $persona->id }}_value_input"
+                                                type="text"
+                                                name="common_name"
+                                                class="border-none rounded-md"
+                                                value="{{ $persona->common_name }}"
                                         >
                                         <input type="hidden" name="_method" value="PATCH">
                                         <input type="hidden" value="PATCH" id="">
@@ -80,7 +80,7 @@
                                             @foreach(json_decode($selected_persona->associated_names, true) as $name)
                                                 <li class="mb-1">
                                                     <div
-                                                        class="rounded-md px-3 mr-1 bg-gray-200 w-max">{{ $name }}</div>
+                                                            class="rounded-md px-3 mr-1 bg-gray-200 w-max">{{ $name }}</div>
                                                 </li>
                                             @endforeach
                                         </ul>

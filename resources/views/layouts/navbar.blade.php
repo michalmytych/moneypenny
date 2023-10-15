@@ -40,7 +40,7 @@
                                     <span class="flex items-center justify-between">
                                         {{ __('Personas') }}
                                         <span class="relative top-2">
-                                            @include('components.mainteance.beta-badge')
+                                            @include('components.maintenance.beta-badge')
                                         </span>
                                     </span>
                                     </x-dropdown-link>
@@ -180,7 +180,7 @@
                                     <button
                                         class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                                         <div>
-                                            {{ __('Mainteance') }}
+                                            {{ __('Maintenance') }}
                                         </div>
                                     </button>
                                 </x-slot>
@@ -249,7 +249,7 @@
                                     <span class="flex items-center justify-between">
                                         {{ __('Chat') }}
                                         <span class="relative top-2">
-                                            @include('components.mainteance.beta-badge')
+                                            @include('components.maintenance.beta-badge')
                                         </span>
                                     </span>
                                     </x-dropdown-link>
@@ -373,7 +373,7 @@
                                     <span class="flex items-center justify-between">
                                         {{ __('Personas') }}
                                         <span class="relative top-2">
-                                            @include('components.mainteance.beta-badge')
+                                            @include('components.maintenance.beta-badge')
                                         </span>
                                     </span>
                     </x-responsive-nav-link>
@@ -424,7 +424,7 @@
                                     <span class="flex items-center justify-between">
                                         {{ __('Chat') }}
                                         <span class="relative top-2">
-                                            @include('components.mainteance.beta-badge')
+                                            @include('components.maintenance.beta-badge')
                                         </span>
                                     </span>
                     </x-responsive-nav-link>

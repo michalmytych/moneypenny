@@ -2,23 +2,24 @@
 
 namespace App\Services\Transaction\Report;
 
+use App\Contracts\Infrastructure\Cache\CacheAdapterInterface;
 use App\Models\Transaction\Report;
-use App\Models\User;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Cache;
 use App\Models\Transaction\Transaction;
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\User;
 use App\Services\Transaction\Currency\CurrencyService;
 use App\Services\Transaction\Report\Defaults\MonthReport;
 use App\Services\Transaction\Transformers\DateGroupByToCalendar;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
-class ReportService
+readonly class ReportService
 {
-    public function __construct(private readonly CurrencyService $currencyService)
-    {
-    }
+    public function __construct(
+        private CurrencyService $currencyService,
+        private CacheAdapterInterface $cacheAdapter
+    ) {}
 
     /**
      * @param string|null $rawMonth Date in m-Y format (optional).
@@ -35,14 +36,14 @@ class ReportService
 
         $cacheKey = $carbon->format('Y_m') . '_periodic_report_' . $userId;
 
-        if (Cache::has($cacheKey)) {
-            $data = Cache::get($cacheKey);
+        if ($this->cacheAdapter->has($cacheKey)) {
+            $data = $this->cacheAdapter->get($cacheKey);
 
         } else {
             $user = User::findOrFail($userId);
             $data = $this->getMonthReport($carbon, $user);
             $data['currency'] = $this->currencyService->resolveCalculationCurrency($user);
-            Cache::put($cacheKey, $data, 10);
+            $this->cacheAdapter->put($cacheKey, $data, 10);
         }
 
         return $data;

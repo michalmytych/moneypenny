@@ -5,7 +5,7 @@
             <div>
                 <div class="flex items-center">
                     <h2 class="text-3xl font-semibold mb-4">Social Chat</h2>
-                    @include('components.mainteance.beta-badge')
+                    @include('components.maintenance.beta-badge')
                 </div>
                 @if(config('network.enabled'))
                     @include('social.partials.chat-widget')

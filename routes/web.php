@@ -29,6 +29,7 @@ Route::middleware(['auth', 'deny_blocked'])->group(function () {
     require __DIR__ . '/web/institutions.php';
     require __DIR__ . '/web/notifications.php';
     require __DIR__ . '/web/personal_accounts.php';
+    require __DIR__ . '/web/exchange_rates.php';
     require __DIR__ . '/web/personas.php';
     require __DIR__ . '/web/profile.php';
     require __DIR__ . '/web/reports.php';

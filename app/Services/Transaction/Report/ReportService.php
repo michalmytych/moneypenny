@@ -3,7 +3,6 @@
 namespace App\Services\Transaction\Report;
 
 use App\Contracts\Infrastructure\Cache\CacheAdapterInterface;
-use App\Models\Transaction\Report;
 use App\Models\Transaction\Transaction;
 use App\Models\User;
 use App\Services\Transaction\Currency\CurrencyService;

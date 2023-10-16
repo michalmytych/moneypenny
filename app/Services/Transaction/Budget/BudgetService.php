@@ -22,7 +22,7 @@ readonly class BudgetService
 
     public function create(mixed $user, mixed $data): Budget
     {
-        $user['user_id'] = $user->id;
+        $data['user_id'] = $user->id;
 
         return Budget::create($data);
     }

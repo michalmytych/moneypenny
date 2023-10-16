@@ -2,6 +2,10 @@
     @php
         $budgetsWithConsumption = $budgets;
     @endphp
+    <a href="{{ route('budget.new') }}" class="flex items-center hover:text-gray-600 font-semibold cursor-pointer">
+        @include('icons.add-indigo')
+        <span class="ml-1 mb-0.5">{{ __('Add new budget') }}</span>
+    </a>
     <h2 class="text-black font-bold text-3xl pb-4 pt-4">{{ __('Your budgets') }}</h2>
     <div>
         @foreach($budgetsWithConsumption as $budgetWithConsumption)

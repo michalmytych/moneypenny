@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Web\Transaction;
 
+use App\Http\Requests\Web\Transaction\Budget\CreateRequest;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\Services\Transaction\Budget\BudgetService;
-use App\Http\Requests\Web\Transaction\CreateRequest;
 use App\Services\Transaction\Currency\CurrencyService;
 use App\Http\Requests\Web\Transaction\Budget\PatchRequest;
 
@@ -36,9 +36,12 @@ class BudgetController extends Controller
         return view('budgets.show', compact('budget', 'currencyCode'));
     }
 
-    public function new(): View
+    public function new(Request $request): View
     {
-        return view('budgets.new');
+        $user = $request->user();
+        $currencyCode = $this->currencyService->resolveCalculationCurrency($user);
+
+        return view('budgets.new', compact('currencyCode'));
     }
 
     public function create(CreateRequest $request): RedirectResponse

@@ -6,7 +6,7 @@
                 <summary class="mb-2">
                     <span class="flex items-center hover:text-gray-600 font-semibold cursor-pointer">
                         @include('icons.add-indigo')
-                        <span class="ml-1">Add new cash transaction</span>
+                        <span class="ml-1">{{ __('Add new cash transaction') }}</span>
                     </span>
                 </summary>
                 @include('transaction.partials.transaction-form', ['personas' => $personas])

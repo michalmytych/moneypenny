@@ -70,7 +70,7 @@ readonly class MetaService
     {
         $data = $this->shellService->runScript('server_meta/top.sh');
 
-        return json_decode($data, true);
+        return json_decode($data, true) ?? [];
     }
 
     protected function getDirectorySize(string $directory): array

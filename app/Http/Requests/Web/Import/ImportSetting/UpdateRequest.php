@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Web\Transaction\ImportSetting;
+namespace App\Http\Requests\Web\Import\ImportSetting;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateImportSettingRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     public function rules(): array
     {

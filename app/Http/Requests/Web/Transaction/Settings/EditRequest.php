@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Web;
+namespace App\Http\Requests\Web\Transaction\Settings;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class EditSettingsRequest extends FormRequest
+class EditRequest extends FormRequest
 {
     public function rules(): array
     {

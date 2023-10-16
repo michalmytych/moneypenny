@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Web\Transaction;
 
-use Illuminate\View\View;
-use Illuminate\Http\Request;
-use App\Models\Auth\Settings;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
-use App\Http\Requests\Web\EditSettingsRequest;
+use App\Http\Requests\Web\Transaction\Settings\EditRequest;
+use App\Models\Auth\Settings;
 use App\Services\Notification\Broadcast\NotificationBroadcastService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class SettingsController extends Controller
 {
@@ -24,7 +24,7 @@ class SettingsController extends Controller
         return view('settings.edit', compact('settings'));
     }
 
-    public function update(EditSettingsRequest $request): RedirectResponse
+    public function update(EditRequest $request): RedirectResponse
     {
         $data = $request->validated();
         $user = $request->user();

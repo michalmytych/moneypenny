@@ -4,6 +4,7 @@ namespace App\Contracts\Infrastructure\Cache;
 
 use DateInterval;
 use App\Models\User;
+use DateTimeInterface;
 
 interface CacheAdapterInterface
 {
@@ -19,7 +20,7 @@ interface CacheAdapterInterface
 
     public function missing(string $cacheKey): bool;
 
-    public function put(string $cacheKey, mixed $content);
+    public function put(string|array $cacheKey, mixed $content, DateInterval|DateTimeInterface|int|null $ttl = null): bool;
 
     public function has(array|string $cacheKey): bool;
 }

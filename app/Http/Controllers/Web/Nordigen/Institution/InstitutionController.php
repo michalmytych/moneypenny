@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Web\Nordigen\Institution;
 
-use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
+use Throwable;
+use Illuminate\View\View;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\View\View;
-use Throwable;
+use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
 
 class InstitutionController extends Controller
 {
@@ -25,7 +25,6 @@ class InstitutionController extends Controller
             return view('nordigen.institution.index', compact('institutions', 'agreements'));
 
         } catch (Throwable) {
-
             return back()
                 ->with(config('session.flash_errors_key'), [
                     __('Cannot fetch institutions data.')

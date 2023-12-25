@@ -280,7 +280,7 @@ class NordigenService implements TransactionSyncServiceInterface
         if ($this->cacheAdapter->missing(self::INSTITUTIONS_CACHE_KEY)) {
             $institutionsData = $this->getFreshSupportedInstitutionsData();
 
-            $this->cacheAdapter->put(self::INSTITUTIONS_CACHE_KEY, $institutionsData);
+            $this->cacheAdapter->put(self::INSTITUTIONS_CACHE_KEY, $institutionsData, 30);
 
             return $this->getInstitutionsDataObjects($institutionsData);
         }
@@ -294,11 +294,8 @@ class NordigenService implements TransactionSyncServiceInterface
      * @return array|InstitutionDataObject[]
      * @noinspection PhpMissingReturnTypeInspection
      */
-    public function getInstitutionsDataObjects(array $institutionsData)
+    public function getInstitutionsDataObjects(array $institutionsData): array
     {
-        // @todo - add pagination instead of returning one chunk
-        $institutionsData = array_slice($institutionsData, 0, 30);
-
         return array_map(
             fn($institution) => InstitutionDataObject::make($institution),
             $institutionsData
@@ -386,6 +383,7 @@ class NordigenService implements TransactionSyncServiceInterface
     {
         $institutions = $this->provideSupportedInstitutionsData();
         $institutions = array_filter($institutions, fn($institution) => $institution->id === $institutionId);
+
         return collect($institutions)->first();
     }
 

@@ -13,6 +13,6 @@ class TransactionsTableSeeder extends Seeder
 
     public function run(): void
     {
-        $this->withoutModelEvents(fn() => Transaction::factory(200)->create());
+        $this->withoutModelEvents(fn() => Transaction::factory(10000)->create());
     }
 }

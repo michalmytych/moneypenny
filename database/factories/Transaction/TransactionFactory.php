@@ -37,7 +37,7 @@ class TransactionFactory extends Factory
             'import_id' => Import::factory()->firstOrCreate()->id,
             'receiver' => $this->faker->firstName() . ' ' . $this->faker->lastName() . ' ' . $this->faker->company(),
             'currency' => $this->faker->randomElement(config('moneypenny.supported_currencies')),
-            'user_id' => User::factory()->firstOrCreate()->id,
+            'user_id' => User::inRandomOrder()->first()->id,
             'sender' => $this->faker->firstName() . ' ' . $this->faker->lastName() . ' ' . $this->faker->company(),
             'type' => $type
         ];

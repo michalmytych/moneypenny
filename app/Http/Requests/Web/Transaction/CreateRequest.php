@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests\Web\Transaction;
 
-use App\Models\Transaction\Transaction;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Models\Transaction\Transaction;
+use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * @property mixed $decimal_volume

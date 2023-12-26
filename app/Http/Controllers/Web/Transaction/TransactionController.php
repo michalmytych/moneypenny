@@ -62,4 +62,15 @@ class TransactionController extends Controller
 
         return to_route('transaction.show', ['id' => $transaction->id]);
     }
+
+    public function toggleExcludeFromCalculation(mixed $transactionId): RedirectResponse
+    {
+        $transaction = Transaction::findOrFail($transactionId);
+        $this->transactionService->toggleExcludeFromCalculation($transactionId);
+
+        return to_route('transaction.show', ['id' => $transaction->id])
+            ->with(config('session.flash_messages_key'), [
+                __('Changed transaction calculation settings.')
+            ]);
+    }
 }

@@ -80,6 +80,9 @@
         </div>
 
         <div>
+            <div class="mb-2">
+                @include('transaction.partials.exclude-from-calculation-form', ['transaction' => $transaction])
+            </div>
             <h2 class="text-black font-bold text-2xl pb-4">{{ __('Details') }}</h2>
             <div class="mb-4">
                 <p class="block text-gray-700 font-bold mb-2">

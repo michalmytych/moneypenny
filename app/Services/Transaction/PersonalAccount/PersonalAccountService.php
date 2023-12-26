@@ -8,8 +8,7 @@ use App\Models\Transaction\PersonalAccount;
 readonly class PersonalAccountService
 {
     public function __construct(private SaldoService $saldoService)
-    {
-    }
+    {}
 
     public function createForUser(User $user): PersonalAccount
     {

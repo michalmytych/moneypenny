@@ -2,25 +2,25 @@
 
 namespace App\Services\Nordigen;
 
-use App\Contracts\Infrastructure\Cache\CacheAdapterInterface;
-use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
-use App\Http\Client\Traits\DecodesHttpJsonResponse;
-use App\Models\Import\Import;
-use App\Models\Nordigen\EndUserAgreement;
-use App\Models\Nordigen\Requisition;
-use App\Models\Synchronization\Account;
-use App\Models\Synchronization\Synchronization;
-use App\Models\User;
-use App\Services\Nordigen\DataObjects\InstitutionDataObject;
-use App\Services\Nordigen\DataObjects\TransactionDataObject;
-use App\Services\Nordigen\Synchronization\NordigenTransactionServiceInterface;
 use Exception;
-use GuzzleHttp\Exception\GuzzleException;
+use Throwable;
+use App\Models\User;
+use Illuminate\Support\Str;
+use App\Models\Import\Import;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
-use Throwable;
+use App\Models\Nordigen\Requisition;
+use App\Models\Synchronization\Account;
+use GuzzleHttp\Exception\GuzzleException;
+use App\Models\Nordigen\EndUserAgreement;
+use App\Models\Synchronization\Synchronization;
+use App\Http\Client\Traits\DecodesHttpJsonResponse;
+use App\Services\Nordigen\DataObjects\InstitutionDataObject;
+use App\Services\Nordigen\DataObjects\TransactionDataObject;
+use App\Contracts\Infrastructure\Cache\CacheAdapterInterface;
+use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
+use App\Services\Nordigen\Synchronization\NordigenTransactionServiceInterface;
 
 class NordigenService implements TransactionSyncServiceInterface
 {

@@ -2,7 +2,6 @@
 
 ### Things to fix
 
-* On similar transactions list (transaction show) it should not be showing same transaction.
 * Check what is happening after changing user settings currency.
 * Add checking status of bank requisition at integration view.
 * Styles improvements for mobile.

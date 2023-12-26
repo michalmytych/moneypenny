@@ -55,6 +55,7 @@ class SimilarTransactionsService
     private function getBaseTransactionQuery(Transaction $transaction): Builder
     {
         return Transaction::whereUser($transaction->user)
+            ->baseCalculationQuery()
             ->whereNot('id', $transaction->id)
             ->where('description', 'like', '%' . $transaction->description . '%')
             ->where('receiver', 'like', '%' . $transaction->receiver . '%')

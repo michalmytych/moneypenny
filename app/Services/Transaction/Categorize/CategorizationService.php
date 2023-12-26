@@ -2,18 +2,16 @@
 
 namespace App\Services\Transaction\Categorize;
 
-use App\Contracts\Infrastructure\Cache\CacheAdapterInterface;
+use Illuminate\Support\Collection;
 use App\Models\Transaction\Category;
 use App\Models\Transaction\Transaction;
-use Illuminate\Support\Collection;
+use App\Services\Transaction\Cache\TransactionsCache;
+use App\Contracts\Infrastructure\Cache\CacheAdapterInterface;
 
 readonly class CategorizationService
 {
     public function __construct(private CacheAdapterInterface $cacheAdapter)
-    {
-    }
-
-    public const PENDING_CATEGORIZATION_CACHE_KEY = 'pending_recategorization';
+    {}
 
     /** @noinspection PhpUndefinedMethodInspection */
     public function getStats(): array
@@ -34,7 +32,7 @@ readonly class CategorizationService
 
     public function getRecategorizationsPending(): bool
     {
-        return (boolean) $this->cacheAdapter->get(self::PENDING_CATEGORIZATION_CACHE_KEY);
+        return (boolean) $this->cacheAdapter->get(TransactionsCache::PENDING_RECATEGORIZATION);
     }
 
     public function getUncategorizedTransactions(): Collection

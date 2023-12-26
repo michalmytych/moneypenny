@@ -86,4 +86,11 @@ class TransactionService
 
         return $this->similarTransactionsService->getSimilarTransactions($transaction);
     }
+
+    public function toggleExcludeFromCalculation(mixed $transactionId): void
+    {
+        $transaction = Transaction::find($transactionId);
+        $transaction->is_excluded_from_calculation = !$transaction->is_excluded_from_calculation;
+        $transaction->save();
+    }
 }

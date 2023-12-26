@@ -2,23 +2,19 @@
 
 namespace App\Services\Transaction\Report;
 
-use App\Contracts\Infrastructure\Cache\CacheAdapterInterface;
-use App\Models\Transaction\Transaction;
 use App\Models\User;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
+use App\Models\Transaction\Transaction;
+use Illuminate\Database\Eloquent\Builder;
 use App\Services\Transaction\Currency\CurrencyService;
 use App\Services\Transaction\Report\Defaults\MonthReport;
 use App\Services\Transaction\Transformers\DateGroupByToCalendar;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 
 readonly class ReportService
 {
-    public function __construct(
-        private CurrencyService $currencyService,
-        private CacheAdapterInterface $cacheAdapter
-    ) {}
+    public function __construct(private CurrencyService $currencyService) {}
 
     /**
      * @param string|null $rawMonth Date in m-Y format (optional).
@@ -33,17 +29,9 @@ readonly class ReportService
             $carbon = now();
         }
 
-        $cacheKey = $carbon->format('Y_m') . '_periodic_report_' . $userId;
-
-        if ($this->cacheAdapter->has($cacheKey)) {
-            $data = $this->cacheAdapter->get($cacheKey);
-
-        } else {
-            $user = User::findOrFail($userId);
-            $data = $this->getMonthReport($carbon, $user);
-            $data['currency'] = $this->currencyService->resolveCalculationCurrency($user);
-            $this->cacheAdapter->put($cacheKey, $data, 10);
-        }
+        $user = User::findOrFail($userId);
+        $data = $this->getMonthReport($carbon, $user);
+        $data['currency'] = $this->currencyService->resolveCalculationCurrency($user);
 
         return $data;
     }
@@ -85,6 +73,7 @@ readonly class ReportService
     protected function getBaseTrendQuery(User $user): Builder
     {
         return Transaction::whereUser($user)
+            ->baseCalculationQuery()
             ->select(DB::raw('transaction_date'),
                 DB::raw('SUM(calculation_volume) as daily_sum'),
                 DB::raw('AVG(SUM(calculation_volume)) OVER (ORDER BY transaction_date ASC ROWS BETWEEN UNBOUNDED PRECEDING AND 1 PRECEDING) as average_volume'))

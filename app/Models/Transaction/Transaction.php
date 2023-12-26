@@ -45,6 +45,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property mixed $import_id
  * @property string|Carbon $created_at
  * @property string|Carbon $updated_at
+ * @property Category|null $category
  */
 class Transaction extends Model
 {

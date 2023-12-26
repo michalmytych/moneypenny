@@ -19,7 +19,7 @@ class CreateRequest extends FormRequest
             'sender' => 'nullable|max:255',
             'receiver' => 'nullable|max:255',
             'description' => 'required|string|min:5|max:255',
-            'transaction_date' => 'required|date',
+            'transaction_date' => 'required|date|before:tomorrow',
             'type' => [
                 Rule::in([Transaction::TYPE_EXPENDITURE, Transaction::TYPE_INCOME])
             ],

@@ -11,5 +11,8 @@
 5. Add checking status of bank requisition at integration view.
 6. Styles improvements for mobile.
 7. Totally reorganize reports.
-8. Add navigation links on some pages.
-
+8. Check if API calls & websockets are properly authorized.
+9. Add synchronizing bank accounts saldo.
+10. Functional tests for endpoints & services.
+11. Add navigation links on some pages.
+12. Add excluding transaction from calculations.

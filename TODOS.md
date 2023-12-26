@@ -10,4 +10,3 @@
 * Add synchronizing bank accounts saldo.
 * Functional tests for endpoints & services.
 * Add navigation links on some pages.
-* Add excluding transaction from calculations.

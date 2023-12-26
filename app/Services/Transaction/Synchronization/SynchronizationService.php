@@ -22,6 +22,27 @@ readonly class SynchronizationService
         return Synchronization::whereUser($user)->latest()->get();
     }
 
+    public function countByUser(User $user): int
+    {
+        return Synchronization::whereUser($user)->count();
+    }
+
+    public function getLatestSucceededByUser(User $user): ?Synchronization
+    {
+        return Synchronization::whereUser($user)
+            ->where('status', Synchronization::SYNC_STATUS_SUCCEEDED)
+            ->with('import')
+            ->latest()
+            ->limit(1)
+            ->get()
+            ->first();
+    }
+
+    public function getEndUserAgreementsCountByUser(User $user): int
+    {
+        return EndUserAgreement::whereUser($user)->count();
+    }
+
     public function getLastRequisitionByAgreement(User $user, mixed $agreementId): ?Requisition
     {
         $conditions = [

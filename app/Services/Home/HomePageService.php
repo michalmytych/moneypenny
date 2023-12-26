@@ -3,6 +3,7 @@
 namespace App\Services\Home;
 
 use App\Models\User;
+use App\Services\Transaction\Synchronization\SynchronizationService;
 use Illuminate\Support\Collection;
 use App\Models\Transaction\Transaction;
 use App\Models\Nordigen\EndUserAgreement;
@@ -22,7 +23,8 @@ class HomePageService implements HomePageServiceInterface
         private readonly CurrencyService                 $currencyService,
         private readonly NotificationService             $notificationService,
         private readonly TransactionQuerySet             $transactionQuerySet,
-        private readonly TransactionSyncServiceInterface $transactionSyncService
+        private readonly SynchronizationService          $synchronizationService,
+        private readonly TransactionSyncServiceInterface $transactionSyncService,
     )
     {
     }
@@ -39,25 +41,12 @@ class HomePageService implements HomePageServiceInterface
             'expendituresThisWeekTotal' => $this->transactionQuerySet->getExpendituresThisWeekTotal($user),
             'incomesTodayTotal' => $this->transactionQuerySet->getIncomesTodayTotal($user),
             'incomesThisWeekTotal' => $this->transactionQuerySet->getIncomesThisWeekTotal($user),
-            'synchronizationsCount' => Synchronization::count(), // @todo
-            'endUserAgreementCount' => EndUserAgreement::count(), // @todo,
+            'synchronizationsCount' => $this->synchronizationService->countByUser($user),
+            'endUserAgreementCount' => $this->synchronizationService->getEndUserAgreementsCountByUser($user),
             'transactionsData' => [
-                'agreement' => $this
-                    ->transactionSyncService
-                    ->getAgreements($user)
-                    ->first(),
-                'transactions' => Transaction::with('category')
-                    ->whereUser($user)
-                    ->orderByTransactionDate()
-                    ->limit(10)
-                    ->get(),
-                'last_synchronization' => Synchronization::whereUser($user)
-                    ->where('status', Synchronization::SYNC_STATUS_SUCCEEDED)
-                    ->with('import')
-                    ->latest()
-                    ->limit(1)
-                    ->get()
-                    ->first()
+                'agreement' => $this->transactionSyncService->getAgreements($user)->first(),
+                'transactions' => $this->transactionQuerySet->getTenLatestTransactionsByUserForHomePage($user),
+                'last_synchronization' => $this->synchronizationService->getLatestSucceededByUser($user)
             ]
         ]);
     }

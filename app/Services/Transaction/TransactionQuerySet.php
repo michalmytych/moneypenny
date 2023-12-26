@@ -5,9 +5,19 @@ namespace App\Services\Transaction;
 use App\Models\Transaction\Transaction;
 use App\Models\User;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 
 class TransactionQuerySet
 {
+    public function getTenLatestTransactionsByUserForHomePage(User $user): Collection
+    {
+        return Transaction::with('category')
+            ->whereUser($user)
+            ->orderByTransactionDate()
+            ->limit(10)
+            ->get();
+    }
+
     public function getExpendituresSumByDates(User $user, array $dates): float|int
     {
         return Transaction::whereUser($user)

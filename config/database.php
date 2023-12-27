@@ -65,7 +65,7 @@ return [
 
         'mysql_testing' => [
             'driver'         => 'mysql',
-            'url'            => 'moneypenny-test',
+            'url'            => 'mmoneypenny-test',
             'host'           => '127.0.0.1',
             'database'       => 'moneypenny-test',
             'username'       => env('MYSQL_USER', 'moneypenny-test'),

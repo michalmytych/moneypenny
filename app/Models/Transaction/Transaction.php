@@ -63,6 +63,7 @@ class Transaction extends Model
         'receiver_account_number',
         'sender_account_number',
         'receiver_persona_id',
+        'personal_account_id',
         'calculation_volume',
         'sender_persona_id',
         'transaction_date',

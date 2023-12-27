@@ -35,6 +35,12 @@
                                     </div>
                                     {{ __('All transactions') }}
                                 </x-dropdown-link>
+                                <x-dropdown-link class="navLink" :href="route('personal-account.index')">
+                                    <div class="mr-2">
+                                        @include('icons.sm.accounts')
+                                    </div>
+                                    {{ __('Personal accounts') }}
+                                </x-dropdown-link>
                                 @if(config('personas.enabled'))
                                     <x-dropdown-link class="navLink" :href="route('persona.index')">
                                     <span class="flex items-center justify-between">

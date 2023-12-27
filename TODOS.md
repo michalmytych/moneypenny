@@ -7,6 +7,7 @@
 * Check what is happening after changing user settings currency.
 * Styles improvements for mobile.
 * Totally reorganize reports.
+* After first synchronization with bank, new personal account should be created.
 * Currently, saldo on home page is showing value of first account of user. It should show saldo of user selected 'default' account. 
 * Check if API calls & websockets are properly authorized.
 * Add synchronizing bank accounts saldo.

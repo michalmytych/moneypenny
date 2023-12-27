@@ -33,15 +33,15 @@ class HomePageService implements HomePageServiceInterface
             'budgetsWithConsumption' => $this->budgetService->allWithConsumption($user),
             'currencyCode' => $this->currencyService->resolveCalculationCurrency($user),
             'expendituresTodayTotal' => $this->transactionQuerySet->getExpendituresTodayTotal($user),
-            'eventNotifications' => $this->notificationService->allEvents($user, 4),
-            'saldoData' => $this->saldoService->getByUser($user),
+            'eventNotifications' => $this->notificationService->allEvents($user, 4), // @todo - test
+            'saldoData' => $this->saldoService->getByUser($user), // @todo - change & test
             'expendituresThisWeekTotal' => $this->transactionQuerySet->getExpendituresThisWeekTotal($user),
             'incomesTodayTotal' => $this->transactionQuerySet->getIncomesTodayTotal($user),
             'incomesThisWeekTotal' => $this->transactionQuerySet->getIncomesThisWeekTotal($user),
             'synchronizationsCount' => $this->synchronizationService->countByUser($user),
             'endUserAgreementCount' => $this->synchronizationService->getEndUserAgreementsCountByUser($user),
             'transactionsData' => [
-                'agreement' => $this->transactionSyncService->getAgreements($user)->first(),
+                'agreement' => $this->transactionSyncService->getAgreements($user)->first(), // @todo - test & change - should show 'default' synchronization
                 'transactions' => $this->transactionQuerySet->getTenLatestTransactionsByUserForHomePage($user),
                 'last_synchronization' => $this->synchronizationService->getLatestSucceededByUser($user)
             ]

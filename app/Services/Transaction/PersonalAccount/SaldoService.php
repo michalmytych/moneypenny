@@ -33,6 +33,7 @@ class SaldoService
 
     public function updateSaldo(Transaction $transaction): void
     {
+        // @todo - $personalAccount could be so number of queries could be minimised
         $personalAccount = PersonalAccount::firstWhere('user_id', $transaction->user->id);
 
         if ($transaction->type === Transaction::TYPE_EXPENDITURE) {

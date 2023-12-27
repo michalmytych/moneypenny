@@ -7,9 +7,15 @@ use App\Models\User;
 
 trait CreatesTransactionForUser
 {
-    protected function createTransactionForUser(User $user, array $overrideAttributes = []): Transaction
+    protected function createTransactionForUserWithoutEvents(User $user, array $overrideAttributes = []): Transaction
     {
-        $overrideAttributes['user_id'] = $user->id;
-        return Transaction::factory()->create($overrideAttributes);
+        $transaction = null;
+
+        Transaction::withoutEvents(function() use ($overrideAttributes, $user, &$transaction) {
+            $overrideAttributes['user_id'] = $user->id;
+            $transaction = Transaction::factory()->create($overrideAttributes);
+        });
+
+        return $transaction;
     }
 }

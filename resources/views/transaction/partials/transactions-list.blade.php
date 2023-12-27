@@ -25,7 +25,7 @@
                 <tr class="hover:bg-gray-50 cursor-pointer transaction-row"
                     data-url="{{ route('transaction.show', ['id' => $transaction->id]) }}">
                     <td class="px-6 py-4 whitespace-nowrap">
-                        {{ $transaction->transaction_date->format('d.m.Y') }}
+                        {{ \Illuminate\Support\Carbon::parse($transaction->transaction_date)->format('d.m.Y') }}
                     </td>
                     <td class="py-4 whitespace-nowrap text-sm">
                         <div class="flex items-center text-gray-500">

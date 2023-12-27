@@ -10,4 +10,5 @@
 * Check if API calls & websockets are properly authorized.
 * Add synchronizing bank accounts saldo.
 * Add navigation links on some pages.
+* Budgets: when user is registered, create for him 'cash account'. When synchronizing with external transactions sources, create new accounts. 
 * Pipeline should run on MySQL, not sqlite.

@@ -48,6 +48,9 @@ class BudgetServiceTest extends TestCase
         /** @var PersonalAccount $personalAccount */
         $personalAccount = $user->personalAccounts->first();
 
+        // Currently 'Default' personal account is created by UserObserver
+        $this->assertNotNull($personalAccount);
+
         $personalAccount->update([
             'value' => $accountsValues[0]
         ]);

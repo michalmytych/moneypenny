@@ -2,11 +2,11 @@
 
 namespace App\Services\Cache;
 
-use App\Contracts\Infrastructure\Cache\CacheAdapterInterface;
-use App\Models\User;
 use DateInterval;
+use App\Models\User;
 use DateTimeInterface;
 use Illuminate\Support\Facades\Cache;
+use App\Contracts\Infrastructure\Cache\CacheAdapterInterface;
 
 class LaravelCacheAdapter implements CacheAdapterInterface
 {

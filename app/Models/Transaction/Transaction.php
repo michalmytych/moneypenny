@@ -79,10 +79,6 @@ class Transaction extends Model
         'type'
     ];
 
-    protected $casts = [
-        'transaction_date' => 'datetime'
-    ];
-
     public function import(): BelongsTo
     {
         return $this->belongsTo(Import::class);

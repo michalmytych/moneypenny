@@ -2,10 +2,10 @@
 
 namespace App\Services\Transaction;
 
-use App\Models\Transaction\Transaction;
 use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use App\Models\Transaction\Transaction;
 
 class TransactionQuerySet
 {
@@ -24,8 +24,8 @@ class TransactionQuerySet
         return Transaction::whereUser($user)
             ->baseCalculationQuery()
             ->whereExpenditure()
-            ->whereDate('transaction_date', '>=', Carbon::parse($dates[0]))
-            ->whereDate('transaction_date', '<=', Carbon::parse(end($dates)))
+            ->whereDate('transaction_date', '>=', Carbon::parse($dates[0])->format('Y-m-d'))
+            ->whereDate('transaction_date', '<=', Carbon::parse(end($dates))->format('Y-m-d'))
             ->sum(Transaction::CALCULATION_COLUMN);
     }
 
@@ -34,7 +34,7 @@ class TransactionQuerySet
         return Transaction::whereUser($user)
             ->baseCalculationQuery()
             ->whereExpenditure()
-            ->whereDate('transaction_date', now()->format('d-m-Y'))
+            ->whereDate('transaction_date', today()->format('Y-m-d'))
             ->sum(Transaction::CALCULATION_COLUMN);
     }
 
@@ -43,29 +43,27 @@ class TransactionQuerySet
         return Transaction::whereUser($user)
             ->baseCalculationQuery()
             ->whereIncome()
-            ->whereDate('transaction_date', now()->format('d-m-Y'))
+            ->whereDate('transaction_date', today()->format('Y-m-d'))
             ->sum(Transaction::CALCULATION_COLUMN);
     }
 
     public function getExpendituresThisWeekTotal(User $user): float|int
     {
-        $now = now();
         return Transaction::whereUser($user)
             ->baseCalculationQuery()
             ->whereExpenditure()
-            ->whereDate('transaction_date', '>=', $now->subDays($now->dayOfWeek - 1))
-            ->whereDate('transaction_date', '<=', $now)
+            ->whereDate('transaction_date', '>=', today()->startOfWeek()->format('Y-m-d'))
+            ->whereDate('transaction_date', '<=', today()->format('Y-m-d'))
             ->sum(Transaction::CALCULATION_COLUMN);
     }
 
     public function getIncomesThisWeekTotal(User $user): float|int
     {
-        $now = now();
         return Transaction::whereUser($user)
             ->baseCalculationQuery()
             ->whereIncome()
-            ->whereDate('transaction_date', '>=', $now->subDays($now->dayOfWeek - 1))
-            ->whereDate('transaction_date', '<=', $now)
+            ->whereDate('transaction_date', '>=', today()->startOfWeek()->format('Y-m-d'))
+            ->whereDate('transaction_date', '<=', today()->format('Y-m-d'))
             ->sum(Transaction::CALCULATION_COLUMN);
     }
 }

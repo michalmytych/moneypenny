@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::table('transactions', function (Blueprint $table) {
             $table
-                ->foreignId('account_id')
+                ->foreignId('personal_account_id')
                 ->nullable()
-                ->constrained('accounts')
+                ->constrained('personal_accounts')
                 ->cascadeOnDelete();
         });
     }
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('transactions', function (Blueprint $table) {
-            $table->dropColumn('account_id');
+            $table->dropColumn('personal_account_id');
         });
     }
 };

@@ -3,7 +3,6 @@
 namespace App\Services\Transaction\PersonalAccount;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Cache;
 use App\Models\Transaction\Transaction;
 use App\Models\Transaction\PersonalAccount;
 

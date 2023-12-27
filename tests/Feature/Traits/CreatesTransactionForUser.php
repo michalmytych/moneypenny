@@ -12,10 +12,16 @@ trait CreatesTransactionForUser
         $transaction = null;
 
         Transaction::withoutEvents(function() use ($overrideAttributes, $user, &$transaction) {
-            $overrideAttributes['user_id'] = $user->id;
-            $transaction = Transaction::factory()->create($overrideAttributes);
+            $transaction = $this->createTransactionForUser($user, $overrideAttributes);
         });
 
         return $transaction;
+    }
+
+    protected function createTransactionForUser(User $user, array $overrideAttributes = []): Transaction
+    {
+        $overrideAttributes['user_id'] = $user->id;
+
+        return Transaction::factory()->create($overrideAttributes);
     }
 }

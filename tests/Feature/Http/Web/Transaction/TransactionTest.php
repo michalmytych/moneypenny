@@ -2,12 +2,12 @@
 /** @noinspection PhpUndefinedMethodInspection */
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
-namespace Tests\Feature\Web\Transaction;
+namespace Tests\Feature\Http\Web\Transaction;
 
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\Transaction\Transaction;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class TransactionTest extends TestCase
 {

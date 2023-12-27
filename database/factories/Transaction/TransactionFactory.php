@@ -23,6 +23,7 @@ class TransactionFactory extends Factory
         ]);
 
         return [
+            'is_excluded_from_calculation' => $this->faker->boolean(),
             'receiver_account_number' => $this->faker->creditCardNumber(),
             'sender_account_number' => $this->faker->creditCardNumber(),
             'receiver_persona_id' => null,

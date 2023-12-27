@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Feature\Web\Stability;
+namespace Tests\Feature\Http\Web\Stability;
 
 use App\Models\User;
-use Tests\TestCase;
 use Illuminate\Support\Facades\Route;
+use Tests\TestCase;
 
 class StabilityTest extends TestCase
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Feature\Api\Auth;
+namespace Tests\Feature\Http\Api\Auth;
 
 use App\Models\User;
-use Tests\ApiTestCase;
-use Illuminate\Testing\Fluent\AssertableJson;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Testing\Fluent\AssertableJson;
+use Tests\ApiTestCase;
 
 class UserApiTest extends ApiTestCase
 {

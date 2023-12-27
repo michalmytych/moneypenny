@@ -3,16 +3,13 @@
 namespace App\Services\Home;
 
 use App\Models\User;
-use App\Services\Transaction\Synchronization\SynchronizationService;
 use Illuminate\Support\Collection;
-use App\Models\Transaction\Transaction;
-use App\Models\Nordigen\EndUserAgreement;
-use App\Models\Synchronization\Synchronization;
 use App\Services\Transaction\TransactionQuerySet;
 use App\Services\Notification\NotificationService;
 use App\Services\Transaction\Budget\BudgetService;
 use App\Services\Transaction\Currency\CurrencyService;
 use App\Services\Transaction\PersonalAccount\SaldoService;
+use App\Services\Transaction\Synchronization\SynchronizationService;
 use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
 
 class HomePageService implements HomePageServiceInterface

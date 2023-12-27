@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Feature\Api\Transaction;
+namespace Tests\Feature\Http\Api\Transaction;
 
-use App\Models\User;
-use Tests\ApiTestCase;
 use App\Models\Transaction\Transaction;
-use Illuminate\Testing\Fluent\AssertableJson;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Testing\Fluent\AssertableJson;
+use Tests\ApiTestCase;
 
 class TransactionApiTest extends ApiTestCase
 {

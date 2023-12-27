@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Web\Auth;
+namespace Tests\Feature\Http\Web\Auth;
 
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;

@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Feature\Web\File;
+namespace Tests\Feature\Http\Web\File;
 
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\File;
+use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Tests\TestCase;
 
 class FileTest extends TestCase
 {

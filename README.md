@@ -11,48 +11,7 @@ composer install
 php artisan moneypenny:setup-app
 ```
 
-### Setup with Sail
-__Start Laravel Sail containers__
-```bash
-# First start docker, then:
-./vendor/bin/sail up -d
-```
-
-__Migrate database__
-```bash
-# (In docker php app container shell)
-php artisan migrate
-```
-
-__Seed database__
-```bash
-# (In docker php app container shell)
-# Seed database
-php artisan db:seed
-# Create users personal accounts
-php artisan moneypenny:create-users-personal-accounts
-```
-
-__Build & hot-reload Blade frontend__
-```bash
-# (In docker php app container shell)
-npm run dev
-```
-
-__Setup tests__
-```bash
-# Copy .env.test.example config and change it
-# accordingly to your local setup
-cp .env.testing.example .env.testing
-# In newly created .env.testing replace APP_ENV value with "testing"
-APP_ENV=testing
-# Clear config cache
-php artisan config:cache --env=testing
-# Run tests
-php artisan test
-```
-
-__Other useful commands__
+__Useful commands__
 ```
 Available commands for the "moneypenny" namespace:
   moneypenny:associate-personas                         Create personas associations for all transactions.

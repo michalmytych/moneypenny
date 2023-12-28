@@ -49,8 +49,7 @@ jobs:
 
       - name: Migrate and seed the database
         run: |
-          php${{ matrix.php }} artisan migrate --force -n --database=mysql_testing
-          php${{ matrix.php }} artisan db:seed --force -n --class=DummyContentSeeder --database=mysql_testing
+          php${{ matrix.php }} artisan migrate --force -n --env=ci --database=mysql_testing
 
       - name: Run PHP tests
         run: php${{ matrix.php }} ./vendor/bin/phpunit

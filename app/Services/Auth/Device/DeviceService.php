@@ -10,7 +10,9 @@ use App\Services\Notification\Broadcast\NotificationBroadcastService;
 
 readonly class DeviceService
 {
-    public function __construct(private NotificationBroadcastService $notificationBroadcastService) {}
+    public function __construct(private NotificationBroadcastService $notificationBroadcastService)
+    {
+    }
 
     public function all(User $user): Collection
     {

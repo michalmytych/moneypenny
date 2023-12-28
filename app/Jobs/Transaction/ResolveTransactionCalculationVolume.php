@@ -20,7 +20,9 @@ class ResolveTransactionCalculationVolume implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(public mixed $transactionId) {}
+    public function __construct(public mixed $transactionId)
+    {
+    }
 
     /**
      * @throws GuzzleException
@@ -44,9 +46,11 @@ class ResolveTransactionCalculationVolume implements ShouldQueue
 
                 $oldCalculationVolume = $transaction->calculation_volume;
 
-                $transaction->update([
+                $transaction->update(
+                    [
                     'calculation_volume' => $oldCalculationVolume * (float) $exchangeRate->rate
-                ]);
+                    ]
+                );
 
             } catch (Throwable $throwable) {
                 Log::error($throwable);

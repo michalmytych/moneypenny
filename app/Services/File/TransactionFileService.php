@@ -12,7 +12,9 @@ class TransactionFileService
 {
     use RegistersFileInDBAndStoresOnDisk;
 
-    public function __construct(private readonly ImportService $importService) {}
+    public function __construct(private readonly ImportService $importService)
+    {
+    }
 
     public function uploadTransactions(mixed $requestFile, mixed $importSettingId, mixed $columnMappingId, User $user): void
     {

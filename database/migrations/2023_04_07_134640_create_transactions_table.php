@@ -11,26 +11,28 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('transactions', function (Blueprint $table) {
-            $table->id();
-            $table->date('transaction_date')->nullable();
-            $table->date('accounting_date')->nullable();
-            $table->string('sender')->nullable();
-            $table->string('raw_volume')->nullable();
-            $table->decimal('decimal_volume')->nullable();
-            $table
-                ->unsignedTinyInteger('type')
-                ->default(Transaction::TYPE_UNKNOWN)
-                ->nullable();
-            $table->string('receiver')->nullable();
-            $table->text('description')->nullable();
-            $table->string('currency')->nullable();
-            $table
-                ->foreignId('import_id')
-                ->constrained('imports')
-                ->cascadeOnDelete();
-            $table->timestamps();
-        });
+        Schema::create(
+            'transactions', function (Blueprint $table) {
+                $table->id();
+                $table->date('transaction_date')->nullable();
+                $table->date('accounting_date')->nullable();
+                $table->string('sender')->nullable();
+                $table->string('raw_volume')->nullable();
+                $table->decimal('decimal_volume')->nullable();
+                $table
+                    ->unsignedTinyInteger('type')
+                    ->default(Transaction::TYPE_UNKNOWN)
+                    ->nullable();
+                $table->string('receiver')->nullable();
+                $table->text('description')->nullable();
+                $table->string('currency')->nullable();
+                $table
+                    ->foreignId('import_id')
+                    ->constrained('imports')
+                    ->cascadeOnDelete();
+                $table->timestamps();
+            }
+        );
     }
 
     /**

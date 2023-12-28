@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('columns_mappings', function (Blueprint $table) {
-            $table->unsignedSmallInteger('sender_account_number_column_index')->nullable();
-            $table->unsignedSmallInteger('receiver_account_number_column_index')->nullable();
-        });
+        Schema::table(
+            'columns_mappings', function (Blueprint $table) {
+                $table->unsignedSmallInteger('sender_account_number_column_index')->nullable();
+                $table->unsignedSmallInteger('receiver_account_number_column_index')->nullable();
+            }
+        );
     }
 
     /**
@@ -22,9 +24,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('columns_mappings', function (Blueprint $table) {
-            $table->dropColumn('sender_account_number_column_index');
-            $table->dropColumn('receiver_account_number_column_index');
-        });
+        Schema::table(
+            'columns_mappings', function (Blueprint $table) {
+                $table->dropColumn('sender_account_number_column_index');
+                $table->dropColumn('receiver_account_number_column_index');
+            }
+        );
     }
 };

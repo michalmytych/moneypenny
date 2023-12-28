@@ -16,17 +16,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * @method static applyFilter(Filter $filter)
- * @method static create(array $data)
- * @method static firstWhere(array $attributes)
- * @method static findOrFail(int $id)
- * @method static cursor()
- * @method static count()
- * @method static whereExpenditure()
- * @method static whereMonthAndYear(Carbon $now)
- * @method static orderByTransactionDate()
- * @method static whereUser(User $user)
- * @method static chunk(int $chunkSize, \Closure $param)
+ * @method   static applyFilter(Filter $filter)
+ * @method   static create(array $data)
+ * @method   static firstWhere(array $attributes)
+ * @method   static findOrFail(int $id)
+ * @method   static cursor()
+ * @method   static count()
+ * @method   static whereExpenditure()
+ * @method   static whereMonthAndYear(Carbon $now)
+ * @method   static orderByTransactionDate()
+ * @method   static whereUser(User $user)
+ * @method   static chunk(int $chunkSize, \Closure $param)
  * @property string $sender Sender name.
  * @property string $receiver Receiver name.
  * @property int $id Transaction primary key.
@@ -102,7 +102,8 @@ class Transaction extends Model
 
     public static function getFilterableColumns(): Collection
     {
-        return collect([
+        return collect(
+            [
             'transaction_date' => [
                 'operators' => ['lte', 'eq', 'gte', 'lt', 'gt'],
                 'input' => 'date',
@@ -131,7 +132,8 @@ class Transaction extends Model
                 'operators' => ['eq'],
                 'input' => 'text',
             ],
-        ]);
+            ]
+        );
     }
 
     public function senderPersona(): BelongsTo

@@ -22,11 +22,13 @@ trait UseGenerateSimilarColors
 
     protected static function generateRandomColor(): string
     {
-        $randomizedRgb = array_map(function ($value) {
-            $randomValue = mt_rand(-100, 100);
-            $newValue = $value + $randomValue;
-            return max(0, min(255, $newValue));
-        }, self::getBaseRGBValues());
+        $randomizedRgb = array_map(
+            function ($value) {
+                $randomValue = mt_rand(-100, 100);
+                $newValue = $value + $randomValue;
+                return max(0, min(255, $newValue));
+            }, self::getBaseRGBValues()
+        );
 
         return sprintf("#%02x%02x%02x", ...$randomizedRgb);
     }

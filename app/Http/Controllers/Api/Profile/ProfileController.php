@@ -9,7 +9,9 @@ use App\Services\File\ProfileFileService;
 
 class ProfileController extends Controller
 {
-    public function __construct(private readonly ProfileFileService $profileFileService) {}
+    public function __construct(private readonly ProfileFileService $profileFileService)
+    {
+    }
 
     public function selectLibraryAvatar(Request $request): JsonResponse
     {

@@ -44,7 +44,9 @@ class UserService
         ];
     }
 
-    /** @noinspection PhpPossiblePolymorphicInvocationInspection */
+    /**
+     * @noinspection PhpPossiblePolymorphicInvocationInspection 
+     */
     public function logout(Authenticatable $user): void
     {
         $user->tokens()->delete();

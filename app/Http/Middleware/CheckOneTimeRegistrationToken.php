@@ -9,7 +9,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CheckOneTimeRegistrationToken
 {
-    public function __construct(private readonly TokenRegistrationService $tokenRegistrationService) {}
+    public function __construct(private readonly TokenRegistrationService $tokenRegistrationService)
+    {
+    }
 
     public function handle(Request $request, Closure $next): Response
     {

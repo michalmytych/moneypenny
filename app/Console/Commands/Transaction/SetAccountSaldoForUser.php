@@ -26,14 +26,18 @@ class SetAccountSaldoForUser extends Command
         $value = $this->ask('Type in value (eg. 3500.00): ');
         $floatValue = floatval($value);
 
-        $personalAccount = PersonalAccount::firstWhere([
+        $personalAccount = PersonalAccount::firstWhere(
+            [
             'user_id' => $user->id,
             'name' => 'Default'
-        ]);
+            ]
+        );
 
-        $personalAccount = tap($personalAccount)->update([
+        $personalAccount = tap($personalAccount)->update(
+            [
             'value' => $floatValue
-        ]);
+            ]
+        );
 
         $this->info("Saldo value updated: " . $personalAccount->value . 'PLN');
 

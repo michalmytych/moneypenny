@@ -13,7 +13,8 @@ class ColumnsMappingsTableSeeder extends Seeder
      */
     public function run(): void
     {
-        ColumnsMapping::create([
+        ColumnsMapping::create(
+            [
             'user_id' => User::first()->id,
             'name' => 'Alior Export',
             'transaction_date_column_index' => 0,
@@ -25,6 +26,7 @@ class ColumnsMappingsTableSeeder extends Seeder
             'currency_column_index' => 6,
             'sender_account_number_column_index' => 9,
             'receiver_account_number_column_index' => 10,
-        ]);
+            ]
+        );
     }
 }

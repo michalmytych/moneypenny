@@ -14,11 +14,13 @@ use App\Services\Transaction\Transformers\DateGroupByToCalendar;
 
 readonly class ReportService
 {
-    public function __construct(private CurrencyService $currencyService) {}
+    public function __construct(private CurrencyService $currencyService)
+    {
+    }
 
     /**
-     * @param string|null $rawMonth Date in m-Y format (optional).
-     * @param mixed $userId
+     * @param  string|null $rawMonth Date in m-Y format (optional).
+     * @param  mixed       $userId
      * @return array Report data.
      */
     public function getPeriodicReport(?string $rawMonth, mixed $userId): array
@@ -50,7 +52,9 @@ readonly class ReportService
 
     private function getMonthReport(Carbon $carbon, User $user): array
     {
-        /** @var MonthReport $reportTemplate */
+        /**
+ * @var MonthReport $reportTemplate 
+*/
         $reportTemplate = app(MonthReport::class);
 
         return $reportTemplate
@@ -74,9 +78,11 @@ readonly class ReportService
     {
         return Transaction::whereUser($user)
             ->baseCalculationQuery()
-            ->select(DB::raw('transaction_date'),
+            ->select(
+                DB::raw('transaction_date'),
                 DB::raw('SUM(calculation_volume) as daily_sum'),
-                DB::raw('AVG(SUM(calculation_volume)) OVER (ORDER BY transaction_date ASC ROWS BETWEEN UNBOUNDED PRECEDING AND 1 PRECEDING) as average_volume'))
+                DB::raw('AVG(SUM(calculation_volume)) OVER (ORDER BY transaction_date ASC ROWS BETWEEN UNBOUNDED PRECEDING AND 1 PRECEDING) as average_volume')
+            )
             ->groupBy('transaction_date')
             ->orderBy('transaction_date', 'ASC');
     }

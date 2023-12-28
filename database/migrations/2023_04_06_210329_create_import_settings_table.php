@@ -11,17 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('import_settings', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->unsignedTinyInteger('start_row');
-            $table->string('file_extension');
-            $table->string('delimiter');
-            $table->string('enclosure')->nullable();
-            $table->string('escape_character')->nullable();
-            $table->string('input_encoding')->nullable();
-            $table->timestamps();
-        });
+        Schema::create(
+            'import_settings', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table->unsignedTinyInteger('start_row');
+                $table->string('file_extension');
+                $table->string('delimiter');
+                $table->string('enclosure')->nullable();
+                $table->string('escape_character')->nullable();
+                $table->string('input_encoding')->nullable();
+                $table->timestamps();
+            }
+        );
     }
 
     /**

@@ -20,13 +20,15 @@ class ImportFactory extends Factory
      */
     public function definition(): array
     {
-        $randomStatus = $this->faker->randomElement([
+        $randomStatus = $this->faker->randomElement(
+            [
             Import::STATUS_SAVED,
             Import::STATUS_IMPORTED,
             Import::STATUS_IMPORTING,
             Import::STATUS_PROCESSING,
             Import::STATUS_IMPORT_ERROR
-        ]);
+            ]
+        );
 
         return [
             'status' => $randomStatus,

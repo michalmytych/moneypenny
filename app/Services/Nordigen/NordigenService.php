@@ -1,4 +1,6 @@
-<?php /** @noinspection PhpArrayShapeAttributeCanBeAddedInspection */
+<?php /**
+       * @noinspection PhpArrayShapeAttributeCanBeAddedInspection 
+       */
 
 namespace App\Services\Nordigen;
 
@@ -47,8 +49,7 @@ class NordigenService implements TransactionSyncServiceInterface
         private readonly CacheAdapterInterface               $cacheAdapter,
         private readonly NordigenAccountService              $nordigenAccountService,
         private readonly NordigenTransactionServiceInterface $nordigenTransactionService
-    )
-    {
+    ) {
     }
 
     /**
@@ -61,11 +62,13 @@ class NordigenService implements TransactionSyncServiceInterface
         $accounts = $this->nordigenAccountService->all($user);
 
         foreach ($accounts as $account) {
-            $import = Import::create([
+            $import = Import::create(
+                [
                 'user_id' => $user->id,
                 'synchronization_id' => $synchronizationId,
                 'status' => Import::STATUS_IMPORTING
-            ]);
+                ]
+            );
 
             try {
                 $this->syncTransactionsByAccount($account, $import, $user);
@@ -86,9 +89,11 @@ class NordigenService implements TransactionSyncServiceInterface
     {
         $uri = self::ACCOUNTS_URI . $account->nordigen_account_id . '/transactions/';
 
-        $response = $this->httpClient->get($uri, [
+        $response = $this->httpClient->get(
+            $uri, [
             'headers' => $this->getAuthorizationHeader(),
-        ]);
+            ]
+        );
 
         $transactionsData = $this->decodedResponse($response);
 
@@ -125,9 +130,11 @@ class NordigenService implements TransactionSyncServiceInterface
     {
         $uri = self::NEW_REQUISITION_URI . $requisitionId . '/';
 
-        $response = $this->httpClient->get($uri, [
+        $response = $this->httpClient->get(
+            $uri, [
             'headers' => $this->getAuthorizationHeader(),
-        ]);
+            ]
+        );
 
         $accountsData = $this->decodedResponse($response);
         $accountsIds = data_get($accountsData, 'accounts');
@@ -135,14 +142,16 @@ class NordigenService implements TransactionSyncServiceInterface
         if (is_array($accountsIds)) {
             foreach ($accountsIds as $accountId) {
                 // @todo add deleting non existing accounts
-                Account::firstOrCreate([
+                Account::firstOrCreate(
+                    [
                     'user_id' => $user->id,
                     'nordigen_account_id' => $accountId,
-                ], [
+                    ], [
                     'user_id' => $user->id,
                     'nordigen_account_id' => $accountId,
                     'synchronization_id' => $synchronizationId,
-                ]);
+                    ]
+                );
             }
         }
     }
@@ -178,16 +187,19 @@ class NordigenService implements TransactionSyncServiceInterface
         ];
 
         try {
-            $response = $this->httpClient->post(self::NEW_REQUISITION_URI, [
+            $response = $this->httpClient->post(
+                self::NEW_REQUISITION_URI, [
                 'json' => $requestBody,
                 'headers' => $this->getAuthorizationHeader(),
-            ]);
+                ]
+            );
 
             $requisitionData = $this->decodedResponse($response);
             $isSuccessful = data_get($requisitionData, 'status') === self::REQUISITION_CREATED_STATUS;
 
             if ($isSuccessful) {
-                return Requisition::create([
+                return Requisition::create(
+                    [
                     'user_id' => $user->id,
                     'reference' => data_get($requisitionData, 'reference'),
                     'link' => data_get($requisitionData, 'link'),
@@ -196,7 +208,8 @@ class NordigenService implements TransactionSyncServiceInterface
                     'raw_request_body' => json_encode($requestBody),
                     'end_user_agreement_id' => $endUserAgreement->id,
                     'nordigen_institution_id' => $institutionId,
-                ]);
+                    ]
+                );
             }
 
             return [
@@ -217,10 +230,12 @@ class NordigenService implements TransactionSyncServiceInterface
 
     public function getExistingAgreementForInstitution(User $user, mixed $institutionId): ?EndUserAgreement
     {
-        return EndUserAgreement::firstWhere([
+        return EndUserAgreement::firstWhere(
+            [
             'user_id' => $user->id,
             'nordigen_institution_id' => $institutionId
-        ]);
+            ]
+        );
     }
 
     public function getAgreementById(User $user, mixed $id): ?EndUserAgreement
@@ -243,16 +258,19 @@ class NordigenService implements TransactionSyncServiceInterface
         ];
 
         try {
-            $response = $this->httpClient->post(self::NEW_END_USER_AGREEMENTS_URI, [
+            $response = $this->httpClient->post(
+                self::NEW_END_USER_AGREEMENTS_URI, [
                 'json' => $requestBody,
                 'headers' => $this->getAuthorizationHeader(),
-            ]);
+                ]
+            );
 
             $userAgreementData = $this->decodedResponse($response);
             $isSuccessful = $response->getStatusCode() > 100 && $response->getStatusCode() < 300;
             $nordigenCreated = data_get($userAgreementData, 'created');
 
-            return EndUserAgreement::create([
+            return EndUserAgreement::create(
+                [
                 'user_id' => $user->id,
                 'is_successful' => $isSuccessful,
                 'raw_request_body' => json_encode($requestBody),
@@ -260,7 +278,8 @@ class NordigenService implements TransactionSyncServiceInterface
                 'nordigen_institution_id' => data_get($userAgreementData, 'institution_id'),
                 'nordigen_end_user_agreement_id' => data_get($userAgreementData, 'id'),
                 'nordigen_end_user_agreement_created' => Carbon::parse($nordigenCreated),
-            ]);
+                ]
+            );
 
         } catch (Throwable $throwable) {
             return [
@@ -271,9 +290,9 @@ class NordigenService implements TransactionSyncServiceInterface
     }
 
     /**
-     * @return array|InstitutionDataObject[]
+     * @return       array|InstitutionDataObject[]
      * @noinspection PhpMissingReturnTypeInspection
-     * @throws GuzzleException
+     * @throws       GuzzleException
      */
     public function provideSupportedInstitutionsData()
     {
@@ -291,7 +310,7 @@ class NordigenService implements TransactionSyncServiceInterface
     }
 
     /**
-     * @return array|InstitutionDataObject[]
+     * @return       array|InstitutionDataObject[]
      * @noinspection PhpMissingReturnTypeInspection
      */
     public function getInstitutionsDataObjects(array $institutionsData): array
@@ -314,10 +333,12 @@ class NordigenService implements TransactionSyncServiceInterface
             'country' => config('nordigen.country'),
         ];
 
-        $response = $this->httpClient->get(self::INSTITUTIONS_URI, [
+        $response = $this->httpClient->get(
+            self::INSTITUTIONS_URI, [
             'query' => $requestQuery,
             'headers' => $this->getAuthorizationHeader(),
-        ]);
+            ]
+        );
 
         return $this->decodedResponse($response);
     }
@@ -351,9 +372,11 @@ class NordigenService implements TransactionSyncServiceInterface
             'secret_key' => config('nordigen.secret_key'),
         ];
 
-        $response = $this->httpClient->post(self::NEW_TOKEN_URI, [
+        $response = $this->httpClient->post(
+            self::NEW_TOKEN_URI, [
             'json' => $requestBody,
-        ]);
+            ]
+        );
 
         return $this->decodedResponse($response);
     }
@@ -389,18 +412,22 @@ class NordigenService implements TransactionSyncServiceInterface
 
     public function setStatusSucceeded(Synchronization $synchronization): void
     {
-        $synchronization->update([
+        $synchronization->update(
+            [
             'status' => Synchronization::SYNC_STATUS_SUCCEEDED,
             'code' => 200
-        ]);
+            ]
+        );
     }
 
     public function setStatusFailed(Synchronization $synchronization, ?int $status = null): void
     {
-        $synchronization->update([
+        $synchronization->update(
+            [
             'status' => Synchronization::SYNC_STATUS_FAILED,
             'code' => $status
-        ]);
+            ]
+        );
     }
 
     protected function hasTokenRefreshExpired(?array $tokenData): bool

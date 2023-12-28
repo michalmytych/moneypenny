@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * @method static where(string[] $criteria)
- * @method static whereDate(string $string, string $format)
- * @method static create(array $array)
- * @method static latest()
+ * @method   static where(string[] $criteria)
+ * @method   static whereDate(string $string, string $format)
+ * @method   static create(array $array)
+ * @method   static latest()
  * @property string $rate
  */
 class ExchangeRate extends Model

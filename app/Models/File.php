@@ -13,9 +13,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $import_setting_id
  * @property int $id
  * @property mixed $user_id
- * @method static findOrFail(int $fileId)
- * @method static latest()
- * @method static whereUser(User $user)
+ * @method   static findOrFail(int $fileId)
+ * @method   static latest()
+ * @method   static whereUser(User $user)
  */
 class File extends Model
 {

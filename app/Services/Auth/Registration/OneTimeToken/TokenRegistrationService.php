@@ -7,7 +7,9 @@ use App\Contracts\Infrastructure\Cache\CacheAdapterInterface;
 
 readonly class TokenRegistrationService
 {
-    public function __construct(private CacheAdapterInterface $cacheAdapter) {}
+    public function __construct(private CacheAdapterInterface $cacheAdapter)
+    {
+    }
 
     private const ONE_TIME_REGISTRATION_TOKEN_CACHE_KEY = 'auth_one_time_registration_token';
 

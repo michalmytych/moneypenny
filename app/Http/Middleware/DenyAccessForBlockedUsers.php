@@ -12,9 +12,11 @@ class DenyAccessForBlockedUsers
     {
         if ($request->user()?->isBlocked()) {
             if ($request->wantsJson()) {
-                return response()->json([
+                return response()->json(
+                    [
                     'error' => 'Your account has been blocked by the system administration.'
-                ], 403);
+                    ], 403
+                );
             }
 
             return to_route('blocked.index');

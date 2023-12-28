@@ -11,18 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('report_fields', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->unsignedTinyInteger('type');
-            $table->string('value')->nullable();
-            $table
-                ->foreignId('report_id')
-                ->references('id')
-                ->on('reports')
-                ->cascadeOnDelete();
-            $table->timestamps();
-        });
+        Schema::create(
+            'report_fields', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table->unsignedTinyInteger('type');
+                $table->string('value')->nullable();
+                $table
+                    ->foreignId('report_id')
+                    ->references('id')
+                    ->on('reports')
+                    ->cascadeOnDelete();
+                $table->timestamps();
+            }
+        );
     }
 
     /**

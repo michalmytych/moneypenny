@@ -17,12 +17,16 @@ class CreateSettingsForUsers extends Command
         $this->info("Creating settings for existing users...");
 
         foreach (User::cursor() as $user) {
-            /** @var User $user */
-            Settings::firstOrCreate([
+            /**
+ * @var User $user 
+*/
+            Settings::firstOrCreate(
+                [
                 'user_id' => $user->id
-            ], [
+                ], [
                 'base_currency_code' => config('moneypenny.base_calculation_currency')
-            ]);
+                ]
+            );
         }
 
         $this->info('Success.');

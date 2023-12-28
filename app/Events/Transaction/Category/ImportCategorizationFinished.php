@@ -8,5 +8,7 @@ class ImportCategorizationFinished
 {
     use Dispatchable;
 
-    public function __construct(public mixed $importId) {}
+    public function __construct(public mixed $importId)
+    {
+    }
 }

@@ -11,9 +11,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * @var Carbon $created_at
- * @method static create(array $data)
- * @method static whereUser(User $user)
+ * @var      Carbon $created_at
+ * @method   static create(array $data)
+ * @method   static whereUser(User $user)
  * @property mixed $id
  * @property int $code
  * @property int $status

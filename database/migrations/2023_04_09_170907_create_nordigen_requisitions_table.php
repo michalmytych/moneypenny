@@ -11,21 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('nordigen_requisitions', function (Blueprint $table) {
-            $table->id();
-            $table->uuid('reference');
-            $table->json('raw_request_body');
-            $table->json('raw_response_body');
-            $table->string('link', 512);
-            $table->string('nordigen_institution_id');
-            $table->string('nordigen_requisition_id');
-            $table
-                ->foreignId('end_user_agreement_id')
-                ->references('id')
-                ->on('nordigen_end_user_agreements')
-                ->cascadeOnDelete();
-            $table->timestamps();
-        });
+        Schema::create(
+            'nordigen_requisitions', function (Blueprint $table) {
+                $table->id();
+                $table->uuid('reference');
+                $table->json('raw_request_body');
+                $table->json('raw_response_body');
+                $table->string('link', 512);
+                $table->string('nordigen_institution_id');
+                $table->string('nordigen_requisition_id');
+                $table
+                    ->foreignId('end_user_agreement_id')
+                    ->references('id')
+                    ->on('nordigen_end_user_agreements')
+                    ->cascadeOnDelete();
+                $table->timestamps();
+            }
+        );
     }
 
     /**

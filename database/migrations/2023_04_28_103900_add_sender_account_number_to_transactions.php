@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('transactions', function (Blueprint $table) {
-            $table->string('sender_account_number', 512)->nullable();
-        });
+        Schema::table(
+            'transactions', function (Blueprint $table) {
+                $table->string('sender_account_number', 512)->nullable();
+            }
+        );
     }
 
     /**
@@ -21,8 +23,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('transactions', function (Blueprint $table) {
-            $table->dropColumn('sender_account_number');
-        });
+        Schema::table(
+            'transactions', function (Blueprint $table) {
+                $table->dropColumn('sender_account_number');
+            }
+        );
     }
 };

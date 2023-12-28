@@ -11,9 +11,12 @@ use App\Contracts\Infrastructure\Cache\CacheAdapterInterface;
 readonly class CategorizationService
 {
     public function __construct(private CacheAdapterInterface $cacheAdapter)
-    {}
+    {
+    }
 
-    /** @noinspection PhpUndefinedMethodInspection */
+    /**
+     * @noinspection PhpUndefinedMethodInspection 
+     */
     public function getStats(): array
     {
         $categorizedPercentage = 0;

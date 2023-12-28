@@ -12,12 +12,14 @@ class CategorizedPercentage extends ChartQuery
     public function get(User $user): array
     {
         $categories = Category::query()
-            ->withCount([
+            ->withCount(
+                [
                 'transactions as transactions_count' => function ($query) use ($user) {
                     $query
                         ->baseCalculationQuery()
                         ->where('user_id', $user->id);
-                }])
+                }]
+            )
             ->get();
 
         $totalTransactions = Transaction::whereUser($user)->baseCalculationQuery()->count();

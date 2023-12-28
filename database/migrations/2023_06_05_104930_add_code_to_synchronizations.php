@@ -8,15 +8,19 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('synchronizations', function (Blueprint $table) {
-            $table->smallInteger('code');
-        });
+        Schema::table(
+            'synchronizations', function (Blueprint $table) {
+                $table->smallInteger('code');
+            }
+        );
     }
 
     public function down(): void
     {
-        Schema::table('synchronizations', function (Blueprint $table) {
-            $table->dropColumn('code');
-        });
+        Schema::table(
+            'synchronizations', function (Blueprint $table) {
+                $table->dropColumn('code');
+            }
+        );
     }
 };

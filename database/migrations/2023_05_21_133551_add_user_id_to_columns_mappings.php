@@ -8,18 +8,22 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('columns_mappings', function (Blueprint $table) {
-            $table
-                ->foreignId('user_id')
-                ->constrained('users')
-                ->cascadeOnDelete();
-        });
+        Schema::table(
+            'columns_mappings', function (Blueprint $table) {
+                $table
+                    ->foreignId('user_id')
+                    ->constrained('users')
+                    ->cascadeOnDelete();
+            }
+        );
     }
 
     public function down(): void
     {
-        Schema::table('columns_mappings', function (Blueprint $table) {
-            $table->dropConstrainedForeignId('user_id');
-        });
+        Schema::table(
+            'columns_mappings', function (Blueprint $table) {
+                $table->dropConstrainedForeignId('user_id');
+            }
+        );
     }
 };

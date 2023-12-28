@@ -15,7 +15,9 @@ use App\Services\Notification\Broadcast\NotificationBroadcastService;
 
 readonly class SynchronizationService
 {
-    public function __construct(private NotificationBroadcastService $notificationBroadcastService) {}
+    public function __construct(private NotificationBroadcastService $notificationBroadcastService)
+    {
+    }
 
     public function all(User $user): Collection
     {
@@ -107,7 +109,9 @@ readonly class SynchronizationService
             ->get()
             ->first();
 
-        /** @var Carbon $carbon */
+        /**
+ * @var Carbon $carbon 
+*/
         $carbon = $lastSuccessfulSync->created_at;
 
         if (now()->diffInHours($carbon) > 4) {

@@ -17,8 +17,7 @@ class SynchronizationController extends Controller
         private readonly NordigenAccountService          $nordigenAccountService,
         private readonly SynchronizationService          $synchronizationService,
         private readonly TransactionSyncServiceInterface $transactionSyncService
-    )
-    {
+    ) {
     }
 
     public function sync(Request $request): JsonResponse
@@ -41,11 +40,13 @@ class SynchronizationController extends Controller
             $supportedStatuses = [500, 429, 408];
             $statusCode = in_array($throwable->getCode(), $supportedStatuses) ? $statusCode : 500;
 
-            return response()->json([
+            return response()->json(
+                [
                 'error' => 'Synchronization error',
                 'details' => App::hasDebugModeEnabled() ? $throwable->getMessage() : 'Lacking permissions',
                 'status_code' => $statusCode,
-            ], $statusCode);
+                ], $statusCode
+            );
         }
 
         $accounts = $this->nordigenAccountService->all($user);

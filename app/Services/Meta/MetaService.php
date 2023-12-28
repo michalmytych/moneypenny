@@ -12,8 +12,7 @@ readonly class MetaService
     public function __construct(
         private ShellService          $shellService,
         private CacheAdapterInterface $cacheAdapter
-    )
-    {
+    ) {
     }
 
     public function getAppMetaData(): array
@@ -55,7 +54,9 @@ readonly class MetaService
         return ['processes' => $this->getTopData()];
     }
 
-    /** @noinspection SqlDialectInspection */
+    /**
+     * @noinspection SqlDialectInspection 
+     */
     public function getTablesSizes(): array
     {
         return DB::table('information_schema.TABLES')
@@ -99,13 +100,15 @@ readonly class MetaService
         $jobs = DB::table('jobs')->select()->latest()->get();
 
         if ($jobs->count() === 0) {
-            $jobs = collect([
+            $jobs = collect(
+                [
                 [
                     'id' => 10,
                     'name' => 'CategorizeTransaction',
                     'queued_at' => '02-12-1999 13:12'
                 ],
-            ]);
+                ]
+            );
         }
 
         return $jobs;

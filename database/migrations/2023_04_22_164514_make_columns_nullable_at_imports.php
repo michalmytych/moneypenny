@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('imports', function (Blueprint $table) {
-            $table->foreignId('import_setting_id')->nullable()->change();
-            $table->foreignId('columns_mapping_id')->nullable()->change();
-        });
+        Schema::table(
+            'imports', function (Blueprint $table) {
+                $table->foreignId('import_setting_id')->nullable()->change();
+                $table->foreignId('columns_mapping_id')->nullable()->change();
+            }
+        );
     }
 
     /**
@@ -22,9 +24,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('imports', function (Blueprint $table) {
-            $table->foreignId('import_setting_id')->nullable(false)->change();
-            $table->foreignId('columns_mapping_id')->nullable(false)->change();
-        });
+        Schema::table(
+            'imports', function (Blueprint $table) {
+                $table->foreignId('import_setting_id')->nullable(false)->change();
+                $table->foreignId('columns_mapping_id')->nullable(false)->change();
+            }
+        );
     }
 };

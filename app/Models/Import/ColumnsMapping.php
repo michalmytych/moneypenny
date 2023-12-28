@@ -19,10 +19,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $volume_column_index
  * @property int|null $sender_account_number_column_index
  * @property int|null $receiver_account_number_column_index
- * @method static findOrFail(int $columnsMappingId)
- * @method static latest()
- * @method static create(array $data)
- * @method static whereUser(User $user)
+ * @method   static findOrFail(int $columnsMappingId)
+ * @method   static latest()
+ * @method   static create(array $data)
+ * @method   static whereUser(User $user)
  */
 class ColumnsMapping extends Model
 {

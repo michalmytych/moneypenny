@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * @method static create(array $array)
- * @method static firstOrCreate(array $attributes, array $data)
- * @method static latest()
- * @method static whereUser(User $user)
+ * @method   static create(array $array)
+ * @method   static firstOrCreate(array $attributes, array $data)
+ * @method   static latest()
+ * @method   static whereUser(User $user)
  * @property int $id
  * @property string $nordigen_account_id
  */

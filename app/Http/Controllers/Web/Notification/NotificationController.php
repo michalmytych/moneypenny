@@ -17,7 +17,8 @@ class NotificationController extends Controller
     public function __construct(
         private readonly NotificationService $notificationService,
         private readonly NotificationBroadcastService $notificationBroadcastService
-    ) {}
+    ) {
+    }
 
     public function index(Request $request): View
     {

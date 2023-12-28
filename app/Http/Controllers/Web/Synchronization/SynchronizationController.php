@@ -9,7 +9,9 @@ use App\Services\Transaction\Synchronization\SynchronizationService;
 
 class SynchronizationController extends Controller
 {
-    public function __construct(private readonly SynchronizationService $synchronizationService) {}
+    public function __construct(private readonly SynchronizationService $synchronizationService)
+    {
+    }
 
     public function index(Request $request): View
     {

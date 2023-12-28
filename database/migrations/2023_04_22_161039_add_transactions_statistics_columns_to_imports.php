@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('imports', function (Blueprint $table) {
-            $table->unsignedInteger('transactions_skipped_count')->default(0);
-        });
+        Schema::table(
+            'imports', function (Blueprint $table) {
+                $table->unsignedInteger('transactions_skipped_count')->default(0);
+            }
+        );
     }
 
     /**
@@ -21,8 +23,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('imports', function (Blueprint $table) {
-            $table->dropColumn('transactions_skipped_count');
-        });
+        Schema::table(
+            'imports', function (Blueprint $table) {
+                $table->dropColumn('transactions_skipped_count');
+            }
+        );
     }
 };

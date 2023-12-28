@@ -17,9 +17,11 @@ class CategoryReferenceService
         $requestUrl = config('egghead.save_reference_uri');
 
         try {
-            $response = Http::withHeaders([
+            $response = Http::withHeaders(
+                [
                 'x-api-key' => config('egghead.api_token')
-            ])->post(
+                ]
+            )->post(
                 url: $requestUrl,
                 data: [
                     'data' => [
@@ -28,7 +30,7 @@ class CategoryReferenceService
                         'category' => Category::findOrFail($transaction->category_id)->toArray()
                     ],
                     'params' => []
-                ]
+                    ]
             );
 
         } catch (Throwable $throwable) {

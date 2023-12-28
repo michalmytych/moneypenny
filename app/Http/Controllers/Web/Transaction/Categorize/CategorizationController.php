@@ -14,7 +14,8 @@ class CategorizationController extends Controller
     public function __construct(
         private readonly CacheAdapterInterface $cacheAdapter,
         private readonly CategorizationService $categorizationService
-    ) {}
+    ) {
+    }
 
     public function index(): View
     {

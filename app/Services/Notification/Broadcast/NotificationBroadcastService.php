@@ -16,15 +16,19 @@ class NotificationBroadcastService
         mixed $userId = null,
         ?int $type = null
     ): void {
-        Notification::create([
+        Notification::create(
+            [
             'user_id' => $userId,
-            'content' => json_encode([
+            'content' => json_encode(
+                [
                 'header' => $header,
                 'content' => $content,
                 'url' => $url,
-            ]),
+                ]
+            ),
             'type' => $type ?? Notification::TYPE_INFO
-        ]);
+            ]
+        );
 
         // @todo - broadcast only to specific users
         try {

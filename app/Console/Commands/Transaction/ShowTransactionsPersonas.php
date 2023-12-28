@@ -37,7 +37,9 @@ class ShowTransactionsPersonas extends Command
         $transactionsPersonasData = [];
 
         foreach ($transactionsCursor as $transaction) {
-            /** @var Transaction $transaction */
+            /**
+ * @var Transaction $transaction 
+*/
             $spCommonName = $transaction->senderPersona?->common_name ?? '';
             $rpCommonName = $transaction->receiverPersona?->common_name ?? '';
             $sender = $transaction->sender ?? '';

@@ -9,9 +9,11 @@ class UserSettingsService
 {
     public function assureUserSettings(User $user): Settings
     {
-        return Settings::firstOrCreate([
+        return Settings::firstOrCreate(
+            [
             'user_id' => $user->id,
             'base_currency_code' => config('moneypenny.base_calculation_currency')
-        ]);
+            ]
+        );
     }
 }

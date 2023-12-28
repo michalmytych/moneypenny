@@ -51,7 +51,8 @@ class UserController extends Controller
         $baseCurrencyCode = Settings::whereUser($user)?->get()->first()?->base_currency_code ?? 'No data';
         $devices = $this->deviceService->all($user);
 
-        return view('admin.users.show', [
+        return view(
+            'admin.users.show', [
             'user' => $user,
             'devices' => $devices,
             'baseCurrencyCode' => $baseCurrencyCode,
@@ -63,7 +64,8 @@ class UserController extends Controller
             'requisitionsCount' => $requisitionsCount,
             'nordigenAccountsCount' => $nordigenAccountsCount,
             'synchronizationsCount' => $synchronizationsCount
-        ]);
+            ]
+        );
     }
 
     public function confirmRoleChange(mixed $id): View

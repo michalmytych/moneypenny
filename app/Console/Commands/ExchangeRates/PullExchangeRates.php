@@ -33,9 +33,11 @@ class PullExchangeRates extends Command
             $line = "Exchanging $transaction->currency to $defaultCurrency: $exchangeRate->rate * $transaction->decimal_volume = $result";
             $this->line($line);
 
-            $transaction->update([
+            $transaction->update(
+                [
                 'calculation_volume' => $exchangeRate->rate * $transaction->decimal_volume
-            ]);
+                ]
+            );
         }
     }
 }

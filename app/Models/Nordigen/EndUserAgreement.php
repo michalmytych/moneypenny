@@ -11,13 +11,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @property string|null $nordigen_institution_id
- * @var bool $is_successful
- * @var Collection $requisitions
- * @method static create(array $array)
- * @method static firstWhere(string|array $attribute, mixed $value = null)
- * @method static findOrFail(mixed $endUserAgreementId)
- * @method static latest()
- * @method static whereUser(User $user)
+ * @var      bool $is_successful
+ * @var      Collection $requisitions
+ * @method   static create(array $array)
+ * @method   static firstWhere(string|array $attribute, mixed $value = null)
+ * @method   static findOrFail(mixed $endUserAgreementId)
+ * @method   static latest()
+ * @method   static whereUser(User $user)
  */
 class EndUserAgreement extends Model
 {

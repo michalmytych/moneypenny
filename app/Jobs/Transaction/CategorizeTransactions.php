@@ -22,7 +22,8 @@ class CategorizeTransactions implements ShouldQueue
 
     /**
      * Execute the job.
-     * @throws Exception
+     *
+     * @throws       Exception
      * @noinspection PhpUndefinedMethodInspection
      */
     public function handle(TransactionCategorizeService $transactionCategorizeService): void

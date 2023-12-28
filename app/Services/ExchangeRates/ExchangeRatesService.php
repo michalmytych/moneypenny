@@ -16,7 +16,9 @@ class ExchangeRatesService implements ExchangeRatesServiceInterface
 {
     use DecodesHttpJsonResponse;
 
-    public function __construct(private readonly ExchangeRatesClient $exchangeRatesClient) { }
+    public function __construct(private readonly ExchangeRatesClient $exchangeRatesClient)
+    { 
+    }
 
     public function all(): Collection
     {
@@ -38,12 +40,14 @@ class ExchangeRatesService implements ExchangeRatesServiceInterface
         if (!$exchangeRate) {
             $dataObject = $this->provideNewHistoryRate($date, $baseCurrencyCode, $targetCurrencyCode);
 
-            return ExchangeRate::create([
+            return ExchangeRate::create(
+                [
                 'rate'             => $dataObject->rate,
                 'base_currency'    => $dataObject->baseCurrencyCode,
                 'target_currency'  => $dataObject->targetCurrencyCode,
                 'rate_source_date' => $dataObject->date,
-            ]);
+                ]
+            );
         }
 
         return $exchangeRate;
@@ -57,12 +61,14 @@ class ExchangeRatesService implements ExchangeRatesServiceInterface
     {
         $dateString = $date->format('Y-m-d');
 
-        $response = $this->exchangeRatesClient->get("/exchangerates_data/$dateString", [
+        $response = $this->exchangeRatesClient->get(
+            "/exchangerates_data/$dateString", [
             'query' => [
                 'base'    => $baseCurrencyCode,
                 'symbols' => $targetCurrencyCode,
             ],
-        ]);
+            ]
+        );
 
         $responseData = $this->decodedResponse($response);
 

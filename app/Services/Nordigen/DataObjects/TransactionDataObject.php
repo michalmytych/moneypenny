@@ -7,34 +7,43 @@ use App\DataObjects\DataObject;
 class TransactionDataObject extends DataObject
 {
     public function __construct(
-        /** @var string $rawVolume Operation raw volume */
+        /**
+         * @var string $rawVolume Operation raw volume 
+         */
         public string  $rawVolume,
-
-        /** @var string $currency Operation currency code */
+        /**
+         * @var string $currency Operation currency code 
+         */
         public string  $currency,
-
-        /** @var string $valueDate Operation execution date */
+        /**
+         * @var string $valueDate Operation execution date 
+         */
         public string  $valueDate,
-
-        /** @var string|null $bookingDate Operation booking date */
+        /**
+         * @var string|null $bookingDate Operation booking date 
+         */
         public ?string $bookingDate,
-
-        /** @var string|null $debtorName Operation sender name */
+        /**
+         * @var string|null $debtorName Operation sender name 
+         */
         public ?string $debtorName,
-
-        /** @var string|null $creditorName Operation receiver name */
+        /**
+         * @var string|null $creditorName Operation receiver name 
+         */
         public ?string $creditorName,
-
-        /** @var string|null $remittanceInformationUnstructured Operation details/description */
+        /**
+         * @var string|null $remittanceInformationUnstructured Operation details/description 
+         */
         public ?string $remittanceInformationUnstructured,
-
-        /** @var string|null $senderAccountNumber Sender IBAN Number */
+        /**
+         * @var string|null $senderAccountNumber Sender IBAN Number 
+         */
         public ?string $senderAccountNumber,
-
-        /** @var string|null $receiverAccountNumber Receiver IBAN Number */
+        /**
+         * @var string|null $receiverAccountNumber Receiver IBAN Number 
+         */
         public ?string $receiverAccountNumber,
-    )
-    {
+    ) {
     }
 
     public static function make(mixed $data): self

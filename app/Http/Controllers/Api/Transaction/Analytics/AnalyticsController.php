@@ -8,7 +8,9 @@ use App\Services\Analytics\AnalyticsService;
 
 class AnalyticsController extends Controller
 {
-    public function __construct(private readonly AnalyticsService $analyticsService) {}
+    public function __construct(private readonly AnalyticsService $analyticsService)
+    {
+    }
 
     public function index(Request $request): array
     {

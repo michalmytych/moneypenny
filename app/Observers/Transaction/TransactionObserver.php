@@ -28,7 +28,7 @@ readonly class TransactionObserver
     {
         $this->cacheAdapter->clearUserCache($transaction->user);
 
-        if($transaction->isDirty('category_id')){
+        if($transaction->isDirty('category_id')) {
             SaveTransactionCategoryReference::dispatch($transaction->id);
         }
     }

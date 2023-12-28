@@ -17,10 +17,12 @@ trait HasJsonFailedValidationResponse
         $errors = (new ValidationException($validator))->errors();
 
         throw new HttpResponseException(
-            response()->json([
+            response()->json(
+                [
                 'errors' => $errors,
                 'message' => 'validation.failed'
-            ], Response::HTTP_UNPROCESSABLE_ENTITY)
+                ], Response::HTTP_UNPROCESSABLE_ENTITY
+            )
         );
     }
 }

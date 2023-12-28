@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('exchange_rates', function (Blueprint $table) {
-            $table->id();
-            $table->string('base_currency');
-            $table->string('target_currency');
-            $table->date('rate_source_date');
-            $table->timestamps();
-        });
+        Schema::create(
+            'exchange_rates', function (Blueprint $table) {
+                $table->id();
+                $table->string('base_currency');
+                $table->string('target_currency');
+                $table->date('rate_source_date');
+                $table->timestamps();
+            }
+        );
     }
 
     /**

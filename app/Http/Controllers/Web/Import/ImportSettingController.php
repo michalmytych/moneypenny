@@ -17,7 +17,8 @@ class ImportSettingController extends Controller
     public function __construct(
         private readonly ImportService $importService,
         private readonly ImportSettingService $importSettingService
-    ) {}
+    ) {
+    }
 
     public function index(Request $request): View
     {

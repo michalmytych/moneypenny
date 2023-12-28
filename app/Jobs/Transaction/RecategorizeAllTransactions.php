@@ -14,7 +14,9 @@ class RecategorizeAllTransactions implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, Batchable;
 
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
     public function handle(): void
     {

@@ -20,7 +20,7 @@ class SendApplicationNotification extends Command
 
         $notificationBroadcastService->sendStoredApplicationNotification(
             header: $header,
-            content: $content ,
+            content: $content,
             url: $url,
             userId: $userId,
         );

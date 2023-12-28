@@ -22,13 +22,13 @@ class HomePageService implements HomePageServiceInterface
         private readonly TransactionQuerySet             $transactionQuerySet,
         private readonly SynchronizationService          $synchronizationService,
         private readonly TransactionSyncServiceInterface $transactionSyncService,
-    )
-    {
+    ) {
     }
 
     public function getHomeData(User $user): Collection
     {
-        return collect([
+        return collect(
+            [
             'user' => $user,
             'budgetsWithConsumption' => $this->budgetService->allWithConsumption($user),
             'currencyCode' => $this->currencyService->resolveCalculationCurrency($user),
@@ -45,6 +45,7 @@ class HomePageService implements HomePageServiceInterface
                 'transactions' => $this->transactionQuerySet->getTenLatestTransactionsByUserForHomePage($user),
                 'last_synchronization' => $this->synchronizationService->getLatestSucceededByUser($user)
             ]
-        ]);
+            ]
+        );
     }
 }

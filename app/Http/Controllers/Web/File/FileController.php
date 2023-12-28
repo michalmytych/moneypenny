@@ -20,8 +20,7 @@ class FileController extends Controller
         private readonly FileUploadService    $fileUploadService,
         private readonly ColumnMappingService $columnMappingService,
         private readonly ImportSettingService $importSettingService
-    )
-    {
+    ) {
     }
 
     public function index(Request $request): View
@@ -36,9 +35,11 @@ class FileController extends Controller
 
     public function show(mixed $id, Request $request): View
     {
-        return view('file.show', [
+        return view(
+            'file.show', [
             'file' => $this->fileService->findOrFail($id, $request->user()),
-        ]);
+            ]
+        );
     }
 
     /**

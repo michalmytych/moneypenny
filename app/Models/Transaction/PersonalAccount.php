@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property mixed $value
- * @method static whereUser(mixed $user)
+ * @method   static whereUser(mixed $user)
  */
 class PersonalAccount extends Model
 {

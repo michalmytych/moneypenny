@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @property string $code
- * @method static firstOrCreate(string[] $categoryData)
+ * @method   static firstOrCreate(string[] $categoryData)
  */
 class Category extends Model
 {

@@ -42,22 +42,26 @@ class CategorizeAllTransactionsDebug extends Command
 
         $chunkCounter = 0;
         $transactionBaseQuery
-            ->chunk($chunkSize, function (Collection $transactions) use ($categorizeTransactionService, &$chunkCounter) {
-                try {
-                    $categorizedPercentage = $categorizeTransactionService->categorizeTransactionsSync($transactions);
-                    ++$chunkCounter;
-                    $categorizedFormatted = number_format($categorizedPercentage * 100, 1);
-                    $line = '[' . $chunkCounter . '] Processed chunk. ' . $categorizedFormatted . '% categorized.';
-                    $this->line($line);
+            ->chunk(
+                $chunkSize, function (Collection $transactions) use ($categorizeTransactionService, &$chunkCounter) {
+                    try {
+                        $categorizedPercentage = $categorizeTransactionService->categorizeTransactionsSync($transactions);
+                        ++$chunkCounter;
+                        $categorizedFormatted = number_format($categorizedPercentage * 100, 1);
+                        $line = '[' . $chunkCounter . '] Processed chunk. ' . $categorizedFormatted . '% categorized.';
+                        $this->line($line);
 
-                } catch (Throwable $throwable) {
-                    $this->error('[' . $chunkCounter . '] Processed chunk failed');
-                    $shortMessage = StringHelper::shortenAuto($throwable->getMessage(), 200);
-                    $this->warn($shortMessage);
+                    } catch (Throwable $throwable) {
+                        $this->error('[' . $chunkCounter . '] Processed chunk failed');
+                        $shortMessage = StringHelper::shortenAuto($throwable->getMessage(), 200);
+                        $this->warn($shortMessage);
+                    }
                 }
-            });
+            );
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /**
+ * @noinspection PhpUndefinedMethodInspection 
+*/
         $categorizedTransactionsCount = Transaction::whereNotNull('category_id')->count();
         $totalCategorizedPercentage = number_format(
             ($categorizedTransactionsCount / $transactionsTotalCount) * 100,

@@ -10,7 +10,9 @@ class AssertableJsonMixin
     public function hasValidPagination(): Closure
     {
         return function (): AssertableJson {
-            /** @var AssertableJson $this */
+            /**
+ * @var AssertableJson $this 
+*/
             return $this
                 ->whereType('data', 'array')
                 ->whereType('current_page', 'integer')

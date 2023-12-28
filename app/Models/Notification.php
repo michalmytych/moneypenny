@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * @property string $content
  * @property int $id
- * @method static whereUser(User $user)
- * @method static create(array $array)
+ * @method   static whereUser(User $user)
+ * @method   static create(array $array)
  */
 class Notification extends Model
 {

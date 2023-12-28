@@ -6,15 +6,17 @@ class TimeHelper
 {
     /**
      * Returns rough (in largest single unit) time elapsed between two times.
-     * @param int $iTime0  Initial time, as time_t.
-     * @param int $iTime1  Final time, as time_t. 0=use current time.
+     *
+     * @param  int $iTime0 Initial time, as time_t.
+     * @param  int $iTime1 Final time, as time_t. 0=use current time.
      * @return string Time elapsed, like "5 minutes" or "3 days" or "1 month".
      *              You might print "ago" after this return if $iTime1 is now.
      * @author Dan Kamins - dos at axonchisel dot net
      */
     static function ax_getRoughTimeElapsedAsText(int $iTime0, int $iTime1 = 0): string
     {
-        if ($iTime1 == 0) { $iTime1 = time(); }
+        if ($iTime1 == 0) { $iTime1 = time(); 
+        }
         $iTimeElapsed = $iTime1 - $iTime0;
 
         if ($iTimeElapsed < (60)) {

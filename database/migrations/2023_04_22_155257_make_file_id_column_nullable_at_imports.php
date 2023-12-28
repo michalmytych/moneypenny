@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('imports', function (Blueprint $table) {
-            $table
-                ->foreignId('file_id')
-                ->nullable()
-                ->change();
-        });
+        Schema::table(
+            'imports', function (Blueprint $table) {
+                $table
+                    ->foreignId('file_id')
+                    ->nullable()
+                    ->change();
+            }
+        );
     }
 
     /**
@@ -24,11 +26,13 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('imports', function (Blueprint $table) {
-            $table
-                ->foreignId('file_id')
-                ->nullable(false)
-                ->change();
-        });
+        Schema::table(
+            'imports', function (Blueprint $table) {
+                $table
+                    ->foreignId('file_id')
+                    ->nullable(false)
+                    ->change();
+            }
+        );
     }
 };

@@ -13,7 +13,9 @@ use App\Events\Transaction\Category\ImportCategorizationFinished;
 
 class CategorizeTransactionService
 {
-    public function __construct(private readonly TransactionCategorizeService $transactionCategorizeService) {}
+    public function __construct(private readonly TransactionCategorizeService $transactionCategorizeService)
+    {
+    }
 
     public function categorizeTransactionsSync(Collection|LazyCollection|array $transactions): float|int
     {
@@ -31,20 +33,24 @@ class CategorizeTransactionService
         Transaction::query()
             ->select('id')
             ->where('import_id', $importId)
-            ->chunk(100, function ($transactionsChunk) use (&$categorizationJobs) {
-                $transactionsIds = collect($transactionsChunk)
-                    ->pluck('id')
-                    ->toArray();
+            ->chunk(
+                100, function ($transactionsChunk) use (&$categorizationJobs) {
+                    $transactionsIds = collect($transactionsChunk)
+                        ->pluck('id')
+                        ->toArray();
 
-                $categorizationJobs[] = new CategorizeTransactions($transactionsIds);
-            });
+                    $categorizationJobs[] = new CategorizeTransactions($transactionsIds);
+                }
+            );
 
         // @todo seems like there is not enough chunks generated (only few transactions are being sent)
         Bus::batch($categorizationJobs)
             ->name('Import [' . $importId . '] transactions categorization')
-            ->finally(function () use ($importId) {
-                event(new ImportCategorizationFinished($importId));
-            })
+            ->finally(
+                function () use ($importId) {
+                    event(new ImportCategorizationFinished($importId));
+                }
+            )
             ->dispatch();
     }
 }

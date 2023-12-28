@@ -9,7 +9,9 @@ use App\Services\Import\ImportService;
 
 class ImportController extends Controller
 {
-    public function __construct(private readonly ImportService $importService) {}
+    public function __construct(private readonly ImportService $importService)
+    {
+    }
 
     public function index(Request $request): View
     {

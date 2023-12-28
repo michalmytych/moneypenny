@@ -47,10 +47,6 @@ jobs:
       - name: Install composer dependencies
         run: composer install --prefer-dist --no-interaction --ansi
 
-      - name: Clear cache
-        run: |
-          php${{ matrix.php }} artisan optimize:clear --env=testing
-
       - name: Migrate and seed the database
         run: |
           php${{ matrix.php }} artisan migrate --force -n --env=testing --database=mysql_testing

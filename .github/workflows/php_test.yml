@@ -49,7 +49,7 @@ jobs:
 
       - name: Migrate and seed the database
         run: |
-          php${{ matrix.php }} artisan migrate --force -n --env=ci --database=mysql_testing
+          php${{ matrix.php }} artisan migrate --force -n --env=testing --database=mysql_testing
 
       - name: Run PHP tests
-        run: php${{ matrix.php }} artisan test --env=ci
+        run: php${{ matrix.php }} artisan test --env=testing

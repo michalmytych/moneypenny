@@ -27,7 +27,3 @@ yarn-error.log
 
 # Test data
 /data
-
-# Testing .env file
-.env.testing
-.env.test

@@ -9,9 +9,7 @@ use Illuminate\View\View;
 
 class DeviceController extends Controller
 {
-    public function __construct(private readonly DeviceService $deviceService)
-    {
-    }
+    public function __construct(private readonly DeviceService $deviceService) {}
 
     public function index(Request $request): View
     {

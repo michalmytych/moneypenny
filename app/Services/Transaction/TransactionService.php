@@ -14,8 +14,7 @@ use App\Services\Transaction\Similar\SimilarTransactionsService;
 class TransactionService
 {
     public function __construct(private readonly SimilarTransactionsService $similarTransactionsService)
-    {
-    }
+    {}
 
     public function getIndexData(Filter $filter, User $user): array
     {
@@ -46,9 +45,7 @@ class TransactionService
             'receiverPersona',
         ];
 
-        /**
- * @var Transaction $transaction 
-*/
+        /** @var Transaction $transaction */
         $transaction = Transaction::with($relationsToLoad)->findOrFail($id);
 
         if ($transaction->user_id !== $user->id) {

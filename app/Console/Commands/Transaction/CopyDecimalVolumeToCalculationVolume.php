@@ -14,16 +14,12 @@ class CopyDecimalVolumeToCalculationVolume extends Command
 
     public function handle(): void
     {
-        DB::transaction(
-            function () {
-                foreach (Transaction::cursor() as $transaction) {
-                    $transaction->update(
-                        [
-                        'calculation_volume' => $transaction->decimal_volume
-                        ]
-                    );
-                }
+        DB::transaction(function() {
+            foreach (Transaction::cursor() as $transaction) {
+                $transaction->update([
+                    'calculation_volume' => $transaction->decimal_volume
+                ]);
             }
-        );
+        });
     }
 }

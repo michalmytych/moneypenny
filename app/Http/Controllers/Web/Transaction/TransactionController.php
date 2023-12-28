@@ -18,8 +18,7 @@ class TransactionController extends Controller
     public function __construct(
         private readonly TransactionService $transactionService,
         private readonly CurrencyService $currencyService
-    ) {
-    }
+    ) {}
 
     public function index(Request $request): View
     {
@@ -50,12 +49,10 @@ class TransactionController extends Controller
         $this->transactionService->create($user, $data);
 
         return to_route('transaction.index')
-            ->with(
-                config('session.flash_messages_key'), [
+            ->with(config('session.flash_messages_key'), [
                 __('Added new transaction.')
-                ]
-            );
-    }
+            ]);
+        }
 
     public function patch(mixed $transactionId, PatchRequest $request): RedirectResponse
     {
@@ -72,10 +69,8 @@ class TransactionController extends Controller
         $this->transactionService->toggleExcludeFromCalculation($transactionId);
 
         return to_route('transaction.show', ['id' => $transaction->id])
-            ->with(
-                config('session.flash_messages_key'), [
+            ->with(config('session.flash_messages_key'), [
                 __('Changed transaction calculation settings.')
-                ]
-            );
+            ]);
     }
 }

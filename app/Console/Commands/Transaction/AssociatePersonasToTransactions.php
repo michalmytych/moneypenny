@@ -14,9 +14,7 @@ class AssociatePersonasToTransactions extends Command
 
     protected $description = 'Create personas associations for all transactions.';
 
-    /**
-     * @noinspection PhpUndefinedMethodInspection 
-     */
+    /** @noinspection PhpUndefinedMethodInspection */
     public function handle(): void
     {
         $transactionsCount = Transaction::count();
@@ -24,11 +22,9 @@ class AssociatePersonasToTransactions extends Command
         $this->line("<fg=blue>Creating associations for $transactionsCount transactions...</>");
         $this->line("* * * * * * * * * * * * * * * * * * * * * * *");
 
-        $this->withProgressBar(
-            Transaction::cursor(), function (Transaction $transaction) {
-                $this->performTask($transaction);
-            }
-        );
+        $this->withProgressBar(Transaction::cursor(), function (Transaction $transaction) {
+            $this->performTask($transaction);
+        });
 
         $this->info(PHP_EOL . 'Found personas list:');
 
@@ -36,18 +32,14 @@ class AssociatePersonasToTransactions extends Command
         $personas = Persona::withCount('transactionsAsSender', 'transactionsAsReceiver')->get();
 
         foreach ($personas as $persona) {
-            /**
- * @var Persona $persona 
-*/
+            /** @var Persona $persona */
             $associatedNamesCount = count(json_decode($persona->associated_names, true));
             $commonNameOutput = trim(StringHelper::shortenAuto($persona->common_name, 25));
             $associatedNamesOutput = "$associatedNamesCount : ";
             $associatedNamesOutput .= trim(StringHelper::shortenAuto($persona->associated_names, 45));
             $accountNumberOutput = $persona->account_number;
 
-            /**
- * @noinspection PhpUndefinedFieldInspection 
-*/
+            /** @noinspection PhpUndefinedFieldInspection */
             $personasData[] = [
                 'common_name' => $commonNameOutput,
                 'associated_names' => $associatedNamesOutput,

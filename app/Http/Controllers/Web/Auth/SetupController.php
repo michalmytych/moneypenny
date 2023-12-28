@@ -9,19 +9,15 @@ use Illuminate\View\View;
 
 class SetupController extends Controller
 {
-    public function __construct(private readonly UserService $userService)
-    {
-    }
+    public function __construct(private readonly UserService $userService) {}
 
     public function setup(Request $request): View
     {
         $apiToken = $this->userService->getOrCreateApiToken($request->user());
 
-        return view(
-            'auth.setup', [
+        return view('auth.setup', [
             'redirect' => route('setting.edit'),
             'currentApiToken' => $apiToken
-            ]
-        );
+        ]);
     }
 }

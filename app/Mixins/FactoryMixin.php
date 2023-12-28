@@ -11,15 +11,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class FactoryMixin
 {
-    /**
-     * @noinspection PhpUndefinedMethodInspection 
-     */
+    /** @noinspection PhpUndefinedMethodInspection */
     public function firstOrCreate(): Closure
     {
         return function (): Model {
-            /**
- * @var Factory $this 
-*/
+            /** @var Factory $this */
             return $this->modelName()::first() ?? $this->modelName()::factory()->create();
         };
     }

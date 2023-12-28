@@ -16,8 +16,7 @@ class ChatController extends Controller
     public function __construct(
         private readonly CacheAdapterInterface $cacheAdapter,
         private readonly NotificationBroadcastService $notificationBroadcastService
-    ) {
-    }
+    ) {}
 
     public function index(): View
     {

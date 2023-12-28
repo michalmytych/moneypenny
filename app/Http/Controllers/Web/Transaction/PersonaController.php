@@ -12,9 +12,7 @@ use Illuminate\Http\Request;
 
 class PersonaController extends Controller
 {
-    public function __construct(private readonly TransactionPersonaService $transactionPersonaService)
-    {
-    }
+    public function __construct(private readonly TransactionPersonaService $transactionPersonaService) {}
 
     public function index(Request $request): View
     {
@@ -26,22 +24,18 @@ class PersonaController extends Controller
             ->get();
 
         if (null !== $selectedPersonaId) {
-            return view(
-                'persona.index', [
+            return view('persona.index', [
                 'personas' => $personas,
                 'selected_persona' => Persona::with(
                     'transactionsAsSender', 'transactionsAsReceiver'
                 )
                     ->find($selectedPersonaId)
-                ]
-            );
+            ]);
         }
 
-        return view(
-            'persona.index', [
+        return view('persona.index', [
             'personas' => $personas,
-            ]
-        );
+        ]);
     }
 
     public function update(Persona $persona, Request $request): RedirectResponse

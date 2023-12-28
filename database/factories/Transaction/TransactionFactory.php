@@ -17,12 +17,10 @@ class TransactionFactory extends Factory
             2
         );
 
-        $type = $this->faker->randomElement(
-            [
+        $type = $this->faker->randomElement([
             Transaction::TYPE_INCOME,
             Transaction::TYPE_EXPENDITURE
-            ]
-        );
+        ]);
 
         return [
             'is_excluded_from_calculation' => $this->faker->boolean(),

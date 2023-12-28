@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table(
-            'imports', function (Blueprint $table) {
-                $table
-                    ->foreignId('synchronization_id')
-                    ->nullable()
-                    ->constrained('synchronizations')
-                    ->nullOnDelete();
-            }
-        );
+        Schema::table('imports', function (Blueprint $table) {
+            $table
+                ->foreignId('synchronization_id')
+                ->nullable()
+                ->constrained('synchronizations')
+                ->nullOnDelete();
+        });
     }
 
     /**
@@ -27,10 +25,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table(
-            'imports', function (Blueprint $table) {
-                $table->dropColumn('synchronization_id');
-            }
-        );
+        Schema::table('imports', function (Blueprint $table) {
+            $table->dropColumn('synchronization_id');
+        });
     }
 };

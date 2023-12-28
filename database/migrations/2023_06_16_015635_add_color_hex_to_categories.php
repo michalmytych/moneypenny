@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table(
-            'categories', function (Blueprint $table) {
-                $table->string('color_hex', 7)->nullable();
-            }
-        );
+        Schema::table('categories', function (Blueprint $table) {
+            $table->string('color_hex', 7)->nullable();
+        });
     }
 
     /**
@@ -23,10 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table(
-            'categories', function (Blueprint $table) {
-                $table->dropColumn('color_hex');
-            }
-        );
+        Schema::table('categories', function (Blueprint $table) {
+            $table->dropColumn('color_hex');
+        });
     }
 };

@@ -25,9 +25,9 @@ use IvanoMatteo\LaravelDeviceTracking\Traits\UseDevices;
  * @property Settings|null $settings
  * @property Collection $personalAccounts
  * @property Collection $budgets
- * @method   static cursor()
- * @method   static firstWhere(array $array)
- * @method   static findOrFail(mixed $userId)
+ * @method static cursor()
+ * @method static firstWhere(array $array)
+ * @method static findOrFail(mixed $userId)
  */
 class User extends Authenticatable
 {

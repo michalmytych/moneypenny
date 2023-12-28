@@ -12,7 +12,8 @@ readonly class FileUploadService
     public function __construct(
         private ProfileFileService $profileFileService,
         private TransactionFileService $transactionFileService
-    ) {
+    )
+    {
     }
 
     /**
@@ -37,11 +38,9 @@ readonly class FileUploadService
             );
 
         } catch(\Throwable) {
-            throw ValidationException::withMessages(
-                [
+            throw ValidationException::withMessages([
                 'file' => 'Invalid file, please check import configuration.'
-                ]
-            );
+            ]);
         }
     }
 }

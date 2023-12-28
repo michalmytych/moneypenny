@@ -8,9 +8,7 @@ use App\Services\ExchangeRates\ExchangeRatesService;
 
 class ExchangeRateController extends Controller
 {
-    public function __construct(private readonly ExchangeRatesService $exchangeRatesService)
-    {
-    }
+    public function __construct(private readonly ExchangeRatesService $exchangeRatesService) {}
 
     public function index(): View
     {

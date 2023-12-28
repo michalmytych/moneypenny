@@ -9,9 +9,7 @@ use Illuminate\View\View;
 
 class ReportController extends Controller
 {
-    public function __construct(private readonly ReportService $reportService)
-    {
-    }
+    public function __construct(private readonly ReportService $reportService) {}
 
     public function periodic(Request $request): View
     {

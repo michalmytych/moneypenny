@@ -12,8 +12,7 @@ class HistoricalExchangeRateDataObject extends DataObject
         public string $rate,
         public string $baseCurrencyCode,
         public string $targetCurrencyCode,
-    ) {
-    }
+    ) {}
 
     public static function make(mixed $data): self
     {

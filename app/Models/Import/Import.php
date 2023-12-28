@@ -18,8 +18,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $file_id
  * @property int|null $synchronization_id
  * @property int $transactions_skipped_count
- * @method   static create(array $data)
- * @method   static whereUser(\App\Models\User $user)
+ * @method static create(array $data)
+ * @method static whereUser(\App\Models\User $user)
  */
 class Import extends Model
 {

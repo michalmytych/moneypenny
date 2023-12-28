@@ -74,11 +74,9 @@ class FileRenderBuilder
     protected function renderAsBinaryFile(): string
     {
         $this->fileType = self::FILE_TYPE_BINARY;
-        return view(
-            'file_explorer.partials.binary-file', [
+        return view('file_explorer.partials.binary-file', [
             'fileName' => $this->fileName
-            ]
-        )->render();
+        ])->render();
     }
 
     protected function renderAsVideoFile(): string
@@ -86,34 +84,28 @@ class FileRenderBuilder
         $this->fileType = self::FILE_TYPE_VIDEO;
         $extension = FileHelper::extractExtension($this->fileName);
 
-        return view(
-            'file_explorer.partials.video-file', [
+        return view('file_explorer.partials.video-file', [
             'fileName' => $this->fileName,
             'fileExtension' => $extension,
             'src' => route('api.file_explorer.get', ['path' => $this->storageFilePath])
-            ]
-        )->render();
+        ])->render();
     }
 
     protected function renderAsTextFile(string $content): string
     {
-        return view(
-            'file_explorer.partials.text-file', [
+        return view('file_explorer.partials.text-file', [
             'fileName' => $this->fileName,
             'content' => $content
-            ]
-        )->render();
+        ])->render();
     }
 
     protected function renderAsImageFile(): string
     {
         $this->fileType = self::FILE_TYPE_IMAGE;
-        return view(
-            'file_explorer.partials.image-file', [
+        return view('file_explorer.partials.image-file', [
             'fileName' => $this->fileName,
             'src' => route('api.file_explorer.get', ['path' => $this->storageFilePath])
-            ]
-        )->render();
+        ])->render();
     }
 
     public function getFileType(): ?string

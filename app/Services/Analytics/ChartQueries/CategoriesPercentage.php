@@ -12,14 +12,12 @@ class CategoriesPercentage extends ChartQuery
     public function get(User $user): array
     {
         $categories = Category::query()
-            ->withCount(
-                [
+            ->withCount([
                 'transactions as transactions_count' => function ($query) use ($user) {
                     $query
                         ->baseCalculationQuery()
                         ->where('user_id', $user->id);
-                }]
-            )
+                }])
             ->get();
 
         $totalTransactionsCategorized = $categories->sum('transactions_count');
@@ -28,12 +26,10 @@ class CategoriesPercentage extends ChartQuery
         $categoriesValues = [];
 
         $categories
-            ->each(
-                function ($category) use ($totalTransactionsCategorized, &$categoriesLabels, &$categoriesValues) {
-                    $categoriesLabels[] = Str::ucfirst($category->code);
-                    $categoriesValues[] = $totalTransactionsCategorized ? $category->transactions_count / $totalTransactionsCategorized : 0;
-                }
-            );
+            ->each(function ($category) use ($totalTransactionsCategorized, &$categoriesLabels, &$categoriesValues) {
+                $categoriesLabels[] = Str::ucfirst($category->code);
+                $categoriesValues[] = $totalTransactionsCategorized ? $category->transactions_count / $totalTransactionsCategorized : 0;
+            });
 
         return DoughnutChart::make(
             header: ' Of category',

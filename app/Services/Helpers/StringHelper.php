@@ -39,8 +39,8 @@ class StringHelper
      * in two given strings. The algorithm runs in linear time O(mn),
      * where m and n are the lengths of the input strings.
      *
-     * @param  string $str1
-     * @param  string $str2
+     * @param string $str1
+     * @param string $str2
      * @return string
      */
     public static function findLongestCommonSubstring(string $str1, string $str2): string
@@ -80,14 +80,13 @@ class StringHelper
      * WordPress' implementation of function which
      * removes accents of different languages from string.
      *
-     * @param  $string
+     * @param $string
      * @return string
      */
     public static function removeAccents($string): string
     {
-        if (!preg_match('/[\x80-\xff]/', $string)) {
+        if (!preg_match('/[\x80-\xff]/', $string))
             return $string;
-        }
 
         $chars = array(
             // Decompositions for Latin-1 Supplement

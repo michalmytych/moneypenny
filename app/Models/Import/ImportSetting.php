@@ -15,10 +15,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $start_row
  * @property int $id
  * @property mixed $user_id
- * @method   static findOrFail(int $importSettingId)
- * @method   static latest()
- * @method   static create(array $validatedData)
- * @method   static whereUser(User $user)
+ * @method static findOrFail(int $importSettingId)
+ * @method static latest()
+ * @method static create(array $validatedData)
+ * @method static whereUser(User $user)
  */
 class ImportSetting extends Model
 {

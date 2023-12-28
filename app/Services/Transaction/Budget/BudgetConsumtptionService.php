@@ -10,9 +10,7 @@ use App\Services\Transaction\TransactionQuerySet;
 
 class BudgetConsumtptionService
 {
-    public function __construct(private readonly TransactionQuerySet $transactionQuerySet)
-    {
-    }
+    public function __construct(private readonly TransactionQuerySet $transactionQuerySet) {}
 
     public function getBudgetsConsumptionByUser(User $user): Collection
     {
@@ -36,14 +34,12 @@ class BudgetConsumtptionService
                     ->getExpendituresSumByDates($user, $weekDates);
             }
 
-            $budgetsConsumptionData->push(
-                [
+            $budgetsConsumptionData->push([
                 'budget' => $budget,
                 'budget_amount' => (float) $budget->amount,
                 'period_expenditures_sum' => (float) $periodExpendituresSum,
                 'consumption' => (float) abs($periodExpendituresSum / $budget->amount),
-                ]
-            );
+            ]);
         }
 
         return $budgetsConsumptionData;

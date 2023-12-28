@@ -7,15 +7,11 @@ use IvanoMatteo\LaravelDeviceTracking\Events\DeviceHijacked;
 
 readonly class HandleWhenDeviceHijacked
 {
-    public function __construct(private DeviceService $deviceService)
-    {
-    }
+    public function __construct(private DeviceService $deviceService) {}
 
     public function handle(object $event): void
     {
-        /**
- * @var DeviceHijacked $event 
-*/
+        /** @var DeviceHijacked $event */
         $this->deviceService->handleWhenDeviceHijacked($event);
     }
 }

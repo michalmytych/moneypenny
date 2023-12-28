@@ -15,9 +15,7 @@ class SimilarTransactionsService
 
         $baseQueryClone = clone $baseQuery;
 
-        /**
- * @var Collection $baseQueryResult 
-*/
+        /** @var Collection $baseQueryResult */
         $baseQueryResult = $baseQueryClone->get();
 
         if ($baseQueryResult->count() < 5) {
@@ -71,9 +69,8 @@ class SimilarTransactionsService
 
         $baseQueryClone
             ->orWhereRaw('UPPER(description) LIKE ?', ['%' . $onlyLettersToken . '%'])
-            ->when(
-                $transaction->category, fn(Builder $builder) => $builder
-                    ->orWhere('category_id', $transaction->category?->id)
+            ->when($transaction->category, fn(Builder $builder) => $builder
+                ->orWhere('category_id', $transaction->category?->id)
             );
     }
 }

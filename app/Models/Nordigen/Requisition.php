@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * @method   static create(array $array)
- * @method   static latest()
- * @method   static whereUser($user)
+ * @method static create(array $array)
+ * @method static latest()
+ * @method static whereUser($user)
  * @property mixed $nordigen_requisition_id
  */
 class Requisition extends Model

@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table(
-            'exchange_rates', function (Blueprint $table) {
-                $table->decimal('rate', 16, 6);
-            }
-        );
+        Schema::table('exchange_rates', function (Blueprint $table) {
+            $table->decimal('rate', 16, 6);
+        });
     }
 
     /**
@@ -23,10 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table(
-            'exchange_rates', function (Blueprint $table) {
-                $table->dropColumn('rate');
-            }
-        );
+        Schema::table('exchange_rates', function (Blueprint $table) {
+            $table->dropColumn('rate');
+        });
     }
 };

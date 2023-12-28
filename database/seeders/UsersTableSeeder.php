@@ -14,23 +14,19 @@ class UsersTableSeeder extends Seeder
     public function run(): void
     {
         try {
-            User::factory()->create(
-                [
+            User::factory()->create([
                 'name' => 'Test User',
                 'email' => 'test@example.com',
-                ]
-            );
+            ]);
         } catch (Throwable) {
             $this->command->warn('  ⚠️ Test user already exists.');
         }
 
         try {
-            User::factory()->create(
-                [
+            User::factory()->create([
                 'name' => 'Guest User',
                 'email' => 'guest@example.com',
-                ]
-            );
+            ]);
         } catch (Throwable) {
             $this->command->warn('  ⚠️ Guest user already exists.');
         }
@@ -38,12 +34,10 @@ class UsersTableSeeder extends Seeder
         try {
             User::factory()
                 ->admin()
-                ->create(
-                    [
+                ->create([
                     'name' => 'Admin User',
                     'email' => 'admin@example.com',
-                    ]
-                );
+                ]);
         } catch (Throwable) {
             $this->command->warn('  ⚠️ Admin user already exists.');
         }

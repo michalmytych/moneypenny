@@ -17,13 +17,11 @@ class PatchRequest extends FormRequest
             'name' => 'string',
             'amount' => 'numeric|gte:0',
             'type' => [
-                Rule::in(
-                    [
+                Rule::in([
                     Budget::TYPE_MONTH,
                     Budget::TYPE_WEEK,
                     Budget::TYPE_DAY
-                    ]
-                )
+                ])
             ]
         ];
     }

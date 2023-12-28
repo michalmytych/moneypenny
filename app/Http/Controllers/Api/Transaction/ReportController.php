@@ -9,9 +9,7 @@ use App\Services\Transaction\Report\ReportService;
 
 class ReportController extends Controller
 {
-    public function __construct(private readonly ReportService $reportService)
-    {
-    }
+    public function __construct(private readonly ReportService $reportService) {}
 
     public function avgExpenditures(Request $request): JsonResponse
     {
@@ -20,11 +18,9 @@ class ReportController extends Controller
             ->reportService
             ->getAvgExpendituresByDays($user, sinceDate: now()->subMonth(), toDate: now());
 
-        return response()->json(
-            [
+        return response()->json([
             'dataset' => $data
-            ]
-        );
+        ]);
     }
 
     public function avgIncomes(Request $request): JsonResponse
@@ -34,10 +30,8 @@ class ReportController extends Controller
             ->reportService
             ->getAvgIncomesByDays($user, sinceDate: now()->subMonth(), toDate: now());
 
-        return response()->json(
-            [
+        return response()->json([
             'dataset' => $data
-            ]
-        );
+        ]);
     }
 }

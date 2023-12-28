@@ -17,7 +17,7 @@ class CategoryController extends Controller
         if (!$user->is_admin) {
             $baseQuery = Category::whereHas(
                 'transactions', fn($relation) => $relation
-                    ->where('user_id', $user->id)
+                ->where('user_id', $user->id)
             );
         }
 

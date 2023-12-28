@@ -8,23 +8,19 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table(
-            'transactions', function (Blueprint $table) {
-                $table
-                    ->foreignId('category_id')
-                    ->nullable()
-                    ->constrained('categories')
-                    ->nullOnDelete();
-            }
-        );
+        Schema::table('transactions', function (Blueprint $table) {
+            $table
+                ->foreignId('category_id')
+                ->nullable()
+                ->constrained('categories')
+                ->nullOnDelete();
+        });
     }
 
     public function down(): void
     {
-        Schema::table(
-            'transactions', function (Blueprint $table) {
-                $table->dropColumn('category_id');
-            }
-        );
+        Schema::table('transactions', function (Blueprint $table) {
+            $table->dropColumn('category_id');
+        });
     }
 };

@@ -9,9 +9,7 @@ use App\Services\Notification\NotificationService;
 
 class NotificationController extends Controller
 {
-    public function __construct(private readonly NotificationService $notificationService)
-    {
-    }
+    public function __construct(private readonly NotificationService $notificationService) {}
 
     public function index(Request $request): JsonResponse
     {
@@ -19,10 +17,8 @@ class NotificationController extends Controller
         $limit = $request->integer('limit', 5);
         $notifications = $this->notificationService->all($user, $limit);
 
-        return response()->json(
-            [
+        return response()->json([
             'notifications' => $notifications
-            ]
-        );
+        ]);
     }
 }

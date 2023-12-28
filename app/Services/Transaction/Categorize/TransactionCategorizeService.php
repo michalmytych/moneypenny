@@ -15,9 +15,7 @@ class TransactionCategorizeService
     {
         $postData = [];
         foreach ($transactions as $transaction) {
-            /**
- * @var Transaction $transaction 
-*/
+            /** @var Transaction $transaction */
             $postData[] = [
                 'id' => $transaction->id,
                 'currency_id' => $transaction->currency,
@@ -37,11 +35,9 @@ class TransactionCategorizeService
         $requestUrl = config('egghead.base_api_url');
 
         // @todo refactor
-        $response = Http::withHeaders(
-            [
+        $response = Http::withHeaders([
             'x-api-key' => config('egghead.api_token')
-            ]
-        )->post(
+        ])->post(
             url: $requestUrl,
             data: $postData
         );

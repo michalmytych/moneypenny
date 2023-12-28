@@ -16,8 +16,7 @@ class BudgetController extends Controller
     public function __construct(
         private readonly BudgetService $budgetService,
         private readonly CurrencyService $currencyService
-    ) {
-    }
+    ) {}
 
     public function index(Request $request): View
     {

@@ -11,18 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create(
-            'nordigen_end_user_agreements', function (Blueprint $table) {
-                $table->id();
-                $table->boolean('is_successful')->default(false);
-                $table->json('raw_request_body');
-                $table->json('raw_response_body');
-                $table->string('nordigen_institution_id')->nullable();
-                $table->string('nordigen_end_user_agreement_id')->nullable();
-                $table->dateTime('nordigen_end_user_agreement_created')->nullable();
-                $table->timestamps();
-            }
-        );
+        Schema::create('nordigen_end_user_agreements', function (Blueprint $table) {
+            $table->id();
+            $table->boolean('is_successful')->default(false);
+            $table->json('raw_request_body');
+            $table->json('raw_response_body');
+            $table->string('nordigen_institution_id')->nullable();
+            $table->string('nordigen_end_user_agreement_id')->nullable();
+            $table->dateTime('nordigen_end_user_agreement_created')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**

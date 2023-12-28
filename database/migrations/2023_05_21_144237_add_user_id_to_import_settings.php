@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table(
-            'import_settings', function (Blueprint $table) {
-                $table
-                    ->foreignId('user_id')
-                    ->constrained('users')
-                    ->cascadeOnDelete();
-            }
-        );
+        Schema::table('import_settings', function (Blueprint $table) {
+            $table
+                ->foreignId('user_id')
+                ->constrained('users')
+                ->cascadeOnDelete();
+        });
     }
 
     /**
@@ -26,10 +24,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table(
-            'import_settings', function (Blueprint $table) {
-                $table->dropConstrainedForeignId('user_id');
-            }
-        );
+        Schema::table('import_settings', function (Blueprint $table) {
+            $table->dropConstrainedForeignId('user_id');
+        });
     }
 };

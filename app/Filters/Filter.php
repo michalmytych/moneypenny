@@ -51,9 +51,7 @@ class Filter
             return $builder;
         }
 
-        /**
- * @var Filterable|Model $model 
-*/
+        /** @var Filterable|Model $model */
         $model = $builder->getModel();
 
         $filterableColumns   = $model::getFilterableColumns()->toArray();

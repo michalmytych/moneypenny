@@ -49,11 +49,9 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->reportable(
-            function (Throwable $e) {
-                //
-            }
-        );
+        $this->reportable(function (Throwable $e) {
+            //
+        });
     }
 
     /**
@@ -76,12 +74,10 @@ class Handler extends ExceptionHandler
     {
         $statusCode = $this->getExceptionHTTPStatusCode($throwable);
 
-        return new JsonResponse(
-            [
+        return new JsonResponse([
             'status' => $statusCode,
             'message' => $throwable->getMessage()
-            ], $statusCode
-        );
+        ], $statusCode);
     }
 
     protected function getExceptionHTTPStatusCode(Throwable $throwable): int

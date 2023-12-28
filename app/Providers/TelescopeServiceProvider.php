@@ -18,19 +18,17 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
 
         $this->hideSensitiveRequestDetails();
 
-        Telescope::filter(
-            function (IncomingEntry $entry) {
-                if ($this->app->environment('local')) {
-                    return true;
-                }
+        Telescope::filter(function (IncomingEntry $entry) {
+            if ($this->app->environment('local')) {
+                return true;
+            }
 
-                return $entry->isReportableException() ||
+            return $entry->isReportableException() ||
                    $entry->isFailedRequest() ||
                    $entry->isFailedJob() ||
                    $entry->isScheduledTask() ||
                    $entry->hasMonitoredTag();
-            }
-        );
+        });
     }
 
     /**
@@ -44,13 +42,11 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
 
         Telescope::hideRequestParameters(['_token']);
 
-        Telescope::hideRequestHeaders(
-            [
+        Telescope::hideRequestHeaders([
             'cookie',
             'x-csrf-token',
             'x-xsrf-token',
-            ]
-        );
+        ]);
     }
 
     /**
@@ -60,14 +56,10 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
      */
     protected function gate(): void
     {
-        Gate::define(
-            'viewTelescope', function ($user) {
-                return in_array(
-                    $user->email, [
-                    'text@example.com'
-                    ]
-                );
-            }
-        );
+        Gate::define('viewTelescope', function ($user) {
+            return in_array($user->email, [
+                'text@example.com'
+            ]);
+        });
     }
 }

@@ -11,9 +11,7 @@ class DateGroupByToCalendar extends Transformer
     public static function transform(mixed $data, string $dateKey, string $valueKey): Collection
     {
         // @todo - refactor
-        /**
- * @var Collection $data 
-*/
+        /** @var Collection $data */
         $datesData = $data->toArray();
         $result = collect();
 
@@ -50,28 +48,24 @@ class DateGroupByToCalendar extends Transformer
                 }
             }
 
-            $result->push(
-                [
+            $result->push([
                 'date' => $dayString,
                 'total' => $valueData
-                ]
-            );
+            ]);
         }
 
         // @todo ASAP - rm this hack
-        return $result->map(
-            function ($record, $ix) use ($result) {
-                $total = data_get($record, 'total');
-                if ($total <= 0) {
-                    $nextIx = intval($ix) + 3;
-                    $nextRecord = $result->get($nextIx);
-                    if ($nextRecord) {
-                        $nextTotal = data_get($nextRecord, 'total');
-                        $record['total'] = $nextTotal;
-                    }
+        return $result->map(function($record, $ix) use ($result) {
+            $total = data_get($record, 'total');
+            if ($total <= 0) {
+                $nextIx = intval($ix) + 3;
+                $nextRecord = $result->get($nextIx);
+                if ($nextRecord) {
+                    $nextTotal = data_get($nextRecord, 'total');
+                    $record['total'] = $nextTotal;
                 }
-                return $record;
             }
-        );
+            return $record;
+        });
     }
 }

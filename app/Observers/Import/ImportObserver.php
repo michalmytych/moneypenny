@@ -8,12 +8,10 @@ use App\Services\Transaction\Category\CategorizeTransactionService;
 
 readonly class ImportObserver
 {
-    public function __construct(private CategorizeTransactionService $categorizeTransactionService)
-    {
-    }
+    public function __construct(private CategorizeTransactionService $categorizeTransactionService) {}
 
     /**
-     * @throws       Throwable
+     * @throws Throwable
      * @noinspection PhpMissingReturnTypeInspection
      */
     public function created(Import $import)

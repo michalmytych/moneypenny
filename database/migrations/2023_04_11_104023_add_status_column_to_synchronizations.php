@@ -12,13 +12,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table(
-            'synchronizations', function (Blueprint $table) {
-                $table
-                    ->tinyInteger('status')
-                    ->default(Synchronization::SYNC_STATUS_RUNNING);
-            }
-        );
+        Schema::table('synchronizations', function (Blueprint $table) {
+            $table
+                ->tinyInteger('status')
+                ->default(Synchronization::SYNC_STATUS_RUNNING);
+        });
     }
 
     /**
@@ -26,10 +24,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table(
-            'synchronizations', function (Blueprint $table) {
-                $table->dropColumn('status');
-            }
-        );
+        Schema::table('synchronizations', function (Blueprint $table) {
+            $table->dropColumn('status');
+        });
     }
 };

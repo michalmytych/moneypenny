@@ -11,20 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create(
-            'files', function (Blueprint $table) {
-                $table->id();
-                $table->string('name');
-                $table->string('path');
-                $table->integer('size');
-                $table
-                    ->foreignId('import_setting_id')
-                    ->nullable()
-                    ->constrained('import_settings')
-                    ->nullOnDelete();
-                $table->timestamps();
-            }
-        );
+        Schema::create('files', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('path');
+            $table->integer('size');
+            $table
+                ->foreignId('import_setting_id')
+                ->nullable()
+                ->constrained('import_settings')
+                ->nullOnDelete();
+            $table->timestamps();
+        });
     }
 
     /**

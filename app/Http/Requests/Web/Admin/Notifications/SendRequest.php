@@ -17,15 +17,13 @@ class SendRequest extends FormRequest
             'user_id' => 'nullable|exists:users,id',
             'type' => [
                 'nullable',
-                Rule::in(
-                    [
+                Rule::in([
                     Notification::TYPE_INFO,
                     Notification::TYPE_ERROR,
                     Notification::TYPE_EVENT,
                     Notification::TYPE_SUCCESS,
                     Notification::TYPE_WARNING
-                    ]
-                )
+                ])
             ]
         ];
     }

@@ -33,11 +33,9 @@ class UserController extends Controller
             );
 
         } catch (Throwable) {
-            return response(
-                [
+            return response([
                 'message' => 'Bad credential provided!',
-                ], 401
-            );
+            ], 401);
         }
 
         return response($result);
@@ -47,20 +45,16 @@ class UserController extends Controller
     {
         $this->userService->logout($request->user());
 
-        return response(
-            [
+        return response([
             'message' => 'User logged out successfully.',
-            ]
-        );
+        ]);
     }
 
     public function user(Request $request): Response
     {
-        return response(
-            [
+        return response([
             'user'  => $request->user(),
             'token' => $request->bearerToken(),
-            ]
-        );
+        ]);
     }
 }

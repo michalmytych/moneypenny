@@ -16,7 +16,8 @@ class ApplicationNotificationSent implements ShouldBroadcast
         public string $header,
         public string $message,
         public string $url
-    ) {
+    )
+    {
     }
 
     public function broadcastAs(): string

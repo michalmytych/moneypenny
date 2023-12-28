@@ -17,15 +17,13 @@ class FilesTableSeeder extends Seeder
     public function run(): void
     {
         for ($i = 1; $i <= 10; $i++) {
-            File::create(
-                [
+            File::create([
                 'user_id' => User::inRandomOrder()->first()->id,
                 'name' => "file{$i}.csv",
                 'path' => "files/file{$i}.csv",
                 'import_setting_id' => ImportSetting::inRandomOrder()->first()->id,
                 'size' => rand(1024, 2048),
-                ]
-            );
+            ]);
         }
     }
 }

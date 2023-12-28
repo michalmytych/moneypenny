@@ -17,11 +17,9 @@ class PersonalAccountController extends Controller
             ->withCount('transactions')
             ->get();
 
-        return view(
-            'personal_account.index', [
+        return view('personal_account.index', [
             'personalAccounts' => $personalAccounts
-            ]
-        );
+        ]);
     }
 
     public function edit(Request $request): View
@@ -29,27 +27,21 @@ class PersonalAccountController extends Controller
         // @todo - handle editing multiplte personal account saldos
         $personalAccount = $request->user()->personalAccounts()->first();
 
-        return view(
-            'personal_account.edit', [
+        return view('personal_account.edit', [
             'personalAccount' => $personalAccount
-            ]
-        );
+        ]);
     }
 
     public function update(Request $request): RedirectResponse
     {
         // @todo - handle editing multiplte personal account saldos
         $personalAccount = $request->user()->personalAccounts()->first();
-        $request->validate(
-            [
+        $request->validate([
             'value' => 'numeric|gte:0'
-            ]
-        );
-        $personalAccount->update(
-            [
+        ]);
+        $personalAccount->update([
             'value' => $request->input('value')
-            ]
-        );
+        ]);
 
         return to_route('home');
     }

@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table(
-            'transactions', function (Blueprint $table) {
-                $table
-                    ->foreignId('personal_account_id')
-                    ->nullable()
-                    ->constrained('personal_accounts')
-                    ->cascadeOnDelete();
-            }
-        );
+        Schema::table('transactions', function (Blueprint $table) {
+            $table
+                ->foreignId('personal_account_id')
+                ->nullable()
+                ->constrained('personal_accounts')
+                ->cascadeOnDelete();
+        });
     }
 
     /**
@@ -27,10 +25,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table(
-            'transactions', function (Blueprint $table) {
-                $table->dropColumn('personal_account_id');
-            }
-        );
+        Schema::table('transactions', function (Blueprint $table) {
+            $table->dropColumn('personal_account_id');
+        });
     }
 };

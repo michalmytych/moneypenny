@@ -8,25 +8,21 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table(
-            'budgets', function (Blueprint $table) {
-                $table
-                    ->decimal('amount', 12)
-                    ->nullable()
-                    ->change();
-            }
-        );
+        Schema::table('budgets', function (Blueprint $table) {
+            $table
+                ->decimal('amount', 12)
+                ->nullable()
+                ->change();
+        });
     }
 
     public function down(): void
     {
-        Schema::table(
-            'budgets', function (Blueprint $table) {
-                $table
-                    ->decimal('amount')
-                    ->nullable()
-                    ->change();
-            }
-        );
+        Schema::table('budgets', function (Blueprint $table) {
+            $table
+                ->decimal('amount')
+                ->nullable()
+                ->change();
+        });
     }
 };

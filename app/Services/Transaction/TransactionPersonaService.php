@@ -13,9 +13,7 @@ class TransactionPersonaService
 
     public const ACCEPTED_SIMILARITY_PERCENTAGE = 10;
 
-    /**
-     * @noinspection PhpUndefinedMethodInspection 
-     */
+    /** @noinspection PhpUndefinedMethodInspection */
     public function createPersonasAssociations(Transaction $transaction): void
     {
         $transactionId = $transaction->id;
@@ -33,12 +31,10 @@ class TransactionPersonaService
         $senderAssociatedPersona = $this->findOrCreateAssociation($senderSearchColumnData, $senderAccountNumber);
         $receiverAssociatedPersona = $this->findOrCreateAssociation($receiverSearchColumnData, $receiverAccountNumber);
 
-        Transaction::where('id', $transactionId)->update(
-            [
+        Transaction::where('id', $transactionId)->update([
             'sender_persona_id' => $senderAssociatedPersona->id,
             'receiver_persona_id' => $receiverAssociatedPersona->id
-            ]
-        );
+        ]);
     }
 
     protected function findOrCreateAssociation(?string $personaName, ?string $personaAccountNumber): Persona
@@ -59,13 +55,11 @@ class TransactionPersonaService
 
             $associatedNamesDataEncoded = json_encode($associatedNamesData);
 
-            $persona = Persona::create(
-                [
+            $persona = Persona::create([
                 'common_name' => $commonName ?? Persona::NAME_UNKNOWN,
                 'account_number' => $personaAccountNumber ?? Persona::ACCOUNT_NUMBER_UNKNOWN,
                 'associated_names' => $associatedNamesDataEncoded
-                ]
-            );
+            ]);
         }
 
         return $persona;
@@ -105,9 +99,7 @@ class TransactionPersonaService
         ];
     }
 
-    /**
-     * @noinspection PhpUndefinedMethodInspection 
-     */
+    /** @noinspection PhpUndefinedMethodInspection */
     protected function findPersonaByExactlySameName(string $personaName): ?Persona
     {
         $value = $this->getStringNormalizedForAssociation($personaName);
@@ -128,9 +120,7 @@ class TransactionPersonaService
         return StringHelper::removeAccents($string);
     }
 
-    /**
-     * @noinspection PhpUndefinedMethodInspection 
-     */
+    /** @noinspection PhpUndefinedMethodInspection */
     protected function findPersonaByAvgAssociatedNamesSimilarity(string $personaName): ?Persona
     {
         $personaName = $this->getStringNormalizedForAssociation($personaName);
@@ -139,28 +129,26 @@ class TransactionPersonaService
         $personasContainingLongestWordCursor = Persona::where('associated_names', 'like', '%' . $longestWord . '%')->cursor();
 
         $avgSimilarityRates = $personasContainingLongestWordCursor
-            ->map(
-                function (Persona $persona) use ($personaName) {
-                    $associatedNames = json_decode($persona->associated_names);
-                    $similarityPercentageRates = [];
+            ->map(function (Persona $persona) use ($personaName) {
+                $associatedNames = json_decode($persona->associated_names);
+                $similarityPercentageRates = [];
 
-                    foreach ($associatedNames as $associatedName) {
-                        similar_text($associatedName, $personaName, $percentage);
-                        $similarityPercentageRates[] = $percentage;
-                    }
+                foreach ($associatedNames as $associatedName) {
+                    similar_text($associatedName, $personaName, $percentage);
+                    $similarityPercentageRates[] = $percentage;
+                }
 
-                    $averageSimilarity = array_sum($similarityPercentageRates) / count($similarityPercentageRates);
+                $averageSimilarity = array_sum($similarityPercentageRates) / count($similarityPercentageRates);
 
-                    if ($averageSimilarity < self::ACCEPTED_SIMILARITY_PERCENTAGE) {
-                        return null;
-                    }
+                if ($averageSimilarity < self::ACCEPTED_SIMILARITY_PERCENTAGE) {
+                    return null;
+                }
 
-                    return [
+                return [
                     'persona' => $persona,
                     'avg_similarity_rate' => $averageSimilarity,
-                    ];
-                }
-            )->filter();
+                ];
+            })->filter();
 
         $mostSimilar = null;
 
@@ -172,9 +160,7 @@ class TransactionPersonaService
         return $mostSimilar;
     }
 
-    /**
-     * @noinspection PhpUndefinedMethodInspection 
-     */
+    /** @noinspection PhpUndefinedMethodInspection */
     protected function findPersonaByAccountNumber(string $accountNumber): ?Persona
     {
         return Persona::where('account_number', $accountNumber)->get()->first();
@@ -189,12 +175,10 @@ class TransactionPersonaService
             $associatedNames[] = $personaName;
             $newCommonName = $this->getNamesCommonParts($associatedNames, $personaName);
 
-            $persona->update(
-                [
+            $persona->update([
                 'associated_names' => $associatedNames,
                 'common_name' => $newCommonName
-                ]
-            );
+            ]);
         }
     }
 

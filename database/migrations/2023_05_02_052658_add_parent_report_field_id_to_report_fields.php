@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table(
-            'report_fields', function (Blueprint $table) {
-                $table
-                    ->foreignId('parent_report_field_id')
-                    ->nullable()
-                    ->references('id')
-                    ->on('report_fields')
-                    ->cascadeOnDelete();
-            }
-        );
+        Schema::table('report_fields', function (Blueprint $table) {
+            $table
+                ->foreignId('parent_report_field_id')
+                ->nullable()
+                ->references('id')
+                ->on('report_fields')
+                ->cascadeOnDelete();
+        });
     }
 
     /**
@@ -28,10 +26,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table(
-            'report_fields', function (Blueprint $table) {
-                $table->dropColumn('parent_report_field_id');
-            }
-        );
+        Schema::table('report_fields', function (Blueprint $table) {
+            $table->dropColumn('parent_report_field_id');
+        });
     }
 };

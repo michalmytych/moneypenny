@@ -11,7 +11,8 @@ readonly class HomePageServiceCachingDecorator implements HomePageServiceInterfa
     public function __construct(
         private CacheAdapterInterface $cacheAdapter,
         private HomePageService       $homePageService
-    ) {
+    )
+    {
     }
 
     public function getHomeData(User $user): Collection

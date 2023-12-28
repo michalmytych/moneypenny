@@ -26,11 +26,9 @@ class InstitutionController extends Controller
 
         } catch (Throwable) {
             return back()
-                ->with(
-                    config('session.flash_errors_key'), [
+                ->with(config('session.flash_errors_key'), [
                     __('Cannot fetch institutions data.')
-                    ]
-                );
+                ]);
         }
     }
 

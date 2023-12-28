@@ -22,15 +22,13 @@ class DatabaseSeeder extends Seeder
             return;
         }
 
-        $this->call(
-            [
+        $this->call([
             UsersTableSeeder::class,
             ImportSettingsTableSeeder::class,
             ColumnsMappingsTableSeeder::class,
             CategoriesTableSeeder::class,
             TransactionsTableSeeder::class,
             FilesTableSeeder::class,
-            ]
-        );
+        ]);
     }
 }

@@ -18,9 +18,7 @@ class SaldoService
     {
         $saldo = 0;
         foreach (Transaction::whereUser($user)->baseCalculationQuery()->cursor() as $transaction) {
-            /**
- * @var Transaction $transaction 
-*/
+            /** @var Transaction $transaction */
             if ($transaction->type === Transaction::TYPE_EXPENDITURE) {
                 $saldo -= $transaction->{Transaction::CALCULATION_COLUMN};
             }

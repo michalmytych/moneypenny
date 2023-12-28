@@ -20,9 +20,7 @@ class AnalyticsService
             'expendituresAndIncomesTrend' => ExpendituresAndIncomesTrend::class
         };
 
-        /**
- * @var ChartQuery $chartQuery 
-*/
+        /** @var ChartQuery $chartQuery */
         $chartQuery = app($chartQueryClass);
         return $chartQuery->get($user);
     }

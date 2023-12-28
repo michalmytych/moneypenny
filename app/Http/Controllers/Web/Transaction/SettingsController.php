@@ -12,9 +12,7 @@ use Illuminate\View\View;
 
 class SettingsController extends Controller
 {
-    public function __construct(private readonly NotificationBroadcastService $notificationBroadcastService)
-    {
-    }
+    public function __construct(private readonly NotificationBroadcastService $notificationBroadcastService) {}
 
     public function edit(Request $request): View
     {
@@ -31,12 +29,10 @@ class SettingsController extends Controller
         $data = $request->validated();
         $user = $request->user();
 
-        Settings::firstOrCreate(
-            [
+        Settings::firstOrCreate([
             'user_id' => $user->id,
             'base_currency_code' => $data['base_currency_code']
-            ]
-        );
+        ]);
 
         $this->notificationBroadcastService->sendStoredApplicationNotification(
             header: 'Settings saved',

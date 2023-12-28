@@ -28,23 +28,19 @@ class DirectoryRenderBuilder
             $directoryName = $this->getShortEntityName($path);
             $sourcePath = $this->targetPath . '/' . $directoryName;
 
-            $this->render .= view(
-                'file_explorer.partials.folder', [
+            $this->render .= view('file_explorer.partials.folder', [
                 'url' => route('api.file_explorer.open', ['path' => $sourcePath]),
                 'directoryName' => $directoryName,
-                ]
-            )->render();
+            ])->render();
         }
 
         foreach (Storage::files($this->targetPath) as $path) {
             $fileName = $this->getShortEntityName($path);
 
-            $this->render .= view(
-                'file_explorer.partials.file', [
+            $this->render .= view('file_explorer.partials.file', [
                 'file' => $fileName,
                 'filePath' => $this->targetPath . '/' . $fileName
-                ]
-            )->render();
+            ])->render();
         }
 
         if ($this->render === '') {

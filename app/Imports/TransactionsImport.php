@@ -20,11 +20,12 @@ class TransactionsImport implements ToCollection, WithCustomCsvSettings, WithSta
         private readonly ColumnsMapping $columnsMapping,
         private readonly Import         $import,
         private readonly User           $user
-    ) {
+    )
+    {
     }
 
     /**
-     * @param  Collection $collection
+     * @param Collection $collection
      * @throws Throwable
      */
     public function collection(Collection $collection): void
@@ -33,9 +34,7 @@ class TransactionsImport implements ToCollection, WithCustomCsvSettings, WithSta
 
         try {
             foreach ($collection as $row) {
-                /**
- * @var TransactionImportService $service 
-*/
+                /** @var TransactionImportService $service */
                 $service = app(TransactionImportService::class);
 
                 $service->importFileRowAsTransaction($row, $this->import, $this->columnsMapping, $this->user);

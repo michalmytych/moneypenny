@@ -8,25 +8,21 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table(
-            'synchronizations', function (Blueprint $table) {
-                $table
-                    ->smallInteger('code')
-                    ->nullable()
-                    ->change();
-            }
-        );
+        Schema::table('synchronizations', function (Blueprint $table) {
+            $table
+                ->smallInteger('code')
+                ->nullable()
+                ->change();
+        });
     }
 
     public function down(): void
     {
-        Schema::table(
-            'synchronizations', function (Blueprint $table) {
-                $table
-                    ->smallInteger('code')
-                    ->nullable(false)
-                    ->change();
-            }
-        );
+        Schema::table('synchronizations', function (Blueprint $table) {
+            $table
+                ->smallInteger('code')
+                ->nullable(false)
+                ->change();
+        });
     }
 };

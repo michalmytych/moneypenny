@@ -11,8 +11,7 @@ readonly class BudgetService
     public function __construct(
         private DefaultBudgetService      $defaultBudgetService,
         private BudgetConsumtptionService $budgetConsumptionService
-    ) {
-    }
+    ) {}
 
     public function allWithConsumption(User $user): Collection
     {
@@ -35,12 +34,10 @@ readonly class BudgetService
 
     public function findOrFail(int $id, mixed $user): Budget
     {
-        $budget = Budget::where(
-            [
+        $budget = Budget::where([
             'id' => $id,
             'user_id' => $user->id,
-            ]
-        )
+        ])
             ->get()
             ->first();
 

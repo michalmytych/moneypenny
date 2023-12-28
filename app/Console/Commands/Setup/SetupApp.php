@@ -151,11 +151,9 @@ class SetupApp extends Command
     {
         $this->info('Migrating database...');
 
-        $exitCode = Artisan::call(
-            'migrate', [
+        $exitCode = Artisan::call('migrate', [
             '--force' => true,
-            ]
-        );
+        ]);
 
         if ($exitCode === 0) {
             $this->info('Database migrated.');
@@ -173,11 +171,9 @@ class SetupApp extends Command
     {
         $this->info('Seeding database...');
 
-        $exitCode = Artisan::call(
-            'db:seed', [
+        $exitCode = Artisan::call('db:seed', [
             '--force' => true,
-            ]
-        );
+        ]);
 
         if ($exitCode === 0) {
             $this->info('Database seeded.');
@@ -195,12 +191,10 @@ class SetupApp extends Command
     {
         $this->info('Performing post setup commands...');
 
-        $exitCode = array_sum(
-            [
+        $exitCode = array_sum([
             Artisan::call('moneypenny:create-users-personal-accounts'),
             Artisan::call('moneypenny:create-users-settings')
-            ]
-        );
+        ]);
 
         if ($exitCode === 0) {
             $this->info('Post setup task performed.');

@@ -11,22 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table(
-            'transactions', function (Blueprint $table) {
-                $table
-                    ->foreignId('sender_persona_id')
-                    ->nullable()
-                    ->references('id')
-                    ->on('personas')
-                    ->cascadeOnDelete();
-                $table
-                    ->foreignId('receiver_persona_id')
-                    ->nullable()
-                    ->references('id')
-                    ->on('personas')
-                    ->cascadeOnDelete();
-            }
-        );
+        Schema::table('transactions', function (Blueprint $table) {
+            $table
+                ->foreignId('sender_persona_id')
+                ->nullable()
+                ->references('id')
+                ->on('personas')
+                ->cascadeOnDelete();
+            $table
+                ->foreignId('receiver_persona_id')
+                ->nullable()
+                ->references('id')
+                ->on('personas')
+                ->cascadeOnDelete();
+        });
     }
 
     /**
@@ -34,11 +32,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table(
-            'transactions', function (Blueprint $table) {
-                $table->dropColumn('sender_persona_id');
-                $table->dropColumn('receiver_persona_id');
-            }
-        );
+        Schema::table('transactions', function (Blueprint $table) {
+            $table->dropColumn('sender_persona_id');
+            $table->dropColumn('receiver_persona_id');
+        });
     }
 };

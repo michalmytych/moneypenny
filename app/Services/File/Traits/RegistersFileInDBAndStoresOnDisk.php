@@ -10,11 +10,9 @@ trait RegistersFileInDBAndStoresOnDisk
 {
     protected function registerAndStoreFile(File $fileModel, UploadedFile $fileObj, string $fileName): void
     {
-        DB::transaction(
-            function () use ($fileModel, $fileObj, $fileName) {
-                $fileModel->save();
-                $fileObj->storeAs('uploads', $fileName);
-            }
-        );
+        DB::transaction(function () use ($fileModel, $fileObj, $fileName) {
+            $fileModel->save();
+            $fileObj->storeAs('uploads', $fileName);
+        });
     }
 }

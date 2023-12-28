@@ -8,21 +8,17 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table(
-            'transactions', function (Blueprint $table) {
-                $table
-                    ->boolean('is_excluded_from_calculation')
-                    ->default(false);
-            }
-        );
+        Schema::table('transactions', function (Blueprint $table) {
+            $table
+                ->boolean('is_excluded_from_calculation')
+                ->default(false);
+        });
     }
 
     public function down(): void
     {
-        Schema::table(
-            'transactions', function (Blueprint $table) {
-                $table->dropColumn('is_excluded_from_calculation');
-            }
-        );
+        Schema::table('transactions', function (Blueprint $table) {
+            $table->dropColumn('is_excluded_from_calculation');
+        });
     }
 };

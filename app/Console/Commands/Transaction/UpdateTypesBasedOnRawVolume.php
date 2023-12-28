@@ -13,17 +13,15 @@ class UpdateTypesBasedOnRawVolume extends Command
 
     public function handle(): void
     {
-        $this->withProgressBar(
-            Transaction::cursor(), function (Transaction $transaction) {
-                $rawVolume = $transaction->raw_volume;
+        $this->withProgressBar(Transaction::cursor(), function(Transaction $transaction) {
+            $rawVolume = $transaction->raw_volume;
 
-                if (str_starts_with($rawVolume, '-')) {
-                    $transaction->update(['type' => Transaction::TYPE_EXPENDITURE]);
-                } else {
-                    $transaction->update(['type' => Transaction::TYPE_INCOME]);
-                }
+            if (str_starts_with($rawVolume, '-')) {
+                $transaction->update(['type' => Transaction::TYPE_EXPENDITURE]);
+            } else {
+                $transaction->update(['type' => Transaction::TYPE_INCOME]);
             }
-        );
+        });
 
         $this->info(PHP_EOL . 'Transactions types updated successfully.');
     }

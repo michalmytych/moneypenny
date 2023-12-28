@@ -16,8 +16,7 @@ class FileExplorerController extends Controller
     public function __construct(
         private readonly FileRenderBuilder $fileRenderBuilder,
         private readonly DirectoryRenderBuilder $directoryRenderBuilder
-    ) {
-    }
+    ) {}
 
     public function get(Request $request): StreamedResponse
     {
@@ -36,21 +35,17 @@ class FileExplorerController extends Controller
                 ->build();
 
         } catch (NotFoundHttpException $exception) {
-            return response()->json(
-                [
+            return response()->json([
                 'exists' => false,
                 'message' => $exception->getMessage(),
-                ], 404
-            );
+            ], 404);
         }
 
-        return response()->json(
-            [
+        return response()->json([
             'exists' => true,
             'file_type' => $fileRender->getFileType(),
             'render' => $fileRender->getRenderedFile()
-            ]
-        );
+        ]);
     }
 
     public function open(Request $request): JsonResponse
@@ -62,11 +57,9 @@ class FileExplorerController extends Controller
             ->setTargetPath($targetPath)
             ->build();
 
-        return response()->json(
-            [
+        return response()->json([
             'requested_path' => $targetPath,
             'render' => $directoryRender->getRenderedDirectory()
-            ]
-        );
+        ]);
     }
 }

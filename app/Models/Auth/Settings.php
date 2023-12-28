@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * @property string $base_currency_code
  * @property mixed $user_id
- * @method   static whereUser($user)
+ * @method static whereUser($user)
  */
 class Settings extends Model
 {

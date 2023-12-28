@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create(
-            'accounts', function (Blueprint $table) {
-                $table->id();
-                $table->string('nordigen_account_id');
-                $table->timestamps();
-            }
-        );
+        Schema::create('accounts', function (Blueprint $table) {
+            $table->id();
+            $table->string('nordigen_account_id');
+            $table->timestamps();
+        });
     }
 
     /**

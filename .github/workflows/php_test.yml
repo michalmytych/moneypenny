@@ -52,4 +52,4 @@ jobs:
           php${{ matrix.php }} artisan migrate --force -n --env=ci --database=mysql_testing
 
       - name: Run PHP tests
-        run: php${{ matrix.php }} ./vendor/bin/phpunit
+        run: php${{ matrix.php }} artisan test --env=ci

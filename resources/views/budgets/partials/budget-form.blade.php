@@ -1,10 +1,9 @@
 <div class="bg-white rounded-md shadow-sm p-4 mb-4 transition">
-    <form action="{{ route('budget.patch', ['id' => $budget->id]) }}" method="POST">
+    <form action="{{ route('budget.create') }}" method="POST">
         @csrf
-        @method('PATCH')
-        <a href="{{ route('budget.show', ['id' => $budget->id]) }}">
+        <a href="{{ route('budget.index') }}">
             <div class="relative -top-0.5 mr-2 text-indigo-600 cursor-pointer hover:text-indigo-400 font-semibold">
-                Go back
+                {{ __('Go back') }}
             </div>
         </a>
         <div class="flex items-center mt-2">
@@ -13,9 +12,9 @@
                         class="text-2xl appearance-none border rounded w-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     @php
                         $types = [
-                            ['name' => 'Monthly', 'value' => \App\Models\Transaction\Budget::TYPE_MONTH, 'selected' => $budget->type === \App\Models\Transaction\Budget::TYPE_MONTH],
-                            ['name' => 'Weekly', 'value' => \App\Models\Transaction\Budget::TYPE_WEEK, 'selected' => $budget->type === \App\Models\Transaction\Budget::TYPE_WEEK],
-                            ['name' => 'Daily', 'value' => \App\Models\Transaction\Budget::TYPE_DAY, 'selected' => $budget->type === \App\Models\Transaction\Budget::TYPE_DAY],
+                            ['name' => 'Monthly', 'value' => \App\Models\Transaction\Budget::TYPE_MONTH, 'selected' => isset($budget) && $budget->type === \App\Models\Transaction\Budget::TYPE_MONTH],
+                            ['name' => 'Weekly', 'value' => \App\Models\Transaction\Budget::TYPE_WEEK, 'selected' => isset($budget) && \App\Models\Transaction\Budget::TYPE_WEEK],
+                            ['name' => 'Daily', 'value' => \App\Models\Transaction\Budget::TYPE_DAY, 'selected' => isset($budget) && \App\Models\Transaction\Budget::TYPE_DAY],
                         ];
                     @endphp
                     @foreach($types as $type)
@@ -31,7 +30,8 @@
                     type="text"
                     name="name"
                     id="name"
-                    value="{{ $budget->name }}"
+                    placeholder="{{ __('Budget name') }}"
+                    value="{{ isset($budget) ? $budget->name : '' }}"
                     class="text-2xl ml-4 w-1/2 appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 >
                 <x-input-error :messages="$errors->get('name')" class="mt-2"/>
@@ -40,7 +40,7 @@
                     step="0.01"
                     name="amount"
                     id="name"
-                    value="{{ $budget->amount }}"
+                    value="{{ isset($budget) ? $budget->amount : 0 }}"
                     class="text-2xl ml-4 w-1/3 appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 >
                 <x-input-error :messages="$errors->get('amount')" class="mt-2"/>

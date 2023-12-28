@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Web\Transaction;
 
 use App\Filters\Filter;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Web\Transaction\CreateRequest;
-use App\Http\Requests\Web\Transaction\PatchRequest;
-use App\Models\Transaction\Transaction;
-use App\Services\Transaction\Currency\CurrencyService;
-use App\Services\Transaction\TransactionService;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use App\Models\Transaction\Transaction;
+use App\Services\Transaction\TransactionService;
+use App\Http\Requests\Web\Transaction\PatchRequest;
+use App\Http\Requests\Web\Transaction\CreateRequest;
+use App\Services\Transaction\Currency\CurrencyService;
 
 class TransactionController extends Controller
 {
@@ -35,7 +35,11 @@ class TransactionController extends Controller
         $transaction = $this->transactionService->findOrFail($id, $user);
         $similarTransactions = $this->transactionService->getSimilarTransactions($transaction);
         $userBaseCurrency = $this->currencyService->resolveCalculationCurrency($user);
-        return view('transaction.show', compact('transaction', 'similarTransactions', 'userBaseCurrency'));
+
+        return view(
+            'transaction.show',
+            compact('transaction', 'similarTransactions', 'userBaseCurrency')
+        );
     }
 
     public function create(CreateRequest $request): RedirectResponse
@@ -43,14 +47,30 @@ class TransactionController extends Controller
         $user = $request->user();
         $data = $request->validated();
         $this->transactionService->create($user, $data);
-        return redirect()->to(route('transaction.index'));
-    }
+
+        return to_route('transaction.index')
+            ->with(config('session.flash_messages_key'), [
+                __('Added new transaction.')
+            ]);
+        }
 
     public function patch(mixed $transactionId, PatchRequest $request): RedirectResponse
     {
         $transaction = Transaction::findOrFail($transactionId);
         $data = $request->validated();
         $transaction->update($data);
-        return redirect()->to(route('transaction.show', ['id' => $transaction->id]));
+
+        return to_route('transaction.show', ['id' => $transaction->id]);
+    }
+
+    public function toggleExcludeFromCalculation(mixed $transactionId): RedirectResponse
+    {
+        $transaction = Transaction::findOrFail($transactionId);
+        $this->transactionService->toggleExcludeFromCalculation($transactionId);
+
+        return to_route('transaction.show', ['id' => $transaction->id])
+            ->with(config('session.flash_messages_key'), [
+                __('Changed transaction calculation settings.')
+            ]);
     }
 }

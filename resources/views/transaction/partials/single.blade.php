@@ -1,10 +1,7 @@
 <div class="bg-white px-8 pt-6 pb-8 mb-4 rounded-md">
-    <div class="font-semibold text-indigo-500">
-        <a href="{{ route('transaction.index') }}">{{ __('Back') }}</a>
-    </div>
+    <x-back-link/>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 mb-6">
-
         <div>
             <div class="mb-4 mt-2">
                 <p class="block text-gray-700 font-bold mb-2">
@@ -83,6 +80,9 @@
         </div>
 
         <div>
+            <div class="mb-2">
+                @include('transaction.partials.exclude-from-calculation-form', ['transaction' => $transaction])
+            </div>
             <h2 class="text-black font-bold text-2xl pb-4">{{ __('Details') }}</h2>
             <div class="mb-4">
                 <p class="block text-gray-700 font-bold mb-2">

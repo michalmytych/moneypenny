@@ -6,13 +6,27 @@ use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
+use App\Models\Transaction\PersonalAccount;
 
 class PersonalAccountController extends Controller
 {
+    public function index(Request $request): View
+    {
+        $personalAccounts = PersonalAccount::whereUser($request->user())
+            ->latest()
+            ->withCount('transactions')
+            ->get();
+
+        return view('personal_account.index', [
+            'personalAccounts' => $personalAccounts
+        ]);
+    }
+
     public function edit(Request $request): View
     {
         // @todo - handle editing multiplte personal account saldos
         $personalAccount = $request->user()->personalAccounts()->first();
+
         return view('personal_account.edit', [
             'personalAccount' => $personalAccount
         ]);
@@ -28,6 +42,7 @@ class PersonalAccountController extends Controller
         $personalAccount->update([
             'value' => $request->input('value')
         ]);
-        return redirect()->to(route('home'));
+
+        return to_route('home');
     }
 }

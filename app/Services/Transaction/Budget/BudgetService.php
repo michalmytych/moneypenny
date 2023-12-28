@@ -6,23 +6,30 @@ use App\Models\User;
 use App\Models\Transaction\Budget;
 use Illuminate\Support\Collection;
 
-class BudgetService
+readonly class BudgetService
 {
     public function __construct(
-        private readonly DefaultBudgetService $defaultBudgetService,
-        private readonly BudgetConsumtptionService $budgetConsumtptionService
+        private DefaultBudgetService      $defaultBudgetService,
+        private BudgetConsumtptionService $budgetConsumptionService
     ) {}
 
     public function allWithConsumption(User $user): Collection
     {
         $this->defaultBudgetService->getOrCreateBudgetsForUser($user);
-        return $this->budgetConsumtptionService->getBudgetsConsumptionByUser($user);
+
+        return $this->budgetConsumptionService->getBudgetsConsumptionByUser($user);
     }
 
     public function create(mixed $user, mixed $data): Budget
     {
-        $user['user_id'] = $user->id;
+        $data['user_id'] = $user->id;
+
         return Budget::create($data);
+    }
+
+    public function update(Budget $budget, mixed $data): Budget
+    {
+        return tap($budget)->update($data);
     }
 
     public function findOrFail(int $id, mixed $user): Budget

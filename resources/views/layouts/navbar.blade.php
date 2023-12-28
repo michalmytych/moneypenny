@@ -35,12 +35,18 @@
                                     </div>
                                     {{ __('All transactions') }}
                                 </x-dropdown-link>
+                                <x-dropdown-link class="navLink" :href="route('personal-account.index')">
+                                    <div class="mr-2">
+                                        @include('icons.sm.accounts')
+                                    </div>
+                                    {{ __('Personal accounts') }}
+                                </x-dropdown-link>
                                 @if(config('personas.enabled'))
                                     <x-dropdown-link class="navLink" :href="route('persona.index')">
                                     <span class="flex items-center justify-between">
                                         {{ __('Personas') }}
                                         <span class="relative top-2">
-                                            @include('components.mainteance.beta-badge')
+                                            @include('components.maintenance.beta-badge')
                                         </span>
                                     </span>
                                     </x-dropdown-link>
@@ -180,24 +186,22 @@
                                     <button
                                         class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                                         <div>
-                                            {{ __('Mainteance') }}
+                                            {{ __('Maintenance') }}
                                         </div>
                                     </button>
                                 </x-slot>
                                 <x-slot name="content">
-                                    @if(config('debugging.enabled'))
-                                        <x-dropdown-link class="navLink" :href="route('debug.analyzers')">
-                                            {{ __('Debugging') }}
-                                        </x-dropdown-link>
-                                        <x-dropdown-link class="navLink" :href="route('exchange_rate.index')">
-                                            {{ __('Exchange rates') }}
-                                        </x-dropdown-link>
-                                    @endif
                                     <x-dropdown-link class="navLink" :href="route('user.index')">
                                         <div class="mr-2">
                                             @include('icons.sm.users')
                                         </div>
                                         {{ __('Users') }}
+                                    </x-dropdown-link>
+                                    <x-dropdown-link class="navLink" :href="route('exchange_rate.index')">
+                                        <div class="mr-2">
+                                            @include('icons.sm.currency')
+                                        </div>
+                                        {{ __('Exchange rates') }}
                                     </x-dropdown-link>
                                     <x-dropdown-link class="navLink" :href="route('meta.index')">
                                         <div class="mr-2">
@@ -216,6 +220,18 @@
                                             @include('icons.sm.storage')
                                         </div>
                                         {{ __('Storage') }}
+                                    </x-dropdown-link>
+                                    <x-dropdown-link class="navLink" :href="route('notification.console')">
+                                        <div class="mr-2">
+                                            @include('icons.sm.notification')
+                                        </div>
+                                        {{ __('Notifications') }}
+                                    </x-dropdown-link>
+                                    <x-dropdown-link class="navLink" :href="route('categorization.index')">
+                                        <div class="mr-2">
+                                            @include('icons.sm.category')
+                                        </div>
+                                        {{ __('Categorization') }}
                                     </x-dropdown-link>
                                 </x-slot>
                             </x-dropdown>
@@ -239,7 +255,7 @@
                                     <span class="flex items-center justify-between">
                                         {{ __('Chat') }}
                                         <span class="relative top-2">
-                                            @include('components.mainteance.beta-badge')
+                                            @include('components.maintenance.beta-badge')
                                         </span>
                                     </span>
                                     </x-dropdown-link>
@@ -363,7 +379,7 @@
                                     <span class="flex items-center justify-between">
                                         {{ __('Personas') }}
                                         <span class="relative top-2">
-                                            @include('components.mainteance.beta-badge')
+                                            @include('components.maintenance.beta-badge')
                                         </span>
                                     </span>
                     </x-responsive-nav-link>
@@ -401,9 +417,6 @@
                 </x-responsive-nav-link>
                 @if(request()->user()?->is_admin)
                     @if(config('debugging.enabled'))
-                        <x-responsive-nav-link class="navLink" :href="route('debug.analyzers')">
-                            {{ __('Debugging') }}
-                        </x-responsive-nav-link>
                         <x-responsive-nav-link class="navLink" :href="route('exchange_rate.index')">
                             {{ __('Exchange rates') }}
                         </x-responsive-nav-link>
@@ -417,7 +430,7 @@
                                     <span class="flex items-center justify-between">
                                         {{ __('Chat') }}
                                         <span class="relative top-2">
-                                            @include('components.mainteance.beta-badge')
+                                            @include('components.maintenance.beta-badge')
                                         </span>
                                     </span>
                     </x-responsive-nav-link>

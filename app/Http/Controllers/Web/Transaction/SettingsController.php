@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Web\Transaction;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Web\EditSettingsRequest;
+use App\Http\Requests\Web\Transaction\Settings\EditRequest;
 use App\Models\Auth\Settings;
 use App\Services\Notification\Broadcast\NotificationBroadcastService;
 use Illuminate\Http\RedirectResponse;
@@ -24,7 +24,7 @@ class SettingsController extends Controller
         return view('settings.edit', compact('settings'));
     }
 
-    public function update(EditSettingsRequest $request): RedirectResponse
+    public function update(EditRequest $request): RedirectResponse
     {
         $data = $request->validated();
         $user = $request->user();
@@ -41,6 +41,6 @@ class SettingsController extends Controller
             userId: $user->id
         );
 
-        return redirect()->to(route('home'));
+        return to_route('home');
     }
 }

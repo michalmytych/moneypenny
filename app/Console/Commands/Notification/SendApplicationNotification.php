@@ -9,7 +9,7 @@ class SendApplicationNotification extends Command
 {
     protected $signature = 'moneypenny:send-app-notification {header} {content?} {url?} {userId?}';
 
-    protected $description = 'Send application notifification via notification broadcasting service.';
+    protected $description = 'Send application notification via notification broadcasting service.';
 
     public function handle(NotificationBroadcastService $notificationBroadcastService): void
     {

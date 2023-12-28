@@ -10,6 +10,7 @@ trait FindsSimilarTransaction
     protected function similarTransactionExists(User $user, array $attributes): bool
     {
         return Transaction::query()
+            ->baseCalculationQuery()
             ->whereUser($user)
             ->whereDate('transaction_date', $attributes['transaction_date'])
             ->where('description', 'LIKE', '%' . $attributes['description'] . '%')

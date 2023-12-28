@@ -12,4 +12,14 @@ class ImportSettingService
     {
         return ImportSetting::whereUser($user)->latest()->get();
     }
+
+    public function findOrFail(mixed $id): ImportSetting
+    {
+        return ImportSetting::findOrFail($id);
+    }
+
+    public function update(ImportSetting $importSetting, array $data): ImportSetting
+    {
+        return tap($importSetting)->update($data);
+    }
 }

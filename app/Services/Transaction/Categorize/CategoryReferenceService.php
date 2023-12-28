@@ -24,7 +24,7 @@ class CategoryReferenceService
                 data: [
                     'data' => [
                         'transaction' => $transactionData,
-                        // Beacuse category may not be accessible through ->category property
+                        // Because category may not be accessible through ->category property
                         'category' => Category::findOrFail($transaction->category_id)->toArray()
                     ],
                     'params' => []

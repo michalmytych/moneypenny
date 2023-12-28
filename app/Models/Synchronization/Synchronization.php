@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static whereUser(User $user)
  * @property mixed $id
  * @property int $code
+ * @property int $status
+ * @property User $user
  */
 class Synchronization extends Model
 {

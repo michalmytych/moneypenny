@@ -1,6 +1,6 @@
 <div class="px-8 pb-24">
     <h1 class="text-3xl font-bold mb-4">{{ __('Create new column mapping') }}</h1>
-    <form action="{{ route('import.columns-mapping.store') }}" method="POST">
+    <form action="{{ route('import.columns-mapping.create') }}" method="POST">
         @csrf
         <div class="mb-4">
             <label for="name" class="form-label block font-medium text-gray-700 mb-1">

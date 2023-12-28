@@ -9,6 +9,6 @@ class EmptyUrlController extends Controller
 {
     public function redirect(): RedirectResponse
     {
-        return redirect(route('home'));
+        return to_route('home');
     }
 }

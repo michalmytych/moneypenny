@@ -22,7 +22,7 @@ class SetAccountSaldoForUser extends Command
             return -1;
         }
 
-        $this->info("Setting saldo on account [Defalut] for user [$user->id]");
+        $this->info("Setting saldo on account [Default] for user [$user->id]");
         $value = $this->ask('Type in value (eg. 3500.00): ');
         $floatValue = floatval($value);
 

@@ -10,12 +10,13 @@
         <div class="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1">
             <div class="pb-48">
                 @include('file_explorer.partials.folder', [
-                    'url' => route('file_explorer.open', ['path' => storage_path()]),
+                    'url' => route('api.file_explorer.open', ['path' => storage_path()]),
                     'directoryName' => 'root',
                 ])
             </div>
 
-            <div id="fileDisplay" class="sm:w-full ml-4 mt-2 lg:static md:fixed shadow-none lg:shadow-none md:shadow-2xl md:shadow-2xl sm:fixed bottom-20 left-2"></div>
+            <div id="fileDisplay"
+                 class="sm:w-full ml-4 mt-2 lg:static md:fixed shadow-none lg:shadow-none md:shadow-2xl md:shadow-2xl sm:fixed bottom-20 left-2"></div>
         </div>
 
         @push('scripts')
@@ -27,11 +28,23 @@
                     directoryDetails.forEach(details => {
                         const getRenderedFile = (e) => {
                             try {
-                                fetch(e.currentTarget.dataset.source)
+                                fetch(e.currentTarget.dataset.source, {
+                                        headers: {
+                                            'Accept-Type': 'application/json',
+                                            'X-XSRF-TOKEN': decodeURIComponent(getCookie('XSRF-TOKEN')),
+                                            'Authorization': `Bearer ${window.localStorage.getItem('SANCTUM_API_TOKEN')}`
+                                        }
+                                    }
+                                )
                                     .then(response => response.json())
                                     .then(json => {
-                                        console.log(json);
-                                        fileDisplay.innerHTML = json.render;
+                                        let render = '{{ __('Empty') }}';
+
+                                        if (json.render) {
+                                            render = json.render;
+                                        }
+
+                                        fileDisplay.innerHTML = render;
                                     });
                             } catch (e) {
                                 //
@@ -40,17 +53,26 @@
 
                         const getRenderedDirectory = (e) => {
                             details = e.currentTarget;
-                            console.log('clicked : [' + e.currentTarget.dataset.name + ']');
+
                             if (!details.classList.contains('directory-details')) {
                                 return;
                             }
+
                             const detailsWrapper = details.parentElement;
-                            console.log('getRenderedItem : [' + details.dataset.name + ']');
+
                             try {
-                                fetch(details.dataset.source)
+                                fetch(details.dataset.source, {
+                                        headers: {
+                                            'Accept-Type': 'application/json',
+                                            'X-XSRF-TOKEN': decodeURIComponent(getCookie('XSRF-TOKEN')),
+                                            'Authorization': `Bearer ${window.localStorage.getItem('SANCTUM_API_TOKEN')}`
+                                        }
+                                    }
+                                )
                                     .then(response => response.json())
                                     .then(json => {
                                         const wrapper = document.createElement('div');
+
                                         wrapper.style.paddingLeft = '1rem';
 
                                         detailsWrapper.querySelector('.loadingState').remove();
@@ -58,14 +80,18 @@
                                         detailsWrapper.appendChild(wrapper);
 
                                         wrapper.innerHTML += json.render;
+
                                         const childDirectoriesDetails = wrapper.querySelectorAll('.directory-details');
                                         const childFileDetails = wrapper.querySelectorAll('.file-details');
+
                                         childDirectoriesDetails.forEach(item => {
                                             item.addEventListener('click', getRenderedDirectory);
                                         });
+
                                         childFileDetails.forEach(item => {
                                             item.addEventListener('click', getRenderedFile);
                                         });
+
                                         details.classList.remove('directory-details');
                                     });
                             } catch (e) {

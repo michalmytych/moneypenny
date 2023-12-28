@@ -2,23 +2,19 @@
 
 namespace App\Services\Transaction\Report;
 
-use App\Models\Transaction\Report;
 use App\Models\User;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Collection;
 use App\Models\Transaction\Transaction;
 use Illuminate\Database\Eloquent\Builder;
 use App\Services\Transaction\Currency\CurrencyService;
 use App\Services\Transaction\Report\Defaults\MonthReport;
 use App\Services\Transaction\Transformers\DateGroupByToCalendar;
 
-class ReportService
+readonly class ReportService
 {
-    public function __construct(private readonly CurrencyService $currencyService)
-    {
-    }
+    public function __construct(private CurrencyService $currencyService) {}
 
     /**
      * @param string|null $rawMonth Date in m-Y format (optional).
@@ -33,17 +29,9 @@ class ReportService
             $carbon = now();
         }
 
-        $cacheKey = $carbon->format('Y_m') . '_periodic_report_' . $userId;
-
-        if (Cache::has($cacheKey)) {
-            $data = Cache::get($cacheKey);
-
-        } else {
-            $user = User::findOrFail($userId);
-            $data = $this->getMonthReport($carbon, $user);
-            $data['currency'] = $this->currencyService->resolveCalculationCurrency($user);
-            Cache::put($cacheKey, $data, 10);
-        }
+        $user = User::findOrFail($userId);
+        $data = $this->getMonthReport($carbon, $user);
+        $data['currency'] = $this->currencyService->resolveCalculationCurrency($user);
 
         return $data;
     }
@@ -85,15 +73,11 @@ class ReportService
     protected function getBaseTrendQuery(User $user): Builder
     {
         return Transaction::whereUser($user)
+            ->baseCalculationQuery()
             ->select(DB::raw('transaction_date'),
                 DB::raw('SUM(calculation_volume) as daily_sum'),
                 DB::raw('AVG(SUM(calculation_volume)) OVER (ORDER BY transaction_date ASC ROWS BETWEEN UNBOUNDED PRECEDING AND 1 PRECEDING) as average_volume'))
             ->groupBy('transaction_date')
             ->orderBy('transaction_date', 'ASC');
-    }
-
-    public function all(): Collection
-    {
-        return Report::latest()->get();
     }
 }

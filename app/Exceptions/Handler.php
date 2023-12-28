@@ -2,11 +2,16 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
+use Illuminate\Validation\UnauthorizedException;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 use Throwable;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
@@ -55,36 +60,35 @@ class Handler extends ExceptionHandler
      * i.e: specifies
      *      Accept: application/json
      * in its header
-     *
-     * @param Request $request
-     * @param Throwable $e
-     * @return JsonResponse|Response|\Symfony\Component\HttpFoundation\Response
-     * @throws Throwable
-     * @todo - check if it works
-     *
-     * @noinspection PhpMissingReturnTypeInspection
      */
-    public function render($request, Throwable $e)
+    public function render($request, Throwable $e): JsonResponse|RedirectResponse|Response
     {
-        if ($request->ajax() || $request->wantsJson()) {
-            return response()->json(
-                $this->getJsonMessage($e),
-                $this->getExceptionHTTPStatusCode($e)
-            );
+        if ($request->ajax() || $request->is('api/*') || $request->wantsJson()) {
+            return $this->getJsonResponse($e);
         }
+
         return parent::render($request, $e);
     }
 
-    protected function getJsonMessage($e): array
+    protected function getJsonResponse(Throwable $throwable): JsonResponse
     {
-        return [
-            'status' => 'false',
-            'message' => $e->getMessage()
-        ];
+        $statusCode = $this->getExceptionHTTPStatusCode($throwable);
+
+        return new JsonResponse([
+            'status' => $statusCode,
+            'message' => $throwable->getMessage()
+        ], $statusCode);
     }
 
-    protected function getExceptionHTTPStatusCode($e){
-        return method_exists($e, 'getStatusCode') ?
-            $e->getStatusCode() : 500;
+    protected function getExceptionHTTPStatusCode(Throwable $throwable): int
+    {
+        return match (true) {
+            $throwable instanceof BadRequestException => 400,
+            $throwable instanceof UnauthorizedException => 403,
+            $throwable instanceof AuthenticationException => 401,
+            $throwable instanceof ValidationException => 422,
+            $throwable instanceof TooManyRequestsHttpException => 429,
+            default => 500,
+        };
     }
 }

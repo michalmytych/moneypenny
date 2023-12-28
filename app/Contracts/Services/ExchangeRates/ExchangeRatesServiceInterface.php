@@ -2,9 +2,9 @@
 
 namespace App\Contracts\Services\ExchangeRates;
 
+use Illuminate\Support\Carbon;
 use App\Models\ExchangeRates\ExchangeRate;
 use App\Services\ExchangeRates\DataObjects\HistoricalExchangeRateDataObject;
-use Illuminate\Support\Carbon;
 
 interface ExchangeRatesServiceInterface
 {

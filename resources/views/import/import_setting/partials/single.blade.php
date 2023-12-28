@@ -48,9 +48,5 @@
             {{ $importSetting->input_encoding ?? '-' }}
         </p>
     </div>
-    <div class="flex items-center justify-between">
-        <a href="{{ route('import.import-setting.index') }}" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            {{ __('Back') }}
-        </a>
-    </div>
+    <x-back-link/>
 </div>

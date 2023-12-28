@@ -38,93 +38,69 @@
 
         <div class="-mx-3 md:flex mb-6">
             <div class="md:w-1/2 px-3 mb-6 md:mb-0">
-                <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
-                       for="transaction_date">
-                    Transaction Date
-                </label>
-                <input
-                    class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey"
-                    id="transaction_date" name="transaction_date" type="date" placeholder="Enter Transaction Date"
-                    required value="{{ now()->format('Y-m-d') }}">
-                <x-input-error :messages="$errors->get('transaction_date')" class="mt-2"/>
+                <x-input-label for="transaction_date" :value="__('Transaction Date')" required/>
+                <x-text-input id="transaction_date" name="transaction_date" type="date" class="mt-1 block w-full"
+                              required autofocus/>
+                <x-input-error class="mt-2" :messages="$errors->get('transaction_date')"/>
             </div>
-            <div class="md:w-1/2 px-3">
-                <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
-                       for="decimal_volume">
-                    Decimal Volume
-                </label>
-                <input
-                    class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
-                    id="decimal_volume" name="decimal_volume" step="0.01" type="number" placeholder="Enter Decimal Volume" required>
-                <x-input-error :messages="$errors->get('decimal_volume')" class="mt-2" />
-            </div>
-        </div>
-
-        <div class="-mx-3 md:flex mb-6">
-            <div class="md:w-1/2 px-3 mb-6 md:mb-0">
-                <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="description">
-                    Description
-                </label>
-                <input
-                    class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey"
-                    id="description" name="description" type="text" placeholder="Enter Description" required>
-                <x-input-error :messages="$errors->get('description')" class="mt-2" />
-            </div>
-        </div>
-
-        <div class="-mx-3 md:flex mb-6">
-            <div class="md:w-1/2 px-3 mb-6 md:mb-0">
-                <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="receiver">
-                    Receiver
-                </label>
-                <input
-                    class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey"
-                    id="receiver" name="receiver" type="text" placeholder="Enter Receiver" required>
-                <x-input-error :messages="$errors->get('receiver')" class="mt-2" />
-            </div>
-            <div class="md:w-1/2 px-3">
-                <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="currency">
-                    Currency
-                </label>
-                <select id="currency" name="currency" placeholder="Enter Currency" required
-                        class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey">
-                    <option>Select currency</option>
-                    @foreach(config('moneypenny.supported_currencies') as $currencyCode)
-                        @if($currencyCode === config('moneypenny.base_calculation_currency'))
-                            <option selected value="{{ $currencyCode }}">{{ $currencyCode }}</option>
-                        @else
-                            <option value="{{ $currencyCode }}">{{ $currencyCode }}</option>
-                        @endif
-                    @endforeach
-                </select>
-                <x-input-error :messages="$errors->get('currency')" class="mt-2" />
-            </div>
-        </div>
-
-        <div class="-mx-3 md:flex mb-6">
-            <div class="md:w-1/2 px-3 mb-6 md:mb-0">
-                <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="sender">
-                    Sender
-                </label>
-                <input
-                    class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey"
-                    id="sender" name="sender" type="text" placeholder="Enter Sender" required>
-                <x-input-error :messages="$errors->get('sender')" class="mt-2" />
-            </div>
-            <div class="md:w-1/2 px-3">
-                <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="type">
-                    Type
-                </label>
-                <div class="relative">
-                    <select
-                        class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey"
-                        id="type" name="type" required>
-                        <option value="{{ \App\Models\Transaction\Transaction::TYPE_INCOME }}">Income</option>
-                        <option selected value="{{ \App\Models\Transaction\Transaction::TYPE_EXPENDITURE }}">Expenditure</option>
+            <div class="flex md:w-1/2">
+                <div class="px-3 w-full">
+                    <x-input-label for="decimal_volume" :value="__('Decimal volume')" required/>
+                    <x-text-input id="decimal_volume" name="decimal_volume" type="number" class="mt-1 block w-full" required/>
+                    <x-input-error class="mt-2" :messages="$errors->get('decimal_volume')"/>
+                </div>
+                <div class="px-3">
+                    <x-input-label for="currency" :value="__('Currency')" required/>
+                    <select id="currency" name="currency" placeholder="Enter Currency" required class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1">
+                        <option>Select currency</option>
+                        @foreach(config('moneypenny.supported_currencies') as $currencyCode)
+                            @if($currencyCode === config('moneypenny.base_calculation_currency'))
+                                <option selected value="{{ $currencyCode }}">{{ $currencyCode }}</option>
+                            @else
+                                <option value="{{ $currencyCode }}">{{ $currencyCode }}</option>
+                            @endif
+                        @endforeach
                     </select>
-                    <x-input-error :messages="$errors->get('type')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('currency')" class="mt-2"/>
                 </div>
             </div>
+        </div>
+
+        <div class="-mx-3 md:flex mb-6">
+            <div class="md:w-1/2 px-3 mb-6 md:mb-0">
+                <x-input-label for="description" :value="__('Description')" required/>
+                <x-text-input id="description" name="description" type="text" class="mt-1 block w-full" required/>
+                <x-input-error class="mt-2" :messages="$errors->get('description')"/>
+            </div>
+            <div class="md:w-1/2 px-3">
+                <x-input-label for="receiver" :value="__('Receiver')"/>
+                <x-text-input id="receiver" name="receiver" type="text" class="mt-1 block w-full"/>
+                <x-input-error class="mt-2" :messages="$errors->get('receiver')"/>
+            </div>
+        </div>
+
+        <div class="-mx-3 md:flex mb-6">
+            <div class="md:w-1/2 px-3">
+                <x-input-label for="sender" :value="__('Sender')"/>
+                <x-text-input id="sender" name="sender" type="text" class="mt-1 block w-full"/>
+                <x-input-error class="mt-2" :messages="$errors->get('sender')"/>
+            </div>
+
+            <div class="md:w-1/2 px-3">
+                <x-input-label for="type" :value="__('Type')" required/>
+                <div class="relative">
+                    <select
+                        class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 w-full"
+                        id="type" name="type" required>
+                        <option value="{{ \App\Models\Transaction\Transaction::TYPE_INCOME }}">Income</option>
+                        <option selected value="{{ \App\Models\Transaction\Transaction::TYPE_EXPENDITURE }}">
+                            Expenditure
+                        </option>
+                    </select>
+                    <x-input-error :messages="$errors->get('type')" class="mt-2"/>
+                </div>
+            </div>
+
         </div>
 
         <div class="flex items-center justify-end">

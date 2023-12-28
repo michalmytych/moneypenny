@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests\Web\Transaction;
 
-use App\Models\Transaction\Transaction;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Models\Transaction\Transaction;
+use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * @property mixed $decimal_volume
@@ -19,7 +18,7 @@ class CreateRequest extends FormRequest
             'sender' => 'nullable|max:255',
             'receiver' => 'nullable|max:255',
             'description' => 'required|string|min:5|max:255',
-            'transaction_date' => 'required|date',
+            'transaction_date' => 'required|date|before:tomorrow',
             'type' => [
                 Rule::in([Transaction::TYPE_EXPENDITURE, Transaction::TYPE_INCOME])
             ],

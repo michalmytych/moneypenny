@@ -11,7 +11,6 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use App\Models\Nordigen\Requisition;
-use Illuminate\Support\Facades\Cache;
 use App\Models\Synchronization\Account;
 use GuzzleHttp\Exception\GuzzleException;
 use App\Models\Nordigen\EndUserAgreement;
@@ -19,6 +18,7 @@ use App\Models\Synchronization\Synchronization;
 use App\Http\Client\Traits\DecodesHttpJsonResponse;
 use App\Services\Nordigen\DataObjects\InstitutionDataObject;
 use App\Services\Nordigen\DataObjects\TransactionDataObject;
+use App\Contracts\Infrastructure\Cache\CacheAdapterInterface;
 use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
 use App\Services\Nordigen\Synchronization\NordigenTransactionServiceInterface;
 
@@ -44,6 +44,7 @@ class NordigenService implements TransactionSyncServiceInterface
 
     public function __construct(
         private readonly NordigenClient                      $httpClient,
+        private readonly CacheAdapterInterface               $cacheAdapter,
         private readonly NordigenAccountService              $nordigenAccountService,
         private readonly NordigenTransactionServiceInterface $nordigenTransactionService
     )
@@ -276,15 +277,15 @@ class NordigenService implements TransactionSyncServiceInterface
      */
     public function provideSupportedInstitutionsData()
     {
-        if (Cache::missing(self::INSTITUTIONS_CACHE_KEY)) {
+        if ($this->cacheAdapter->missing(self::INSTITUTIONS_CACHE_KEY)) {
             $institutionsData = $this->getFreshSupportedInstitutionsData();
 
-            Cache::put(self::INSTITUTIONS_CACHE_KEY, $institutionsData);
+            $this->cacheAdapter->put(self::INSTITUTIONS_CACHE_KEY, $institutionsData, 30);
 
             return $this->getInstitutionsDataObjects($institutionsData);
         }
 
-        $institutionsData = Cache::get(self::INSTITUTIONS_CACHE_KEY);
+        $institutionsData = $this->cacheAdapter->get(self::INSTITUTIONS_CACHE_KEY);
 
         return $this->getInstitutionsDataObjects($institutionsData);
     }
@@ -293,11 +294,8 @@ class NordigenService implements TransactionSyncServiceInterface
      * @return array|InstitutionDataObject[]
      * @noinspection PhpMissingReturnTypeInspection
      */
-    public function getInstitutionsDataObjects(array $institutionsData)
+    public function getInstitutionsDataObjects(array $institutionsData): array
     {
-        // @todo - add pagination instead of returning one chunk
-        $institutionsData = array_slice($institutionsData, 0, 30);
-
         return array_map(
             fn($institution) => InstitutionDataObject::make($institution),
             $institutionsData
@@ -329,13 +327,13 @@ class NordigenService implements TransactionSyncServiceInterface
      */
     public function provideAccessTokenData(): array
     {
-        $tokenData = Cache::get(self::TOKEN_CACHE_KEY);
+        $tokenData = $this->cacheAdapter->get(self::TOKEN_CACHE_KEY);
         $tokenExpired = $this->hasTokenRefreshExpired($tokenData);
 
-        if ($tokenExpired || Cache::missing(self::TOKEN_CACHE_KEY)) {
+        if ($tokenExpired || $this->cacheAdapter->missing(self::TOKEN_CACHE_KEY)) {
             $tokenData = $this->getFreshTokenData();
 
-            Cache::put(self::TOKEN_CACHE_KEY, $tokenData);
+            $this->cacheAdapter->put(self::TOKEN_CACHE_KEY, $tokenData);
 
             return $tokenData;
         }
@@ -385,6 +383,7 @@ class NordigenService implements TransactionSyncServiceInterface
     {
         $institutions = $this->provideSupportedInstitutionsData();
         $institutions = array_filter($institutions, fn($institution) => $institution->id === $institutionId);
+
         return collect($institutions)->first();
     }
 

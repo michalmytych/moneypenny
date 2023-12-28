@@ -4,22 +4,24 @@ namespace App\Services\Transaction;
 
 use App\Models\User;
 use App\Filters\Filter;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use App\Models\Transaction\Persona;
 use App\Models\Transaction\Transaction;
 use App\Services\Helpers\TransactionHelper;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection;
+use App\Services\Transaction\Similar\SimilarTransactionsService;
 
 class TransactionService
 {
+    public function __construct(private readonly SimilarTransactionsService $similarTransactionsService)
+    {}
+
     public function getIndexData(Filter $filter, User $user): array
     {
         $transactions = Transaction::applyFilter($filter)
             ->whereUser($user)
             ->orderBy('transaction_date', 'desc')
             ->with('category')
-            ->limit(1000)
             ->get();
 
         $filterableColumns = Transaction::getFilterableColumns();
@@ -78,59 +80,17 @@ class TransactionService
 
     public function getSimilarTransactions(?Transaction $transaction): Collection
     {
-        // @todo - improve search, refactor, optimize
         if (!$transaction) {
             return collect();
         }
 
-        $search = $transaction->description
-            . ' ' . $transaction->receiver
-            . ' ' . $transaction->sender;
+        return $this->similarTransactionsService->getSimilarTransactions($transaction);
+    }
 
-        $separators = ['-', '.', ',', '/', '\\', '--', '(', ')'];
-        $search = str_replace(
-            $separators,
-            ' ',
-            $search
-        );
-
-        $search = explode(' ', $search);
-
-        // Sort by length
-        $search = array_filter($search, fn($s) => strlen($s) > 3);
-        usort($search, fn($a, $b) => strlen($b) - strlen($a));
-
-        // Get max 10 longest
-        $tokens = array_slice($search, 0, 10, true);
-
-        $baseQuery = Transaction::whereUser($transaction->user)
-            ->where('id', '!=', $transaction->id)
-            ->where('description', 'like', '%' . $transaction->description . '%')
-            ->where('receiver', 'like', '%' . $transaction->receiver . '%')
-            ->where('sender', 'like', '%' . $transaction->sender . '%')
-            ->limit(20);
-
-        $baseQueryClone = clone $baseQuery;
-
-        /** @var Collection $result */
-        $result = $baseQueryClone->get();
-
-        if ($result->count() < 5) {
-            foreach ($tokens as $token) {
-                $onlyLettersToken = preg_replace('/[^A-Za-z\-]/', '', $token);
-
-                $baseQueryClone
-                    ->orWhereRaw('UPPER(description) LIKE ?', ['%' . $onlyLettersToken . '%'])
-                    ->when($transaction->category, fn(Builder $builder) => $builder
-                        ->orWhere('category_id', $transaction->category?->id)
-                    );
-            }
-
-            return $result
-                ->concat($baseQueryClone->get())
-                ->unique('id');
-        } else {
-            return $result;
-        }
+    public function toggleExcludeFromCalculation(mixed $transactionId): void
+    {
+        $transaction = Transaction::find($transactionId);
+        $transaction->is_excluded_from_calculation = !$transaction->is_excluded_from_calculation;
+        $transaction->save();
     }
 }

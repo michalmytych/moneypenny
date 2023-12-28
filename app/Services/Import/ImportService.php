@@ -15,7 +15,9 @@ use App\Services\Notification\Broadcast\NotificationBroadcastService;
 
 class ImportService implements ImportServiceContract
 {
-    public function __construct(private readonly NotificationBroadcastService $notificationBroadcastService) {}
+    public function __construct(private readonly NotificationBroadcastService $notificationBroadcastService)
+    {
+    }
 
     public function all(User $user)
     {
@@ -54,6 +56,12 @@ class ImportService implements ImportServiceContract
             url: route('transaction.index'),
             userId: $user->id
         );
+    }
+
+    public function columnConfigurationForUserExist(User $user): bool
+    {
+        return ColumnsMapping::whereUser($user)->count() === 0
+            || ImportSetting::whereUser(request()->user())->count() === 1;
     }
 
     public function create(User $user, array $data): Import

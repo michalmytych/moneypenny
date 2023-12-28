@@ -37,6 +37,7 @@ class ExchangeRatesService implements ExchangeRatesServiceInterface
 
         if (!$exchangeRate) {
             $dataObject = $this->provideNewHistoryRate($date, $baseCurrencyCode, $targetCurrencyCode);
+
             return ExchangeRate::create([
                 'rate'             => $dataObject->rate,
                 'base_currency'    => $dataObject->baseCurrencyCode,

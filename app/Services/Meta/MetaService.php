@@ -2,14 +2,17 @@
 
 namespace App\Services\Meta;
 
+use App\Contracts\Infrastructure\Cache\CacheAdapterInterface;
+use App\Services\Shell\ShellService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use App\Services\Shell\ShellService;
-use Illuminate\Support\Facades\Cache;
 
-class MetaService
+readonly class MetaService
 {
-    public function __construct(private readonly ShellService $shellService)
+    public function __construct(
+        private ShellService          $shellService,
+        private CacheAdapterInterface $cacheAdapter
+    )
     {
     }
 
@@ -17,8 +20,8 @@ class MetaService
     {
         $cacheKey = 'app_meta_data';
 
-        if (Cache::has($cacheKey)) {
-            return Cache::get($cacheKey);
+        if ($this->cacheAdapter->has($cacheKey)) {
+            return $this->cacheAdapter->get($cacheKey);
         }
 
         $appMetaData = [
@@ -42,7 +45,7 @@ class MetaService
             ]
         ];
 
-        Cache::put($cacheKey, $appMetaData, 30);
+        $this->cacheAdapter->put($cacheKey, $appMetaData, 30);
 
         return $appMetaData;
     }
@@ -66,31 +69,36 @@ class MetaService
     protected function getTopData(): array
     {
         $data = $this->shellService->runScript('server_meta/top.sh');
-        return json_decode($data, true);
+
+        return json_decode($data, true) ?? [];
     }
 
     protected function getDirectorySize(string $directory): array
     {
         $data = $this->shellService->runScript('server_meta/directory_size.sh', [$directory]);
+
         return json_decode($data, true);
     }
 
     protected function getDiskFree(): array
     {
         $data = $this->shellService->runScript('server_meta/disk_free.sh');
+
         return json_decode($data, true);
     }
 
     protected function getSystemInfo(): array
     {
         $data = $this->shellService->runScript('server_meta/system_info.sh');
+
         return json_decode($data, true);
     }
 
     public function getJobsList(): Collection
     {
-        $jobs =  DB::table('jobs')->select()->latest()->get();
-        if ($jobs->count() ===0) {
+        $jobs = DB::table('jobs')->select()->latest()->get();
+
+        if ($jobs->count() === 0) {
             $jobs = collect([
                 [
                     'id' => 10,
@@ -99,6 +107,7 @@ class MetaService
                 ],
             ]);
         }
+
         return $jobs;
     }
 }

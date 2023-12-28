@@ -104,6 +104,7 @@ class TransactionPersonaService
     {
         $value = $this->getStringNormalizedForAssociation($personaName);
         $condition = 'json_contains(associated_names, \'["' . $value . '"]\')';
+
         return Persona::whereRaw($condition)->limit(1)->first();
     }
 
@@ -115,6 +116,7 @@ class TransactionPersonaService
         $string = stripcslashes($string);
         $string = preg_replace('|/|', '', $string);
         $string = Str::lower($string);
+
         return StringHelper::removeAccents($string);
     }
 
@@ -124,9 +126,9 @@ class TransactionPersonaService
         $personaName = $this->getStringNormalizedForAssociation($personaName);
         $words = collect(explode(' ', $personaName));
         $longestWord = $words->max(fn($word) => strlen($word));
-        $personasContainingLongesWordCursor = Persona::where('associated_names', 'like', '%' . $longestWord . '%')->cursor();
+        $personasContainingLongestWordCursor = Persona::where('associated_names', 'like', '%' . $longestWord . '%')->cursor();
 
-        $avgSimilarityRates = $personasContainingLongesWordCursor
+        $avgSimilarityRates = $personasContainingLongestWordCursor
             ->map(function (Persona $persona) use ($personaName) {
                 $associatedNames = json_decode($persona->associated_names);
                 $similarityPercentageRates = [];

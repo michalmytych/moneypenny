@@ -1,7 +1,5 @@
 <div class="bg-white rounded-md shadow-sm p-4 mb-4 transition">
-    <div class="font-semibold text-indigo-500 mb-4">
-        <a href="{{ route('budget.index') }}">{{ __('Back') }}</a>
-    </div>
+    <x-back-link/>
 
     <div class="flex justify-between items-center">
         <h4 class="font-semibold flex text-2xl">

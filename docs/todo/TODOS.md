@@ -17,3 +17,4 @@
 * Change reports date input style.
 * At maintenance, processes list is empty.
 * At maintenance, database stats show another database.
+* Docker config almost ready: Xdebug: [Step Debug] Could not connect to debugging client. Tried: host.docker.internal:9090 

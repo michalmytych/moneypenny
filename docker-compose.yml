@@ -46,3 +46,7 @@ services:
         volumes:
             - ./:/app
         entrypoint: /app/dev/docker/entrypoint.node.sh
+        ports:
+            - "5173:5173"
+        expose:
+            - "5173"

@@ -1,11 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\UserController;
-use App\Models\Transaction\Transaction;
-use App\Models\User;
-use App\Services\Home\HomePageServiceInterface;
+use App\Moneypenny\Home\Services\HomePageServiceInterface;
+use App\Moneypenny\Transaction\Models\Transaction;
+use App\Moneypenny\User\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------

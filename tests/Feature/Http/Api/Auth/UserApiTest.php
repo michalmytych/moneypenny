@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Api\Auth;
 
-use App\Models\User;
+use App\Moneypenny\User\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\ApiTestCase;

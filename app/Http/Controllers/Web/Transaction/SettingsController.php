@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Web\Transaction;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Transaction\Settings\EditRequest;
-use App\Models\Auth\Settings;
-use App\Services\Notification\Broadcast\NotificationBroadcastService;
+use App\Moneypenny\User\Models\Settings;
+use App\Notification\Services\NotificationBroadcastService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;

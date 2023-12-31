@@ -22,15 +22,15 @@
             @foreach ($imports as $import)
                 <tr class="divide-y divide-gray-200">
                     <td class="px-4 py-2">
-                        @if ($import->status === \App\Models\Import\Import::STATUS_PROCESSING)
+                        @if ($import->status === \App\Moneypenny\Import\Models\Import::STATUS_PROCESSING)
                             {{ __('Processing') }}
-                        @elseif ($import->status === \App\Models\Import\Import::STATUS_SAVED)
+                        @elseif ($import->status === \App\Moneypenny\Import\Models\Import::STATUS_SAVED)
                             {{ __('Saved') }}
-                        @elseif ($import->status === \App\Models\Import\Import::STATUS_IMPORTING)
+                        @elseif ($import->status === \App\Moneypenny\Import\Models\Import::STATUS_IMPORTING)
                             {{ __('Importing') }}
-                        @elseif ($import->status === \App\Models\Import\Import::STATUS_IMPORTED)
+                        @elseif ($import->status === \App\Moneypenny\Import\Models\Import::STATUS_IMPORTED)
                             {{ __('Imported') }}
-                        @elseif ($import->status === \App\Models\Import\Import::STATUS_IMPORT_ERROR)
+                        @elseif ($import->status === \App\Moneypenny\Import\Models\Import::STATUS_IMPORT_ERROR)
                             {{ __('Import failed') }}
                         @endif
                     </td>
@@ -69,8 +69,10 @@
     <h2 class="font-semibold text-2xl">{{ __('No imports') }}</h2>
     <p class="mt-4">
         {{ __('Add first') }}
-        <a class="text-indigo-600 font-semibold hover:text-indigo-400" href="{{ route('institution.index') }}"> {{ __('bank integration') }} </a>
+        <a class="text-indigo-600 font-semibold hover:text-indigo-400"
+           href="{{ route('institution.index') }}"> {{ __('bank integration') }} </a>
         {{ __('or') }}
-        <a class="text-indigo-600 font-semibold hover:text-indigo-400" href="{{ route('file.index') }}"> {{ __('upload transaction file') }}</a>.
+        <a class="text-indigo-600 font-semibold hover:text-indigo-400"
+           href="{{ route('file.index') }}"> {{ __('upload transaction file') }}</a>.
     </p>
 @endif

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Web\Transaction;
 
-use Illuminate\View\View;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Moneypenny\PersonalAccount\Models\PersonalAccount;
+use App\Shared\Contracts\Infrastructure\Cache\CacheAdapterInterface;
 use Illuminate\Http\RedirectResponse;
-use App\Models\Transaction\PersonalAccount;
-use App\Contracts\Infrastructure\Cache\CacheAdapterInterface;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class PersonalAccountController extends Controller
 {

@@ -21,10 +21,12 @@
                             @include('components.profile.avatar', ['variant' => 'xl', 'src' => request()->user()?->getAvatarPath()])
                         </div>
                         <div class="flex-col justify-center">
-                            <div id="avatarForm" class="flex-col mt-2 bg-gray-100 hidden rounded-lg p-2 shadow-md mb-6 pb-2">
-                                <form id="_avatarForm" action="{{ route('file.upload') }}" method="POST" enctype="multipart/form-data">
+                            <div id="avatarForm"
+                                 class="flex-col mt-2 bg-gray-100 hidden rounded-lg p-2 shadow-md mb-6 pb-2">
+                                <form id="_avatarForm" action="{{ route('file.upload') }}" method="POST"
+                                      enctype="multipart/form-data">
                                     @csrf
-                                    <input type="hidden" name="type" value="{{ \App\Models\File::USER_AVATAR }}">
+                                    <input type="hidden" name="type" value="{{ \App\File\Models\File::USER_AVATAR }}">
 
                                     <div class="mb-4">
                                         <x-file-drop fileInputName="file"/>
@@ -35,7 +37,8 @@
                                     </div>
                                 </form>
                             </div>
-                            <div class="flex mt-2 justify-center cursor-pointer hover:text-gray-500" id="selectAvatarFormTrigger">
+                            <div class="flex mt-2 justify-center cursor-pointer hover:text-gray-500"
+                                 id="selectAvatarFormTrigger">
                                 <div class="relative" style="top: 1px;">
                                     @include('icons.image')
                                 </div>
@@ -46,13 +49,14 @@
                                 </div>
                                 <span class="ml-2 hover:underline">{{ __('Select avatar') }}</span>
                             </div>
-                            <div class="flex mt-2 justify-center cursor-pointer hover:text-gray-500" id="changeAvatarFormTrigger">
+                            <div class="flex mt-2 justify-center cursor-pointer hover:text-gray-500"
+                                 id="changeAvatarFormTrigger">
                                 <div class="relative" style="top: 1px;">
                                     @include('icons.edit')
                                 </div>
                                 <span class="ml-2 hover:underline">{{ __('Upload avatar') }}</span>
                             </div>
-                            <x-input-error :messages="$errors->get('file')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('file')" class="mt-2"/>
                         </div>
                     </div>
                 </div>
@@ -109,12 +113,12 @@
                     )
                         .then(response => response.json())
                         .then(data => {
-                           if (data.copied) {
-                               const avatarImages = document.querySelectorAll('.avatarImage');
-                               avatarImages.forEach(avatarImage => {
-                                   avatarImage.setAttribute('src', tmpSrc);
-                               });
-                           }
+                            if (data.copied) {
+                                const avatarImages = document.querySelectorAll('.avatarImage');
+                                avatarImages.forEach(avatarImage => {
+                                    avatarImage.setAttribute('src', tmpSrc);
+                                });
+                            }
                         });
                 }
 

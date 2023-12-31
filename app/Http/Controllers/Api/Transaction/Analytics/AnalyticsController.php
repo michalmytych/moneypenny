@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api\Transaction\Analytics;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Services\Analytics\AnalyticsService;
+use App\Moneypenny\Transaction\Services\Analytics\AnalyticsService;
+use Illuminate\Http\Request;
 
 class AnalyticsController extends Controller
 {

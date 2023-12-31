@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Web\Auth;
 
-use App\Models\User;
+use App\Moneypenny\User\Models\User;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;

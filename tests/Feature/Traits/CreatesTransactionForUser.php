@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Traits;
 
-use App\Models\Transaction\Transaction;
-use App\Models\User;
+use App\Moneypenny\Transaction\Models\Transaction;
+use App\Moneypenny\User\Models\User;
 
 trait CreatesTransactionForUser
 {

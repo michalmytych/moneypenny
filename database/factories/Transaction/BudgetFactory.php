@@ -5,7 +5,7 @@ namespace Database\Factories\Transaction;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Transaction\Budget>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Moneypenny\Budget\Models\Budget>
  */
 class BudgetFactory extends Factory
 {

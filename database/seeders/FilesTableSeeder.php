@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\File;
-use App\Models\User;
+use App\File\Models\File;
+use App\Moneypenny\Import\Models\ImportSetting;
+use App\Moneypenny\User\Models\User;
 use Illuminate\Database\Seeder;
-use App\Models\Import\ImportSetting;
 
 class FilesTableSeeder extends Seeder
 {

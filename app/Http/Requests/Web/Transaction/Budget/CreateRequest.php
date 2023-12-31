@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Web\Transaction\Budget;
 
-use Illuminate\Validation\Rule;
-use App\Models\Transaction\Budget;
+use App\Moneypenny\Budget\Models\Budget;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 /**
  * @property mixed $decimal_volume

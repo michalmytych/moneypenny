@@ -1,0 +1,49 @@
+<?php
+
+namespace App\Transaction\PersonalAccount;
+
+use App\Moneypenny\PersonalAccount\Models\PersonalAccount;
+use App\Moneypenny\Transaction\Models\Transaction;
+use App\Moneypenny\User\Models\User;
+
+class SaldoService
+{
+    public function getByUser(User $user)
+    {
+        $personalAccount = PersonalAccount::firstWhere('user_id', $user->id);
+        return $personalAccount?->value ?? 0.0;
+    }
+
+    public function calculate(User $user): int
+    {
+        $saldo = 0;
+        foreach (Transaction::whereUser($user)->baseCalculationQuery()->cursor() as $transaction) {
+            /** @var Transaction $transaction */
+            if ($transaction->type === Transaction::TYPE_EXPENDITURE) {
+                $saldo -= $transaction->{Transaction::CALCULATION_COLUMN};
+            }
+
+            if ($transaction->type === Transaction::TYPE_INCOME) {
+                $saldo += $transaction->{Transaction::CALCULATION_COLUMN};
+            }
+        }
+
+        return $saldo;
+    }
+
+    public function updateSaldo(Transaction $transaction): void
+    {
+        // @todo - $personalAccount could be so number of queries could be minimised
+        $personalAccount = PersonalAccount::firstWhere('user_id', $transaction->user->id);
+
+        if ($transaction->type === Transaction::TYPE_EXPENDITURE) {
+            $personalAccount->value -= $transaction->{Transaction::CALCULATION_COLUMN};
+        }
+
+        if ($transaction->type === Transaction::TYPE_INCOME) {
+            $personalAccount->value += $transaction->{Transaction::CALCULATION_COLUMN};
+        }
+
+        $personalAccount->save();
+    }
+}

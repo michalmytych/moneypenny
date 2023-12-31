@@ -10,7 +10,7 @@
     @php
         $timePassed = null;
         if ($synchronization) {
-             $timePassed = \App\Services\Helpers\TimeHelper::ax_getRoughTimeElapsedAsText(
+             $timePassed = \App\Shared\Helpers\TimeHelper::ax_getRoughTimeElapsedAsText(
                 $synchronization->created_at->timestamp
             );
         }

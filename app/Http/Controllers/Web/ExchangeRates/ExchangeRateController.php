@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Web\ExchangeRates;
 
-use Illuminate\View\View;
+use App\ExchangeRates\Services\ExchangeRatesService;
 use App\Http\Controllers\Controller;
-use App\Services\ExchangeRates\ExchangeRatesService;
+use Illuminate\View\View;
 
 class ExchangeRateController extends Controller
 {

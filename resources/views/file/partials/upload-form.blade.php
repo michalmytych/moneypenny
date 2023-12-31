@@ -3,7 +3,7 @@
 
     <div class="mb-3">
         {{--@todo - no queries in templates--}}
-        @if(\App\Models\Import\ImportSetting::whereUser(request()->user())->count() === 0)
+        @if(\App\Moneypenny\Import\Models\ImportSetting::whereUser(request()->user())->count() === 0)
             <a
                 class="font-semibold text-indigo-600 hover:text-indigo-400 flex items-center"
                 href="{{ route('import.import-setting.index') }}">
@@ -17,7 +17,7 @@
 
     <div class="mb-3">
         {{--@todo - no queries in templates--}}
-        @if(\App\Models\Import\ColumnsMapping::whereUser(request()->user())->count() === 0)
+        @if(\App\Moneypenny\Import\Models\ColumnsMapping::whereUser(request()->user())->count() === 0)
             <a
                 class="font-semibold text-indigo-600 hover:text-indigo-400 flex items-center"
                 href="{{ route('import.columns-mapping.index') }}">
@@ -64,7 +64,7 @@
         <x-input-error :messages="$errors->get('columns_mapping_id')" class="mt-2"/>
     </div>
     <div class="mb-4">
-        <input type="hidden" name="type" value="{{ \App\Models\File::TRANSACTIONS_IMPORT }}">
+        <input type="hidden" name="type" value="{{ \App\File\Models\File::TRANSACTIONS_IMPORT }}">
         <x-file-drop fileInputName="file"/>
         <x-input-error :messages="$errors->get('file')" class="mt-2"/>
     </div>

@@ -41,7 +41,7 @@
                                     <div class="w-4 h-4 rounded-full shadow pt-1 bg-indigo-500"
                                          @if($transaction->category->color_hex)
                                              style="background-color: {{ $transaction->category->color_hex }};"
-                                        @endif
+                                            @endif
                                     ></div>
                                     <div class="ml-3">{{ $transaction->category->name }}</div>
                                 @else
@@ -55,10 +55,10 @@
                         <strong>{{ $transaction->raw_volume }}</strong> {{ $transaction->currency }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        {{ \App\Services\Helpers\StringHelper::shortenAuto($transaction->description ?? '-') }}
+                        {{ \App\Shared\Helpers\StringHelper::shortenAuto($transaction->description ?? '-') }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        {{ \App\Services\Helpers\StringHelper::shortenAuto($transaction->receiver ?? '-') }}
+                        {{ \App\Shared\Helpers\StringHelper::shortenAuto($transaction->receiver ?? '-') }}
                     </td>
                 </tr>
             @endforeach

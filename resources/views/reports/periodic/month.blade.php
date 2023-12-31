@@ -68,7 +68,7 @@
                             @foreach ($data['top_5_biggest_incomes'] as $income)
                                 <tr class="border-t">
                                     <td class="px-4 py-2">{{ \Illuminate\Support\Carbon::parse($income['transaction_date'])->format('d-m-Y') }}</td>
-                                    <td class="px-4 py-2">{{ \App\Services\Helpers\StringHelper::shortenAuto($income['description']) }}</td>
+                                    <td class="px-4 py-2">{{ \App\Shared\Helpers\StringHelper::shortenAuto($income['description']) }}</td>
                                     <td class="px-4 py-2">{{ $income['calculation_volume'] }} {{ $data['currency'] }}</td>
                                 </tr>
                             @endforeach
@@ -90,7 +90,7 @@
                             @foreach ($data['top_5_biggest_expenditures'] as $expenditure)
                                 <tr class="border-t">
                                     <td class="px-4 py-2">{{ \Illuminate\Support\Carbon::parse($expenditure['transaction_date'])->format('d-m-Y') }}</td>
-                                    <td class="px-4 py-2">{{ \App\Services\Helpers\StringHelper::shortenAuto($expenditure['description']) }}</td>
+                                    <td class="px-4 py-2">{{ \App\Shared\Helpers\StringHelper::shortenAuto($expenditure['description']) }}</td>
                                     <td class="px-4 py-2">{{ $expenditure['calculation_volume'] }} {{ $data['currency'] }}</td>
                                 </tr>
                             @endforeach

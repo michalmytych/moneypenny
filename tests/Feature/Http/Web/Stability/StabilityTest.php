@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Web\Stability;
 
-use App\Models\User;
+use App\Moneypenny\User\Models\User;
 use Illuminate\Support\Facades\Route;
 use Tests\TestCase;
 

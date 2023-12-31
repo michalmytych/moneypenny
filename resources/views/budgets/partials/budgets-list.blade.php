@@ -13,11 +13,11 @@
                 <div class="bg-white rounded-md shadow-sm p-4 mb-4 transition scale-hover">
                     <div class="flex justify-between items-center">
                         <h4 class="text-indigo-500 font-bold text-xl">
-                            @if($budgetWithConsumption['budget']->type === \App\Models\Transaction\Budget::TYPE_MONTH)
+                            @if($budgetWithConsumption['budget']->type === \App\Moneypenny\Budget\Models\Budget::TYPE_MONTH)
                                 Monthly
-                            @elseif($budgetWithConsumption['budget']->type === \App\Models\Transaction\Budget::TYPE_WEEK)
+                            @elseif($budgetWithConsumption['budget']->type === \App\Moneypenny\Budget\Models\Budget::TYPE_WEEK)
                                 Weekly
-                            @elseif($budgetWithConsumption['budget']->type === \App\Models\Transaction\Budget::TYPE_DAY)
+                            @elseif($budgetWithConsumption['budget']->type === \App\Moneypenny\Budget\Models\Budget::TYPE_DAY)
                                 Daily
                             @endif
                             {{ $budgetWithConsumption['budget']->name }}
@@ -29,7 +29,7 @@
                                     <span class="font-semibold text-3x">/</span>
                                 </span>
                                 <span
-                                    class="text-4xl font-semibold">{{ number_format($budgetWithConsumption['budget']->amount, 2) }}</span>
+                                        class="text-4xl font-semibold">{{ number_format($budgetWithConsumption['budget']->amount, 2) }}</span>
                                 <span class="ml-1 text-xl">{{ $currencyCode }}</span>
                                 <span class="font-semibold text-2xl ml-4">
                                     @php

@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Web\File;
 
-use App\Models\File;
+use App\File\Models\File;
 use Illuminate\Foundation\Http\FormRequest;
 
 class FileUploadRequest extends FormRequest

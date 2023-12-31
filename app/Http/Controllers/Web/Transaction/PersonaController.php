@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Web\Transaction;
 
 use App\Http\Controllers\Controller;
-use App\Models\Transaction\Persona;
-use App\Models\Transaction\Transaction;
-use App\Services\Transaction\TransactionPersonaService;
+use App\Moneypenny\Persona\Models\Persona;
+use App\Moneypenny\Transaction\Models\Transaction;
+use App\Transaction\Transaction\TransactionPersonaService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

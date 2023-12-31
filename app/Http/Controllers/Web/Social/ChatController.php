@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Web\Social;
 
-use App\Contracts\Infrastructure\Cache\CacheAdapterInterface;
 use App\Http\Controllers\Controller;
-use App\Services\Notification\Broadcast\NotificationBroadcastService;
+use App\Notification\Services\NotificationBroadcastService;
+use App\Shared\Contracts\Infrastructure\Cache\CacheAdapterInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;

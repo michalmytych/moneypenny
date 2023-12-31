@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Web\Import;
 
-use Illuminate\View\View;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Services\Import\ImportService;
+use App\Moneypenny\Import\Services\ImportService;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ImportController extends Controller
 {

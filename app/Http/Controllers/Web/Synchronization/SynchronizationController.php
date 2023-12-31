@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Web\Synchronization;
 
-use Illuminate\View\View;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Services\Transaction\Synchronization\SynchronizationService;
+use App\Transaction\Synchronization\SynchronizationService;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class SynchronizationController extends Controller
 {

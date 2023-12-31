@@ -2,18 +2,18 @@
 
 namespace Tests\Feature\Services\Transaction\Sync;
 
+use App\Moneypenny\Synchronization\Models\Synchronization;
+use App\Moneypenny\Transaction\Contracts\TransactionSyncServiceInterface;
+use App\Moneypenny\User\Models\User;
+use App\Nordigen\Models\EndUserAgreement;
+use App\Nordigen\Models\Requisition;
+use App\Nordigen\Services\NordigenClientInterface;
+use App\Nordigen\Services\NordigenTransactionServiceInterface;
+use GuzzleHttp\Psr7\Response;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Cache;
 use Mockery;
 use Tests\TestCase;
-use App\Models\User;
-use GuzzleHttp\Psr7\Response;
-use App\Models\Nordigen\Requisition;
-use Illuminate\Support\Facades\Cache;
-use App\Models\Nordigen\EndUserAgreement;
-use App\Models\Synchronization\Synchronization;
-use App\Services\Nordigen\NordigenClientInterface;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
-use App\Services\Nordigen\Synchronization\NordigenTransactionServiceInterface;
 
 class TransactionSyncServiceTest extends TestCase
 {

@@ -2,8 +2,8 @@
 
 namespace Database\Factories\Synchronization;
 
-use App\Models\User;
-use App\Models\Synchronization\Synchronization;
+use App\Moneypenny\Synchronization\Models\Synchronization;
+use App\Moneypenny\User\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class SynchronizationFactory extends Factory

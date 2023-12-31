@@ -189,21 +189,21 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
+        \App\Shared\Providers\AppServiceProvider::class,
+        \App\Shared\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\HorizonServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
-        App\Providers\TelescopeServiceProvider::class,
-        App\Providers\MixinServiceProvider::class,
-        App\Providers\QueryCachingServiceProvider::class,
-        App\Providers\LoggingServiceProvider::class,
+        \App\Shared\Providers\EventServiceProvider::class,
+        \App\Shared\Providers\HorizonServiceProvider::class,
+        \App\Shared\Providers\RouteServiceProvider::class,
+        \App\Shared\Providers\TelescopeServiceProvider::class,
+        \App\Shared\Providers\MixinServiceProvider::class,
+        \App\Shared\Providers\QueryCachingServiceProvider::class,
+        \App\Shared\Providers\LoggingServiceProvider::class,
         /*
          * Moneypenny integrations specific service providers...
          */
-        \App\Services\Nordigen\Provider\NordigenServiceProvider::class,
-        \App\Services\ExchangeRates\Provider\ExchangeRatesServiceProvider::class
+        \App\Nordigen\Providers\NordigenServiceProvider::class,
+        \App\ExchangeRates\Providers\ExchangeRatesServiceProvider::class
 
     ],
 

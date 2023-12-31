@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Web\Nordigen\Institution;
 
-use Throwable;
-use Illuminate\View\View;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Moneypenny\Transaction\Contracts\TransactionSyncServiceInterface;
+use App\Shared\Services\Logging\LoggingAdapterInterface;
 use Illuminate\Http\RedirectResponse;
-use App\Services\Logging\LoggingAdapterInterface;
-use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
+use Throwable;
 
 class InstitutionController extends Controller
 {

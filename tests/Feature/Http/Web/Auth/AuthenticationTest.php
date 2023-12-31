@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Http\Web\Auth;
 
-use App\Models\User;
-use App\Providers\RouteServiceProvider;
+use App\Moneypenny\User\Models\User;
+use App\Shared\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

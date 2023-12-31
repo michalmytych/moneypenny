@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Services\Transaction\Budget;
 
-use App\Models\User;
-use App\Services\Transaction\Currency\CurrencyService;
+use App\Moneypenny\User\Models\User;
+use App\Transaction\Currency\CurrencyService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

@@ -2,8 +2,8 @@
 
 namespace Database\Factories\Import;
 
+use App\Moneypenny\User\Models\User;
 use Exception;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ImportSettingFactory extends Factory

@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Http\Web\File;
 
-use App\Models\File;
-use App\Models\User;
+use App\File\Models\File;
+use App\Moneypenny\User\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;

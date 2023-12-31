@@ -46,12 +46,14 @@
             <div class="flex md:w-1/2">
                 <div class="px-3 w-full">
                     <x-input-label for="decimal_volume" :value="__('Decimal volume')" required/>
-                    <x-text-input id="decimal_volume" name="decimal_volume" type="number" class="mt-1 block w-full" required/>
+                    <x-text-input id="decimal_volume" name="decimal_volume" type="number" class="mt-1 block w-full"
+                                  required/>
                     <x-input-error class="mt-2" :messages="$errors->get('decimal_volume')"/>
                 </div>
                 <div class="px-3">
                     <x-input-label for="currency" :value="__('Currency')" required/>
-                    <select id="currency" name="currency" placeholder="Enter Currency" required class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1">
+                    <select id="currency" name="currency" placeholder="Enter Currency" required
+                            class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1">
                         <option>Select currency</option>
                         @foreach(config('moneypenny.supported_currencies') as $currencyCode)
                             @if($currencyCode === config('moneypenny.base_calculation_currency'))
@@ -90,10 +92,11 @@
                 <x-input-label for="type" :value="__('Type')" required/>
                 <div class="relative">
                     <select
-                        class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 w-full"
-                        id="type" name="type" required>
-                        <option value="{{ \App\Models\Transaction\Transaction::TYPE_INCOME }}">Income</option>
-                        <option selected value="{{ \App\Models\Transaction\Transaction::TYPE_EXPENDITURE }}">
+                            class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 w-full"
+                            id="type" name="type" required>
+                        <option value="{{ \App\Moneypenny\Transaction\Models\Transaction::TYPE_INCOME }}">Income
+                        </option>
+                        <option selected value="{{ \App\Moneypenny\Transaction\Models\Transaction::TYPE_EXPENDITURE }}">
                             Expenditure
                         </option>
                     </select>
@@ -105,8 +108,8 @@
 
         <div class="flex items-center justify-end">
             <button
-                class="bg-indigo-600 hover:bg-indigo-400 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
-                type="submit">
+                    class="bg-indigo-600 hover:bg-indigo-400 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
+                    type="submit">
                 Create Transaction
             </button>
         </div>

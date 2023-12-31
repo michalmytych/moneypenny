@@ -12,36 +12,36 @@
                         class="text-2xl appearance-none border rounded w-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     @php
                         $types = [
-                            ['name' => 'Monthly', 'value' => \App\Models\Transaction\Budget::TYPE_MONTH, 'selected' => isset($budget) && $budget->type === \App\Models\Transaction\Budget::TYPE_MONTH],
-                            ['name' => 'Weekly', 'value' => \App\Models\Transaction\Budget::TYPE_WEEK, 'selected' => isset($budget) && \App\Models\Transaction\Budget::TYPE_WEEK],
-                            ['name' => 'Daily', 'value' => \App\Models\Transaction\Budget::TYPE_DAY, 'selected' => isset($budget) && \App\Models\Transaction\Budget::TYPE_DAY],
+                            ['name' => 'Monthly', 'value' => \App\Moneypenny\Budget\Models\Budget::TYPE_MONTH, 'selected' => isset($budget) && $budget->type === \App\Moneypenny\Budget\Models\Budget::TYPE_MONTH],
+                            ['name' => 'Weekly', 'value' => \App\Moneypenny\Budget\Models\Budget::TYPE_WEEK, 'selected' => isset($budget) && \App\Moneypenny\Budget\Models\Budget::TYPE_WEEK],
+                            ['name' => 'Daily', 'value' => \App\Moneypenny\Budget\Models\Budget::TYPE_DAY, 'selected' => isset($budget) && \App\Moneypenny\Budget\Models\Budget::TYPE_DAY],
                         ];
                     @endphp
                     @foreach($types as $type)
                         <option
-                            @if($type['selected'])
-                                selected
-                            @endif
-                            value="{{ $type['value'] }}">{{ $type['name'] }}</option>
+                                @if($type['selected'])
+                                    selected
+                                @endif
+                                value="{{ $type['value'] }}">{{ $type['name'] }}</option>
                     @endforeach
                 </select>
                 <x-input-error :messages="$errors->get('type')" class="mt-2"/>
                 <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    placeholder="{{ __('Budget name') }}"
-                    value="{{ isset($budget) ? $budget->name : '' }}"
-                    class="text-2xl ml-4 w-1/2 appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        type="text"
+                        name="name"
+                        id="name"
+                        placeholder="{{ __('Budget name') }}"
+                        value="{{ isset($budget) ? $budget->name : '' }}"
+                        class="text-2xl ml-4 w-1/2 appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 >
                 <x-input-error :messages="$errors->get('name')" class="mt-2"/>
                 <input
-                    type="number"
-                    step="0.01"
-                    name="amount"
-                    id="name"
-                    value="{{ isset($budget) ? $budget->amount : 0 }}"
-                    class="text-2xl ml-4 w-1/3 appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        type="number"
+                        step="0.01"
+                        name="amount"
+                        id="name"
+                        value="{{ isset($budget) ? $budget->amount : 0 }}"
+                        class="text-2xl ml-4 w-1/3 appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 >
                 <x-input-error :messages="$errors->get('amount')" class="mt-2"/>
                 <span class="ml-1 text-xl">{{ $currencyCode }}</span>

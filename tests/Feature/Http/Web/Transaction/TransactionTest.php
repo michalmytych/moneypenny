@@ -4,8 +4,8 @@
 
 namespace Tests\Feature\Http\Web\Transaction;
 
-use App\Models\Transaction\Transaction;
-use App\Models\User;
+use App\Moneypenny\Transaction\Models\Transaction;
+use App\Moneypenny\User\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

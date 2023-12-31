@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Web\Transaction\Categorize;
 
-use App\Contracts\Infrastructure\Cache\CacheAdapterInterface;
 use App\Http\Controllers\Controller;
-use App\Jobs\Transaction\RecategorizeAllTransactions;
-use App\Services\Transaction\Categorize\CategorizationService;
+use App\Moneypenny\Transaction\Jobs\RecategorizeAllTransactions;
+use App\Shared\Contracts\Infrastructure\Cache\CacheAdapterInterface;
+use App\Transaction\Categorize\CategorizationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 

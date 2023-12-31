@@ -7,7 +7,7 @@
                     <h2 class="text-3xl font-semibold mb-4">Social Chat</h2>
                     @include('components.maintenance.beta-badge')
                 </div>
-                @include('social.partials.chat-widget', ['chatMessages' => app(\App\Contracts\Infrastructure\Cache\CacheAdapterInterface::class)->get('chat_messages')])
+                @include('social.partials.chat-widget', ['chatMessages' => app(\App\Shared\Contracts\Infrastructure\Cache\CacheAdapterInterface::class)->get('chat_messages')])
             </div>
         </div>
     </div>

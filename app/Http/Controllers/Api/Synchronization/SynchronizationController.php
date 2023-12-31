@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Api\Synchronization;
 
-use Throwable;
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
-use App\Services\Nordigen\NordigenAccountService;
-use App\Services\Transaction\Synchronization\SynchronizationService;
-use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
+use App\Moneypenny\Transaction\Contracts\TransactionSyncServiceInterface;
+use App\Nordigen\Services\NordigenAccountService;
+use App\Transaction\Synchronization\SynchronizationService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Throwable;
 
 class SynchronizationController extends Controller
 {

@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Throwable;
-use App\Models\User;
+use App\Moneypenny\User\Models\User;
 use Illuminate\Database\Seeder;
+use Throwable;
 
 class UsersTableSeeder extends Seeder
 {

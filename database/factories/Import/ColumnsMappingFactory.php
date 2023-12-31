@@ -2,7 +2,7 @@
 
 namespace Database\Factories\Import;
 
-use App\Models\User;
+use App\Moneypenny\User\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ColumnsMappingFactory extends Factory

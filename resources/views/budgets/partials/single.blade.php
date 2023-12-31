@@ -3,11 +3,11 @@
 
     <div class="flex justify-between items-center">
         <h4 class="font-semibold flex text-2xl">
-            @if($budget->type === \App\Models\Transaction\Budget::TYPE_MONTH)
+            @if($budget->type === \App\Moneypenny\Budget\Models\Budget::TYPE_MONTH)
                 Monthly
-            @elseif($budget->type === \App\Models\Transaction\Budget::TYPE_WEEK)
+            @elseif($budget->type === \App\Moneypenny\Budget\Models\Budget::TYPE_WEEK)
                 Weekly
-            @elseif($budget->type === \App\Models\Transaction\Budget::TYPE_DAY)
+            @elseif($budget->type === \App\Moneypenny\Budget\Models\Budget::TYPE_DAY)
                 Daily
             @endif
             {{ $budget->name }}

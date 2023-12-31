@@ -13,7 +13,8 @@
             <div class="hover:bg-gray-200 p-2 rounded-md mr-2 cursor-pointer">
                 <h3 class="text-sm font-semibold">{{ __('Expenditures today') }}</h3>
                 <div class="flex">
-                    <h4 class="text-2xl text-semibold" style="font-weight: 600; opacity: 0;" id="expendituresTodayTotal"></h4>
+                    <h4 class="text-2xl text-semibold" style="font-weight: 600; opacity: 0;"
+                        id="expendituresTodayTotal"></h4>
                     <span class="ml-2 text-sm">PLN</span>
                 </div>
 
@@ -21,7 +22,8 @@
             <div class="hover:bg-gray-200 p-2 rounded-md mr-2 cursor-pointer">
                 <h3 class="text-sm font-semibold">{{ __('Incomes today') }}</h3>
                 <div class="flex">
-                    <h4 class="text-2xl text-semibold" style="font-weight: 600; opacity: 0;" id="incomesTodayTotal"></h4>
+                    <h4 class="text-2xl text-semibold" style="font-weight: 600; opacity: 0;"
+                        id="incomesTodayTotal"></h4>
                     <span class="ml-2 text-sm">PLN</span>
                 </div>
 
@@ -31,7 +33,8 @@
             <div class="hover:bg-gray-200 p-2 rounded-md mr-2 cursor-pointer">
                 <h3 class="text-sm font-semibold">{{ __('Expenditures this week') }}</h3>
                 <div class="flex">
-                    <h4 class="text-2xl text-semibold" style="font-weight: 600; opacity: 0;" id="expendituresThisWeekTotal"></h4>
+                    <h4 class="text-2xl text-semibold" style="font-weight: 600; opacity: 0;"
+                        id="expendituresThisWeekTotal"></h4>
                     <span class="ml-2 text-sm">PLN</span>
                 </div>
 
@@ -39,7 +42,8 @@
             <div class="hover:bg-gray-200 p-2 rounded-md mr-2 cursor-pointer">
                 <h3 class="text-sm font-semibold">{{ __('Incomes this week') }}</h3>
                 <div class="flex">
-                    <h4 class="text-2xl text-semibold" style="font-weight: 600; opacity: 0;" id="incomesThisWeekTotal"></h4>
+                    <h4 class="text-2xl text-semibold" style="font-weight: 600; opacity: 0;"
+                        id="incomesThisWeekTotal"></h4>
                     <span class="ml-2 text-sm">PLN</span>
                 </div>
 
@@ -54,7 +58,7 @@
                 $notificationContent = json_decode(data_get($eventNotification, 'content'));
                 $eventHeader = data_get($notificationContent, 'header');
                 $rawEventContent = data_get($notificationContent, 'content');
-                $eventContent = \App\Services\Helpers\StringHelper::shortenAuto($rawEventContent, 30);
+                $eventContent = \App\Shared\Helpers\StringHelper::shortenAuto($rawEventContent, 30);
                 $eventUrl = data_get($notificationContent, 'url');
             @endphp
             <a href="{{ $eventUrl ?? route('home') }}">
@@ -88,11 +92,11 @@
                     <div class="mb-2 mt-6 w-full">
                         <div
                             class="text-sm w-full text-left mr-4 mb-2 font-semibold @if($consumptionPercentage === 100) text-red-800 @else text-gray-700 @endif">
-                            @if($budget->type === \App\Models\Transaction\Budget::TYPE_MONTH)
+                            @if($budget->type === \App\Moneypenny\Budget\Models\Budget::TYPE_MONTH)
                                 Monthly
-                            @elseif($budget->type === \App\Models\Transaction\Budget::TYPE_WEEK)
+                            @elseif($budget->type === \App\Moneypenny\Budget\Models\Budget::TYPE_WEEK)
                                 Weekly
-                            @elseif($budget->type === \App\Models\Transaction\Budget::TYPE_DAY)
+                            @elseif($budget->type === \App\Moneypenny\Budget\Models\Budget::TYPE_DAY)
                                 Daily
                             @endif
                             <span class="text-sm">

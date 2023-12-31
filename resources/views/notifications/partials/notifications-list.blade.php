@@ -5,23 +5,26 @@
             @php
                 $notifiactionData = json_decode($notification->content, true);
             @endphp
-            <a href="{{ route('notification.redirect', ['notification' => $notification->id]) }}" class="notificationLink{{ $notification->id }}">
-            <div class="bg-white rounded-md shadow-sm p-4 mb-4 transition scale-hover">
-                <div class="flex justify-between items-center">
-                    <h4 class="text-2xl font-semibold flex">
-                        @if($notification->status === \App\Models\Notification::STATUS_UNREAD)
-                            <div class="readMarker bg-indigo-600 rounded-full self-center mr-3" style="width: 10px; height: 10px;"></div>
-                        @else
-                            <div class="bg-gray-400 rounded-full self-center mr-3" style="width: 10px; height: 10px;"></div>
-                        @endif
-                        {{ $notifiactionData['header'] }}
-                    </h4>
+            <a href="{{ route('notification.redirect', ['notification' => $notification->id]) }}"
+               class="notificationLink{{ $notification->id }}">
+                <div class="bg-white rounded-md shadow-sm p-4 mb-4 transition scale-hover">
+                    <div class="flex justify-between items-center">
+                        <h4 class="text-2xl font-semibold flex">
+                            @if($notification->status === \App\Notification\Models\Notification::STATUS_UNREAD)
+                                <div class="readMarker bg-indigo-600 rounded-full self-center mr-3"
+                                     style="width: 10px; height: 10px;"></div>
+                            @else
+                                <div class="bg-gray-400 rounded-full self-center mr-3"
+                                     style="width: 10px; height: 10px;"></div>
+                            @endif
+                            {{ $notifiactionData['header'] }}
+                        </h4>
+                    </div>
+                    <div class="font-light text-gray-500 my-2">{{ $notification->created_at }}</div>
+                    <p>
+                        {{ $notifiactionData['content'] }}
+                    </p>
                 </div>
-                <div class="font-light text-gray-500 my-2">{{ $notification->created_at }}</div>
-                <p>
-                    {{ $notifiactionData['content'] }}
-                </p>
-            </div>
             </a>
         @endforeach
     </div>

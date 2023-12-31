@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Web\Import;
 
-use Illuminate\View\View;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Import\ImportSetting;
-use Illuminate\Http\RedirectResponse;
-use App\Services\Import\ImportService;
-use App\Services\Import\ImportSettingService;
-use App\Http\Requests\Web\Import\ImportSetting\UpdateRequest;
 use App\Http\Requests\Web\Import\ImportSetting\CreateRequest;
+use App\Http\Requests\Web\Import\ImportSetting\UpdateRequest;
+use App\Moneypenny\Import\Models\ImportSetting;
+use App\Moneypenny\Import\Services\ImportService;
+use App\Moneypenny\Import\Services\ImportSettingService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ImportSettingController extends Controller
 {

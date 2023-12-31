@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Web\Transaction;
 
-use App\Filters\Filter;
-use Illuminate\View\View;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
-use App\Models\Transaction\Transaction;
-use App\Services\Transaction\TransactionService;
-use App\Http\Requests\Web\Transaction\PatchRequest;
 use App\Http\Requests\Web\Transaction\CreateRequest;
-use App\Services\Transaction\Currency\CurrencyService;
+use App\Http\Requests\Web\Transaction\PatchRequest;
+use App\Moneypenny\Transaction\Models\Transaction;
+use App\Shared\Filters\Filter;
+use App\Transaction\Currency\CurrencyService;
+use App\Transaction\Transaction\TransactionService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class TransactionController extends Controller
 {

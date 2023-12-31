@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Web\Notification;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Admin\Notifications\SendRequest;
-use App\Models\Notification;
-use App\Models\User;
-use App\Services\Notification\Broadcast\NotificationBroadcastService;
-use App\Services\Notification\NotificationService;
+use App\Moneypenny\User\Models\User;
+use App\Notification\Models\Notification;
+use App\Notification\Services\NotificationBroadcastService;
+use App\Notification\Services\NotificationService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

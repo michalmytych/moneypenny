@@ -1,9 +1,9 @@
 <?php
 
+use App\Moneypenny\Synchronization\Models\Synchronization;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Synchronization\Synchronization;
 
 return new class extends Migration
 {

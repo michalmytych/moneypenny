@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Api\Auth;
 
+use App\Shared\Http\Traits\HasJsonFailedValidationResponse;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Http\Traits\HasJsonFailedValidationResponse;
 
 class RegisterRequest extends FormRequest
 {

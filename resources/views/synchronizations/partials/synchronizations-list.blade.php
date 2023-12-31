@@ -13,15 +13,15 @@
                 <tr>
                     <td class="pl-6 py-2">{{ $sync->created_at->format('d.m.Y H:i') }}</td>
                     <td class="pl-6 py-2">
-                        @if($sync->status == \App\Models\Synchronization\Synchronization::SYNC_STATUS_RUNNING)
+                        @if($sync->status == \App\Moneypenny\Synchronization\Models\Synchronization::SYNC_STATUS_RUNNING)
                             <span class="text-blue-600 font-semibold">
                                 {{ __('Running') }}
                             </span>
-                        @elseif($sync->status == \App\Models\Synchronization\Synchronization::SYNC_STATUS_FAILED)
+                        @elseif($sync->status == \App\Moneypenny\Synchronization\Models\Synchronization::SYNC_STATUS_FAILED)
                             <span class="text-gray-500 font-semibold">
                                 {{ __('Failed') }}
                             </span>
-                        @elseif($sync->status == \App\Models\Synchronization\Synchronization::SYNC_STATUS_SUCCEEDED)
+                        @elseif($sync->status == \App\Moneypenny\Synchronization\Models\Synchronization::SYNC_STATUS_SUCCEEDED)
                             <span class="text-green-600 font-semibold">
                                 {{ __('Succeeded') }}
                             </span>
@@ -38,7 +38,8 @@
     </h2>
     <p class="mt-4">
         {{ __('Add first') }}
-        <a class="text-indigo-600 font-semibold hover:text-indigo-400" href="{{ route('institution.index') }}"> {{ __('bank integration') }} </a>
+        <a class="text-indigo-600 font-semibold hover:text-indigo-400"
+           href="{{ route('institution.index') }}"> {{ __('bank integration') }} </a>
         {{ __('to perform synchronization.') }}
     </p>
 @endif

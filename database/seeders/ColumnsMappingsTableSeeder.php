@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Moneypenny\Import\Models\ColumnsMapping;
+use App\Moneypenny\User\Models\User;
 use Illuminate\Database\Seeder;
-use App\Models\Import\ColumnsMapping;
 
 class ColumnsMappingsTableSeeder extends Seeder
 {

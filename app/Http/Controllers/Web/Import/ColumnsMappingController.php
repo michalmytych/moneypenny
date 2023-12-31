@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Web\Import;
 
-use Illuminate\View\View;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
-use App\Services\Import\ColumnMappingService;
 use App\Http\Requests\Web\Import\ColumnMapping\CreateRequest;
+use App\Moneypenny\Import\Services\ColumnMappingService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ColumnsMappingController extends Controller
 {

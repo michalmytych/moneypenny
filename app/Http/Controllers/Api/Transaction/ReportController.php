@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\Transaction;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use App\Services\Transaction\Report\ReportService;
+use App\Transaction\Report\ReportService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {

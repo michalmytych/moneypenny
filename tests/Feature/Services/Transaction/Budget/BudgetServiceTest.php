@@ -2,13 +2,13 @@
 
 namespace Tests\Feature\Services\Transaction\Budget;
 
-use Tests\TestCase;
-use App\Models\User;
-use App\Models\Transaction\Budget;
-use App\Models\Transaction\PersonalAccount;
-use App\Services\Transaction\Budget\BudgetService;
+use App\Moneypenny\Budget\Models\Budget;
+use App\Moneypenny\PersonalAccount\Models\PersonalAccount;
+use App\Moneypenny\User\Models\User;
+use App\Transaction\Budget\BudgetService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\Feature\Traits\CreatesTransactionForUser;
+use Tests\TestCase;
 
 class BudgetServiceTest extends TestCase
 {

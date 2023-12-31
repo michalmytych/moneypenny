@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Web\File;
 
-use Illuminate\View\View;
-use Illuminate\Http\Request;
-use App\Services\File\FileService;
+use App\File\Services\FileService;
+use App\File\Services\FileUploadService;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
-use App\Services\File\FileUploadService;
-use App\Services\Import\ColumnMappingService;
-use App\Services\Import\ImportSettingService;
-use Illuminate\Validation\ValidationException;
 use App\Http\Requests\Web\File\FileUploadRequest;
+use App\Moneypenny\Import\Services\ColumnMappingService;
+use App\Moneypenny\Import\Services\ImportSettingService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
 
 class FileController extends Controller
 {

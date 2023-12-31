@@ -8,8 +8,9 @@
                     {{ __('Volume (as used for calculations)') }}:
                 </p>
                 <p class="text-gray-700 font-bold text-7xl">
-                    {{ $transaction->{\App\Models\Transaction\Transaction::CALCULATION_COLUMN} ?? 'No data' }} <span
-                        class="text-xl">{{ $userBaseCurrency }}</span>
+                    {{ $transaction->{\App\Moneypenny\Transaction\Models\Transaction::CALCULATION_COLUMN} ?? 'No data' }}
+                    <span
+                            class="text-xl">{{ $userBaseCurrency }}</span>
                 </p>
             </div>
             <div class="mb-4 mt-2">
@@ -18,7 +19,7 @@
                 </p>
                 <p class="text-gray-700 text-4xl font-bold">
                     {{ $transaction->raw_volume ?? 'No data' }} <span
-                        class="text-xl">{{ $transaction->currency }}</span>
+                            class="text-xl">{{ $transaction->currency }}</span>
                 </p>
             </div>
             <div class="mb-4">
@@ -50,8 +51,8 @@
                                 'transaction' => $transaction,
                             ])
                         @endif
-                @endif
-                    </p>
+                        @endif
+                        </p>
             </div>
             <div class="mb-4">
                 <p class="block text-gray-700 font-bold mb-2">

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\JsonResponse;
-use App\Services\Meta\MetaService;
 use App\Http\Controllers\Controller;
+use App\Shared\Services\Meta\MetaService;
+use Illuminate\Http\JsonResponse;
 
 class MetaController extends Controller
 {

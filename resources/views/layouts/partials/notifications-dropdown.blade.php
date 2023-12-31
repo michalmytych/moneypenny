@@ -20,11 +20,12 @@
 <x-dropdown align="right" width="72">
     <x-slot name="trigger">
         <button id="{{ $prefix ?? '' }}notificationsDropdownButton"
-            class="inline-flex items-center py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                class="inline-flex items-center py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
             <div class="mr-4 font-bold">
                 <div
-                    id="{{ $prefix ?? '' }}notificationsBellUnreadBadge"
-                    class="bg-red-500 text-white font-semibold shadow-md" style="font-size: 9px; padding: 5.5px; border-radius: 100%; position: absolute; left: 1.1rem; bottom: 1.8rem; opacity: 0;"></div>
+                        id="{{ $prefix ?? '' }}notificationsBellUnreadBadge"
+                        class="bg-red-500 text-white font-semibold shadow-md"
+                        style="font-size: 9px; padding: 5.5px; border-radius: 100%; position: absolute; left: 1.1rem; bottom: 1.8rem; opacity: 0;"></div>
                 @include('icons.notification-bell')
             </div>
         </button>
@@ -84,7 +85,7 @@
                 const link = document.createElement('a');
                 link.classList.add('dropdown-link');
 
-                if (notification.status === {{ \App\Models\Notification::STATUS_READ }}) {
+                if (notification.status === {{ \App\Notification\Models\Notification::STATUS_READ }}) {
                     link.style.opacity = '0.7';
                     link.style.borderLeft = '4px solid #9CA3AF';
                 } else {

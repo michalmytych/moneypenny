@@ -2,14 +2,14 @@
 
 namespace Tests\Feature\Services\Transaction\Budget;
 
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
-use App\Models\User;
-use Illuminate\Support\Carbon;
-use App\Models\Transaction\Transaction;
-use App\Services\Transaction\TransactionQuerySet;
+use App\Moneypenny\Transaction\Models\Transaction;
+use App\Moneypenny\User\Models\User;
+use App\Transaction\Transaction\TransactionQuerySet;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Carbon;
 use Tests\Feature\Traits\CreatesTransactionForUser;
+use Tests\TestCase;
 
 class TransactionQuerySetTest extends TestCase
 {

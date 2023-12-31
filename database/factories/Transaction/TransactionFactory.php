@@ -2,10 +2,10 @@
 
 namespace Database\Factories\Transaction;
 
-use App\Models\User;
-use App\Models\Import\Import;
-use App\Models\Transaction\Category;
-use App\Models\Transaction\Transaction;
+use App\Moneypenny\Category\Models\Category;
+use App\Moneypenny\Import\Models\Import;
+use App\Moneypenny\Transaction\Models\Transaction;
+use App\Moneypenny\User\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TransactionFactory extends Factory

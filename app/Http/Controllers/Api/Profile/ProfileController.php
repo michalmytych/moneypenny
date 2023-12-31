@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\Profile;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
+use App\File\Services\ProfileFileService;
 use App\Http\Controllers\Controller;
-use App\Services\File\ProfileFileService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {

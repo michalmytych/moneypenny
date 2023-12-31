@@ -2,13 +2,13 @@
 
 namespace Tests\Feature\Services\Transaction\Budget;
 
-use Tests\TestCase;
-use App\Models\User;
-use Illuminate\Support\Carbon;
-use App\Models\Transaction\Transaction;
+use App\Moneypenny\Transaction\Models\Transaction;
+use App\Moneypenny\User\Models\User;
+use App\Transaction\PersonalAccount\SaldoService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
 use Tests\Feature\Traits\CreatesTransactionForUser;
-use App\Services\Transaction\PersonalAccount\SaldoService;
+use Tests\TestCase;
 
 class SaldoServiceTest extends TestCase
 {

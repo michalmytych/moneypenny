@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Web\Transaction;
 
 use App\Http\Controllers\Controller;
-use App\Services\Transaction\Report\ReportService;
+use App\Transaction\Report\ReportService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 

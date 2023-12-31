@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Moneypenny\Category\Models\Category;
 use Illuminate\Database\Seeder;
-use App\Models\Transaction\Category;
 
 class CategoriesTableSeeder extends Seeder
 {

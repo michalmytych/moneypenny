@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
-use App\Models\Import\ImportSetting;
+use App\Moneypenny\Import\Models\ImportSetting;
+use App\Moneypenny\User\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class FileFactory extends Factory

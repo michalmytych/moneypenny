@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Web\Transaction;
 
 use App\Http\Controllers\Controller;
-use App\Models\Transaction\Category;
+use App\Moneypenny\Category\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 

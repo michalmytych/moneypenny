@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers\Web\User;
 
-use App\Models\User;
-use Illuminate\View\View;
-use Illuminate\Http\Request;
-use App\Models\Auth\Settings;
-use App\Models\Import\Import;
 use App\Http\Controllers\Controller;
-use App\Models\Import\ImportSetting;
-use App\Models\Nordigen\Requisition;
-use Illuminate\Http\RedirectResponse;
-use App\Models\Import\ColumnsMapping;
-use App\Models\Transaction\Transaction;
-use App\Models\Synchronization\Account;
-use App\Models\Nordigen\EndUserAgreement;
+use App\Moneypenny\Import\Models\ColumnsMapping;
+use App\Moneypenny\Import\Models\Import;
+use App\Moneypenny\Import\Models\ImportSetting;
+use App\Moneypenny\Synchronization\Models\Account;
+use App\Moneypenny\Synchronization\Models\Synchronization;
+use App\Moneypenny\Transaction\Models\Transaction;
+use App\Moneypenny\User\Models\Settings;
+use App\Moneypenny\User\Models\User;
+use App\Nordigen\Models\EndUserAgreement;
+use App\Nordigen\Models\Requisition;
 use App\Services\Auth\Device\DeviceService;
-use App\Models\Synchronization\Synchronization;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {

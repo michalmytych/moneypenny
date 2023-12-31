@@ -2,12 +2,12 @@
 
 namespace Database\Factories\Import;
 
-use App\Models\File;
-use App\Models\Import\ColumnsMapping;
-use App\Models\Import\Import;
-use App\Models\Import\ImportSetting;
-use App\Models\Synchronization\Synchronization;
-use App\Models\User;
+use App\File\Models\File;
+use App\Moneypenny\Import\Models\ColumnsMapping;
+use App\Moneypenny\Import\Models\Import;
+use App\Moneypenny\Import\Models\ImportSetting;
+use App\Moneypenny\Synchronization\Models\Synchronization;
+use App\Moneypenny\User\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ImportFactory extends Factory

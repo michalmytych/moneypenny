@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\Notification;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use App\Services\Notification\NotificationService;
+use App\Notification\Services\NotificationService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {

@@ -6,7 +6,7 @@
         @php
             /**
              * @var array $institutions
-             * @var \App\Models\Nordigen\EndUserAgreement $agreement
+             * @var \App\Nordigen\Models\EndUserAgreement $agreement
              */
             $institution = collect($institutions)->filter(
                 fn($institution) => $institution->id === $agreement->nordigen_institution_id

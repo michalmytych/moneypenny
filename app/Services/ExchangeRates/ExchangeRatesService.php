@@ -5,9 +5,9 @@ namespace App\Services\ExchangeRates;
 use Exception;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 use GuzzleHttp\Exception\GuzzleException;
 use App\Models\ExchangeRates\ExchangeRate;
+use App\Services\Logging\LoggingAdapterInterface;
 use App\Http\Client\Traits\DecodesHttpJsonResponse;
 use App\Contracts\Services\ExchangeRates\ExchangeRatesServiceInterface;
 use App\Services\ExchangeRates\DataObjects\HistoricalExchangeRateDataObject;
@@ -16,7 +16,12 @@ class ExchangeRatesService implements ExchangeRatesServiceInterface
 {
     use DecodesHttpJsonResponse;
 
-    public function __construct(private readonly ExchangeRatesClient $exchangeRatesClient) { }
+    public function __construct(
+        private readonly LoggingAdapterInterface $loggingAdapter,
+        private readonly ExchangeRatesClient     $exchangeRatesClient
+    )
+    {
+    }
 
     public function all(): Collection
     {
@@ -39,9 +44,9 @@ class ExchangeRatesService implements ExchangeRatesServiceInterface
             $dataObject = $this->provideNewHistoryRate($date, $baseCurrencyCode, $targetCurrencyCode);
 
             return ExchangeRate::create([
-                'rate'             => $dataObject->rate,
-                'base_currency'    => $dataObject->baseCurrencyCode,
-                'target_currency'  => $dataObject->targetCurrencyCode,
+                'rate' => $dataObject->rate,
+                'base_currency' => $dataObject->baseCurrencyCode,
+                'target_currency' => $dataObject->targetCurrencyCode,
                 'rate_source_date' => $dataObject->date,
             ]);
         }
@@ -59,7 +64,7 @@ class ExchangeRatesService implements ExchangeRatesServiceInterface
 
         $response = $this->exchangeRatesClient->get("/exchangerates_data/$dateString", [
             'query' => [
-                'base'    => $baseCurrencyCode,
+                'base' => $baseCurrencyCode,
                 'symbols' => $targetCurrencyCode,
             ],
         ]);
@@ -67,15 +72,15 @@ class ExchangeRatesService implements ExchangeRatesServiceInterface
         $responseData = $this->decodedResponse($response);
 
         if (!data_get($responseData, 'success')) {
-            Log::debug(json_encode($responseData));
+            $this->loggingAdapter->debug(json_encode($responseData));
             throw new Exception('Invalid data received from Exchange Rates API');
         }
 
         $rateDataObjectData = [
-            'date'                 => Carbon::parse($responseData['date']),
-            'base_currency_code'   => $responseData['base'],
+            'date' => Carbon::parse($responseData['date']),
+            'base_currency_code' => $responseData['base'],
             'target_currency_code' => $targetCurrencyCode,
-            'rate'                 => data_get($responseData, "rates.$targetCurrencyCode"),
+            'rate' => data_get($responseData, "rates.$targetCurrencyCode"),
         ];
 
         return HistoricalExchangeRateDataObject::make($rateDataObjectData);

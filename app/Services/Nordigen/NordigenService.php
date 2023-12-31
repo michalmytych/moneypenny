@@ -3,6 +3,7 @@
 namespace App\Services\Nordigen;
 
 
+use App\Services\Logging\LoggingAdapterInterface;
 use Exception;
 use Throwable;
 use App\Models\User;
@@ -10,7 +11,6 @@ use Illuminate\Support\Str;
 use App\Models\Import\Import;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 use App\Models\Nordigen\Requisition;
 use GuzzleHttp\Exception\GuzzleException;
 use App\Models\Nordigen\EndUserAgreement;
@@ -47,6 +47,7 @@ class NordigenService implements TransactionSyncServiceInterface
     public function __construct(
         private readonly NordigenClientInterface             $httpClient,
         private readonly CacheAdapterInterface               $cacheAdapter,
+        private readonly LoggingAdapterInterface             $loggingAdapter,
         private readonly NordigenAccountService              $nordigenAccountService,
         private readonly NordigenTransactionServiceInterface $nordigenTransactionService
     )
@@ -116,7 +117,8 @@ class NordigenService implements TransactionSyncServiceInterface
 
         $transactionsData = $this->decodedResponse($response);
         $personalAccountId = $account->refresh()->personalAccount?->id;
-        $transactionsData['personalAccountId'] = $personalAccountId;
+//        $transactionsData['personalAccountId'] = $personalAccountId; // @todo Should be properly set so transaction should be assigned to personalAccount
+        $transactionsData['personalAccountId'] = null; // @todo: tmp
 
         if (data_get($transactionsData, 'transactions')) {
             $booked = data_get($transactionsData, 'transactions.booked');
@@ -129,7 +131,7 @@ class NordigenService implements TransactionSyncServiceInterface
                 $this->nordigenTransactionService->addNewSynchronizedTransaction($transactionDataObject, $import, $user);
             }
         } else {
-            Log::debug(json_encode($transactionsData));
+            $this->loggingAdapter->debug(json_encode($transactionsData));
             throw new Exception('Invalid transaction data received. Response was logged to debug logs.');
         }
     }
@@ -426,11 +428,11 @@ class NordigenService implements TransactionSyncServiceInterface
         ]);
     }
 
-    public function setStatusFailed(Synchronization $synchronization, ?int $status = null): void
+    public function setStatusFailed(Synchronization $synchronization, mixed $status = null): void
     {
         $synchronization->update([
             'status' => Synchronization::SYNC_STATUS_FAILED,
-            'code' => $status
+            'code' => (int)$status
         ]);
     }
 

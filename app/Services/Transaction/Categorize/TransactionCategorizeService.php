@@ -4,13 +4,15 @@ namespace App\Services\Transaction\Categorize;
 
 use App\Models\Transaction\Category;
 use App\Models\Transaction\Transaction;
+use App\Services\Logging\LaravelLoggingAdapter;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\LazyCollection;
 
-class TransactionCategorizeService
+readonly class TransactionCategorizeService
 {
+    public function __construct(private LaravelLoggingAdapter $loggingAdapter) {}
+
     public function categorizeTransactions(Collection|LazyCollection|array $transactions): float|int
     {
         $postData = [];
@@ -42,7 +44,7 @@ class TransactionCategorizeService
             data: $postData
         );
 
-        Log::debug($response->reason());
+        $this->loggingAdapter->debug($response->reason());
 
         $categorizedData = $response->json() ?? [];
 

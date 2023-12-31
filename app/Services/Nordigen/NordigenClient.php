@@ -3,8 +3,8 @@
 namespace App\Services\Nordigen;
 
 use App\Http\Client\Client;
-use Illuminate\Support\Facades\Log;
 use Psr\Http\Message\ResponseInterface;
+use App\Services\Logging\LoggingAdapterInterface;
 
 class NordigenClient extends Client implements NordigenClientInterface
 {
@@ -33,14 +33,14 @@ class NordigenClient extends Client implements NordigenClientInterface
                 'client_parameters' => $clientParameters,
                 'response' => [
                     'status_code' => $response->getStatusCode(),
-                    'body' => $response->getBody(),
+                    'body' => $response->getBody()->getContents(),
                     'headers' => $response->getHeaders(),
                     'protocol_version' => $response->getProtocolVersion()
                 ]
             ]
         ];
 
-        Log::debug(
+        app(LoggingAdapterInterface::class)->debug(
             json_encode($log)
         );
     }

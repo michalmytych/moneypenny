@@ -4,13 +4,15 @@ namespace App\Services\Transaction\Categorize;
 
 use App\Models\Transaction\Category;
 use App\Models\Transaction\Transaction;
+use App\Services\Logging\LoggingAdapterInterface;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 use Throwable;
 
 // @todo refactor
-class CategoryReferenceService
+readonly class CategoryReferenceService
 {
+    public function __construct(private LoggingAdapterInterface $loggingAdapter) {}
+
     public function saveReference(Transaction $transaction): ?int
     {
         $transactionData = $transaction->toArray();
@@ -32,7 +34,7 @@ class CategoryReferenceService
             );
 
         } catch (Throwable $throwable) {
-            Log::debug($throwable->getMessage());
+            $this->loggingAdapter->debugExtension($throwable);
 
             return null;
         }

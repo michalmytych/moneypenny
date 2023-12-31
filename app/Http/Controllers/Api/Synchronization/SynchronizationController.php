@@ -30,7 +30,6 @@ class SynchronizationController extends Controller
         $synchronization = $this->synchronizationService->create($user);
 
         try {
-            $this->transactionSyncService->syncAccounts($requisition->nordigen_requisition_id, $synchronization->id, $user);
             $this->transactionSyncService->syncTransactions($requisition->nordigen_requisition_id, $synchronization->id, $user);
             $this->transactionSyncService->setStatusSucceeded($synchronization);
 

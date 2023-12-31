@@ -35,7 +35,7 @@ class TransactionDataObject extends DataObject
         public ?string $receiverAccountNumber,
 
         /** @var int $personalAccountId Personal account id. */
-        public int $personalAccountId,
+        public ?int $personalAccountId // @todo: SHOULD NOT BE NULLABLE
     )
     {
     }

@@ -7,13 +7,15 @@ use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
+use App\Services\Logging\LoggingAdapterInterface;
 use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
 
 class InstitutionController extends Controller
 {
-    public function __construct(private readonly TransactionSyncServiceInterface $transactionSyncService)
-    {
-    }
+    public function __construct(
+        private readonly LoggingAdapterInterface         $loggingAdapter,
+        private readonly TransactionSyncServiceInterface $transactionSyncService
+    ) {}
 
     public function index(Request $request): View|RedirectResponse
     {
@@ -24,7 +26,9 @@ class InstitutionController extends Controller
 
             return view('nordigen.institution.index', compact('institutions', 'agreements'));
 
-        } catch (Throwable) {
+        } catch (Throwable $throwable) {
+            $this->loggingAdapter->debugExtension($throwable);
+
             return back()
                 ->with(config('session.flash_errors_key'), [
                     __('Cannot fetch institutions data.')

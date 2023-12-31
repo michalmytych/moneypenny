@@ -30,6 +30,9 @@ class Account extends Model
 
     public function personalAccount(): HasOne
     {
-        return $this->hasOne(PersonalAccount::class);
+        return $this->hasOne(
+            related: PersonalAccount::class,
+            foreignKey: 'nordigen_account_id'
+        );
     }
 }

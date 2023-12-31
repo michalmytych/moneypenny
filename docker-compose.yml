@@ -5,6 +5,7 @@ version: '3'
 
 volumes:
     db: {}
+    redis-store: {}
 
 services:
     db:
@@ -39,6 +40,16 @@ services:
         entrypoint: /app/dev/docker/entrypoint.app.sh
         extra_hosts:
             - "host.docker.internal:host-gateway"
+
+    redis:
+        image: redis:6.2-alpine
+        volumes:
+            - type: volume
+              source: redis-store
+              target: /data
+              volume:
+                  nocopy: true
+
     node:
         image: node:alpine
         working_dir: /app

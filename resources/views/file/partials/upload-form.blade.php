@@ -64,6 +64,7 @@
         <x-input-error :messages="$errors->get('columns_mapping_id')" class="mt-2"/>
     </div>
     <div class="mb-4">
+        <input type="hidden" name="type" value="{{ \App\Models\File::TRANSACTIONS_IMPORT }}">
         <x-file-drop fileInputName="file"/>
         <x-input-error :messages="$errors->get('file')" class="mt-2"/>
     </div>

@@ -9,13 +9,17 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property mixed $value
+ * @property int $id
  * @method static whereUser(mixed $user)
+ * @method static firstOrCreate(array $attributes, array $data)
  */
 class PersonalAccount extends Model
 {
     use HasFactory, BelongsToUser;
 
     protected $fillable = [
+        'external_reference',
+        'account_id',
         'user_id',
         'value',
         'name'

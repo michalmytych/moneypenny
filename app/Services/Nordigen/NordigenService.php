@@ -2,6 +2,7 @@
 
 namespace App\Services\Nordigen;
 
+
 use Exception;
 use Throwable;
 use App\Models\User;
@@ -11,11 +12,12 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use App\Models\Nordigen\Requisition;
-use App\Models\Synchronization\Account;
 use GuzzleHttp\Exception\GuzzleException;
 use App\Models\Nordigen\EndUserAgreement;
+use App\Models\Transaction\PersonalAccount;
 use App\Models\Synchronization\Synchronization;
 use App\Http\Client\Traits\DecodesHttpJsonResponse;
+use App\Models\Synchronization\Account as NordigenAccount;
 use App\Services\Nordigen\DataObjects\InstitutionDataObject;
 use App\Services\Nordigen\DataObjects\TransactionDataObject;
 use App\Contracts\Infrastructure\Cache\CacheAdapterInterface;
@@ -43,7 +45,7 @@ class NordigenService implements TransactionSyncServiceInterface
     private const REQUISITION_CREATED_STATUS = 'CR';
 
     public function __construct(
-        private readonly NordigenClient                      $httpClient,
+        private readonly NordigenClientInterface             $httpClient,
         private readonly CacheAdapterInterface               $cacheAdapter,
         private readonly NordigenAccountService              $nordigenAccountService,
         private readonly NordigenTransactionServiceInterface $nordigenTransactionService
@@ -80,9 +82,31 @@ class NordigenService implements TransactionSyncServiceInterface
 
     /**
      * @throws GuzzleException
+     */
+    public function getAccountBalance(NordigenAccount $account): int|float|null
+    {
+        $uri = self::ACCOUNTS_URI . $account->nordigen_account_id . '/balances/';
+
+        $response = $this->httpClient->get($uri, [
+            'headers' => $this->getAuthorizationHeader(),
+        ]);
+
+        $balancesData = $this->decodedResponse($response);
+        $balances = data_get($balancesData, 'balances');
+
+        $availableBalance = array_filter(
+            $balances,
+            fn(array $balance) => $balance['balanceType'] === 'forwardAvailable'
+        );
+
+        return data_get($availableBalance, 'balanceAmount.amount');
+    }
+
+    /**
+     * @throws GuzzleException
      * @throws Exception
      */
-    protected function syncTransactionsByAccount(Account $account, Import $import, User $user): void
+    protected function syncTransactionsByAccount(NordigenAccount $account, Import $import, User $user): void
     {
         $uri = self::ACCOUNTS_URI . $account->nordigen_account_id . '/transactions/';
 
@@ -91,6 +115,8 @@ class NordigenService implements TransactionSyncServiceInterface
         ]);
 
         $transactionsData = $this->decodedResponse($response);
+        $personalAccountId = $account->refresh()->personalAccount?->id;
+        $transactionsData['personalAccountId'] = $personalAccountId;
 
         if (data_get($transactionsData, 'transactions')) {
             $booked = data_get($transactionsData, 'transactions.booked');
@@ -100,21 +126,12 @@ class NordigenService implements TransactionSyncServiceInterface
 
             foreach ($all as $transactionData) {
                 $transactionDataObject = TransactionDataObject::make($transactionData);
-                $this->nordigenTransactionService->addNewSynchronizedTransaction(
-                    $transactionDataObject,
-                    $import,
-                    $user
-                );
+                $this->nordigenTransactionService->addNewSynchronizedTransaction($transactionDataObject, $import, $user);
             }
         } else {
             Log::debug(json_encode($transactionsData));
             throw new Exception('Invalid transaction data received. Response was logged to debug logs.');
         }
-    }
-
-    public function getAccounts(User $user): Collection
-    {
-        return Account::whereUser($user)->latest()->get();
     }
 
     /**
@@ -134,14 +151,28 @@ class NordigenService implements TransactionSyncServiceInterface
 
         if (is_array($accountsIds)) {
             foreach ($accountsIds as $accountId) {
-                // @todo add deleting non existing accounts
-                Account::firstOrCreate([
+                $account = NordigenAccount::firstOrCreate([
                     'user_id' => $user->id,
                     'nordigen_account_id' => $accountId,
                 ], [
                     'user_id' => $user->id,
                     'nordigen_account_id' => $accountId,
                     'synchronization_id' => $synchronizationId,
+                ]);
+
+                $institutionId = data_get($accountsData, 'institution_id');
+                $accountReference = data_get($accountsData, 'reference');
+
+                $accountBalance = $this->getAccountBalance($account);
+
+                PersonalAccount::firstOrCreate([
+                    'user_id' => $user->id,
+                    'external_reference' => $accountReference
+                ], [
+                    'user_id' => $user->id,
+                    'nordigen_account_id' => $account->id,
+                    'name' => $institutionId . ' ' . $accountReference,
+                    'value' => $accountBalance
                 ]);
             }
         }

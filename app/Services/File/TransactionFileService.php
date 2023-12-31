@@ -26,10 +26,10 @@ class TransactionFileService
 
         $fileModel = new File();
         $fileModel->user_id = $user->id;
-        $fileModel->name = $file->getClientOriginalName();
-        $fileModel->path = "uploads/{$fileName}";
         $fileModel->size = $file->getSize();
+        $fileModel->path = "uploads/{$fileName}";
         $fileModel->import_setting_id = $importSettingId;
+        $fileModel->name = $file->getClientOriginalName();
 
         $this->registerAndStoreFile($fileModel, $file, $fileName);
 

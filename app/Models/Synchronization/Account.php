@@ -3,9 +3,11 @@
 namespace App\Models\Synchronization;
 
 use App\Models\Traits\BelongsToUser;
+use App\Models\Transaction\PersonalAccount;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @method static create(array $array)
@@ -14,6 +16,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static whereUser(User $user)
  * @property int $id
  * @property string $nordigen_account_id
+ * @property PersonalAccount|null $personalAccount
  */
 class Account extends Model
 {
@@ -24,4 +27,9 @@ class Account extends Model
         'nordigen_account_id',
         'synchronization_id'
     ];
+
+    public function personalAccount(): HasOne
+    {
+        return $this->hasOne(PersonalAccount::class);
+    }
 }

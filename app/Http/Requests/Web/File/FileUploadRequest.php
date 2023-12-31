@@ -12,7 +12,7 @@ class FileUploadRequest extends FormRequest
         return [
             'import_setting_id' => 'exists:import_settings,id|exclude_if:type,' . File::USER_AVATAR,
             'columns_mapping_id' => 'exists:columns_mappings,id|exclude_if:type,' . File::USER_AVATAR,
-            'file' => 'required|mimes:jpeg|max:6000',
+            'file' => 'required|max:6000',
             'type' => 'string'
         ];
     }

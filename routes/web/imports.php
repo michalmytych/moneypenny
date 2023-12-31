@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Web\Import\ColumnsMappingController;
-use App\Http\Controllers\Web\Import\ImportController;
-use App\Http\Controllers\Web\Import\ImportSettingController;
+use App\Moneypenny\Import\Http\Controller\Web\ColumnsMappingController;
+use App\Moneypenny\Import\Http\Controller\Web\ImportController;
+use App\Moneypenny\Import\Http\Controller\Web\ImportSettingController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('imports')->as('import.')->group(function () {

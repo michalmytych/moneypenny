@@ -2,6 +2,7 @@
 
 namespace App\Moneypenny\Home\Services;
 
+use App\Moneypenny\Home\Contracts\HomePageServiceInterface;
 use App\Moneypenny\User\Models\User;
 use App\Shared\Contracts\Infrastructure\Cache\CacheAdapterInterface;
 use Illuminate\Support\Collection;

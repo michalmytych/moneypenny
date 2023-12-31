@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Web\Nordigen\Institution\InstitutionController;
+use App\Nordigen\Http\Controller\Web\InstitutionController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('institutions')->as('institution.')->group(function () {

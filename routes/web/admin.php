@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\Web\ExchangeRates\ExchangeRateController;
-use App\Http\Controllers\Web\FileExplorer\FileExplorerController;
-use App\Http\Controllers\Web\Meta\MetaController;
-use App\Http\Controllers\Web\Notification\NotificationController;
-use App\Http\Controllers\Web\Transaction\Categorize\CategorizationController;
-use App\Http\Controllers\Web\User\UserController;
+use App\ExchangeRates\Http\Controller\Web\ExchangeRateController;
+use App\File\Http\Controller\Web\FileExplorerController;
+use App\Moneypenny\Categorize\Http\Controller\Web\CategorizationController;
+use App\Moneypenny\User\Http\Controller\Web\UserController;
+use App\Notification\Http\Controller\Web\NotificationController;
+use App\Shared\Http\Controller\Web\MetaController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('admin')->group(function () {

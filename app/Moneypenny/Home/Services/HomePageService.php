@@ -2,6 +2,7 @@
 
 namespace App\Moneypenny\Home\Services;
 
+use App\Moneypenny\Home\Contracts\HomePageServiceInterface;
 use App\Moneypenny\Transaction\Contracts\TransactionSyncServiceInterface;
 use App\Moneypenny\User\Models\User;
 use App\Notification\Services\NotificationService;

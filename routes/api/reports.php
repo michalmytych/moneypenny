@@ -1,7 +1,7 @@
 <?php
 
+use App\Moneypenny\Transaction\Http\Controller\Api\ReportController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\Transaction\ReportController;
 
 Route::prefix('reports')->as('report.')->group(function () {
     Route::get('avg-expenditures', [ReportController::class, 'avgExpenditures'])

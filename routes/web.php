@@ -1,9 +1,9 @@
 <?php
 
+use App\Moneypenny\Home\Http\Controller\Web\HomeController;
+use App\Moneypenny\User\Http\Controller\Web\SetupController;
+use App\Shared\Http\Controller\Web\EmptyUrlController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Web\Home\HomeController;
-use App\Http\Controllers\Web\Auth\SetupController;
-use App\Http\Controllers\Web\Utils\EmptyUrlController;
 
 /*
 |--------------------------------------------------------------------------

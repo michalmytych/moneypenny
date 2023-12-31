@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Web\Transaction\PersonaController;
+use App\Moneypenny\Persona\Http\Controller\Web\PersonaController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('personas')->as('persona.')->group(function () {

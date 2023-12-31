@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Web\Transaction\BudgetController;
+use App\Moneypenny\Budget\Http\Controller\Web\BudgetController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('budgets')->as('budget.')->group(function () {

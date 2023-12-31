@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Web\BlockedUserController;
+use App\Moneypenny\User\Http\Controller\Web\BlockedUserController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('blocked')->as('blocked.')->group(function () {

@@ -2,9 +2,9 @@
 
 namespace App\Shared\Providers;
 
+use App\Moneypenny\Home\Contracts\HomePageServiceInterface;
 use App\Moneypenny\Home\Services\HomePageService;
 use App\Moneypenny\Home\Services\HomePageServiceCachingDecorator;
-use App\Moneypenny\Home\Services\HomePageServiceInterface;
 use App\Shared\Contracts\Infrastructure\Cache\CacheAdapterInterface;
 use App\Shared\Services\Cache\LaravelCacheAdapter;
 use Illuminate\Support\ServiceProvider;

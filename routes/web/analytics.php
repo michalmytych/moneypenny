@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Web\Transaction\Analytics\AnalyticsController;
+use App\Moneypenny\Transaction\Http\Controller\Web\AnalyticsController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('analytics')->as('analytic.')->group(function () {

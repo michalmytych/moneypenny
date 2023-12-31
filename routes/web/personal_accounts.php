@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Web\Transaction\PersonalAccountController;
+use App\Moneypenny\PersonalAccount\Http\Controller\Web\PersonalAccountController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('personal-accounts')->as('personal-account.')->group(function () {

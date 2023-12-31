@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Web\Transaction\TransactionController;
+use App\Moneypenny\Transaction\Http\Controller\Web\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('transactions')->as('transaction.')->group(function () {

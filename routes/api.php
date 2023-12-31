@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Api\Auth\UserController;
-use App\Moneypenny\Home\Services\HomePageServiceInterface;
+use App\Moneypenny\Home\Contracts\HomePageServiceInterface;
 use App\Moneypenny\Transaction\Models\Transaction;
+use App\Moneypenny\User\Http\Controller\Api\UserController;
 use App\Moneypenny\User\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;

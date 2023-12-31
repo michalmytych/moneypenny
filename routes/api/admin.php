@@ -1,8 +1,8 @@
 <?php
 
+use App\File\Http\Controller\Api\FileExplorerController;
+use App\Shared\Http\Controller\Api\MetaController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\MetaController;
-use App\Http\Controllers\Api\FileExplorer\FileExplorerController;
 
 Route::prefix('meta')->as('meta.')->group(function () {
     Route::get('processes', [MetaController::class, 'processes'])->name('processes');

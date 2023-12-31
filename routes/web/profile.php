@@ -1,7 +1,7 @@
 <?php
 
+use App\Moneypenny\User\Http\Controller\Web\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Web\Auth\ProfileController;
 
 Route::prefix('profile')->as('profile.')->group(function () {
     Route::get('/', [ProfileController::class, 'edit'])->name('edit');

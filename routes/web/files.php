@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Web\File\FileController;
+use App\File\Http\Controller\Web\FileController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('files')->as('file.')->group(function () {

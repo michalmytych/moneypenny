@@ -1,15 +1,15 @@
 <?php
 
-use App\Http\Controllers\Web\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Web\Auth\ConfirmablePasswordController;
-use App\Http\Controllers\Web\Auth\DeviceController;
-use App\Http\Controllers\Web\Auth\EmailVerificationNotificationController;
-use App\Http\Controllers\Web\Auth\EmailVerificationPromptController;
-use App\Http\Controllers\Web\Auth\NewPasswordController;
-use App\Http\Controllers\Web\Auth\PasswordController;
-use App\Http\Controllers\Web\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Web\Auth\RegisteredUserController;
-use App\Http\Controllers\Web\Auth\VerifyEmailController;
+use App\Moneypenny\User\Http\Controller\Web\AuthenticatedSessionController;
+use App\Moneypenny\User\Http\Controller\Web\ConfirmablePasswordController;
+use App\Moneypenny\User\Http\Controller\Web\DeviceController;
+use App\Moneypenny\User\Http\Controller\Web\EmailVerificationNotificationController;
+use App\Moneypenny\User\Http\Controller\Web\EmailVerificationPromptController;
+use App\Moneypenny\User\Http\Controller\Web\NewPasswordController;
+use App\Moneypenny\User\Http\Controller\Web\PasswordController;
+use App\Moneypenny\User\Http\Controller\Web\PasswordResetLinkController;
+use App\Moneypenny\User\Http\Controller\Web\RegisteredUserController;
+use App\Moneypenny\User\Http\Controller\Web\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['guest', 'deny_blocked'])->group(function () {

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Web\Social\ChatController;
+use App\Social\Http\Controller\Web\ChatController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('social')->as('social.')->group(function () {

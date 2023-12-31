@@ -31,9 +31,10 @@ class TransactionSyncService implements NordigenTransactionServiceInterface
             'raw_volume' => TransactionHelper::changeComaToDotAtRawVolume($transactionDataObject->rawVolume),
             'import_id' => $import->id,
             'description' => $transactionDataObject->remittanceInformationUnstructured,
+            'decimal_volume' => TransactionHelper::rawVolumeToDecimal($transactionDataObject->rawVolume),
             'accounting_date' => Carbon::parse($transactionDataObject->bookingDate),
             'transaction_date' => Carbon::parse($transactionDataObject->valueDate),
-            'decimal_volume' => TransactionHelper::rawVolumeToDecimal($transactionDataObject->rawVolume),
+            'personal_account_id' => $transactionDataObject->personalAccountId, // @todo - It's not being saved
             'calculation_volume' => TransactionHelper::rawVolumeToDecimal($transactionDataObject->rawVolume),
             'sender_account_number' => $transactionDataObject->senderAccountNumber,
             'receiver_account_number' => $transactionDataObject->receiverAccountNumber,

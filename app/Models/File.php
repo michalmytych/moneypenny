@@ -22,6 +22,7 @@ class File extends Model
     use HasFactory, BelongsToUser;
 
     public const USER_AVATAR = 'USER_AVATAR';
+    public const TRANSACTIONS_IMPORT = 'TRANSACTIONS_IMPORT';
 
     protected $fillable = [
         'name',

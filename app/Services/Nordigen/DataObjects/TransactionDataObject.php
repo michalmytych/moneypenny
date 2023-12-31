@@ -33,6 +33,9 @@ class TransactionDataObject extends DataObject
 
         /** @var string|null $receiverAccountNumber Receiver IBAN Number */
         public ?string $receiverAccountNumber,
+
+        /** @var int $personalAccountId Personal account id. */
+        public int $personalAccountId,
     )
     {
     }
@@ -49,6 +52,7 @@ class TransactionDataObject extends DataObject
             remittanceInformationUnstructured: data_get($data, 'remittanceInformationUnstructured'),
             senderAccountNumber: data_get($data, 'debtorAccount.iban'),
             receiverAccountNumber: data_get($data, 'creditorAccount.iban'),
+            personalAccountId: data_get($data, 'personalAccountId'),
         );
     }
 }

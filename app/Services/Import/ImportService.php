@@ -36,16 +36,19 @@ class ImportService implements ImportServiceContract
 
         $import = new Import([
             'user_id' => $user->id,
-            'status' => Import::STATUS_PROCESSING,
-            'columns_mapping_id' => $columnsMappingId,
-            'import_setting_id' => $importSettingId,
             'file_id' => $file->id,
+            'status' => Import::STATUS_PROCESSING,
+            'import_setting_id' => $importSettingId,
+            'columns_mapping_id' => $columnsMappingId,
         ]);
 
         $import->save();
 
         DB::transaction(function () use ($file, $importSetting, $columnsMapping, $import, $user) {
-            Excel::import(new TransactionsImport($importSetting, $columnsMapping, $import, $user), $file->path);
+            Excel::queueImport(
+                new TransactionsImport($importSetting, $columnsMapping, $import, $user),
+                $file->path
+            );
         });
 
         $import->update(['status' => Import::STATUS_SAVED]);

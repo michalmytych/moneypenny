@@ -31,10 +31,10 @@ readonly class FileUploadService
 
         try {
             $this->transactionFileService->uploadTransactions(
-                $file,
-                $data['import_setting_id'],
-                $data['columns_mapping_id'],
-                $user
+                requestFile: $file,
+                importSettingId: $data['import_setting_id'],
+                columnMappingId: $data['columns_mapping_id'],
+                user: $user
             );
 
         } catch(\Throwable) {

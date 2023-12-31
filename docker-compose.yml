@@ -31,9 +31,6 @@ services:
             DB_USERNAME: moneypenny-test
             DB_PASSWORD: moneypenny-test
             TEST_DATABASE_URL: mysql://moneypenny-test:moneypenny-test@db/moneypenny-test
-            MAIL_DRIVER: smtp
-            MAIL_HOST: mailhog
-            MAIL_PORT: 1025
         ports:
             - ${DEV_PORT:-8080}:80
         volumes:
@@ -49,7 +46,3 @@ services:
         volumes:
             - ./:/app
         entrypoint: /app/dev/docker/entrypoint.node.sh
-    mailhog:
-        image: mailhog/mailhog
-        ports:
-            - ${DEV_MAIL_PORT:-8025}:8025

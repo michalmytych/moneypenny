@@ -43,6 +43,10 @@ services:
 
     redis:
         image: redis:6.2-alpine
+        environment:
+            CACHE_DRIVER: redis
+            QUEUE_CONNECTION: redis
+            SESSION_DRIVER: redis
         volumes:
             - type: volume
               source: redis-store

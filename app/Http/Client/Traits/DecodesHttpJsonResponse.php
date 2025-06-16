@@ -2,6 +2,7 @@
 
 namespace App\Http\Client\Traits;
 
+use Illuminate\Support\Facades\Log;
 use Throwable;
 use Psr\Http\Message\ResponseInterface;
 

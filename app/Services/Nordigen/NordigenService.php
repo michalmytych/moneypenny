@@ -23,6 +23,7 @@ use App\Services\Nordigen\DataObjects\TransactionDataObject;
 use App\Contracts\Infrastructure\Cache\CacheAdapterInterface;
 use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
 use App\Services\Nordigen\Synchronization\NordigenTransactionServiceInterface;
+use Illuminate\Support\Facades\Log;
 
 class NordigenService implements TransactionSyncServiceInterface
 {
@@ -313,7 +314,9 @@ class NordigenService implements TransactionSyncServiceInterface
         if ($this->cacheAdapter->missing(self::INSTITUTIONS_CACHE_KEY)) {
             $institutionsData = $this->getFreshSupportedInstitutionsData();
 
-            $this->cacheAdapter->put(self::INSTITUTIONS_CACHE_KEY, $institutionsData, 30);
+            if (!isset($institutionsData['decoding_exception'])) {
+                $this->cacheAdapter->put(self::INSTITUTIONS_CACHE_KEY, $institutionsData, 30);
+            }
 
             return $this->getInstitutionsDataObjects($institutionsData);
         }
@@ -343,7 +346,7 @@ class NordigenService implements TransactionSyncServiceInterface
     {
         $requestQuery = [
             // @todo - payments enabled unkonow field obadac po wyczyszczeniu cache
-            'payments_enabled' => config('nordigen.payments_enabled'),
+            // 'payments_enabled' => config('nordigen.payments_enabled'), - prawdopodobnie deprecated w nowym api gocardless
             'country' => config('nordigen.country'),
         ];
 
@@ -364,9 +367,12 @@ class NordigenService implements TransactionSyncServiceInterface
         $tokenExpired = $this->hasTokenRefreshExpired($tokenData);
 
         if ($tokenExpired || $this->cacheAdapter->missing(self::TOKEN_CACHE_KEY)) {
+            Log::debug('Fetching new access token');
             $tokenData = $this->getFreshTokenData();
 
-            $this->cacheAdapter->put(self::TOKEN_CACHE_KEY, $tokenData);
+            if ($tokenData && !isset($tokenData['decoding_exception'])) {
+                $this->cacheAdapter->put(self::TOKEN_CACHE_KEY, $tokenData);
+            }
 
             return $tokenData;
         }

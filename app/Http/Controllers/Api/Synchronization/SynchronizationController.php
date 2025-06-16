@@ -42,7 +42,10 @@ class SynchronizationController extends Controller
 
             return response()->json([
                 'error' => 'Synchronization error',
-                'details' => App::hasDebugModeEnabled() ? $throwable->getMessage() : 'Lacking permissions',
+                'details' => App::hasDebugModeEnabled() ? [
+                    'message' => $throwable->getMessage(),
+                    'trace' => $throwable->getTraceAsString(),
+                ] : 'Lacking permissions',
                 'status_code' => $statusCode,
             ], $statusCode);
         }

@@ -11,20 +11,25 @@ class NordigenClient extends Client implements NordigenClientInterface
     public function request(string $method, $uri = '', array $options = []): ResponseInterface
     {
         $response = parent::request($method, $uri, $options);
+        $clonedResponse = clone $response;
 
-        $this->log(
+        data_set($options, 'headers.accept', 'application/json');
+        data_set($options, 'headers.Content-Type', 'application/json');
+
+        $this->logRequest(
             [
+                'response_php_object_id' => spl_object_id($clonedResponse),
                 'uri' => $uri,
                 'method' => $method,
                 'options' => $options
             ],
-            $response
+            $clonedResponse
         );
 
         return $response;
     }
 
-    public function log(array $clientParameters, ResponseInterface $response): void
+    public function logRequest(array $clientParameters, ResponseInterface $response): void
     {
         $log = [
             'type' => '[NordigenClient Requests Log]',
@@ -33,7 +38,7 @@ class NordigenClient extends Client implements NordigenClientInterface
                 'client_parameters' => $clientParameters,
                 'response' => [
                     'status_code' => $response->getStatusCode(),
-                    'body' => $response->getBody()->getContents(),
+                    'body' => $response->getBody()->getContents(), // - jesli to logujesz to oprozniasz contents i dalej są juz puste
                     'headers' => $response->getHeaders(),
                     'protocol_version' => $response->getProtocolVersion()
                 ]

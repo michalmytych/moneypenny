@@ -27,3 +27,5 @@ yarn-error.log
 
 # Test data
 /data
+
+database.sqlite

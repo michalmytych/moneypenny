@@ -14,7 +14,21 @@ class MetaController extends Controller
 
     public function updateSystem(): JsonResponse
     {
-        $results = $this->metaService->updateSystem();
+        try {
+            $results = $this->metaService->updateSystem();
+        } catch (\Throwable $throwable) {
+            return response()->json([
+                '__exec_meta' => [
+                    'target_host' => gethostbyname(config('admin-ssh.host')),
+                    'on_host' => gethostbyname(gethostname()),
+                ],
+                'error' => [
+                    'exception_message' => $throwable->getMessage(),
+                    'exception_file' => $throwable->getFile(),
+                    'exception_line' => $throwable->getLine(),
+                ],
+            ], 500);
+        }
 
         return response()->json($results);
     }

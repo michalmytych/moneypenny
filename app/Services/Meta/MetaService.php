@@ -29,7 +29,7 @@ readonly class MetaService
         );
 
         $commands = [
-            'cd ./moneypenny/ && git status'
+            './deploy_moneypenny.sh'
         ];
         $results = $this->sshService->executeCommands($commands);
 

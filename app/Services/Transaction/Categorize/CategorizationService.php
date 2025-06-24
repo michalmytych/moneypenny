@@ -10,6 +10,8 @@ use App\Contracts\Infrastructure\Cache\CacheAdapterInterface;
 
 readonly class CategorizationService
 {
+    public const PENDING_CATEGORIZATION_CACHE_KEY = 'is_pending_categorization';
+
     public function __construct(private CacheAdapterInterface $cacheAdapter)
     {}
 

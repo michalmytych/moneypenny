@@ -20,7 +20,7 @@ class MetaController extends Controller
             return response()->json([
                 '__exec_meta' => [
                     'target_host' => gethostbyname(config('admin-ssh.host')),
-                    'on_host' => gethostbyname(gethostname()),
+                    'on_host' => $this->metaService->getLocalIp(),
                 ],
                 'error' => [
                     'exception_message' => $throwable->getMessage(),

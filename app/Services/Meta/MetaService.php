@@ -22,7 +22,7 @@ readonly class MetaService
     public function updateSystem(): array
     {
         $targetHost = gethostbyname(config('admin-ssh.host'));
-        $currentHost = gethostbyname(gethostname());
+        $currentHost = $this->getLocalIp();
 
         $commands = ['./deploy_moneypenny.sh'];
         $results = [];
@@ -163,5 +163,17 @@ readonly class MetaService
         }
 
         return $jobs;
+    }
+
+    public function getLocalIp(): ?string
+    {
+        $sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
+        if ($sock === false) return null;
+
+        socket_connect($sock, '8.8.8.8', 53);
+        socket_getsockname($sock, $localIp);
+        socket_close($sock);
+
+        return $localIp;
     }
 }

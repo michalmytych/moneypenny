@@ -21,23 +21,33 @@ readonly class MetaService
 
     public function updateSystem(): array
     {
-        $this->sshService->connect(
-            config('admin-ssh.host'),
-            (int) config('admin-ssh.port'),
-            config('admin-ssh.username'),
-            config('admin-ssh.password'),
-        );
+        $targetHost = gethostbyname(config('admin-ssh.host'));
+        $currentHost = gethostbyname(gethostname());
 
-        $commands = [
-            './deploy_moneypenny.sh'
-        ];
-        $results = $this->sshService->executeCommands($commands);
+        $commands = ['./deploy_moneypenny.sh'];
+        $results = [];
+
+        if ($targetHost === $currentHost) {
+            foreach ($commands as $command) {
+                $output = shell_exec($command . ' 2>&1');
+                $results[] = [
+                    'command' => $command,
+                    'output' => explode("\n", trim($output)),
+                ];
+            }
+        } else {
+            $this->sshService->connect(
+                config('admin-ssh.host'),
+                (int) config('admin-ssh.port'),
+                config('admin-ssh.username'),
+                config('admin-ssh.password'),
+            );
+            $results = $this->sshService->executeCommands($commands);
+        }
 
         $logPath = storage_path('logs/system_ssh.log');
-
         $last = end($results);
         $lastLine = '[ ' . now()->toDateTimeString() . ' ] ' . $last['command'] . ' → ' . implode(' | ', $last['output']) . PHP_EOL;
-
         file_put_contents($logPath, $lastLine, FILE_APPEND);
         $connectionLog = file_exists($logPath) ? file($logPath, FILE_IGNORE_NEW_LINES) : [];
 

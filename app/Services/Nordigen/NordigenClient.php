@@ -31,6 +31,9 @@ class NordigenClient extends Client implements NordigenClientInterface
 
     public function logRequest(array $clientParameters, ResponseInterface $response): void
     {
+        $stream = $response->getBody();
+        $body = $stream->getContents();
+
         $log = [
             'type' => '[NordigenClient Requests Log]',
             'time' => time(),
@@ -38,12 +41,14 @@ class NordigenClient extends Client implements NordigenClientInterface
                 'client_parameters' => $clientParameters,
                 'response' => [
                     'status_code' => $response->getStatusCode(),
-                    'body' => $response->getBody()->getContents(), // - jesli to logujesz to oprozniasz contents i dalej są juz puste
+                    'body' => $body,
                     'headers' => $response->getHeaders(),
                     'protocol_version' => $response->getProtocolVersion()
                 ]
             ]
         ];
+
+        $stream->rewind();
 
         app(LoggingAdapterInterface::class)->debug(
             json_encode($log)

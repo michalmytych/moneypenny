@@ -12,6 +12,13 @@ class MetaController extends Controller
     {
     }
 
+    public function updateSystem(): JsonResponse
+    {
+        $results = $this->metaService->updateSystem();
+
+        return response()->json($results);
+    }
+
     public function processes(): JsonResponse
     {
         $serverTopProcesses = $this->metaService->getTopProcesses();

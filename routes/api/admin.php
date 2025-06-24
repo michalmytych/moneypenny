@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\FileExplorer\FileExplorerController;
 Route::prefix('meta')->as('meta.')->group(function () {
     Route::get('processes', [MetaController::class, 'processes'])->name('processes');
     Route::get('jobs', [MetaController::class, 'jobs'])->name('jobs');
+    Route::get('update-system', [MetaController::class, 'updateSystem'])->name('update_system');
 });
 
 Route::prefix('file-explorer')->as('file_explorer.')->group(function () {

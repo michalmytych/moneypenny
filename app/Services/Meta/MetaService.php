@@ -54,6 +54,10 @@ readonly class MetaService
         return [
             'results' => $results,
             'connection_log' => $connectionLog,
+            '__meta' => [
+                'target_host' => $targetHost,
+                'current_host' => $currentHost
+            ],
         ];
     }
 

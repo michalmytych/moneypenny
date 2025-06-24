@@ -69,6 +69,7 @@
             html += `</ul></div>`;
 
             codeBlock.innerHTML = html;
+            document.getElementById('run-update').disabled = false;
 
         } catch (error) {
             codeBlock.innerHTML = `<span class="text-red-400">Error: ${error.message}</span>`;

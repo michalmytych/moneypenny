@@ -3,17 +3,48 @@
 namespace App\Services\Meta;
 
 use App\Contracts\Infrastructure\Cache\CacheAdapterInterface;
+use App\Services\Logging\LoggingAdapterInterface;
 use App\Services\Shell\ShellService;
+use App\Services\SSH\SshService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 readonly class MetaService
 {
     public function __construct(
-        private ShellService          $shellService,
-        private CacheAdapterInterface $cacheAdapter
-    )
+        private ShellService            $shellService,
+        private CacheAdapterInterface   $cacheAdapter,
+        private LoggingAdapterInterface $loggingAdapter,
+        private SshService              $sshService,
+    ) {}
+
+    public function updateSystem(): array
     {
+        $this->sshService->connect(
+            config('admin-ssh.host'),
+            (int) config('admin-ssh.port'),
+            config('admin-ssh.username'),
+            config('admin-ssh.password'),
+        );
+
+        $commands = [
+            'cd ./moneypenny/ && git status'
+        ];
+        $results = $this->sshService->executeCommands($commands);
+
+        $logPath = storage_path('logs/system_ssh.log');
+
+        $last = end($results);
+        $lastLine = '[ ' . now()->toDateTimeString() . ' ] ' . $last['command'] . ' → ' . implode(' | ', $last['output']) . PHP_EOL;
+
+        file_put_contents($logPath, $lastLine, FILE_APPEND);
+        $connectionLog = file_exists($logPath) ? file($logPath, FILE_IGNORE_NEW_LINES) : [];
+
+        return [
+            'results' => $results,
+            'connection_log' => $connectionLog,
+        ];
     }
 
     public function getAppMetaData(): array
@@ -58,12 +89,21 @@ readonly class MetaService
     /** @noinspection SqlDialectInspection */
     public function getTablesSizes(): array
     {
-        return DB::table('information_schema.TABLES')
-            ->select(DB::raw("table_name as `table`, ROUND(((data_length + index_length) / 1024 / 1024), 2) `size_MB`"))
-            ->where('table_schema', 'laravel')
-            ->orderBy(DB::raw("(data_length + index_length)"), 'desc')
-            ->get()
-            ->toArray();
+        try {
+            return DB::table('information_schema.TABLES')
+                ->select(DB::raw("table_name as `table`, ROUND(((data_length + index_length) / 1024 / 1024), 2) `size_MB`"))
+                ->where('table_schema', 'laravel')
+                ->orderBy(DB::raw("(data_length + index_length)"), 'desc')
+                ->get()
+                ->toArray();
+        } catch (\Throwable $throwable) {
+            $this->loggingAdapter->debug($throwable->getMessage(), [
+                'trace' => $throwable->getTraceAsString(),
+                'file' => $throwable->getFile(),
+                'line' => $throwable->getLine(),
+            ]);
+            return [];
+        }
     }
 
     protected function getTopData(): array

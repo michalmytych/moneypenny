@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\SSH\SshService;
 use App\Services\Import\ImportService;
 use Illuminate\Support\ServiceProvider;
 use App\Services\Nordigen\NordigenService;
@@ -17,6 +18,10 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(ImportServiceContract::class, ImportService::class);
         $this->app->bind(TransactionSyncServiceInterface::class, NordigenService::class);
+
+        $this->app->singleton(SshService::class, function ($app) {
+            return new SshService();
+        });
     }
 
     /**

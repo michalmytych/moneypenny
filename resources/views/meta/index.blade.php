@@ -3,6 +3,11 @@
         <div class="w-full mx-auto">
             <div class="py-10">
                 <div class="mx-auto sm:px-6 lg:px-8">
+
+                    <div>
+                        @include('meta.partials.update-system')
+                    </div>
+
                     <div class="grid gap-4 lg:grid-cols-2 md:grid-cols-1">
                         <div class="bg-white overflow-hidden sm:rounded-lg">
                             <div class="p-6 bg-white shadow-sm">

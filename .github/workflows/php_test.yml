@@ -2,16 +2,16 @@ name: PHP Test
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "bachelor" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "bachelor" ]
 
 jobs:
   build:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        php: ['8.2']
+        php: ['8.3']
     steps:
       - uses: actions/checkout@v1
 

@@ -59,8 +59,13 @@
     </form>
 
     <div class="w-1/2 mx-auto">
-        <div class="flex items-center w-full lg:w-1/5 md:w-2/3 mx-auto sm:w-full" id="loaderWrapper" style="visibility: hidden;">
-            @include('icons.loader') <span class="text-gray-600">{{ __('Loging in...') }}</span>
+        <div class="flex items-center justify-center w-full mx-auto" id="loaderWrapper" style="visibility: hidden;">
+            <div class="flex">
+                <div class="mr-2">
+                    @include('icons.loader')
+                </div>
+                <span class="text-gray-600 font-semibold text-lg">{{ __('Loging in...') }}</span>
+            </div>
         </div>
     </div>
 

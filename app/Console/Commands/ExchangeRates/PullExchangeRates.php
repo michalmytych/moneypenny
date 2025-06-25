@@ -21,6 +21,11 @@ class PullExchangeRates extends Command
             ->whereNot('currency', $defaultCurrency)
             ->cursor();
 
+        if (0 === $otherCurrenciesTransactionsCursor->count()) {
+            $this->warn('No transactions in database!');
+            exit -1;
+        }
+
         foreach ($otherCurrenciesTransactionsCursor as $transaction) {
             $exchangeRate = $exchangeRatesService->getOrCreateExchangeRate(
                 date: Carbon::parse($transaction->transaction_date),

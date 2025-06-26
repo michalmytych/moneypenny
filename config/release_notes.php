@@ -1,8 +1,16 @@
 <?php
 
 return [
-    'current_version' => 'v0.5',
+    'current_version' => 'v1.0',
     'list' => [
+        [
+            'header' => '🎓🎓🎓 Moneypenny v1.0',
+            'date' => '26-06-2025 01:32',
+            'notes' => [
+                'Bachelor version release',
+            ],
+            'tags' => ['major_version']
+        ],
         [
             'header' => '🦅🦅🦅 Moneypenny v0.5',
             'date' => '19-06-2023 02:30',
@@ -11,7 +19,8 @@ return [
                 'Log browser view for admin',
                 'Deprecate analyzers logic',
                 'Minor bugs fixes'
-            ]
+            ],
+            'tags' => []
         ],
         [
             'header' => '🐛🫎🦋 Moneypenny v0.4.1',
@@ -19,7 +28,8 @@ return [
             'notes' => [
                 'Fixed api error handling bug at register',
                 'Improved styling at some pages'
-            ]
+            ],
+            'tags' => []
         ],
         [
             'header' => '🧑🏾‍🎨👨🏻‍🎨👩‍🎨 Moneypenny v0.4',
@@ -27,7 +37,8 @@ return [
             'notes' => [
                 'Add selecting avatars from gallery',
                 'Add new data widgets at home view'
-            ]
+            ],
+            'tags' => []
         ],
         [
             'header' => '🥳🥳🥳 Moneypenny v0.3',
@@ -41,7 +52,8 @@ return [
                 'Added icons and graphics for better UX',
                 'Improved query times',
                 'Fixed bugs'
-            ]
+            ],
+            'tags' => []
         ],
         [
             'header' => '🐥🐥🐥 Moneypenny v0.2',
@@ -49,14 +61,16 @@ return [
             'notes' => [
                 'Code refactor',
                 'Added users devices tracking',
-            ]
+            ],
+            'tags' => []
         ],
         [
             'header' => '🐤🐤🐤 Moneypenny v0.1',
             'date' => '06-05-2023 00:15',
             'notes' => [
                 'Init application'
-            ]
+            ],
+            'tags' => []
         ]
     ]
 ];

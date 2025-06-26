@@ -8,6 +8,8 @@ use Illuminate\Support\ServiceProvider;
 use App\Services\Nordigen\NordigenService;
 use App\Contracts\Services\Import\ImportServiceContract;
 use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,6 +31,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Gate::define('viewPulse', function (User $user) {
+            return $user->isAdmin();
+        });
     }
 }

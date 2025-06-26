@@ -44,4 +44,5 @@ Route::middleware(['auth', 'deny_blocked'])->group(function () {
 
 require __DIR__ . '/web/blocked.php';
 require __DIR__ . '/web/auth.php';
+require __DIR__ . '/web/welcome.php';
 

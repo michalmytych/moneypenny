@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'current_version' => 'v1.0',
+    'current_version' => 'v' . file_get_contents(base_path('version.txt')),
     'list' => [
         [
             'header' => '🎓🎓🎓 Moneypenny v1.0',

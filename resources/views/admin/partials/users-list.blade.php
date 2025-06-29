@@ -49,6 +49,6 @@
         @endforeach
     </div>
 @else
-    <h2 class="font-semibold text-xl">{{ __('No other users') }}</h2>
+    <h2 class="font-semibold text-3xl mt-10 text-gray-500">{{ __('No other users') }}</h2>
 @endif
 

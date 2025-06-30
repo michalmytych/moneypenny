@@ -52,7 +52,7 @@ jobs:
 
       - name: Migrate and seed the database
         run: |
-          php${{ matrix.php }} artisan migrate --force -n --env=testing --database=moneypenny-test
+          php${{ matrix.php }} artisan migrate --force -n --env=testing --database=mysql
 
       - name: Install npm dependencies
         run: npm install

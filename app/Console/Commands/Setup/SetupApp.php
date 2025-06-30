@@ -82,7 +82,8 @@ class SetupApp extends Command
                 ->replace('###DB_USERNAME###', $databaseUser)
                 ->replace('###DB_PASSWORD###', $databasePassword);
         } else {
-            $databasePath = $this->ask('Database patch', base_path('database.sqlite'));
+            $databasePath = $this->ask('Database path', base_path('database.sqlite'));
+            $this->copy(base_path('setup/env-testing-template-sqlite'), Str::of($databasePath)->replace('.sqlite', 'test_database.sqlite')->toString());
             $templateEnvFileContentsStringable = Str::of($templateEnvFileContents)
                 ->replace('###DB_CONNECTION###', $databaseConnection)
                 ->replace('###DB_DATABASE###', $databasePath)

@@ -31,8 +31,6 @@ class SaldoServiceTest extends TestCase
         $user = User::factory()->create();
 
         $userDefaultPersonalAccount = $user->personalAccounts->first();
-        $userDefaultPersonalAccount->value = $this->sut->calculate($user);
-        $userDefaultPersonalAccount->save();
 
         $this->createTransactionForUser($user, [
             'transaction_date' => Carbon::yesterday(),
@@ -67,7 +65,22 @@ class SaldoServiceTest extends TestCase
             'is_excluded_from_calculation' => false
         ]);
 
-        $this->assertEquals(expected: 3, actual: Transaction::where('user_id', $user->id)->count());
-        $this->assertEquals(expected: 70.00, actual: $this->sut->getByUser($user));
+
+        $this->createTransactionForUser($user, [
+            'transaction_date' => Carbon::yesterday(),
+            'accounting_date' => Carbon::yesterday(),
+            'raw_volume' => '20.00',
+            'calculation_volume' => 20.00,
+            'decimal_volume' => 20.00,
+            'type' => Transaction::TYPE_INCOME,
+            'personal_account_id' => $userDefaultPersonalAccount->id,
+            'is_excluded_from_calculation' => true
+        ]);
+
+        $userDefaultPersonalAccount->value = $this->sut->calculate($user);
+        $userDefaultPersonalAccount->save();
+
+        $this->assertEquals(expected: 4, actual: Transaction::where('user_id', $user->id)->count());
+        $this->assertEquals(expected: 20.00, actual: $this->sut->getByUser($user));
     }
 }

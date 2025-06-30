@@ -67,6 +67,7 @@ class SaldoServiceTest extends TestCase
             'is_excluded_from_calculation' => false
         ]);
 
+        $this->assertEquals(expected: 3, actual: Transaction::where('user_id', $user->id)->count());
         $this->assertEquals(expected: 70.00, actual: $this->sut->getByUser($user));
     }
 }

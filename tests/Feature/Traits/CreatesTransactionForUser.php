@@ -7,7 +7,7 @@ use App\Models\User;
 
 trait CreatesTransactionForUser
 {
-    protected function createTransactionForUserWithoutEvents(User $user, array $overrideAttributes = []): Transaction
+    protected function createTransactionForUserWithoutEvents(User $user, array $overrideAttributes = []): ?Transaction
     {
         $transaction = null;
 

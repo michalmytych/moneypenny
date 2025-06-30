@@ -4,6 +4,7 @@ namespace Tests\Feature\Services\Transaction\Budget;
 
 use App\Models\User;
 use App\Services\Transaction\Currency\CurrencyService;
+use App\Services\Transaction\Settings\UserSettingsService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -26,6 +27,7 @@ class CurrencyCodeTest extends TestCase
     {
         /** @var User $user */
         $user = User::factory()->create();
+        app(UserSettingsService::class)->assureUserSettings($user);
 
         $this->assertNotNull($user->settings);
 

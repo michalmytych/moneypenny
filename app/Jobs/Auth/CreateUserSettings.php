@@ -10,6 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Services\Transaction\Settings\UserSettingsService;
 
+/** @deprecated - user settings should be created in sync flow */
 class CreateUserSettings implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;

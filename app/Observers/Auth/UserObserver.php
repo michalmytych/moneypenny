@@ -3,7 +3,6 @@
 namespace App\Observers\Auth;
 
 use App\Models\User;
-use App\Jobs\Auth\CreateUserSettings;
 use App\Services\Transaction\PersonalAccount\PersonalAccountService;
 
 readonly class UserObserver
@@ -14,7 +13,6 @@ readonly class UserObserver
 
     public function created(User $user): void
     {
-        CreateUserSettings::dispatch($user);
         $this->personalAccountService->createForUser($user);
     }
 }

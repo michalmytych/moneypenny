@@ -103,9 +103,10 @@ class TransactionPersonaService
     protected function findPersonaByExactlySameName(string $personaName): ?Persona
     {
         $value = $this->getStringNormalizedForAssociation($personaName);
-        $condition = 'json_contains(associated_names, \'["' . $value . '"]\')';
+        // @todo - should be removed (json contains is not available in every database)
+        //$condition = 'json_contains(associated_names, \'["' . $value . '"]\')';
 
-        return Persona::whereRaw($condition)->limit(1)->first();
+        return Persona::limit(1)->first();
     }
 
     protected function getStringNormalizedForAssociation(string $string): string

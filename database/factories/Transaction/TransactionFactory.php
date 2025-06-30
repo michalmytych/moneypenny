@@ -12,7 +12,7 @@ class TransactionFactory extends Factory
 {
     public function definition(): array
     {
-        $calcVolume = round($this->faker->numberBetween(0.01, 1_000_000), 2);
+        $calcVolume = round($this->faker->numberBetween(0, 1000) * 0.1, 2);
 
         $type = $this->faker->randomElement([
             Transaction::TYPE_INCOME,

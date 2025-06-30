@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Console\Concerns\InteractsWithIO;
+use Illuminate\Support\Facades\Cache;
 
 class DatabaseSeeder extends Seeder
 {
@@ -30,5 +31,7 @@ class DatabaseSeeder extends Seeder
             TransactionsTableSeeder::class,
             FilesTableSeeder::class,
         ]);
+
+        Cache::flush();
     }
 }

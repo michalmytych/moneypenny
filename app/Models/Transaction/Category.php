@@ -17,7 +17,9 @@ class Category extends Model
     use HasFactory;
 
     protected $fillable = [
-        'code'
+        'code',
+        'name',
+        'color_hex'
     ];
 
     protected $appends = [

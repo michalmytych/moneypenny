@@ -43,7 +43,7 @@ class SetupApp extends Command
         if (!file_exists($templateEnvFilePath)) {
             $this->warn(
                 'Looks like .env template file not exists. It should be present at path: [' .
-                $templateEnvFilePath . ']. Quitting setup...'
+                    $templateEnvFilePath . ']. Quitting setup...'
             );
 
             exit(-1);
@@ -59,40 +59,59 @@ class SetupApp extends Command
 
         $this->info('Now, please setup your database connection.');
 
-        $databaseConnection = $this->ask('Database connection name', 'mysql');
-        $databaseHost = $this->ask('Database host', '127.0.0.1');
-        $databasePort = $this->ask('Database port', '3306');
-        $databaseName = $this->ask('Database name', 'laravel');
-        $databaseUser = $this->ask('Database user', 'laravel');
-        $databasePassword = $this->ask('Database password', '');
+        $databaseConnection = $this->choice('Database connection name', ['mysql', 'sqlite'], 'pgsql');
+        if (in_array($databaseConnection, ['mysql', 'pgsql'])) {
+            $databaseHost = $this->ask('Database host', '127.0.0.1');
+            $databasePort = $this->ask(
+                'Database port',
+                match ($databaseConnection) {
+                    'mysql' => 3306,
+                    'pgsql' => 5432,
+                    default => 3306,
+                }
+            );
+            $databaseName = $this->ask('Database name', 'laravel');
+            $databaseUser = $this->ask('Database user', 'laravel');
+            $databasePassword = $this->ask('Database password', '');
 
-        $templateEnvFileContentsStringable = Str::of($templateEnvFileContents)
-            ->replace('###DB_CONNECTION###', $databaseConnection)
-            ->replace('###DB_HOST###', $databaseHost)
-            ->replace('###DB_PORT###', $databasePort)
-            ->replace('###DB_DATABASE###', $databaseName)
-            ->replace('###DB_USERNAME###', $databaseUser)
-            ->replace('###DB_PASSWORD###', $databasePassword);
+            $templateEnvFileContentsStringable = Str::of($templateEnvFileContents)
+                ->replace('###DB_CONNECTION###', $databaseConnection)
+                ->replace('###DB_HOST###', $databaseHost)
+                ->replace('###DB_PORT###', $databasePort)
+                ->replace('###DB_DATABASE###', $databaseName)
+                ->replace('###DB_USERNAME###', $databaseUser)
+                ->replace('###DB_PASSWORD###', $databasePassword);
+        } else {
+            $databasePath = $this->ask('Database patch', base_path('database.sqlite'));
+            $templateEnvFileContentsStringable = Str::of($templateEnvFileContents)
+                ->replace('###DB_CONNECTION###', $databaseConnection)
+                ->replace('###DB_DATABASE###', $databasePath)
+                ->replace('DB_HOST=###DB_HOST###', '# DB_HOST=###DB_HOST###')
+                ->replace('DB_PORT=###DB_PORT###', '# DB_PORT=###DB_PORT###')
+                ->replace('DB_USERNAME=###DB_USERNAME###', '# DB_USERNAME=###DB_USERNAME###')
+                ->replace('DB_PASSWORD=###DB_PASSWORD###', '# DB_PASSWORD=###DB_PASSWORD###');
+        }
 
         $this->info(
             'Ok. Now, if you want, you can setup other app services. ' .
-            'Most of them are optional for now, but they may be required in production.'
+                'Most of them are optional for now, but they may be required in production.'
         );
 
         $this->line(
             'Pusher is used for real-time user interface updates. ' . PHP_EOL .
-            'Without it, some things like notifications delivering will not work properly. ' . PHP_EOL .
-            'Of course you can setup it later in .env file.'
+                'Without it, some things like notifications delivering will not work properly. ' . PHP_EOL .
+                'Of course you can setup it later in .env file.'
         );
 
+        $pusherAppId = $this->ask('Pusher app ID (optional)', '');
         $pusherAppKey = $this->ask('Pusher app key (optional)', '');
         $pusherAppSecret = $this->ask('Pusher app secret (optional)', '');
 
         $this->line(
             'Nordigen API is an external service which is used to connect ' . PHP_EOL .
-            'with financial institutions to fetch your financial data. ' . PHP_EOL .
-            'Without it, app will not be fully working. ' . PHP_EOL .
-            'Of course you can setup it later in .env file.'
+                'with financial institutions to fetch your financial data. ' . PHP_EOL .
+                'Without it, app will not be fully working. ' . PHP_EOL .
+                'Of course you can setup it later in .env file.'
         );
 
         $nordigenApiSecretId = $this->ask('Nordigen API secret ID (optional)', '');
@@ -100,13 +119,14 @@ class SetupApp extends Command
 
         $this->line(
             'ExchangeRates API is an external service which is used to fetch ' . PHP_EOL .
-            'historical currencies exchange rates. Without it, app will not be fully working. ' . PHP_EOL .
-            'Of course you can setup it later in .env file.'
+                'historical currencies exchange rates. Without it, app will not be fully working. ' . PHP_EOL .
+                'Of course you can setup it later in .env file.'
         );
 
         $exchangeRatesApiKey = $this->ask('ExchangeRates API KEY (optional)', '');
 
         $templateEnvFileContents = $templateEnvFileContentsStringable
+            ->replace('###PUSHER_APP_ID###', $pusherAppId)
             ->replace('###PUSHER_APP_KEY###', $pusherAppKey)
             ->replace('###PUSHER_APP_SECRET###', $pusherAppSecret)
             ->replace('###NORDIGEN_API_SECRET_ID###', $nordigenApiSecretId)

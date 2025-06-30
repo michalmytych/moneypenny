@@ -49,13 +49,16 @@ jobs:
 
       - name: Migrate and seed the database
         run: |
-          php${{ matrix.php }} artisan migrate --force -n --env=testing --database=mysql_testing
+          php${{ matrix.php }} artisan migrate --force -n --env=testing --database=moneypenny-test
 
       - name: Install npm dependencies
         run: npm install
 
       - name: Install npm dependencies
         run: npm run build
+
+      - name: Create testing env file
+        run: cp setup/env-testing-template-phpunit .env.testing
 
       - name: Run PHP tests
         run: php${{ matrix.php }} artisan test --env=testing

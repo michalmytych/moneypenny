@@ -86,7 +86,8 @@ readonly class MetaService
                 base_path('/node_modules') => $this->getDirectorySize(base_path('/node_modules'))
             ],
             'database' => [
-                'tables_sizes' => $this->getTablesSizes()
+                // @todo - use only with read-only replica (requires root priviledges in database)
+                'tables_sizes' => $this->getTablesSizes(),
             ]
         ];
 

@@ -12,10 +12,7 @@ class TransactionFactory extends Factory
 {
     public function definition(): array
     {
-        $calcVolume = round(
-            $this->faker->numberBetween(0.01, 1_000_000),
-            2
-        );
+        $calcVolume = round($this->faker->numberBetween(0.01, 1_000_000), 2);
 
         $type = $this->faker->randomElement([
             Transaction::TYPE_INCOME,
@@ -40,7 +37,7 @@ class TransactionFactory extends Factory
             'currency' => $this->faker->randomElement(config('moneypenny.supported_currencies')),
             'user_id' => User::inRandomOrder()->first()->id,
             'sender' => $this->faker->firstName() . ' ' . $this->faker->lastName() . ' ' . $this->faker->company(),
-            'type' => $type
+            'type' => $type,
         ];
     }
 }

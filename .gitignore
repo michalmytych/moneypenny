@@ -29,3 +29,6 @@ yarn-error.log
 /data
 
 database.sqlite
+
+# Testing env config
+.env.testing

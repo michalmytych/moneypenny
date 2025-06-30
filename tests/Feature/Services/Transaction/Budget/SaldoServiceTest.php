@@ -31,6 +31,8 @@ class SaldoServiceTest extends TestCase
         $user = User::factory()->create();
 
         $userDefaultPersonalAccount = $user->personalAccounts->first();
+        $userDefaultPersonalAccount->value = $this->sut->calculate($user);
+        $userDefaultPersonalAccount->save();
 
         $this->createTransactionForUser($user, [
             'transaction_date' => Carbon::yesterday(),

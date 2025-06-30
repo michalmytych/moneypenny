@@ -34,7 +34,7 @@ class HomePageService implements HomePageServiceInterface
             'currencyCode' => $this->currencyService->resolveCalculationCurrency($user),
             'expendituresTodayTotal' => $this->transactionQuerySet->getExpendituresTodayTotal($user),
             'eventNotifications' => $this->notificationService->allEvents($user, 4), // @todo - test
-            'saldoData' => $this->saldoService->getByUser($user), // @todo - change & test
+            'saldoData' => $this->saldoService->getByUser($user),
             'expendituresThisWeekTotal' => $this->transactionQuerySet->getExpendituresThisWeekTotal($user),
             'incomesTodayTotal' => $this->transactionQuerySet->getIncomesTodayTotal($user),
             'incomesThisWeekTotal' => $this->transactionQuerySet->getIncomesThisWeekTotal($user),

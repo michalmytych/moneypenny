@@ -47,6 +47,9 @@ jobs:
       - name: Install composer dependencies
         run: composer install --prefer-dist --no-interaction --ansi
 
+      - name: Create testing env file
+        run: cp setup/env-testing-template-phpunit .env.testing
+
       - name: Migrate and seed the database
         run: |
           php${{ matrix.php }} artisan migrate --force -n --env=testing --database=moneypenny-test
@@ -56,9 +59,6 @@ jobs:
 
       - name: Install npm dependencies
         run: npm run build
-
-      - name: Create testing env file
-        run: cp setup/env-testing-template-phpunit .env.testing
 
       - name: Run PHP tests
         run: php${{ matrix.php }} artisan test --env=testing

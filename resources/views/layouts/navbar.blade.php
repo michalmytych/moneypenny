@@ -233,6 +233,12 @@
                                         </div>
                                         {{ __('Categorization') }}
                                     </x-dropdown-link>
+                                    <x-dropdown-link class="navLink" :href="route('command.index')">
+                                        <div class="mr-2">
+                                            @include('icons.sm.command')
+                                        </div>
+                                        {{ __('Commands') }}
+                                    </x-dropdown-link>
                                 </x-slot>
                             </x-dropdown>
                         </div>

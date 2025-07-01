@@ -15,4 +15,3 @@ Route::prefix('file-explorer')->as('file_explorer.')->group(function () {
     Route::get('/show', [FileExplorerController::class, 'show'])->name('show');
     Route::get('/open', [FileExplorerController::class, 'open'])->name('open');
 });
-

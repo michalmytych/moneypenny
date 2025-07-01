@@ -41,6 +41,7 @@ class HomePageService implements HomePageServiceInterface
             'synchronizationsCount' => $this->synchronizationService->countByUser($user),
             'endUserAgreementCount' => $this->synchronizationService->getEndUserAgreementsCountByUser($user),
             'transactionsData' => [
+                'count' => $this->transactionQuerySet->getCountByUser($user),
                 'agreement' => $this->transactionSyncService->getAgreements($user)->first(), // @todo - test & change - should show 'default' synchronization
                 'transactions' => $this->transactionQuerySet->getTenLatestTransactionsByUserForHomePage($user),
                 'last_synchronization' => $this->synchronizationService->getLatestSucceededByUser($user)

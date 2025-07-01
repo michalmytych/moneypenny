@@ -19,6 +19,14 @@ class TransactionQuerySet
             ->get();
     }
 
+    public function getCountByUser(User $user): int
+    {
+        return Transaction::with('category')
+            ->baseCalculationQuery()
+            ->whereUser($user)
+            ->count();
+    }
+
     public function getExpendituresSumByDates(User $user, array $dates): float|int
     {
         return Transaction::whereUser($user)

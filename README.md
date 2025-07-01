@@ -1,4 +1,4 @@
-# http_mike/moneypenny
+# michalmytych/moneypenny
 
 Moneypenny is a project created as part of my BA thesis. It is a full-stack web application for personal budget management.
 

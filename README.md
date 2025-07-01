@@ -5,7 +5,7 @@ Moneypenny is a project created as part of my BA thesis. It is a full-stack web 
 ![Image](https://github.com/user-attachments/assets/9e5d6b91-7aa1-42ee-8cec-18774dd11239)
 
 ### Automated basic local setup
-If you have `php8.2`, `Composer 2.*` and some relational database (`mysql`, `postgresql`, etc.) installed in your system, you can try automated setup.
+If you have `php8.2`, `Composer 2.*` and one of supported databases (`sqlite`, `mysql`, `postgresql`) installed in your system, you can try automated setup.
 ```bash
 composer install
 php artisan moneypenny:setup-app

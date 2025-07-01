@@ -2,7 +2,7 @@
 
 Moneypenny is a project created as part of my BA thesis. It is a full-stack web application for personal budget management.
 
-![ezgif com-video-to-gif](https://github.com/michalmytych/moneypenny/assets/59512535/726475dc-dcb8-4515-b319-a535a4e2a301)
+![Image](https://github.com/user-attachments/assets/9e5d6b91-7aa1-42ee-8cec-18774dd11239)
 
 ### Automated basic local setup
 If you have `php8.2`, `Composer 2.*` and some relational database (`mysql`, `postgresql`, etc.) installed in your system, you can try automated setup.

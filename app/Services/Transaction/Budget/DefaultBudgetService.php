@@ -2,8 +2,8 @@
 
 namespace App\Services\Transaction\Budget;
 
-use App\Models\Transaction\Budget;
 use App\Models\User;
+use App\Models\Transaction\Budget;
 use Illuminate\Support\Collection;
 
 class DefaultBudgetService

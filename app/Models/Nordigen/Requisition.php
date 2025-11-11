@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static latest()
  * @method static whereUser($user)
  * @property mixed $nordigen_requisition_id
+ * @property mixed $id
  */
 class Requisition extends Model
 {

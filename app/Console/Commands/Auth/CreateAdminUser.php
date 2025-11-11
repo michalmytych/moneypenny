@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands\Auth;
 
+use Throwable;
 use App\Models\User;
 use Illuminate\Console\Command;
-use Throwable;
 
 class CreateAdminUser extends Command
 {

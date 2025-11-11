@@ -17,7 +17,7 @@ class DenyAccessForBlockedUsers
                 ], 403);
             }
 
-            return redirect()->to(route('blocked.index'));
+            return to_route('blocked.index');
         }
 
         return $next($request);

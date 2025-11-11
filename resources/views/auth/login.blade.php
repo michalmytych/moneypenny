@@ -59,32 +59,37 @@
     </form>
 
     <div class="w-1/2 mx-auto">
-        <div class="flex items-center w-full lg:w-1/5 md:w-2/3 mx-auto sm:w-full" id="loaderWraper" style="visibility: hidden;">
-            @include('icons.loader') <span class="text-gray-600">{{ __('Loging in...') }}</span>
+        <div class="flex items-center justify-center w-full mx-auto" id="loaderWrapper" style="visibility: hidden;">
+            <div class="flex">
+                <div class="mr-2">
+                    @include('icons.loader')
+                </div>
+                <span class="text-gray-600 font-semibold text-lg">{{ __('Loging in...') }}</span>
+            </div>
         </div>
     </div>
 
     @push('scripts')
         <script>
             const apiLoginRoute = "{{ route('api.login') }}";
-            const sancutmCSRFCookieRoute = "{{ route('sanctum.csrf-cookie') }}";
+            const sanctumCSRFCookieRoute = "{{ route('sanctum.csrf-cookie') }}";
 
             window.addEventListener('load', () => {
                 const loginForm = document.getElementById('loginForm');
                 const loginBtn = document.getElementById('loginBtn');
                 const emailInput = document.getElementById('email');
                 const passwordInput = document.getElementById('password');
-                const loaderWraper = document.getElementById('loaderWraper');
+                const loaderWrapper = document.getElementById('loaderWrapper');
 
                 const displayProgress = () => {
-                    loaderWraper.style.visibility = 'visible';
+                    loaderWrapper.style.visibility = 'visible';
                 }
 
                 const fetchSanctumCSRFToken = () => {
                     if (loginBtn.disabled) return false;
 
                     try {
-                        return fetch(sancutmCSRFCookieRoute, {
+                        return fetch(sanctumCSRFCookieRoute, {
                                 method: "GET",
                                 headers: {
                                     'Accept-Type': 'application/json',
@@ -97,7 +102,7 @@
                 }
 
                 const loginApi = async () => {
-                    if (loginBtn.disabled) return false;
+                    loginBtn.disabled = true;
 
                     return fetch(apiLoginRoute, {
                             method: "POST",

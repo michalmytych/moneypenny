@@ -42,6 +42,7 @@ class PersonaController extends Controller
     {
         // @todo - not working logic (user)
         $persona->update($request->all());
+
         return redirect()->back();
     }
 
@@ -52,6 +53,6 @@ class PersonaController extends Controller
             $this->transactionPersonaService->createPersonasAssociations($transaction);
         }
 
-        return redirect(route('persona.index'));
+        return to_route('persona.index');
     }
 }

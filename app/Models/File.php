@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Models\Traits\BelongsToUser;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @property string $name
@@ -22,6 +22,7 @@ class File extends Model
     use HasFactory, BelongsToUser;
 
     public const USER_AVATAR = 'USER_AVATAR';
+    public const TRANSACTIONS_IMPORT = 'TRANSACTIONS_IMPORT';
 
     protected $fillable = [
         'name',

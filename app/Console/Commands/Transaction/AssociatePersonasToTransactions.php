@@ -55,7 +55,7 @@ class AssociatePersonasToTransactions extends Command
         );
 
         $personasCount = Persona::count();
-        $this->info("Successfuly associated. Personas count: $personasCount");
+        $this->info("Successfully associated. Personas count: $personasCount");
     }
 
     private function performTask(Transaction $transaction): void

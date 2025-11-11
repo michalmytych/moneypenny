@@ -15,7 +15,9 @@ use App\Services\Notification\Broadcast\NotificationBroadcastService;
 
 class ImportService implements ImportServiceContract
 {
-    public function __construct(private readonly NotificationBroadcastService $notificationBroadcastService) {}
+    public function __construct(private readonly NotificationBroadcastService $notificationBroadcastService)
+    {
+    }
 
     public function all(User $user)
     {
@@ -34,16 +36,19 @@ class ImportService implements ImportServiceContract
 
         $import = new Import([
             'user_id' => $user->id,
-            'status' => Import::STATUS_PROCESSING,
-            'columns_mapping_id' => $columnsMappingId,
-            'import_setting_id' => $importSettingId,
             'file_id' => $file->id,
+            'status' => Import::STATUS_PROCESSING,
+            'import_setting_id' => $importSettingId,
+            'columns_mapping_id' => $columnsMappingId,
         ]);
 
         $import->save();
 
         DB::transaction(function () use ($file, $importSetting, $columnsMapping, $import, $user) {
-            Excel::import(new TransactionsImport($importSetting, $columnsMapping, $import, $user), $file->path);
+            Excel::queueImport(
+                new TransactionsImport($importSetting, $columnsMapping, $import, $user),
+                $file->path
+            );
         });
 
         $import->update(['status' => Import::STATUS_SAVED]);
@@ -54,6 +59,12 @@ class ImportService implements ImportServiceContract
             url: route('transaction.index'),
             userId: $user->id
         );
+    }
+
+    public function columnConfigurationForUserExist(User $user): bool
+    {
+        return ColumnsMapping::whereUser($user)->count() === 0
+            || ImportSetting::whereUser(request()->user())->count() === 1;
     }
 
     public function create(User $user, array $data): Import

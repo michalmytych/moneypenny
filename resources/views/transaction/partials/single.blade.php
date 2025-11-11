@@ -1,10 +1,11 @@
 <div class="bg-white px-8 pt-6 pb-8 mb-4 rounded-md">
+    <x-back-link />
+
     <div class="font-semibold text-indigo-500">
-        <a href="{{ route('transaction.index') }}">{{ __('Back') }}</a>
+        <a href="{{ route('user.index') }}">{{ __('Back') }}</a>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 mb-6">
-
         <div>
             <div class="mb-4 mt-2">
                 <p class="block text-gray-700 font-bold mb-2">
@@ -29,39 +30,41 @@
                     {{ __('Category') }}:
                 </p>
                 <p class="text-gray-700 text-xl">
-                @if($transaction->created_at->gt(now()->subMinutes(10)))
-                    <div class="flex items-center w-fit">
-                        @include('icons.loader-sm')
-                        <div class="ml-2">
-                            Categorizing
-                        </div>
-                    </div>
-                @else
-                    @if($transaction->category)
-                        <details>
-                            <summary class="flex items-center">
-                                @include('components.category.category-badge', ['name' => $transaction->category->name])
-                            </summary>
-                            <div class="mt-4">
-                                @include('transaction.partials.transaction-category-form', [
-                                    'transaction' => $transaction,
-                                ])
+                    @if ($transaction->created_at->gt(now()->subMinutes(10)))
+                        <div class="flex items-center w-fit">
+                            @include('icons.loader-sm')
+                            <div class="ml-2">
+                                Categorizing
                             </div>
-                        </details>
+                        </div>
+                    @else
+                        @if ($transaction->category)
+                            <details>
+                                <summary class="flex items-center">
+                                    @include('components.category.category-badge', [
+                                        'name' => $transaction->category->name,
+                                    ])
+                                </summary>
+                                <div class="mt-4">
+                                    @include('transaction.partials.transaction-category-form', [
+                                        'transaction' => $transaction,
+                                    ])
+                                </div>
+                            </details>
                         @else
                             @include('transaction.partials.transaction-category-form', [
                                 'transaction' => $transaction,
                             ])
                         @endif
-                @endif
-                    </p>
+                    @endif
+                </p>
             </div>
             <div class="mb-4">
                 <p class="block text-gray-700 font-bold mb-2">
                     {{ __('Sender') }}:
                 </p>
                 <p class="text-gray-700 text-xl">
-                    {{ $transaction->sender ?? 'No data'  }}
+                    {{ $transaction->sender ?? 'No data' }}
                 </p>
             </div>
             <div class="mb-4">
@@ -83,6 +86,11 @@
         </div>
 
         <div>
+            <div class="mb-2">
+                @include('transaction.partials.exclude-from-calculation-form', [
+                    'transaction' => $transaction,
+                ])
+            </div>
             <h2 class="text-black font-bold text-2xl pb-4">{{ __('Details') }}</h2>
             <div class="mb-4">
                 <p class="block text-gray-700 font-bold mb-2">
@@ -105,7 +113,7 @@
                     {{ __('Sender account number') }}:
                 </p>
                 <p class="text-gray-700 text-xl">
-                    {{ $transaction->sender_account_number ?? 'No data'  }}
+                    {{ $transaction->sender_account_number ?? 'No data' }}
                 </p>
             </div>
             <div class="mb-4">

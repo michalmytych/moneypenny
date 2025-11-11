@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use Throwable;
-use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Console\Concerns\InteractsWithIO;
+use Illuminate\Support\Facades\Cache;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,30 +15,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        try {
-            User::factory()->create([
-                'name' => 'Test User',
-                'email' => 'test@example.com',
-            ]);
-        } catch (Throwable) {
-            $this->command->warn('⚠️ Test user already exists.');
-        }
+        if (!app()->hasDebugModeEnabled()) {
+            $this
+                ->command
+                ->warn('⚠️ Cannot run development seeders in production! Debug mode is disabled.');
 
-        try {
-            User::factory()->create([
-                'name' => 'Guest User',
-                'email' => 'guest@example.com',
-            ]);
-        } catch (Throwable) {
-            $this->command->warn('⚠️ Guest user already exists.');
+            return;
         }
 
         $this->call([
+            UsersTableSeeder::class,
             ImportSettingsTableSeeder::class,
             ColumnsMappingsTableSeeder::class,
             CategoriesTableSeeder::class,
             TransactionsTableSeeder::class,
-            // FilesTableSeeder::class,
+            FilesTableSeeder::class,
         ]);
+
+        Cache::flush();
     }
 }

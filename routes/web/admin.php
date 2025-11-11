@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\Transaction\Categorize\CategorizationController;
 use App\Http\Controllers\Web\ExchangeRates\ExchangeRateController;
+use App\Http\Controllers\Web\FileExplorer\FileExplorerController;
 use App\Http\Controllers\Web\Meta\MetaController;
 use App\Http\Controllers\Web\Notification\NotificationController;
+use App\Http\Controllers\Web\Transaction\Categorize\CategorizationController;
 use App\Http\Controllers\Web\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,6 +45,12 @@ Route::middleware('admin')->group(function () {
 
     Route::prefix('meta')->as('meta.')->group(function () {
         Route::get('/', [MetaController::class, 'index'])->name('index');
+    });
+
+    Route::prefix('file-explorer')->as('file_explorer.')->group(function () {
+        Route::get('/', [FileExplorerController::class, 'index'])
+            ->middleware(['auth', 'admin'])
+            ->name('index');
     });
 });
 

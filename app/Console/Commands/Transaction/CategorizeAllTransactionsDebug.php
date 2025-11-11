@@ -12,16 +12,23 @@ use App\Services\Transaction\Category\CategorizeTransactionService;
 class CategorizeAllTransactionsDebug extends Command
 {
     protected $signature = 'moneypenny:categorize-all-transactions-debug
-                            {?--only-uncategorized : Whether only uncathegorized transactions should be taken into account.}';
+                            {--only-uncategorized : Whether only uncategorized transactions should be taken into account.}';
 
     protected $description = 'Categorize all transactions with debug info.';
 
-    public function handle(CategorizeTransactionService $categorizeTransactionService): void
+    public function handle(CategorizeTransactionService $categorizeTransactionService): int
     {
-        $chunkSize = 100;
         $transactionsTotalCount = Transaction::count();
-        $selectedToCategorizationCount = $transactionsTotalCount;
+
+        if ($transactionsTotalCount === 0) {
+            $this->info('Transactions database is empty. ');
+
+            return -1;
+        }
+
+        $chunkSize = 100;
         $transactionBaseQuery = Transaction::query();
+        $selectedToCategorizationCount = $transactionsTotalCount;
 
         if ($this->hasOption('only-uncategorized')) {
             $transactionBaseQuery = Transaction::whereNull('category_id');
@@ -62,5 +69,7 @@ class CategorizeAllTransactionsDebug extends Command
             . $totalCategorizedPercentage
             . '% of all transactions is assigned to some category.'
         );
+
+        return 0;
     }
 }

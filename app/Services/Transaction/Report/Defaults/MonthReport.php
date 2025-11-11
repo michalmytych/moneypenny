@@ -31,30 +31,36 @@ class MonthReport extends ReportTemplate
             ],
 
             'transactions_count' => Transaction::whereUser($user)
+                ->baseCalculationQuery()
                 ->whereMonthAndYear($selectedMonth)
                 ->count(),
 
             'expenditures_count' => Transaction::whereUser($user)
+                ->baseCalculationQuery()
                 ->whereMonthAndYear($selectedMonth)
                 ->whereExpenditure()
                 ->count(),
 
             'incomes_count' => Transaction::whereUser($user)
+                ->baseCalculationQuery()
                 ->whereMonthAndYear($selectedMonth)
                 ->whereIncome()
                 ->count(),
 
             'expenditures_sum' => Transaction::whereUser($user)
+                ->baseCalculationQuery()
                 ->whereMonthAndYear($selectedMonth)
                 ->whereExpenditure()
                 ->sum(Transaction::CALCULATION_COLUMN),
 
             'incomes_sum' => Transaction::whereUser($user)
+                ->baseCalculationQuery()
                 ->whereMonthAndYear($selectedMonth)
                 ->whereIncome()
                 ->sum(Transaction::CALCULATION_COLUMN),
 
             'top_5_biggest_incomes' => Transaction::whereUser($user)
+                ->baseCalculationQuery()
                 ->whereMonthAndYear($selectedMonth)
                 ->whereIncome()
                 ->select($columnsSelected)
@@ -63,6 +69,7 @@ class MonthReport extends ReportTemplate
                 ->get(),
 
             'top_5_biggest_expenditures' => Transaction::whereUser($user)
+                ->baseCalculationQuery()
                 ->whereMonthAndYear($selectedMonth)
                 ->whereExpenditure()
                 ->select($columnsSelected)

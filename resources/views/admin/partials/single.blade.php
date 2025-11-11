@@ -1,7 +1,6 @@
 <div class="pb-36">
-    <a href="{{ route('user.index') }}" class="text-indigo-600 font-bold">
-        {{ __('Back') }}
-    </a>
+    <x-back-link/>
+
     <h1 class="text-4xl mt-4 font-semibold">{{ __('User') }} {{ $user->name }}</h1>
 
     <h2 class="text-2xl font-semibold mt-4">{{ __('Data') }}</h2>

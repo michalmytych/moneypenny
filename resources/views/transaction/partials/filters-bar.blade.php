@@ -1,10 +1,10 @@
 <div class="w-full mb-6">
-    <h2 class="text-black font-bold text-xl pb-4">
+    <h2 class="text-black font-bold text-xl pb-3">
         {{ __('Filter transactions') }}
     </h2>
     <form action="{{ $route }}" method="GET">
-        <div class="flex" id="filters-box-0">
-            <select name="column" id="column" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-4">
+        <div class="flex items-center" id="filters-box-0">
+            <select name="column" id="column" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md w-full shadow-sm mt-1 mr-2">
                 <option>Select attribute</option>
                 @foreach($filterableColumns->keys() as $column)
                     <option value="{{ $column }}">
@@ -13,20 +13,20 @@
                 @endforeach
             </select>
 
-            <select name="operator" id="operator" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-4">
+            <select name="operator" id="operator" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md w-full shadow-sm mt-1 mr-2">
                 <option>Select operator</option>
             </select>
 
             <input
                     name="value"
                     id="value"
-                    class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-4"
+                    class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md w-full shadow-sm mt-1 mr-2"
                     type="text"
                     placeholder="Attribute value"
                     autocomplete="off"
             />
 
-            <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg">
+            <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-8 rounded-md py-2 mt-[4px]">
                 Apply
             </button>
         </div>

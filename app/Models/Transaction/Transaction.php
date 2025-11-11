@@ -27,24 +27,27 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static orderByTransactionDate()
  * @method static whereUser(User $user)
  * @method static chunk(int $chunkSize, \Closure $param)
- * @property string $sender
- * @property string $receiver
- * @property int $id
- * @property Persona|null $senderPersona
- * @property Persona|null $receiverPersona
- * @property string $description
- * @property string|null $receiver_account_number
- * @property string|null $sender_account_number
- * @property string $raw_volume
- * @property int $type
- * @property float $calculation_volume
- * @property mixed $user_id
- * @property User $user
- * @property string $currency
- * @property string|Carbon $transaction_date
- * @property mixed $import_id
- * @property string|Carbon $created_at
- * @property string|Carbon $updated_at
+ * @property string $sender Sender name.
+ * @property string $receiver Receiver name.
+ * @property int $id Transaction primary key.
+ * @property Persona|null $senderPersona Related sender persona.
+ * @property Persona|null $receiverPersona Related receiver persona.
+ * @property string $description Transaction description content.
+ * @property string|null $receiver_account_number Receiver bank account number.
+ * @property string|null $sender_account_number Sender bank account number.
+ * @property string $raw_volume Raw volume (string - as it was from source).
+ * @property int $type Type of transaction (TYPE_UNKNOWN, TYPE_INCOME, TYPE_EXPENDITURE)
+ * @property float $calculation_volume Calculation volume - as used for calculations.
+ * @property mixed $user_id Foreign key of users table.
+ * @property User $user Related (owning) user.
+ * @property string $currency Currency ISO code.
+ * @property boolean $is_excluded_from_calculation If true, transaction is excluded from all calculations.
+ * @property string|Carbon $transaction_date Transaction date (when it was performed).
+ * @property mixed $import_id Foreign key to import (source of transaction).
+ * @property string|Carbon $created_at Created at date of transaction.
+ * @property string|Carbon $updated_at Updated at date of transaction.
+ * @property Category|null $category Related (owning) category.
+ * @property mixed $category_id Foreign key of related category.
  */
 class Transaction extends Model
 {
@@ -53,13 +56,14 @@ class Transaction extends Model
     const TYPE_UNKNOWN = 0;
     const TYPE_INCOME = 1;
     const TYPE_EXPENDITURE = 2;
-
     const CALCULATION_COLUMN = 'calculation_volume';
 
     protected $fillable = [
+        'is_excluded_from_calculation',
         'receiver_account_number',
         'sender_account_number',
         'receiver_persona_id',
+        'personal_account_id',
         'calculation_volume',
         'sender_persona_id',
         'transaction_date',
@@ -74,10 +78,6 @@ class Transaction extends Model
         'user_id',
         'sender',
         'type'
-    ];
-
-    protected $casts = [
-        'transaction_date' => 'datetime'
     ];
 
     public function import(): BelongsTo
@@ -164,5 +164,10 @@ class Transaction extends Model
         return $builder
             ->whereYear('transaction_date', $carbon->year)
             ->whereMonth('transaction_date', $carbon->month);
+    }
+
+    public function scopeBaseCalculationQuery(Builder $builder): Builder
+    {
+        return $builder->where('is_excluded_from_calculation', false);
     }
 }

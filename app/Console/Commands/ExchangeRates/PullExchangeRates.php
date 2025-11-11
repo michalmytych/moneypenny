@@ -13,13 +13,18 @@ class PullExchangeRates extends Command
 
     protected $description = 'Fetch history exchange rates from external api for currently stored transactions';
 
-    public function handle(ExchangeRatesServiceInterface $exchangeRatesService)
+    public function handle(ExchangeRatesServiceInterface $exchangeRatesService): void
     {
         $defaultCurrency = config('moneypenny.base_calculation_currency');
 
         $otherCurrenciesTransactionsCursor = Transaction::query()
             ->whereNot('currency', $defaultCurrency)
             ->cursor();
+
+        if (0 === $otherCurrenciesTransactionsCursor->count()) {
+            $this->warn('No transactions in database!');
+            exit -1;
+        }
 
         foreach ($otherCurrenciesTransactionsCursor as $transaction) {
             $exchangeRate = $exchangeRatesService->getOrCreateExchangeRate(

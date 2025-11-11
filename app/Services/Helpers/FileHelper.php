@@ -20,18 +20,21 @@ class FileHelper
     public static function isImageByExtension(string $name): bool
     {
         $extension = self::extractExtension($name);
+
         return in_array($extension, self::BROWSER_SUPPORTED_IMAGE_EXTENSIONS);
     }
 
     public static function isVideoByExtension(string $name): bool
     {
         $extension = self::extractExtension($name);
+
         return in_array($extension, self::BROWSER_SUPPORTED_VIDEO_EXTENSIONS);
     }
 
     public static function extractExtension(string $fullName): string|bool
     {
         $tokens = explode('.', $fullName);
+
         return end($tokens);  // @todo what if no extension
     }
 }

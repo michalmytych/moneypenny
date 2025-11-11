@@ -14,6 +14,7 @@ class AnalyticsController extends Controller
     {
         $user = $request->user();
         $chartQueryId = $request->get('chart_id');
+
         return $this->analyticsService->getChartData($user, $chartQueryId);
     }
 }

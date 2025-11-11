@@ -14,7 +14,9 @@ class CategoriesPercentage extends ChartQuery
         $categories = Category::query()
             ->withCount([
                 'transactions as transactions_count' => function ($query) use ($user) {
-                    $query->where('user_id', $user->id);
+                    $query
+                        ->baseCalculationQuery()
+                        ->where('user_id', $user->id);
                 }])
             ->get();
 

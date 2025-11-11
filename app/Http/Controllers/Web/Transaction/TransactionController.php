@@ -36,7 +36,10 @@ class TransactionController extends Controller
         $similarTransactions = $this->transactionService->getSimilarTransactions($transaction);
         $userBaseCurrency = $this->currencyService->resolveCalculationCurrency($user);
 
-        return view('transaction.show', compact('transaction', 'similarTransactions', 'userBaseCurrency'));
+        return view(
+            'transaction.show',
+            compact('transaction', 'similarTransactions', 'userBaseCurrency')
+        );
     }
 
     public function create(CreateRequest $request): RedirectResponse
@@ -45,8 +48,11 @@ class TransactionController extends Controller
         $data = $request->validated();
         $this->transactionService->create($user, $data);
 
-        return redirect()->to(route('transaction.index'));
-    }
+        return to_route('transaction.index')
+            ->with(config('session.flash_messages_key'), [
+                __('Added new transaction.')
+            ]);
+        }
 
     public function patch(mixed $transactionId, PatchRequest $request): RedirectResponse
     {
@@ -54,6 +60,17 @@ class TransactionController extends Controller
         $data = $request->validated();
         $transaction->update($data);
 
-        return redirect()->to(route('transaction.show', ['id' => $transaction->id]));
+        return to_route('transaction.show', ['id' => $transaction->id]);
+    }
+
+    public function toggleExcludeFromCalculation(mixed $transactionId): RedirectResponse
+    {
+        $transaction = Transaction::findOrFail($transactionId);
+        $this->transactionService->toggleExcludeFromCalculation($transactionId);
+
+        return to_route('transaction.show', ['id' => $transaction->id])
+            ->with(config('session.flash_messages_key'), [
+                __('Changed transaction calculation settings.')
+            ]);
     }
 }

@@ -9,7 +9,7 @@ class GetUserSaldo extends Command
 {
     protected $signature = 'moneypenny:saldo';
 
-    protected $description = "Calculate users's current saldo.";
+    protected $description = "Calculate user's current saldo.";
 
     public function handle(): int
     {

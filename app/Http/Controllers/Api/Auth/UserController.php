@@ -28,7 +28,9 @@ class UserController extends Controller
     public function login(LoginRequest $request): Response
     {
         try {
-            $result = $this->userService->login($request->validated());
+            $result = $this->userService->login(
+                $request->validated()
+            );
 
         } catch (Throwable) {
             return response([

@@ -2,26 +2,39 @@
 
 namespace App\Services\Transaction\Categorize;
 
+use Illuminate\Support\Collection;
 use App\Models\Transaction\Category;
 use App\Models\Transaction\Transaction;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
+use App\Services\Transaction\Cache\TransactionsCache;
+use App\Contracts\Infrastructure\Cache\CacheAdapterInterface;
 
-class CategorizationService
+readonly class CategorizationService
 {
-    public const PENDING_CATEGORIZATION_CACHE_KEY = 'pending_recategorization';
+    public const PENDING_CATEGORIZATION_CACHE_KEY = 'is_pending_categorization';
+
+    public function __construct(private CacheAdapterInterface $cacheAdapter)
+    {}
 
     /** @noinspection PhpUndefinedMethodInspection */
     public function getStats(): array
     {
+        $categorizedPercentage = 0;
+        $allTransactionsCount = Transaction::count();
+
+        if ($allTransactionsCount > 0) {
+            $categorizedPercentage = Category::count() > 0
+                ? Transaction::whereNotNull('category_id')->count() / $allTransactionsCount
+                : 0;
+        }
+
         return [
-            'categorized_percent' => Category::count() > 0 ? Transaction::whereNotNull('category_id')->count() / Transaction::count() : 0,
+            'categorized_percent' => $categorizedPercentage,
         ];
     }
 
     public function getRecategorizationsPending(): bool
     {
-        return (boolean) Cache::get(self::PENDING_CATEGORIZATION_CACHE_KEY);
+        return (boolean) $this->cacheAdapter->get(TransactionsCache::PENDING_RECATEGORIZATION);
     }
 
     public function getUncategorizedTransactions(): Collection

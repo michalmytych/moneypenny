@@ -15,6 +15,11 @@ $app = new Illuminate\Foundation\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
 );
 
+if (!data_get($_ENV, 'DEPRECATIONS_WARNINGS_ENABLED')) {
+    ini_set('error_reporting', E_ALL & ~E_DEPRECATED);
+    error_reporting(E_ALL & ~E_DEPRECATED);
+}
+
 /*
 |--------------------------------------------------------------------------
 | Bind Important Interfaces

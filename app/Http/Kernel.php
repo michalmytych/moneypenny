@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use Barryvdh\Debugbar\Middleware\InjectDebugbar;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -34,10 +35,12 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
+            \App\Http\Middleware\TouchSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \IvanoMatteo\LaravelDeviceTracking\Http\Middleware\DeviceTrackerMiddleware::class
+            \IvanoMatteo\LaravelDeviceTracking\Http\Middleware\DeviceTrackerMiddleware::class,
+            InjectDebugbar::class,
         ],
 
         'api' => [

@@ -16,6 +16,13 @@ use App\Http\Controllers\Web\Utils\EmptyUrlController;
 |
 */
 
+use Illuminate\Support\Str;
+Route::get('/_session-test', function () {
+    session()->put('probe', Str::random(8)); // modyfikuje sesję => wymusi Set-Cookie
+    return response('ok');
+});
+
+
 Route::middleware(['auth', 'deny_blocked'])->group(function () {
     Route::get('/setup', [SetupController::class, 'setup'])->name('setup');
     Route::get('/home', [HomeController::class, 'index'])->name('home');

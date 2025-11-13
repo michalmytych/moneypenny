@@ -1,4 +1,4 @@
-<x-guest-layout>
+    <x-guest-layout>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')"/>
 
@@ -89,13 +89,7 @@
                     if (loginBtn.disabled) return false;
 
                     try {
-                        return fetch(sanctumCSRFCookieRoute, {
-                                method: "GET",
-                                headers: {
-                                    'Accept-Type': 'application/json',
-                                }
-                            }
-                        );
+                        return fetch(sanctumCSRFCookieRoute, {credentials: 'include'});
                     } catch (e) {
                         console.error(e);
                     }

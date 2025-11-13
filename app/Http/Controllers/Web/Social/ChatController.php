@@ -2,27 +2,30 @@
 
 namespace App\Http\Controllers\Web\Social;
 
+use App\Contracts\Infrastructure\Cache\CacheAdapterInterface;
 use App\Http\Controllers\Controller;
 use App\Services\Notification\Broadcast\NotificationBroadcastService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
 class ChatController extends Controller
 {
     private const CHAT_MESSAGES_CACHE_KEY = 'chat_messages';
 
-    public function __construct(private readonly NotificationBroadcastService $notificationBroadcastService) {}
+    public function __construct(
+        private readonly CacheAdapterInterface $cacheAdapter,
+        private readonly NotificationBroadcastService $notificationBroadcastService
+    ) {}
 
     public function index(): View
     {
         $chatMessages = [];
 
-        if (Cache::missing(self::CHAT_MESSAGES_CACHE_KEY)) {
-            Cache::put(self::CHAT_MESSAGES_CACHE_KEY, $chatMessages);
+        if ($this->cacheAdapter->missing(self::CHAT_MESSAGES_CACHE_KEY)) {
+            $this->cacheAdapter->put(self::CHAT_MESSAGES_CACHE_KEY, $chatMessages);
         } else {
-            $chatMessages = Cache::get(self::CHAT_MESSAGES_CACHE_KEY, []);
+            $chatMessages = $this->cacheAdapter->get(self::CHAT_MESSAGES_CACHE_KEY, []);
         }
 
         return view('social.chat.index', compact('chatMessages'));
@@ -39,7 +42,7 @@ class ChatController extends Controller
             url: route('home', ['chat_opened' => true])
         );
 
-        $chatMessages = Cache::get(self::CHAT_MESSAGES_CACHE_KEY, []);
+        $chatMessages = $this->cacheAdapter->get(self::CHAT_MESSAGES_CACHE_KEY, []);
         $chatMessages[] = [
             'text' => $chatMessage,
             'timestamp' => time(),
@@ -49,7 +52,7 @@ class ChatController extends Controller
             ]
         ];
 
-        Cache::put(self::CHAT_MESSAGES_CACHE_KEY, $chatMessages);
+        $this->cacheAdapter->put(self::CHAT_MESSAGES_CACHE_KEY, $chatMessages);
 
         return redirect()->back();
     }

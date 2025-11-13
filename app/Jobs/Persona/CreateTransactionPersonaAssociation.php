@@ -23,7 +23,7 @@ class CreateTransactionPersonaAssociation implements ShouldQueue
      */
     public function handle(TransactionPersonaService $transactionPersonaService): void
     {
-        $transation = Transaction::findOrFail($this->transactionId);
-        $transactionPersonaService->createPersonasAssociations($transation);
+        $transaction = Transaction::findOrFail($this->transactionId);
+        $transactionPersonaService->createPersonasAssociations($transaction);
     }
 }

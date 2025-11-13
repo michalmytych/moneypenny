@@ -11,8 +11,8 @@ class ForceSSL
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if (env('FORCE_SSL', false)) {
-            URL::forceScheme('https');
+        if (app()->environment('production')) {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
         }
 
         return $next($request);

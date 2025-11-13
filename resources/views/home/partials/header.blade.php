@@ -51,7 +51,7 @@
         <h2 class="text-xl font-semibold mb-2">{{ __("Events") }}</h2>
         @foreach($eventNotifications as $eventNotification)
             @php
-                $notificationContent = json_decode($eventNotification->content);
+                $notificationContent = json_decode(data_get($eventNotification, 'content'));
                 $eventHeader = data_get($notificationContent, 'header');
                 $rawEventContent = data_get($notificationContent, 'content');
                 $eventContent = \App\Services\Helpers\StringHelper::shortenAuto($rawEventContent, 30);

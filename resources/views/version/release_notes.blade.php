@@ -7,7 +7,10 @@
         <div class="w-full mx-auto sm:px-6 lg:px-8">
 
             @foreach($releaseNotes as $note)
-                <div class="px-6 py-6 bg-white rounded-md mb-6">
+                @php
+                    $isMajorVerion = in_array('major_version', $note['tags']);
+                @endphp
+                <div class="px-6 py-6 bg-white rounded-md mb-6 @if($isMajorVerion) border-indigo-500 border-2 @endif">
                     <div class="mb-2">
                         <div class="flex items-center">
                             <h2 class="text-4xl font-bold text-black">{{ $note['header'] }}</h2>

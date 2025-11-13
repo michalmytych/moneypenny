@@ -29,7 +29,7 @@ class DirectoryRenderBuilder
             $sourcePath = $this->targetPath . '/' . $directoryName;
 
             $this->render .= view('file_explorer.partials.folder', [
-                'url' => route('file_explorer.open', ['path' => $sourcePath]),
+                'url' => route('api.file_explorer.open', ['path' => $sourcePath]),
                 'directoryName' => $directoryName,
             ])->render();
         }

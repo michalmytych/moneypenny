@@ -10,6 +10,7 @@ class TransactionHelper
     {
         $volume  = str_replace(',', '.', $volume);
         $float = abs(floatval($volume));
+
         return round($float, 2);
     }
 

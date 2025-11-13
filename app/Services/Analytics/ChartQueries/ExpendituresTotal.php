@@ -13,8 +13,10 @@ class ExpendituresTotal extends ChartQuery
     public function get(User $user): array
     {
         $lastMonthDates = DateHelper::getLastMonthDates();
+
         $data = collect($lastMonthDates)->map(
             fn($dateString) => Transaction::query()
+                ->baseCalculationQuery()
                 ->whereUser($user)
                 ->where('type', Transaction::TYPE_EXPENDITURE)
                 ->whereDate('transaction_date', Carbon::parse($dateString))

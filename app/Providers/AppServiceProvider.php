@@ -2,13 +2,14 @@
 
 namespace App\Providers;
 
-use App\Contracts\Services\Analysis\AnalysisServiceContract;
+use App\Services\SSH\SshService;
+use App\Services\Import\ImportService;
+use Illuminate\Support\ServiceProvider;
+use App\Services\Nordigen\NordigenService;
 use App\Contracts\Services\Import\ImportServiceContract;
 use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
-use App\Services\Analytics\AnalysisService;
-use App\Services\Import\ImportService;
-use App\Services\Nordigen\NordigenService;
-use Illuminate\Support\ServiceProvider;
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,8 +19,11 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(ImportServiceContract::class, ImportService::class);
-        $this->app->bind(AnalysisServiceContract::class, AnalysisService::class);
         $this->app->bind(TransactionSyncServiceInterface::class, NordigenService::class);
+
+        $this->app->singleton(SshService::class, function ($app) {
+            return new SshService();
+        });
     }
 
     /**
@@ -27,6 +31,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Gate::define('viewPulse', function (User $user) {
+            return $user->isAdmin();
+        });
     }
 }

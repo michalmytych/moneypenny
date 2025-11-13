@@ -2,6 +2,8 @@
 
 namespace App\Services\Nordigen;
 
+
+use App\Services\Logging\LoggingAdapterInterface;
 use Exception;
 use Throwable;
 use App\Models\User;
@@ -9,18 +11,19 @@ use Illuminate\Support\Str;
 use App\Models\Import\Import;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 use App\Models\Nordigen\Requisition;
-use Illuminate\Support\Facades\Cache;
-use App\Models\Synchronization\Account;
 use GuzzleHttp\Exception\GuzzleException;
 use App\Models\Nordigen\EndUserAgreement;
+use App\Models\Transaction\PersonalAccount;
 use App\Models\Synchronization\Synchronization;
 use App\Http\Client\Traits\DecodesHttpJsonResponse;
+use App\Models\Synchronization\Account as NordigenAccount;
 use App\Services\Nordigen\DataObjects\InstitutionDataObject;
 use App\Services\Nordigen\DataObjects\TransactionDataObject;
+use App\Contracts\Infrastructure\Cache\CacheAdapterInterface;
 use App\Contracts\Services\Transaction\TransactionSyncServiceInterface;
 use App\Services\Nordigen\Synchronization\NordigenTransactionServiceInterface;
+use Illuminate\Support\Facades\Log;
 
 class NordigenService implements TransactionSyncServiceInterface
 {
@@ -43,7 +46,9 @@ class NordigenService implements TransactionSyncServiceInterface
     private const REQUISITION_CREATED_STATUS = 'CR';
 
     public function __construct(
-        private readonly NordigenClient                      $httpClient,
+        private readonly NordigenClientInterface             $httpClient,
+        private readonly CacheAdapterInterface               $cacheAdapter,
+        private readonly LoggingAdapterInterface             $loggingAdapter,
         private readonly NordigenAccountService              $nordigenAccountService,
         private readonly NordigenTransactionServiceInterface $nordigenTransactionService
     )
@@ -79,9 +84,31 @@ class NordigenService implements TransactionSyncServiceInterface
 
     /**
      * @throws GuzzleException
+     */
+    public function getAccountBalance(NordigenAccount $account): int|float|null
+    {
+        $uri = self::ACCOUNTS_URI . $account->nordigen_account_id . '/balances/';
+
+        $response = $this->httpClient->get($uri, [
+            'headers' => $this->getAuthorizationHeader(),
+        ]);
+
+        $balancesData = $this->decodedResponse($response);
+        $balances = data_get($balancesData, 'balances');
+
+        $availableBalance = array_filter(
+            $balances,
+            fn(array $balance) => $balance['balanceType'] === 'forwardAvailable'
+        );
+
+        return data_get($availableBalance, 'balanceAmount.amount');
+    }
+
+    /**
+     * @throws GuzzleException
      * @throws Exception
      */
-    protected function syncTransactionsByAccount(Account $account, Import $import, User $user): void
+    protected function syncTransactionsByAccount(NordigenAccount $account, Import $import, User $user): void
     {
         $uri = self::ACCOUNTS_URI . $account->nordigen_account_id . '/transactions/';
 
@@ -90,6 +117,9 @@ class NordigenService implements TransactionSyncServiceInterface
         ]);
 
         $transactionsData = $this->decodedResponse($response);
+        $personalAccountId = $account->refresh()->personalAccount?->id;
+//        $transactionsData['personalAccountId'] = $personalAccountId; // @todo Should be properly set so transaction should be assigned to personalAccount
+        $transactionsData['personalAccountId'] = null; // @todo: tmp
 
         if (data_get($transactionsData, 'transactions')) {
             $booked = data_get($transactionsData, 'transactions.booked');
@@ -99,21 +129,12 @@ class NordigenService implements TransactionSyncServiceInterface
 
             foreach ($all as $transactionData) {
                 $transactionDataObject = TransactionDataObject::make($transactionData);
-                $this->nordigenTransactionService->addNewSynchronizedTransaction(
-                    $transactionDataObject,
-                    $import,
-                    $user
-                );
+                $this->nordigenTransactionService->addNewSynchronizedTransaction($transactionDataObject, $import, $user);
             }
         } else {
-            Log::debug(json_encode($transactionsData));
+            $this->loggingAdapter->debug(json_encode($transactionsData));
             throw new Exception('Invalid transaction data received. Response was logged to debug logs.');
         }
-    }
-
-    public function getAccounts(User $user): Collection
-    {
-        return Account::whereUser($user)->latest()->get();
     }
 
     /**
@@ -133,14 +154,28 @@ class NordigenService implements TransactionSyncServiceInterface
 
         if (is_array($accountsIds)) {
             foreach ($accountsIds as $accountId) {
-                // @todo add deleting non existing accounts
-                Account::firstOrCreate([
+                $account = NordigenAccount::firstOrCreate([
                     'user_id' => $user->id,
                     'nordigen_account_id' => $accountId,
                 ], [
                     'user_id' => $user->id,
                     'nordigen_account_id' => $accountId,
                     'synchronization_id' => $synchronizationId,
+                ]);
+
+                $institutionId = data_get($accountsData, 'institution_id');
+                $accountReference = data_get($accountsData, 'reference');
+
+                $accountBalance = $this->getAccountBalance($account);
+
+                PersonalAccount::firstOrCreate([
+                    'user_id' => $user->id,
+                    'external_reference' => $accountReference
+                ], [
+                    'user_id' => $user->id,
+                    'nordigen_account_id' => $account->id,
+                    'name' => $institutionId . ' ' . $accountReference,
+                    'value' => $accountBalance
                 ]);
             }
         }
@@ -276,15 +311,17 @@ class NordigenService implements TransactionSyncServiceInterface
      */
     public function provideSupportedInstitutionsData()
     {
-        if (Cache::missing(self::INSTITUTIONS_CACHE_KEY)) {
+        if ($this->cacheAdapter->missing(self::INSTITUTIONS_CACHE_KEY)) {
             $institutionsData = $this->getFreshSupportedInstitutionsData();
 
-            Cache::put(self::INSTITUTIONS_CACHE_KEY, $institutionsData);
+            if (!isset($institutionsData['decoding_exception'])) {
+                $this->cacheAdapter->put(self::INSTITUTIONS_CACHE_KEY, $institutionsData, 30);
+            }
 
             return $this->getInstitutionsDataObjects($institutionsData);
         }
 
-        $institutionsData = Cache::get(self::INSTITUTIONS_CACHE_KEY);
+        $institutionsData = $this->cacheAdapter->get(self::INSTITUTIONS_CACHE_KEY);
 
         return $this->getInstitutionsDataObjects($institutionsData);
     }
@@ -293,11 +330,8 @@ class NordigenService implements TransactionSyncServiceInterface
      * @return array|InstitutionDataObject[]
      * @noinspection PhpMissingReturnTypeInspection
      */
-    public function getInstitutionsDataObjects(array $institutionsData)
+    public function getInstitutionsDataObjects(array $institutionsData): array
     {
-        // @todo - add pagination instead of returning one chunk
-        $institutionsData = array_slice($institutionsData, 0, 30);
-
         return array_map(
             fn($institution) => InstitutionDataObject::make($institution),
             $institutionsData
@@ -312,7 +346,7 @@ class NordigenService implements TransactionSyncServiceInterface
     {
         $requestQuery = [
             // @todo - payments enabled unkonow field obadac po wyczyszczeniu cache
-            'payments_enabled' => config('nordigen.payments_enabled'),
+            // 'payments_enabled' => config('nordigen.payments_enabled'), - prawdopodobnie deprecated w nowym api gocardless
             'country' => config('nordigen.country'),
         ];
 
@@ -329,13 +363,16 @@ class NordigenService implements TransactionSyncServiceInterface
      */
     public function provideAccessTokenData(): array
     {
-        $tokenData = Cache::get(self::TOKEN_CACHE_KEY);
+        $tokenData = $this->cacheAdapter->get(self::TOKEN_CACHE_KEY);
         $tokenExpired = $this->hasTokenRefreshExpired($tokenData);
 
-        if ($tokenExpired || Cache::missing(self::TOKEN_CACHE_KEY)) {
+        if ($tokenExpired || $this->cacheAdapter->missing(self::TOKEN_CACHE_KEY)) {
+            Log::debug('Fetching new access token');
             $tokenData = $this->getFreshTokenData();
 
-            Cache::put(self::TOKEN_CACHE_KEY, $tokenData);
+            if ($tokenData && !isset($tokenData['decoding_exception'])) {
+                $this->cacheAdapter->put(self::TOKEN_CACHE_KEY, $tokenData);
+            }
 
             return $tokenData;
         }
@@ -385,6 +422,7 @@ class NordigenService implements TransactionSyncServiceInterface
     {
         $institutions = $this->provideSupportedInstitutionsData();
         $institutions = array_filter($institutions, fn($institution) => $institution->id === $institutionId);
+
         return collect($institutions)->first();
     }
 
@@ -396,11 +434,11 @@ class NordigenService implements TransactionSyncServiceInterface
         ]);
     }
 
-    public function setStatusFailed(Synchronization $synchronization, ?int $status = null): void
+    public function setStatusFailed(Synchronization $synchronization, mixed $status = null): void
     {
         $synchronization->update([
             'status' => Synchronization::SYNC_STATUS_FAILED,
-            'code' => $status
+            'code' => (int)$status
         ]);
     }
 

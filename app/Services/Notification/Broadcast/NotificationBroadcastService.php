@@ -2,8 +2,10 @@
 
 namespace App\Services\Notification\Broadcast;
 
+use Throwable;
 use App\Models\Notification;
 use App\Events\Notification\ApplicationNotificationSent;
+use Illuminate\Support\Facades\Log;
 
 class NotificationBroadcastService
 {
@@ -25,6 +27,10 @@ class NotificationBroadcastService
         ]);
 
         // @todo - broadcast only to specific users
-        broadcast(new ApplicationNotificationSent($header, $content, $url));
+        try {
+            broadcast(new ApplicationNotificationSent($header, $content, $url));
+        } catch (Throwable $throwable) {
+            Log::error($throwable);
+        }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Jobs\Transaction;
 
+use Throwable;
 use Illuminate\Support\Str;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Carbon;
@@ -13,6 +14,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Services\ExchangeRates\ExchangeRatesService;
 use App\Services\Transaction\Currency\CurrencyService;
+use Illuminate\Support\Facades\Log;
 
 class ResolveTransactionCalculationVolume implements ShouldQueue
 {
@@ -33,17 +35,22 @@ class ResolveTransactionCalculationVolume implements ShouldQueue
         $transactionDate = Carbon::parse($transaction->transaction_date);
 
         if ($transactionCurrency !== $baseUserCurrency) {
-            $exchangeRate = $exchangeRatesService->getOrCreateExchangeRate(
-                date: $transactionDate,
-                baseCurrencyCode: $transactionCurrency,
-                targetCurrencyCode: $baseUserCurrency
-            );
+            try {
+                $exchangeRate = $exchangeRatesService->getOrCreateExchangeRate(
+                    date: $transactionDate,
+                    baseCurrencyCode: $transactionCurrency,
+                    targetCurrencyCode: $baseUserCurrency
+                );
 
-            $oldCalculationVolume = $transaction->calculation_volume;
+                $oldCalculationVolume = $transaction->calculation_volume;
 
-            $transaction->update([
-                'calculation_volume' => $oldCalculationVolume * (float) $exchangeRate->rate
-            ]);
+                $transaction->update([
+                    'calculation_volume' => $oldCalculationVolume * (float) $exchangeRate->rate
+                ]);
+
+            } catch (Throwable $throwable) {
+                Log::error($throwable);
+            }
         }
     }
 }

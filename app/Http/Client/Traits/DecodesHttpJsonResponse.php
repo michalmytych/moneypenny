@@ -2,12 +2,13 @@
 
 namespace App\Http\Client\Traits;
 
+use Illuminate\Support\Facades\Log;
 use Throwable;
-use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ResponseInterface;
 
 trait DecodesHttpJsonResponse
 {
-    protected function decodedResponse(Response $response): array
+    protected function decodedResponse(ResponseInterface $response): array
     {
         $contents = $response
             ->getBody()

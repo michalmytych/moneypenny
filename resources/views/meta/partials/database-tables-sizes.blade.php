@@ -1,4 +1,4 @@
-<div class="container mx-auto">
+<div class="container mx-auto shadow-lg">
     <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-200">
         <tr class="bg-gray-200">

@@ -63,6 +63,21 @@ return [
             ]) : [],
         ],
 
+        'mysql_testing' => [
+            'driver'         => 'mysql',
+            'url'            => 'mmoneypenny-test',
+            'host'           => '127.0.0.1',
+            'database'       => 'moneypenny-test',
+            'username'       => env('MYSQL_USER', 'moneypenny-test'),
+            'password'       => env('MYSQL_PASSWORD', 'moneypenny-test'),
+            'port'           => '3306',
+            'charset'        => 'utf8mb4',
+            'collation'      => 'utf8mb4_unicode_ci',
+            'prefix'         => '',
+            'prefix_indexes' => true,
+            'strict'         => false
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),

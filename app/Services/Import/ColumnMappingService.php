@@ -16,6 +16,7 @@ class ColumnMappingService
     public function create(User $user, array $data): ColumnsMapping
     {
         $data['user_id'] = $user->id;
+
         return ColumnsMapping::create($data);
     }
 }
